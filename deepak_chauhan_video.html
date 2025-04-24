@@ -56,12 +56,12 @@
           body: JSON.stringify((item.views || 0) + 1)
         });
 
-        const youtubeId = getYouTubeId(item.videoUrl);
+        const youtubeEmbedUrl = item.videoUrl;
 
         const videoBlock = document.createElement("div");
         videoBlock.innerHTML = `
           <h3 style="color: #ffd700;">${item.title}</h3>
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/${youtubeId}" 
+          <iframe width="100%" height="315" src="${youtubeEmbedUrl}" ...
             frameborder="0" allowfullscreen style="border-radius:12px; box-shadow: 0 0 15px #00ffff;"></iframe>
           <p style="color: #ccc; margin-top: 10px;">${item.description}</p>
           <p style="color: #00ffcc;">Views: <span id="view-${key}">${(item.views || 0) + 1}</span> 
