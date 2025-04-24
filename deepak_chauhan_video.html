@@ -141,10 +141,10 @@
       });  
   }  
   
-  // Function to extract YouTube Video ID from URL  
-  function getYouTubeId(url) {  
-  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([^&?/]+)/);  
-  return match ? match[1] : '';  
-  }  
+ // Function to extract YouTube Video ID from URL (updated for Shorts too)
+function getYouTubeId(url) {
+  const match = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([^&?/]+)/);
+  return match ? match[1] : '';
+}  
  </script>  </body>  
 </html>
