@@ -1,104 +1,150 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Deepak Chauhan Video – Team Bhai × AI</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header>
-    <h1>Team Bhai × AI</h1>
-    <p>Powered by Deepak Chauhan</p>
-  </header>
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Deepak Chauhan Video – Team Bhai × AI</title>  
+  <link rel="stylesheet" href="style.css" />  
+</head>  
+<body>  
+  <header>  
+    <h1>Team Bhai × AI</h1>  
+    <p>Powered by Deepak Chauhan</p>  
+  </header>    <nav>  
+    <a href="index.html">Home</a>  
+    <a href="top_comments.html">Comments</a>  
+  </nav>    <section style="text-align: center; padding: 1rem;">  
+    <p style="font-size: 1.1rem; color: #ccc;">  
+      Yeh Video Nahi, Zindagi Ka Jawab Hai.<br>  
+      जब ज़ंदगी चुप हो जाए, तो ये वीडियो बोलेगा।  
+    </p>  
+  </section>    <section id="deepak-video-display" style="padding: 30px; text-align: center;">  
+    <h2 style="color: #00ffff;">Deepak Chauhan – Motivational Videos</h2>  
+    <div id="video-container" style="margin-top: 20px;"></div>  
+  </section>    <!-- Comment and Share System -->    <section id="deepak-video-comments" style="padding: 30px; background-color: #0a0a0a; color: white; border-top: 2px solid #00ffff;">  
+    <h2 style="text-align: center; color: #00ffff; font-size: 26px;">Comment & Share Your Thoughts</h2>  
+    <form style="max-width: 600px; margin: 20px auto;" onsubmit="submitComment(event)">  
+      <input type="text" id="username" placeholder="Your Name" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: none;">  
+      <textarea id="commentText" rows="4" placeholder="Write your comment..." required style="width: 100%; padding: 10px; border-radius: 5px; border: none;"></textarea>  
+      <button type="submit" style="margin-top: 10px; padding: 10px 20px; background: #00ffff; color: black; font-weight: bold; border: none; border-radius: 5px; cursor: pointer;">Post Comment</button>  
+    </form>  <div id="commentsDisplay" style="margin-top: 30px; max-width: 600px; margin: auto;"></div>  
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="top_comments.html">Comments</a>
-  </nav>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
-  <section style="text-align: center; padding: 1rem;">
-    <h2 id="video-title" style="color: #00ffff;"></h2>
-    <iframe id="video-frame" width="320" height="180" frameborder="0" allowfullscreen></iframe>
-    <p id="video-desc" style="font-size: 1.1rem; color: #ccc;"></p>
+<div style="text-align: center; margin-top: 40px;">  
+  <h3 style="color: #ffd700;">Share this video</h3>  
+  <button onclick="shareLink()" style="margin: 5px; padding: 8px 14px; background-color: #25D366; color: white; border: none; border-radius: 5px; cursor: pointer;">WhatsApp</button>  
+  <button onclick="copyToClipboard()" style="margin: 5px; padding: 8px 14px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Copy Link</button>  
+</div>  
+<p style="text-align:center; font-size:14px; color:#999; margin-top:10px;">  
+  Powered by <strong>Team Bhai × AI Dk_community</strong> | All comments are public & visible in real-time.  
+</p>
 
-    <div style="margin-top: 20px;">
-      <span>Likes: <span id="like-count">0</span></span>
-      <button onclick="likeVideo()">Like</button>
-    </div>
-
-    <div style="margin-top: 30px;">
-      <h3>Comments</h3>
-      <div id="comment-box"></div>
-      <input type="text" id="userName" placeholder="Your Name" />
-      <textarea id="commentText" placeholder="Your Comment"></textarea>
-      <button onclick="submitComment()">Submit</button>
-    </div>
-  </section>
-
-  <footer>
-    © 2025 Team Bhai × AI | All Rights Reserved
-  </footer>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-
-    const videoId = "deepak1"; // Static ID for now
-
-    function fetchVideoData() {
-      db.ref("videos/" + videoId).once("value", (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-          document.getElementById("video-title").innerText = data.title;
-          document.getElementById("video-frame").src = data.videoURL;
-          document.getElementById("video-desc").innerText = data.description;
-          document.getElementById("like-count").innerText = data.likes || 0;
-        }
-      });
-
-      db.ref("comments/" + videoId).on("value", (snapshot) => {
-        const box = document.getElementById("comment-box");
-        box.innerHTML = "";
-        snapshot.forEach(child => {
-          const val = child.val();
-          box.innerHTML += `<p><strong>${val.name}:</strong> ${val.comment}</p>`;
-        });
-      });
-    }
-
-    function likeVideo() {
-      const uid = localStorage.getItem("liked_" + videoId);
-      if (!uid) {
-        const likeRef = db.ref("videos/" + videoId + "/likes");
-        likeRef.transaction(likes => (likes || 0) + 1);
-        localStorage.setItem("liked_" + videoId, "yes");
-      } else {
-        alert("You already liked!");
-      }
-    }
-
-    function submitComment() {
-      const name = document.getElementById("userName").value;
-      const comment = document.getElementById("commentText").value;
-      if (name && comment) {
-        const newComment = db.ref("comments/" + videoId).push();
-        newComment.set({ name, comment });
-        document.getElementById("userName").value = "";
-        document.getElementById("commentText").value = "";
-      }
-    }
-
-    fetchVideoData();
-  </script>
-</body>
+  </section>    <script>  
+    const commentsPath = "https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/DeepakVideosComments.json";  
+    function shareLink() {  
+      const url = window.location.href;  
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(url)}`;  
+      window.open(whatsappUrl, '_blank');  
+    }  
+    function copyToClipboard() {  
+      const url = window.location.href;  
+      navigator.clipboard.writeText(url).then(() => alert("Link copied to clipboard!"));  
+    }  
+    function submitComment(event) {  
+      event.preventDefault();  
+      const name = document.getElementById("username").value.trim();  
+      const comment = document.getElementById("commentText").value.trim();  
+      if (name && comment) {  
+        const newComment = { name, comment, timestamp: new Date().toLocaleString() };  
+        fetch(commentsPath, { method: "POST", body: JSON.stringify(newComment) }).then(() => {  
+          document.getElementById("username").value = "";  
+          document.getElementById("commentText").value = "";  
+          loadComments();  
+        });  
+      }  
+    }  
+    function loadComments() {  
+      fetch(commentsPath)  
+        .then(res => res.json())  
+        .then(data => {  
+          const display = document.getElementById("commentsDisplay");  
+          display.innerHTML = "";  
+          if (data) {  
+            Object.values(data).reverse().forEach(comment => {  
+              const div = document.createElement("div");  
+              div.innerHTML = `<p><strong style='color:#00ffff;'>${comment.name}</strong>: ${comment.comment}</p><small style='color:#aaa;'>${comment.timestamp}</small><hr style='border-color:#00ffff;'>`;  
+              display.appendChild(div);  
+            });  
+          }  
+        });  
+    }  
+    window.onload = loadComments;  
+  </script>    <div class="glow-strip"></div>  
+  <style>  
+    .glow-strip {  
+      height: 5px;  
+      width: 100%;  
+      background: linear-gradient(90deg, #00ffcc, #00ffff, #00ccff, #00ffcc);  
+      background-size: 300% 100%;  
+      animation: moveGlow 4s linear infinite;  
+      box-shadow: 0 0 20px #00ffff, 0 0 40px #00ccff;  
+      border-radius: 10px;  
+      margin-top: 40px;  
+    }  
+    @keyframes moveGlow {  
+      0% { background-position: 0% 50%; }  
+      100% { background-position: 300% 50%; }  
+    }  
+  </style>    <footer style="padding: 20px; text-align: center; color: #ccc; font-size: 16px;">  
+    © 2025 Team Bhai × AI | All Rights Reserved - Dk_community  
+  </footer>   <script>  
+  fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_videos.json")  
+    .then(res => res.json())  
+    .then(data => {  
+      const container = document.getElementById("video-container");  
+      Object.entries(data).forEach(([key, item]) => {  
+        const viewsRef = `https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_videos/${key}/views.json`;  
+        fetch(viewsRef, {  
+          method: "PUT",  
+          body: JSON.stringify((item.views || 0) + 1)  
+        });  
+  
+        // Get YouTube video ID from full URL  
+        const youtubeId = getYouTubeId(item.videoUrl);  
+  
+        const videoBlock = document.createElement("div");  
+        videoBlock.innerHTML = `  
+          <h3 style="color: #ffd700;">${item.title}</h3>  
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/${youtubeId}"   
+            frameborder="0" allowfullscreen style="border-radius:12px; box-shadow: 0 0 15px #00ffff;"></iframe>  
+          <p style="color: #ccc; margin-top: 10px;">${item.description}</p>  
+          <p style="color: #00ffcc;">Views: <span id="view-${key}">${(item.views || 0) + 1}</span>   
+          | Likes: <span id="like-${key}">${item.likes || 0}</span></p>  
+          <button onclick="likeVideo('${key}')" style="margin: 5px 0 30px; padding: 8px 20px; background: #ff4444;   
+            color: white; border: none; border-radius: 6px; cursor: pointer;">❤️ Like</button>  
+          <hr style="margin: 30px 0; border-color: #00ffff;">  
+        `;  
+        container.appendChild(videoBlock);  
+      });  
+    });  
+  
+  function likeVideo(key) {  
+    const likeRef = `https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_videos/${key}/likes.json`;  
+    fetch(likeRef)  
+      .then(res => res.json())  
+      .then(likes => {  
+        const newLikes = (likes || 0) + 1;  
+        fetch(likeRef, {  
+          method: "PUT",  
+          body: JSON.stringify(newLikes)  
+        }).then(() => {  
+          document.getElementById(`like-${key}`).innerText = newLikes;  
+        });  
+      });  
+  }  
+  
+  // Function to extract YouTube Video ID from URL  
+  function getYouTubeId(url) {  
+  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([^&?/]+)/);  
+  return match ? match[1] : '';  
+  }  
+ </script>  </body>  
 </html>
