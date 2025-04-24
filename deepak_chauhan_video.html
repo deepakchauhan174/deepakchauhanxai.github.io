@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Deepak Chauhan Video – Team Bhai × AI</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 </head>
 <body>
-
   <header>
     <h1>Team Bhai × AI</h1>
     <p>Powered by Deepak Chauhan</p>
@@ -29,15 +30,69 @@
     </p>
   </section>
 
-  <h2 style="text-align: center; margin-top: 2rem;">Deepak Chauhan – Videos</h2>
-  <ul style="list-style-type: disc; padding: 1rem 2rem;">
-    <li>Motivational Reels</li>
-    <li>Motivational Video</li>
-  </ul>
+  <div id="videoContainer" class="video-box"></div>
 
   <footer>
     © 2025 Team Bhai × AI | All Rights Reserved
   </footer>
 
+  <script>
+    const firebaseConfig = {
+      databaseURL: "https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/"
+    };
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    db.ref("Deepak_Videos/video1").once("value", (snapshot) => {
+      const data = snapshot.val();
+      const videoDiv = document.getElementById("videoContainer");
+
+      videoDiv.innerHTML = `
+        <div class="video-card">
+          <h3>${data.title}</h3>
+          <iframe width="320" height="400" src="${data.videoUrl}" frameborder="0" allowfullscreen></iframe>
+          <p style="color:#ccc; margin-top: 10px;">${data.description}</p>
+          <p>Likes: <span id="likeCount">${data.likes}</span></p>
+          <button onclick="likeVideo()">Like</button>
+
+          <div style="margin-top: 1rem;">
+            <input id="commentName" placeholder="Your Name" /><br><br>
+            <textarea id="commentText" placeholder="Write a comment..."></textarea><br><br>
+            <button onclick="submitComment()">Submit</button>
+          </div>
+
+          <div id="commentBox" style="margin-top: 2rem;"></div>
+        </div>
+      `;
+    });
+
+    function likeVideo() {
+      const likeRef = firebase.database().ref("Deepak_videos/video1/likes");
+      likeRef.transaction((count) => (count || 0) + 1);
+      likeRef.on("value", (snapshot) => {
+        document.getElementById("likeCount").innerText = snapshot.val();
+      });
+    }
+
+    function submitComment() {
+      const name = document.getElementById("commentName").value;
+      const comment = document.getElementById("commentText").value;
+      const commentData = {
+        name: name,
+        comment: comment,
+        timestamp: new Date().toLocaleString()
+      };
+      firebase.database().ref("DeepakVideosComments/video1").push(commentData);
+    }
+
+    firebase.database().ref("DeepakVideosComments/video1").on("value", (snapshot) => {
+      const commentBox = document.getElementById("commentBox");
+      commentBox.innerHTML = "<h4>Comments:</h4>";
+      snapshot.forEach((child) => {
+        const c = child.val();
+        commentBox.innerHTML += `<p><strong>${c.name}</strong>: ${c.comment} <small>(${c.timestamp})</small></p>`;
+      });
+    });
+  </script>
 </body>
 </html>
