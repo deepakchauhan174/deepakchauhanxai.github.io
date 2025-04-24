@@ -97,12 +97,12 @@
   </style>    <footer style="padding: 20px; text-align: center; color: #ccc; font-size: 16px;">  
     © 2025 Team Bhai × AI | All Rights Reserved - Dk_community  
   </footer>   <script>  
-  fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_videos.json")  
+  fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_Videos.json")  
     .then(res => res.json())  
     .then(data => {  
       const container = document.getElementById("video-container");  
       Object.entries(data).forEach(([key, item]) => {  
-        const viewsRef = `https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_videos/${key}/views.json`;  
+        const viewsRef = `https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_Videos/${key}/views.json`;  
         fetch(viewsRef, {  
           method: "PUT",  
           body: JSON.stringify((item.views || 0) + 1)  
@@ -128,7 +128,7 @@
     });  
   
   function likeVideo(key) {  
-    const likeRef = `https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_videos/${key}/likes.json`;  
+    const likeRef = `https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_Videos/${key}/likes.json`;  
     fetch(likeRef)  
       .then(res => res.json())  
       .then(likes => {  
