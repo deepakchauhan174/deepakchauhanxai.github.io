@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Psychology Image Gallery</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(#000015, #000);
+      color: white;
+      text-align: center;
+    }
+    h1 {
+      padding: 2rem;
+      font-size: 2.5rem;
+      color: #00ffff;
+      text-shadow: 0 0 12px #00ffff;
+    }
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    .card {
+      background: #0d1b2a;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      width: 100%;
+    }
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+      border: 2px solid #00ffff;
+      cursor: pointer;
+    }
+    .card h3 {
+      color: #00ffff;
+      margin-top: 12px;
+    }
+    .card p, .caption {
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 10px;
+    }
+    .btn {
+      padding: 6px 12px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .download {
+      background: #00ffff;
+      color: black;
+    }
+    .share {
+      background: #ffd700;
+      color: black;
+    }
+  </style>
+  <script>
+    const FIREBASE_URL = "https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Psychology_Images.json";
+    let images = [];
+    let currentIndex = 0;async function loadImages() {
+  const res = await fetch(FIREBASE_URL);
+  const data = await res.json();
+  for (let key in data) {
+    images.push(data[key]);
+  }
+  renderImage();
+}
+
+function renderImage() {
+  const gallery = document.getElementById("gallery");
+  gallery.innerHTML = "";
+  const item = images[currentIndex];
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `
+    <img src="${item.image}" alt="Psychology Image" onclick="nextImage()">
+    <div class="caption">${item.caption}</div>
+    <div class="btn-group">
+      <a href="${item.image}" download target="_blank" class="btn download">Download</a>
+      <button onclick="shareImage('${item.image}')" class="btn share">Share</button>
+    </div>
+  `;
+  gallery.appendChild(card);
+}
+
+function nextImage() {
+  currentIndex = (currentIndex + 1) % images.length;
+  renderImage();
+}
+
+function shareImage(url) {
+  if (navigator.share) {
+    navigator.share({
+      title: "AI Bhai × Deepak Chauhan",
+      text: "देखो ये ज़बरदस्त मोटिवेशनल इमेज!",
+      url: url,
+    });
+  } else {
+    alert("Sharing is not supported on this device.");
+  }
+}
+
+window.onload = loadImages;
+window.onpageshow = function(event) {
+  if (event.persisted) {
+    window.location.reload();
+  }
+};
+
+  </script>
+</head>
+<body>
+  <h1>Psychology Thought Gallery</h1>
+  <div id="gallery" class="gallery"></div>
+</body>
+</html>

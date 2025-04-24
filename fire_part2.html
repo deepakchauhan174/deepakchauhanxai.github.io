@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fire Dialogues – Part 2</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #000000, #0a0a0a);
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ff4444;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px #ff4444;
+    }
+    .dialogue-box {
+      background: #111;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      box-shadow: 0 0 15px #00ffff;
+    }
+    .dialogue-box p {
+      font-size: 20px;
+      line-height: 1.8;
+      color: #00ffff;
+    }
+    .dialogue-box img {
+      display: block;
+      margin: 20px auto 0;
+      width: 220px;
+      border-radius: 12px;
+      border: 3px solid #00ffff;
+      box-shadow: 0 0 15px #00ffff;
+    }
+    .button-group {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .copy-btn, .share-btn {
+      margin: 5px;
+      padding: 6px 14px;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+    }
+    .copy-btn {
+      background-color: #00ffff;
+      color: #000;
+    }
+    .share-btn {
+      background-color: #ffd700;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <h1>Fire Dialogues – Part 2</h1>
+  <div id="dialogues-container"></div>
+
+  <script>
+  fetch("https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("dialogues-container");
+      const imagePaths = [
+        "images/fire_part_img4.jpg",
+        "images/fire_part_img2.jpg",
+        "images/fire_part_img5.jpg",
+        "images/fire_part_img1.jpg",
+        "images/fire_part_img3.jpg"
+      ];
+      let index = 0;
+
+      Object.keys(data).forEach(key => {
+        const fire = data[key].fire;
+        const story = data[key].story;
+        const signature = data[key].signature;
+
+        const box = document.createElement("div");
+        box.className = "dialogue-box";
+
+        box.innerHTML = `
+          <h3 style="color:#00ffff; text-align:center;">${fire}</h3>
+          <p>${story}</p>
+          <p style="color:#ccc; font-size:14px; text-align:right; margin-top:10px;">${signature}</p>
+          <img src="${imagePaths[index]}" alt="Fire Image ${index+1}">
+          <div class="button-group">
+            <button class="copy-btn" onclick="copyToClipboard(\`${story}\`)">Copy</button>
+            <button class="share-btn" onclick="shareText(\`${story}\`)">Share</button>
+          </div>
+        `;
+        container.appendChild(box);
+        index++;
+      });
+    });
+
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert("सर जी डायलॉग कॉपी हो गया!");
+    });
+  }
+
+  function shareText(text) {
+    if (navigator.share) {
+      navigator.share({
+        title: "Deepak Chauhan x Ai Bhai",
+        text: text
+      });
+    } else {
+      alert("Sharing is not supported on this device.");
+    }
+  }
+
+  window.onpageshow = function(event) {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  };
+  </script>
+</body>
+</html>

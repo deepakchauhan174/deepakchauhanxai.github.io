@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel – Upload Video</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body style="background-color: #000; color: white; font-family: sans-serif; text-align: center; padding: 20px;">
+
+  <h1 style="color: #00ffff;">Admin Panel – Upload Video</h1>
+
+  <form id="uploadForm" style="max-width: 500px; margin: auto;">
+    <input type="text" id="title" placeholder="Video Title" required style="width: 100%; padding: 10px; margin: 10px 0;"><br>
+    <textarea id="description" placeholder="Video Description" required style="width: 100%; padding: 10px; margin: 10px 0;"></textarea><br>
+    <input type="text" id="videoURL" placeholder="Video URL (mp4 or hosted link)" required style="width: 100%; padding: 10px; margin: 10px 0;"><br>
+    <input type="text" id="thumbnail" placeholder="Thumbnail Image URL" required style="width: 100%; padding: 10px; margin: 10px 0;"><br>
+    <input type="text" id="admin" value="admin 1" style="width: 100%; padding: 10px; margin: 10px 0;"><br>
+    <button type="submit" style="background-color: #00ffff; color: black; padding: 10px 20px; font-weight: bold;">Upload to Firebase</button>
+  </form>
+
+  <p id="status" style="margin-top: 20px; color: #00ffcc;"></p>
+
+  <script>
+    document.getElementById("uploadForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const payload = {
+        title: document.getElementById("title").value,
+        description: document.getElementById("description").value,
+        videoURL: document.getElementById("videoURL").value,
+        thumbnail: document.getElementById("thumbnail").value,
+        views: 0,
+        likes: 0,
+        admin: document.getElementById("admin").value || "default"
+      };
+
+      fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/DeepakVideos.json", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      })
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("status").innerText = "✅ Upload successful!";
+          document.getElementById("uploadForm").reset();
+        })
+        .catch(err => {
+          document.getElementById("status").innerText = "❌ Upload failed. Please check Firebase or network.";
+          console.error(err);
+        });
+    });
+  </script>
+</body>
+</html>

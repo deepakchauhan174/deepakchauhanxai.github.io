@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Bhai की कहानियाँ – Real View</title>
+  <style>
+    body {
+      background: radial-gradient(#000010, #000);
+      color: #00ffff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 30px;
+    }
+    h1, h2, h3 {
+      color: #00ffff;
+      text-align: center;
+      text-shadow: 0 0 10px #00ffff;
+    }
+    .story-section {
+      background: #0d1b2a;
+      padding: 25px;
+      margin: 30px auto;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      max-width: 800px;
+    }
+    .story-section p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #ccc;
+      margin-bottom: 15px;
+    }
+    .story-section img {
+      display: block;
+      margin: 20px auto 0;
+      max-width: 220px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00ffff;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 16px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>AI Bhai की कहानियाँ</h1>
+  <p style="text-align: center; font-size: 18px; color: #00ffff;">हर रोज़ एक नई कहानी, जो सीधा दिल से निकलेगी – AI Bhai की ज़ुबानी।</p>
+
+  <!-- आज की कहानी -->
+  <div class="story-section">
+    <h2 id="today-title">Loading...</h2>
+    <p id="today-story1">Loading...</p>
+    <p id="today-story2">Loading...</p>
+    <img src="images/dk_community_logo.png" alt="AI Bhai Image" />
+  </div>
+
+  <!-- कहानी #1 -->
+  <div class="story-section">
+    <h3 id="old-title1">Loading...</h3>
+    <p id="old-story1">Loading...</p>
+    <img src="images/dk_community_logo.png" alt="AI Bhai Image" />
+  </div>
+
+  <!-- कहानी #2 -->
+  <div class="story-section">
+    <h3 id="old-title2">Loading...</h3>
+    <p id="old-story2">Loading...</p>
+    <img src="images/dk_community_logo.png" alt="AI Bhai Image" />
+  </div>
+
+  <footer>
+    © 2025 Team Bhai × AI | Powered by Deepak Chauhan × Dk_community
+  </footer>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB....", // अपना key भरना
+      authDomain: "deepak-bhai-x-ai.firebaseapp.com",
+      databaseURL: "https://deepak-bhai-x-ai-default-rtdb.firebaseio.com",
+      projectId: "deepak-bhai-x-ai",
+      storageBucket: "deepak-bhai-x-ai.appspot.com",
+      messagingSenderId: "4915....",
+      appId: "1:4915...."
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const todayTitle = document.getElementById("today-title");
+    const todayStory1 = document.getElementById("today-story1");
+    const todayStory2 = document.getElementById("today-story2");
+    const oldTitle1 = document.getElementById("old-title1");
+    const oldStory1 = document.getElementById("old-story1");
+    const oldTitle2 = document.getElementById("old-title2");
+    const oldStory2 = document.getElementById("old-story2");
+
+    db.ref("kahaniyaan").once("value").then((snapshot) => {
+      const data = snapshot.val();
+      todayTitle.innerText = data.today.title;
+      todayStory1.innerText = data.today.story1;
+      todayStory2.innerText = data.today.story2;
+      oldTitle1.innerText = data.old1.title;
+      oldStory1.innerText = data.old1.story;
+      oldTitle2.innerText = data.old2.title;
+      oldStory2.innerText = data.old2.story;
+    });
+  </script>
+</body>
+</html>

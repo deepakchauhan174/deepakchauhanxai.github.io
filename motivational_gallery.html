@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motivational Gallery</title>
+  <style>
+    body {
+      background-color: #000000;
+      font-family: 'Segoe UI', sans-serif;
+      color: #00ffff;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #00ffff;
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+    .gallery-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .image-card {
+      background-color: #111;
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00ffff;
+      overflow: hidden;
+      max-width: 350px;
+      width: 100%;
+      text-align: center;
+    }
+    .image-card img {
+      width: 100%;
+      display: block;
+      border-bottom: 1px solid #00ffff;
+      cursor: pointer;
+    }
+    .caption {
+      padding: 10px 10px 0;
+      font-size: 16px;
+      color: #ffffff;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: space-around;
+      margin: 10px;
+    }
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .download {
+      background: #00ffff;
+      color: black;
+    }
+    .share {
+      background: #ffd700;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <h1>Motivational Image Gallery</h1>
+  <div class="gallery-box" id="Motivational_Images"></div>  <script>
+    let images = [];
+    let currentIndex = 0;
+
+    fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Motivational_Images.json")
+      .then(res => res.json())
+      .then(data => {
+        for (let key in data) {
+          images.push(data[key]);
+        }
+        renderImage();
+      });
+
+    function renderImage() {
+      const gallery = document.getElementById("Motivational_Images");
+      gallery.innerHTML = "";
+      const item = images[currentIndex];
+      const card = document.createElement("div");
+      card.className = "image-card";
+      card.innerHTML = `
+        <img src="${item.image}" alt="Motivational Image" onclick="nextImage()">
+        <div class="caption">${item.caption}</div>
+        <div class="btn-group">
+          <a href="${item.image}" download target="_blank" class="btn download">Download</a>
+          <button onclick="shareImage('${item.image}')" class="btn share">Share</button>
+        </div>
+      `;
+      gallery.appendChild(card);
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      renderImage();
+    }
+
+    function shareImage(url) {
+      if (navigator.share) {
+        navigator.share({
+          title: "AI Bhai × Deepak Chauhan",
+          text: "देखो ये ज़बरदस्त मोटिवेशनल इमेज!",
+          url: url,
+        });
+      } else {
+        alert("Sharing is not supported on this device.");
+      }
+    }
+
+    window.onpageshow = function(event) {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    };
+  </script></body>
+</html>

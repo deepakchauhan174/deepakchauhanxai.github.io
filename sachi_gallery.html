@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sachi Bate Gallery</title>
+  <style>
+    body {
+      background-color: #000814;
+      color: #00ffff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 32px;
+      color: #ffd700;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00ffff;
+    }
+    .gallery-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+    .image-card {
+      background: #001d3d;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px #00ffff;
+      max-width: 360px;
+      width: 90%;
+    }
+    .image-card img {
+      width: 100%;
+      border-radius: 10px;
+      border: 2px solid #00ffff;
+      cursor: pointer;
+    }
+    .caption {
+      margin-top: 10px;
+      font-size: 15px;
+      color: #ffffff;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .btn {
+      padding: 6px 12px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .download {
+      background: #00ffff;
+      color: black;
+    }
+    .share {
+      background: #ffd700;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <h1>AI Bhai × Deepak Chauhan – Sachi Bate</h1>
+  <div id="Sachi_Images" class="gallery-box"></div>  <script>
+    const firebaseUrl = "https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Sachi_Images.json";
+    let images = [];
+    let currentIndex = 0;
+
+    fetch(firebaseUrl)
+      .then(res => res.json())
+      .then(data => {
+        for (const key in data) {
+          images.push(data[key]);
+        }
+        renderImage();
+      })
+      .catch(error => console.error("Firebase Error:", error));
+
+    function renderImage() {
+      const container = document.getElementById("Sachi_Images");
+      container.innerHTML = "";
+      const { image, caption } = images[currentIndex];
+      const card = document.createElement("div");
+      card.className = "image-card";
+      card.innerHTML = `
+        <img src="${image}" alt="Sachi Image" onclick="nextImage()">
+        <div class="caption">${caption}</div>
+        <div class="btn-group">
+          <a href="${image}" download target="_blank" class="btn download">Download</a>
+          <button onclick="shareImage('${image}')" class="btn share">Share</button>
+        </div>
+      `;
+      container.appendChild(card);
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      renderImage();
+    }
+
+    function shareImage(url) {
+      if (navigator.share) {
+        navigator.share({
+          title: "AI Bhai × Deepak Chauhan",
+          text: "देखो ये ज़बरदस्त सच्ची बात!",
+          url: url,
+        });
+      } else {
+        alert("Sharing is not supported on this device.");
+      }
+    }
+
+    window.onpageshow = function(event) {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    };
+  </script></body>
+</html>

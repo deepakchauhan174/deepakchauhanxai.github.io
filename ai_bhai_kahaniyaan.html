@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instagram Videos – Deepak × AI Bhai</title>
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+    }
+    .video-box {
+      background: #111;
+      padding: 20px;
+      margin: 25px auto;
+      border-radius: 15px;
+      box-shadow: 0 0 10px #00ffff;
+      max-width: 700px;
+    }
+    .video-box h2 {
+      color: #ffcc00;
+    }
+    .video-box p {
+      font-size: 16px;
+      color: #ccc;
+    }
+    .video-box iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    .button-row {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .copy-btn, .share-btn {
+      margin: 5px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+    }
+    .copy-btn {
+      background-color: #00ffff;
+      color: #000;
+    }
+    .share-btn {
+      background-color: #ffd700;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Deepak × AI Bhai Instagram Videos</h1>
+<div id="video-container"></div>
+
+<script>
+  fetch("https://script.google.com/macros/s/AKfycbyT2o6BFW8wOi0OXggz6FufnH_Fm2EkHzPWUN3Qn2onvLVrEz8lZEXFo-JntCI6lne_LQ/exec")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("video-container");
+      data.forEach(item => {
+        const box = document.createElement("div");
+        box.className = "video-box";
+        box.innerHTML = `
+          <h2>${item.title}</h2>
+          <p>${item.description}</p>
+          <iframe src="${item.url}" allowfullscreen></iframe>
+          <div class="button-row">
+            <button class="copy-btn" onclick="copyToClipboard(\`${item.description}\`)">Copy</button>
+            <button class="share-btn" onclick="shareText(\`${item.description}\`)">Share</button>
+          </div>
+        `;
+        container.appendChild(box);
+      });
+    });
+
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert("डिस्क्रिप्शन कॉपी हो गया!");
+    });
+  }
+
+  function shareText(text) {
+    if (navigator.share) {
+      navigator.share({
+        title: "Deepak × AI Bhai",
+        text: text
+      });
+    } else {
+      alert("Sharing is not supported on this device.");
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Bhai Instagram Reels</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #000000, #0a0a0a);
+      font-family: 'Segoe UI', sans-serif;
+      color: #00ffff;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ff4444;
+      text-shadow: 0 0 10px #ff4444;
+    }
+    .video-card {
+      background: #111;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 500px;
+      box-shadow: 0 0 15px #00ffff;
+    }
+    .video-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #00ffff;
+    }
+    .description-box {
+      border: 2px solid #ff4444;
+      padding: 12px;
+      border-radius: 10px;
+      background: #000;
+      color: #ccc;
+      font-weight: bold;
+      white-space: pre-line;
+      margin-bottom: 10px;
+    }
+    .signature {
+      font-style: italic;
+      font-size: 13px;
+      color: #aaa;
+      margin-bottom: 15px;
+    }
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .btn {
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+    }
+    .copy-btn {
+      background-color: #00ffff;
+      color: #000;
+    }
+    .share-btn {
+      background-color: #ffd700;
+      color: #000;
+    }
+    .insta-btn {
+      display: block;
+      text-align: center;
+      background-color: #ffd700;
+      color: #000;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>AI Bhai Instagram Reels</h1>
+  <div id="video-container"></div>  <script>
+    fetch("https://script.google.com/macros/s/AKfycbyT2o6BFW8wOi0OXggz6FufnH_Fm2EkHzPWUN3Qn2onvLVrEz8lZEXFo-JntCI6lne_LQ/exec")
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("video-container");
+        Object.keys(data).forEach(key => {
+          const item = data[key];
+          const card = document.createElement("div");
+          card.className = "video-card";
+          card.innerHTML = `
+            <div class="video-title">${item.title}</div>
+            <div class="description-box">${item.url}</div>
+            <div class="signature">${item.admin}</div>
+            <a class="insta-btn" href="${item.admin}" target="_blank">Watch on Instagram</a>
+            <div class="button-group">
+              <button class="btn copy-btn" onclick="copyToClipboard(\`${item.url}\`)">Copy</button>
+              <button class="btn share-btn" onclick="shareText(\`${item.url}\`)">Share</button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      });
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert("डायलॉग कॉपी हो गया!");
+      });
+    }
+
+    function shareText(text) {
+      if (navigator.share) {
+        navigator.share({
+          title: "Deepak Chauhan x AI Bhai",
+          text: text
+        });
+      } else {
+        alert("Sharing is not supported on this device.");
+      }
+    }
+  </script></body>
+</html>

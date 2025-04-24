@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Success Story Gallery</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: gold;
+      text-shadow: 0 0 8px cyan;
+    }
+    .gallery-box {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      margin-top: 20px;
+      align-items: center;
+    }
+    .image-card {
+      background: #111;
+      border-radius: 16px;
+      padding: 15px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+      width: 90%;
+      max-width: 400px;
+    }
+    .image-card img {
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 8px #0ff;
+      cursor: pointer;
+    }
+    .caption {
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fffae3;
+      text-shadow: 0 0 3px #0ff;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .btn {
+      padding: 6px 12px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .download {
+      background: #00ffff;
+      color: black;
+    }
+    .share {
+      background: #ffd700;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <h1>Success Story Gallery</h1>
+  <div class="gallery-box" id="Success_Images"></div>  <script>
+    const firebaseURL = "https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Success_Images.json";
+    let images = [];
+    let currentIndex = 0;
+
+    fetch(firebaseURL)
+      .then(res => res.json())
+      .then(data => {
+        for (let key in data) {
+          images.push(data[key]);
+        }
+        renderImage();
+      })
+      .catch(err => console.error("Firebase Error:", err));
+
+    function renderImage() {
+      const container = document.getElementById("Success_Images");
+      container.innerHTML = "";
+      const item = images[currentIndex];
+      const card = document.createElement("div");
+      card.className = "image-card";
+      card.innerHTML = `
+        <img src="${item.image}" alt="Success Image" onclick="nextImage()">
+        <div class="caption">${item.caption}</div>
+        <div class="btn-group">
+          <a href="${item.image}" download target="_blank" class="btn download">Download</a>
+          <button onclick="shareImage('${item.image}')" class="btn share">Share</button>
+        </div>
+      `;
+      container.appendChild(card);
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      renderImage();
+    }
+
+    function shareImage(url) {
+      if (navigator.share) {
+        navigator.share({
+          title: "AI Bhai × Deepak Chauhan",
+          text: "देखो ये ज़बरदस्त मोटिवेशनल इमेज!",
+          url: url,
+        });
+      } else {
+        alert("Sharing is not supported on this device.");
+      }
+    }
+
+    window.onpageshow = function(event) {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    };
+  </script></body>
+</html>
