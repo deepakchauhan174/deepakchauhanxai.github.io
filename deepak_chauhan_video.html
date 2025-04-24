@@ -17,8 +17,7 @@
       Yeh Video Nahi, Zindagi Ka Jawab Hai.<br>  
       जब ज़ंदगी चुप हो जाए, तो ये वीडियो बोलेगा।  
     </p>  
-  </section>    
-  <section id="deepak-video-display" style="padding: 30px; text-align: center;">  
+  </section>    <section id="deepak-video-display" style="padding: 30px; text-align: center;">  
     <h2 style="color: #00ffff;">Deepak Chauhan – Motivational Videos</h2>  
     <div id="video-container" style="margin-top: 20px;"></div>  
   </section>    <!-- Comment and Share System -->    <section id="deepak-video-comments" style="padding: 30px; background-color: #0a0a0a; color: white; border-top: 2px solid #00ffff;">  
@@ -38,61 +37,116 @@
   Powered by <strong>Team Bhai × AI Dk_community</strong> | All comments are public & visible in real-time.  
 </p>
   </section>    
-  <script>
-  fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_videos.json")
-    .then(res => res.json())
-    .then(data => {
-      const container = document.getElementById("video-container");
-      if (!data) {
-        container.innerHTML = "<p style='color:white;'>No video found.</p>";
-        return;
-      }
-
-      Object.keys(data).forEach(key => {
-        const item = data[key];
-        const viewsRef = `https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_videos/${key}/views.json`;
-        fetch(viewsRef, {
-          method: "PUT",
-          body: JSON.stringify((item.views || 0) + 1)
-        });
-
-        const youtubeEmbedUrl = item.videoUrl;
-
-        const videoBlock = document.createElement("div");
-        videoBlock.innerHTML = `
-          <h3 style="color: #ffd700;">${item.title}</h3>
-          <iframe width="100%" height="315" src="${youtubeEmbedUrl}" ...
-            frameborder="0" allowfullscreen style="border-radius:12px; box-shadow: 0 0 15px #00ffff;"></iframe>
-          <p style="color: #ccc; margin-top: 10px;">${item.description}</p>
-          <p style="color: #00ffcc;">Views: <span id="view-${key}">${(item.views || 0) + 1}</span> 
-          | Likes: <span id="like-${key}">${item.likes || 0}</span></p>
-          <button onclick="likeVideo('${key}')" style="margin: 5px 0 30px; padding: 8px 20px; background: #ff4444; 
-            color: white; border: none; border-radius: 6px; cursor: pointer;">❤️ Like</button>
-          <hr style="margin: 30px 0; border-color: #00ffff;">
-        `;
-        container.appendChild(videoBlock);
-      });
-    });
-
-  function likeVideo(key) {
-    const likeRef = `https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_videos/${key}/likes.json`;
-    fetch(likeRef)
-      .then(res => res.json())
-      .then(likes => {
-        const newLikes = (likes || 0) + 1;
-        fetch(likeRef, {
-          method: "PUT",
-          body: JSON.stringify(newLikes)
-        }).then(() => {
-          document.getElementById(`like-${key}`).innerText = newLikes;
-        });
-      });
-  }
-
-  function getYouTubeId(url) {
-    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([^&?/]+)/);
-    return match ? match[1] : '';
-  }
-  </script>
+  
+  <script>  
+    const commentsPath = "https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/DeepakVideosComments.json";  
+    function shareLink() {  
+      const url = window.location.href;  
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(url)}`;  
+      window.open(whatsappUrl, '_blank');  
+    }  
+    function copyToClipboard() {  
+      const url = window.location.href;  
+      navigator.clipboard.writeText(url).then(() => alert("Link copied to clipboard!"));  
+    }  
+    function submitComment(event) {  
+      event.preventDefault();  
+      const name = document.getElementById("username").value.trim();  
+      const comment = document.getElementById("commentText").value.trim();  
+      if (name && comment) {  
+        const newComment = { name, comment, timestamp: new Date().toLocaleString() };  
+        fetch(commentsPath, { method: "POST", body: JSON.stringify(newComment) }).then(() => {  
+          document.getElementById("username").value = "";  
+          document.getElementById("commentText").value = "";  
+          loadComments();  
+        });  
+      }  
+    }  
+    function loadComments() {  
+      fetch(commentsPath)  
+        .then(res => res.json())  
+        .then(data => {  
+          const display = document.getElementById("commentsDisplay");  
+          display.innerHTML = "";  
+          if (data) {  
+            Object.values(data).reverse().forEach(comment => {  
+              const div = document.createElement("div");  
+              div.innerHTML = `<p><strong style='color:#00ffff;'>${comment.name}</strong>: ${comment.comment}</p><small style='color:#aaa;'>${comment.timestamp}</small><hr style='border-color:#00ffff;'>`;  
+              display.appendChild(div);  
+            });  
+          }  
+        });  
+    }  
+    window.onload = loadComments;  
+  </script>    <div class="glow-strip"></div>  
+  <style>  
+    .glow-strip {  
+      height: 5px;  
+      width: 100%;  
+      background: linear-gradient(90deg, #00ffcc, #00ffff, #00ccff, #00ffcc);  
+      background-size: 300% 100%;  
+      animation: moveGlow 4s linear infinite;  
+      box-shadow: 0 0 20px #00ffff, 0 0 40px #00ccff;  
+      border-radius: 10px;  
+      margin-top: 40px;  
+    }  
+    @keyframes moveGlow {  
+      0% { background-position: 0% 50%; }  
+      100% { background-position: 300% 50%; }  
+    }  
+  </style>    <footer style="padding: 20px; text-align: center; color: #ccc; font-size: 16px;">  
+    © 2025 Team Bhai × AI | All Rights Reserved - Dk_community  
+  </footer>   <script>  
+  fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_videos.json")  
+    .then(res => res.json())  
+    .then(data => {  
+      const container = document.getElementById("video-container");  
+      Object.entries(data).forEach(([key, item]) => {  
+        const viewsRef = `https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_videos/${key}/views.json`;  
+        fetch(viewsRef, {  
+          method: "PUT",  
+          body: JSON.stringify((item.views || 0) + 1)  
+        });  
+  
+        // Get YouTube video ID from full URL  
+        const youtubeId = getYouTubeId(item.videoUrl);  
+  
+        const videoBlock = document.createElement("div");  
+        videoBlock.innerHTML = `  
+          <h3 style="color: #ffd700;">${item.title}</h3>  
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/${youtubeId}"   
+            frameborder="0" allowfullscreen style="border-radius:12px; box-shadow: 0 0 15px #00ffff;"></iframe>  
+          <p style="color: #ccc; margin-top: 10px;">${item.description}</p>  
+          <p style="color: #00ffcc;">Views: <span id="view-${key}">${(item.views || 0) + 1}</span>   
+          | Likes: <span id="like-${key}">${item.likes || 0}</span></p>  
+          <button onclick="likeVideo('${key}')" style="margin: 5px 0 30px; padding: 8px 20px; background: #ff4444;   
+            color: white; border: none; border-radius: 6px; cursor: pointer;">❤️ Like</button>  
+          <hr style="margin: 30px 0; border-color: #00ffff;">  
+        `;  
+        container.appendChild(videoBlock);  
+      });  
+    });  
+  
+  function likeVideo(key) {  
+    const likeRef = `https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_videos/${key}/likes.json`;  
+    fetch(likeRef)  
+      .then(res => res.json())  
+      .then(likes => {  
+        const newLikes = (likes || 0) + 1;  
+        fetch(likeRef, {  
+          method: "PUT",  
+          body: JSON.stringify(newLikes)  
+        }).then(() => {  
+          document.getElementById(`like-${key}`).innerText = newLikes;  
+        });  
+      });  
+  }  
+  
+  // Function to extract YouTube Video ID from URL  
+  function getYouTubeId(url) {  
+  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([^&?/]+)/);  
+  return match ? match[1] : '';  
+  }  
+ </script>  
 </body>  
 </html>
