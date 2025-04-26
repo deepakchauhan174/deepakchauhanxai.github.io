@@ -3,96 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Floating Planets - AI Bhai × Deepak Chauhan</title>
+  <title>Floating Planets – Deepak Chauhan × AI Bhai</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      background: radial-gradient(ellipse at bottom, #050505 0%, #000000 100%);
-      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #000010, #001f3f);
       font-family: 'Segoe UI', sans-serif;
-      position: relative;
     }
-
     .planet {
       position: absolute;
       border-radius: 50%;
-      background: linear-gradient(45deg, #00ffff, #0044ff);
-      box-shadow: 0 0 30px #00ffff;
-      animation: floatPlanet 20s linear infinite;
+      opacity: 0.8;
+      animation: float 10s infinite alternate;
+      box-shadow: 0 0 20px #00ffff;
     }
-
-    .planet.small {
-      width: 40px;
-      height: 40px;
-      top: 20%;
-      left: 10%;
-      animation-duration: 25s;
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-30px) rotate(360deg); }
     }
-
-    .planet.medium {
-      width: 70px;
-      height: 70px;
-      top: 50%;
-      left: 70%;
-      animation-duration: 30s;
-    }
-
-    .planet.large {
-      width: 120px;
-      height: 120px;
-      top: 70%;
-      left: 30%;
-      animation-duration: 35s;
-    }
-
-    @keyframes floatPlanet {
-      0% {
-        transform: translateY(0) translateX(0);
-      }
-      50% {
-        transform: translateY(-50px) translateX(30px);
-      }
-      100% {
-        transform: translateY(0) translateX(0);
-      }
-    }
-
-    .title-text {
+    #text {
       position: absolute;
-      top: 40%;
+      top: 20px;
       width: 100%;
       text-align: center;
-      font-size: 28px;
       color: #00ffff;
-      text-shadow: 0 0 10px #00ffff;
+      font-size: 22px;
       font-weight: bold;
-      animation: glowTitle 2s ease-in-out infinite alternate;
-    }
-
-    @keyframes glowTitle {
-      from {
-        text-shadow: 0 0 5px #00ffff;
-      }
-      to {
-        text-shadow: 0 0 20px #00ffff, 0 0 30px #0044ff;
-      }
+      text-shadow: 0 0 10px #00ffff;
+      z-index: 1;
     }
   </style>
 </head>
-
 <body>
 
-<!-- Floating Planets Section Start -->
-<div class="planet small"></div>
-<div class="planet medium"></div>
-<div class="planet large"></div>
+<div id="text">Deepak × AI Bhai की Floating Planets Zone में आपका स्वागत है...</div>
 
-<div class="title-text">
-   Deepak Chauhan x AI Bhai की एक नई ब्रह्मांड यात्रा
-</div>
-<!-- Floating Planets Section End -->
+<script>
+const colors = ['#00ffff', '#ff00ff', '#00ff00', '#ffcc00', '#00ccff'];
+
+function createPlanet() {
+  const planet = document.createElement('div');
+  planet.className = 'planet';
+  planet.style.width = planet.style.height = Math.random() * 50 + 30 + 'px';
+  planet.style.background = colors[Math.floor(Math.random() * colors.length)];
+  planet.style.left = Math.random() * window.innerWidth + 'px';
+  planet.style.top = Math.random() * window.innerHeight + 'px';
+  document.body.appendChild(planet);
+}
+
+for (let i = 0; i < 15; i++) {
+  createPlanet();
+}
+</script>
 
 </body>
 </html>
