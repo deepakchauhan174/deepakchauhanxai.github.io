@@ -61,10 +61,34 @@
   </style>
 </head>
 <body>
-  <h1>Fire Dialogues – Part 2</h1>
-  <div id="dialogues-container"></div>
 
-  <script>
+<!-- Loader Start -->
+<div id="loader" style="
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: black;
+  color: #00ffff;
+  font-size: 22px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+  text-shadow: 0 0 10px #00ffff;">
+  Deepak Chauhan × AI Bhai के 🔥 Fire Dialogues Part 2 में आपका स्वागत है...
+</div>
+<!-- Loader End -->
+
+<h1>Fire Dialogues – Part 2</h1>
+<div id="dialogues-container"></div>
+
+<script>
   fetch("https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec")
     .then(res => res.json())
     .then(data => {
@@ -110,7 +134,7 @@
   function shareText(text) {
     if (navigator.share) {
       navigator.share({
-        title: "Deepak Chauhan x Ai Bhai",
+        title: "Deepak Chauhan x AI Bhai",
         text: text
       });
     } else {
@@ -123,6 +147,17 @@
       window.location.reload();
     }
   };
-  </script>
+</script>
+
+<!-- Loader Script -->
+<script>
+  window.addEventListener("load", function () {
+    const loader = document.getElementById("loader");
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 5000); // 5 second delay
+  });
+</script>
+
 </body>
 </html>
