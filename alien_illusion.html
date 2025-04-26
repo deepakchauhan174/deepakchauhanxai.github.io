@@ -1,59 +1,51 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Alien × Hypnotic Zone – AI Bhai</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alien Illusion World – Deepak Chauhan × AI Bhai</title>
   <style>
     body {
       margin: 0;
-      background: radial-gradient(ellipse at center, #000000 0%, #020202 100%);
-      overflow-x: hidden;
-      color: #00ffff;
+      background: linear-gradient(120deg, #000000, #0a1a2f);
+      overflow: hidden;
       font-family: 'Segoe UI', sans-serif;
     }
-    .glow-orb {
+    .illusion {
       position: absolute;
-      width: 120px;
-      height: 120px;
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      height: 200px;
+      margin: -100px 0 0 -100px;
+      background: repeating-conic-gradient(from 0deg, #00ffff 0deg 30deg, #000 30deg 60deg);
       border-radius: 50%;
-      background: radial-gradient(circle, #00ffff, #002233);
+      animation: spin 8s linear infinite, glow 2s ease-in-out infinite alternate;
       box-shadow: 0 0 30px #00ffff;
-      animation: float 6s ease-in-out infinite;
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-40px); }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
-    .center-message {
+    @keyframes glow {
+      from { box-shadow: 0 0 10px #00ffff; }
+      to { box-shadow: 0 0 40px #00ffff; }
+    }
+    .center-text {
+      position: absolute;
+      top: 10%;
+      width: 100%;
       text-align: center;
-      padding-top: 120px;
-      font-size: 28px;
-      font-weight: bold;
-      text-shadow: 0 0 15px #00ffff;
-    }
-    .illusion-strip {
-      height: 280px;
-      margin-top: 60px;
-      background: repeating-linear-gradient(45deg, #0ff, #0ff 2px, #000 2px, #000 4px);
-      animation: illusionMove 3s linear infinite;
-    }
-    @keyframes illusionMove {
-      0% { background-position: 0 0; }
-      100% { background-position: 400px 0; }
+      color: #00ffcc;
+      font-size: 24px;
+      text-shadow: 0 0 10px #00ffff;
     }
   </style>
 </head>
 <body>
-  <div class="center-message">
-    आप एक AI-भाई द्वारा बनाए गए<br> *भ्रम और एलियन की दुनिया* में हैं...
-  </div>
 
-  <div class="illusion-strip"></div>
+<div class="center-text">Deepak Chauhan × AI Bhai की Alien Illusion World में स्वागत है...</div>
+<div class="illusion"></div>
 
-  <!-- Floating orbs -->
-  <div class="glow-orb" style="top: 80px; left: 20%; animation-delay: 0s;"></div>
-  <div class="glow-orb" style="top: 200px; right: 15%; animation-delay: 2s;"></div>
-  <div class="glow-orb" style="top: 320px; left: 40%; animation-delay: 4s;"></div>
 </body>
 </html>
