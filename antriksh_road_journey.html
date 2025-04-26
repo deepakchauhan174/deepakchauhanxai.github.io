@@ -1,77 +1,58 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Antriksh Road – AI Bhai World</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final Message – Deepak Chauhan × AI Bhai</title>
   <style>
     body {
+      background: black;
       margin: 0;
-      background: linear-gradient(#000000, #0a0a0a);
-      overflow-x: hidden;
-      overflow-y: auto;
       height: 100vh;
-      font-family: 'Segoe UI', sans-serif;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: start;
-      padding: 50px 20px;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
     }
-
-    .road {
-      position: relative;
-      width: 8px;
-      height: 2000px;
-      background: repeating-linear-gradient(
-        to bottom,
-        #00ffff 0px,
-        #00ffff 20px,
-        transparent 20px,
-        transparent 40px
-      );
-      box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
-      animation: moveRoad 5s linear infinite;
-    }
-
-    @keyframes moveRoad {
-      0% { background-position: 0 0; }
-      100% { background-position: 0 40px; }
-    }
-
-    .glow-circle {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      background: radial-gradient(circle, #ff00ff, transparent);
-      border-radius: 50%;
-      top: -50px;
-      left: -11px;
-      animation: moveGlow 5s linear infinite;
-    }
-
-    @keyframes moveGlow {
-      0% { top: -50px; }
-      100% { top: 2050px; }
-    }
-
-    h1 {
-      font-size: 28px;
-      color: #00ffff;
+    .typing-box {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 30px #00ffff;
       text-align: center;
-      margin-bottom: 50px;
-      text-shadow: 0 0 10px #00ffff;
+      max-width: 600px;
+      animation: glow 1.5s infinite alternate;
     }
-
+    @keyframes glow {
+      from { box-shadow: 0 0 20px #00ffff; }
+      to { box-shadow: 0 0 40px #00ffff; }
+    }
+    .typing-text {
+      font-size: 22px;
+      color: #00ffff;
+      text-shadow: 0 0 5px #00ffff;
+    }
   </style>
 </head>
 <body>
 
-<h1>AI Bhai × Deepak Chauhan की अनोखी अंतरिक्ष यात्रा</h1>
-
-<div class="road">
-  <div class="glow-circle"></div>
+<div class="typing-box">
+  <p class="typing-text" id="typing-text"></p>
 </div>
+
+<script>
+const text = "यह सिर्फ AI Bhai का 1% नमूना था... पूरी दुनिया देखना अभी बाकी है! 🚀🌌";
+let index = 0;
+function typeEffect() {
+  if (index < text.length) {
+    document.getElementById("typing-text").innerHTML += text.charAt(index);
+    index++;
+    setTimeout(typeEffect, 100);
+  }
+}
+window.onload = typeEffect;
+</script>
 
 </body>
 </html>
