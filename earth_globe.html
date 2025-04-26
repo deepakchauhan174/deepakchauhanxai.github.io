@@ -2,98 +2,58 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <title>🌍 AI Bhai × Deepak Chauhan Globe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Earth Globe – Deepak Chauhan × AI Bhai</title>
   <style>
     body {
       margin: 0;
-      background-color: black;
       overflow: hidden;
-      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #000000, #0a0a0a);
+      font-family: 'Segoe UI', sans-serif;
     }
-    h1 {
-      text-align: center;
-      color: #00ffff;
-      text-shadow: 0 0 10px #00ffff;
-      margin: 20px 0;
-    }
-    #globeViz {
-      width: 100vw;
-      height: 90vh;
+    #globe-container {
+      width: 100%;
+      height: 100vh;
     }
   </style>
 </head>
 <body>
-  <h1>🌍 Deepak Chauhan × AI Bhai की दुनिया में आपका स्वागत है 🌍</h1>
-  <div id="globeViz"></div>
 
-  <!-- Required Libraries -->
-  <script src="https://unpkg.com/three@0.150.1/build/three.min.js"></script>
-  <script src="https://unpkg.com/three-globe@2.24.11/dist/three-globe.min.js"></script>
-  <script src="https://unpkg.com/three@0.150.1/examples/js/controls/OrbitControls.min.js"></script>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="https://unpkg.com/topojson@3"></script>
+<div id="globe-container"></div>
 
-  <script>
-    // Initialize scene, camera, renderer
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera();
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    camera.position.z = 300;
+<!-- Three.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- Globe texture -->
+<script>
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.getElementById('globe-container').appendChild(renderer.domElement);
 
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById('globeViz').appendChild(renderer.domElement);
+// Create Earth Sphere
+const geometry = new THREE.SphereGeometry(2, 64, 64);
+const texture = new THREE.TextureLoader().load('https://upload.wikimedia.org/wikipedia/commons/8/83/Earthmap1000x500compac.jpg');
+const material = new THREE.MeshBasicMaterial({ map: texture });
+const earth = new THREE.Mesh(geometry, material);
+scene.add(earth);
 
-    // Add lighting
-    scene.add(new THREE.AmbientLight(0xbbbbbb));
-    scene.add(new THREE.DirectionalLight(0xffffff, 0.6));
+camera.position.z = 5;
 
-    // Initialize Globe
-    const globe = new ThreeGlobe()
-      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
-      .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
-      .showAtmosphere(true)
-      .atmosphereColor('#00ffff')
-      .atmosphereAltitude(0.25);
+function animate() {
+  requestAnimationFrame(animate);
+  earth.rotation.y += 0.0015;
+  renderer.render(scene, camera);
+}
+animate();
 
-    scene.add(globe);
+// Handle resize
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
 
-    // Add OrbitControls
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.enableZoom = true;
-    controls.enableRotate = true;
-
-    // Load country data and add labels
-    fetch('https://unpkg.com/world-atlas@2/countries-110m.json')
-      .then(res => res.json())
-      .then(worldData => {
-        const countries = topojson.feature(worldData, worldData.objects.countries).features;
-        globe
-          .labelsData(countries)
-          .labelLat(d => d3.geoCentroid(d)[1])
-          .labelLng(d => d3.geoCentroid(d)[0])
-          .labelText(d => d.properties.name)
-          .labelSize(1.2)
-          .labelColor(() => '#ffffff')
-          .labelDotRadius(0.4);
-      });
-
-    // Animate
-    function animate() {
-      requestAnimationFrame(animate);
-      globe.rotation.y += 0.001;
-      controls.update();
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-  </script>
 </body>
 </html>
