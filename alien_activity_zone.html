@@ -1,88 +1,53 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alien Activity – AI Bhai World</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alien Activity Zone – Deepak Chauhan × AI Bhai</title>
   <style>
     body {
       margin: 0;
-      background: radial-gradient(circle at center, #0a0a0a, #000000);
+      background: radial-gradient(#0a0a0a, #000000);
       overflow: hidden;
       font-family: 'Segoe UI', sans-serif;
-      position: relative;
-      height: 100vh;
     }
-
-    .alien {
+    .activity {
       position: absolute;
-      width: 60px;
-      height: 80px;
-      background: linear-gradient(#00ff99, #00ccff);
-      border-radius: 30% 30% 50% 50%;
-      box-shadow: 0 0 15px #00ffcc, 0 0 25px #00ffcc;
-      animation: moveAlien 8s infinite alternate ease-in-out;
-    }
-
-    .alien::before {
-      content: '';
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background: #fff;
+      width: 50px;
+      height: 50px;
+      background: #00ffff;
       border-radius: 50%;
-      top: 15px;
-      left: 12px;
-      box-shadow: 20px 0 #fff;
+      animation: float 4s infinite ease-in-out alternate;
+      box-shadow: 0 0 20px #00ffff;
     }
+    .activity:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+    .activity:nth-child(2) { top: 30%; left: 50%; animation-delay: 1s; }
+    .activity:nth-child(3) { top: 60%; left: 70%; animation-delay: 2s; }
+    .activity:nth-child(4) { top: 80%; left: 30%; animation-delay: 3s; }
 
-    @keyframes moveAlien {
-      0% {
-        top: 20%;
-        left: 10%;
-        transform: rotate(0deg);
-      }
-      25% {
-        top: 40%;
-        left: 70%;
-        transform: rotate(20deg);
-      }
-      50% {
-        top: 70%;
-        left: 30%;
-        transform: rotate(-20deg);
-      }
-      75% {
-        top: 30%;
-        left: 50%;
-        transform: rotate(10deg);
-      }
-      100% {
-        top: 60%;
-        left: 80%;
-        transform: rotate(0deg);
-      }
+    @keyframes float {
+      0% { transform: translateY(0px) scale(1); }
+      100% { transform: translateY(-20px) scale(1.2); }
     }
-
-    h1 {
+    .heading {
+      position: absolute;
+      top: 20px;
+      width: 100%;
       text-align: center;
       color: #00ffff;
       font-size: 26px;
-      margin-top: 20px;
       text-shadow: 0 0 10px #00ffff;
-      position: absolute;
-      top: 10px;
-      width: 100%;
     }
   </style>
 </head>
 <body>
 
-<h1>Alien Activity Zone – Deepak Chauhan × AI Bhai</h1>
+<div class="heading">Deepak Chauhan × AI Bhai की Alien Activity Zone</div>
 
-<div class="alien"></div>
-<div class="alien" style="animation-delay: 2s;"></div>
-<div class="alien" style="animation-delay: 4s;"></div>
+<div class="activity"></div>
+<div class="activity"></div>
+<div class="activity"></div>
+<div class="activity"></div>
 
 </body>
 </html>
