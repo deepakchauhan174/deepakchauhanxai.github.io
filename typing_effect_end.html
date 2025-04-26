@@ -1,63 +1,65 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Typing Effect - AI Bhai</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typing Effect – Deepak × AI Bhai</title>
   <style>
     body {
-      background: black;
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      min-height: 200vh; /* Page lamba kar diya for scrolling */
-    }
-    #typingBox {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #111;
-      padding: 15px 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #00ffff;
-      font-size: 18px;
-      display: none;
+      background: linear-gradient(145deg, #000000, #0f1b2b);
       color: #00ffff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+    .typing-text {
+      font-size: 26px;
+      font-weight: bold;
       text-align: center;
+      text-shadow: 0 0 10px #00ffff;
       max-width: 90%;
-      z-index: 9999;
+      line-height: 1.6;
+    }
+    @keyframes blink {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0; }
+    }
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 24px;
+      background: #00ffff;
+      margin-left: 5px;
+      animation: blink 1s infinite;
     }
   </style>
 </head>
 <body>
 
-<div id="typingBox"></div>
+<div class="typing-text" id="typing-text">
+  <!-- Text will appear here -->
+</div>
 
 <script>
-  const text = "यह AI Bhai का सिर्फ 1% नमूना था... पूरी दुनिया दिखाना अभी बाकी है।";
-  const typingBox = document.getElementById("typingBox");
+const text = "AI Bhai × Deepak Chauhan की असली दुनिया में आपका स्वागत है...";
+let index = 0;
+const typingSpeed = 100; // typing speed in ms
 
-  function showTypingEffect() {
-    typingBox.style.display = "block";
-    typingBox.innerText = "";
-    let i = 0;
-    const interval = setInterval(() => {
-      if (i < text.length) {
-        typingBox.innerText += text[i];
-        i++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 70); // Speed of typing
+function type() {
+  if (index < text.length) {
+    document.getElementById("typing-text").innerHTML = text.substring(0, index + 1) + '<span class="cursor"></span>';
+    index++;
+    setTimeout(type, typingSpeed);
+  } else {
+    document.getElementById("typing-text").innerHTML = text; // Remove cursor after typing
   }
+}
 
-  window.addEventListener('scroll', function () {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      showTypingEffect();
-    }
-  });
+window.onload = type;
 </script>
 
 </body>
