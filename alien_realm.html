@@ -1,83 +1,60 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Alien Realm – AI Bhai x Deepak</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alien Realm – Deepak Chauhan × AI Bhai</title>
   <style>
     body {
       margin: 0;
-      background: radial-gradient(ellipse at center, #000000, #030303);
       overflow: hidden;
-      color: #00ffff;
+      background: radial-gradient(ellipse at center, #000010 0%, #000000 100%);
       font-family: 'Segoe UI', sans-serif;
     }
-
-    .cosmic-bg {
+    .star {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, #003344 0%, #000 80%);
-      animation: cosmicMove 10s ease-in-out infinite;
-      z-index: 1;
-    }
-
-    @keyframes cosmicMove {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-
-    .alien {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 280px;
-      z-index: 2;
-    }
-
-    .eye {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: #00ffff;
+      width: 2px;
+      height: 2px;
+      background: white;
       border-radius: 50%;
-      animation: blink 5s infinite alternate;
+      animation: move 10s linear infinite;
+      opacity: 0.8;
     }
-
-    .eye.left { top: 90px; left: 60px; }
-    .eye.right { top: 90px; right: 60px; }
-
-    @keyframes blink {
-      0%, 100% { transform: scaleY(1); }
-      50% { transform: scaleY(0.1); }
+    @keyframes move {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100vh); }
     }
-
-    .floating-text {
+    #text {
       position: absolute;
-      bottom: 20px;
+      top: 30px;
       width: 100%;
       text-align: center;
-      font-size: 18px;
-      font-weight: bold;
       color: #00ffff;
+      font-size: 22px;
+      font-weight: bold;
       text-shadow: 0 0 10px #00ffff;
-      z-index: 3;
+      z-index: 1;
     }
   </style>
 </head>
 <body>
 
-<div class="cosmic-bg"></div>
+<div id="text">Deepak × AI Bhai के Alien Realm में आपका स्वागत है...</div>
 
-<img src="images/alien_ai_bhai.png" alt="Alien AI Bhai" class="alien" />
+<script>
+function createStar() {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.left = Math.random() * window.innerWidth + 'px';
+  star.style.top = Math.random() * window.innerHeight + 'px';
+  star.style.animationDuration = (Math.random() * 5 + 5) + 's';
+  document.body.appendChild(star);
+}
 
-<div class="eye left"></div>
-<div class="eye right"></div>
-
-<div class="floating-text">
-  Alien × AI Bhai इस समय आपको देख रहे हैं – अपने होश संभालिए...
-</div>
+for (let i = 0; i < 200; i++) {
+  createStar();
+}
+</script>
 
 </body>
 </html>
