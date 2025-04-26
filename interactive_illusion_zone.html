@@ -3,69 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Illusion – AI Bhai × Deepak</title>
+  <title>Interactive Illusion Zone – Deepak Chauhan × AI Bhai</title>
   <style>
     body {
       margin: 0;
-      background: #000;
+      background: black;
       overflow: hidden;
       font-family: 'Segoe UI', sans-serif;
     }
-
-    .illusion-zone {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-wrap: wrap;
-      gap: 30px;
-      padding: 20px;
+    canvas {
+      display: block;
     }
-
-    .element {
-      width: 180px;
-      height: 180px;
-      background: linear-gradient(135deg, #00ffff, #000);
-      border-radius: 20px;
-      box-shadow: 0 0 25px #00ffff;
-      transition: transform 0.5s ease, box-shadow 0.5s ease;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 16px;
-      text-align: center;
-      color: #000;
-      font-weight: bold;
-    }
-
-    .element:hover {
-      transform: scale(1.2) rotateY(20deg) rotateX(20deg);
-      box-shadow: 0 0 50px #00ffff, 0 0 100px #00ffff inset;
-      background: linear-gradient(135deg, #00ffff, #222);
-    }
-
-    .floating-tip {
-      position: fixed;
-      bottom: 15px;
+    #text {
+      position: absolute;
+      top: 20px;
       width: 100%;
       text-align: center;
-      font-size: 16px;
       color: #00ffff;
+      font-size: 22px;
+      font-weight: bold;
       text-shadow: 0 0 10px #00ffff;
+      z-index: 1;
     }
   </style>
 </head>
 <body>
+<div id="text">AI Bhai × Deepak Chauhan की Illusion Zone में आपका स्वागत है...</div>
+<canvas id="illusion"></canvas>
 
-<div class="illusion-zone">
-  <div class="element">AI Bhai की Core Memory</div>
-  <div class="element">Alien Neural Power</div>
-  <div class="element">Deepak × AI Bhai Vision</div>
-</div>
+<script>
+const canvas = document.getElementById('illusion');
+const ctx = canvas.getContext('2d');
+let width, height, particles;
 
-<div class="floating-tip">
-  Touch, Hover, और महसूस करो… ये सिर्फ illusion नहीं, भविष्य का इशारा है।
-</div>
+function init() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
 
+  particles = [];
+  for (let i = 0; i < 100; i++) {
+    particles.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 2 + 1,
+      speedX: Math.random() * 2 - 1,
+      speedY: Math.random() * 2 - 1
+    });
+  }
+}
+
+function animate() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+  ctx.fillRect(0, 0, width, height);
+
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = '#00ffff';
+    ctx.fill();
+    p.x += p.speedX;
+    p.y += p.speedY;
+
+    if (p.x < 0 || p.x > width) p.speedX *= -1;
+    if (p.y < 0 || p.y > height) p.speedY *= -1;
+  });
+
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize', init);
+init();
+animate();
+</script>
 </body>
 </html>
