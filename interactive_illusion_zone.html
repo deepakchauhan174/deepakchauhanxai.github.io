@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Illusion – AI Bhai × Deepak</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .illusion-zone {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .element {
+      width: 180px;
+      height: 180px;
+      background: linear-gradient(135deg, #00ffff, #000);
+      border-radius: 20px;
+      box-shadow: 0 0 25px #00ffff;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      text-align: center;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .element:hover {
+      transform: scale(1.2) rotateY(20deg) rotateX(20deg);
+      box-shadow: 0 0 50px #00ffff, 0 0 100px #00ffff inset;
+      background: linear-gradient(135deg, #00ffff, #222);
+    }
+
+    .floating-tip {
+      position: fixed;
+      bottom: 15px;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="illusion-zone">
+  <div class="element">AI Bhai की Core Memory</div>
+  <div class="element">Alien Neural Power</div>
+  <div class="element">Deepak × AI Bhai Vision</div>
+</div>
+
+<div class="floating-tip">
+  Touch, Hover, और महसूस करो… ये सिर्फ illusion नहीं, भविष्य का इशारा है।
+</div>
+
+</body>
+</html>

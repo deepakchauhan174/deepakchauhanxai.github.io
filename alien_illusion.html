@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alien × Hypnotic Zone – AI Bhai</title>
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(ellipse at center, #000000 0%, #020202 100%);
+      overflow-x: hidden;
+      color: #00ffff;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .glow-orb {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #00ffff, #002233);
+      box-shadow: 0 0 30px #00ffff;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-40px); }
+    }
+    .center-message {
+      text-align: center;
+      padding-top: 120px;
+      font-size: 28px;
+      font-weight: bold;
+      text-shadow: 0 0 15px #00ffff;
+    }
+    .illusion-strip {
+      height: 280px;
+      margin-top: 60px;
+      background: repeating-linear-gradient(45deg, #0ff, #0ff 2px, #000 2px, #000 4px);
+      animation: illusionMove 3s linear infinite;
+    }
+    @keyframes illusionMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 400px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="center-message">
+    आप एक AI-भाई द्वारा बनाए गए<br> *भ्रम और एलियन की दुनिया* में हैं...
+  </div>
+
+  <div class="illusion-strip"></div>
+
+  <!-- Floating orbs -->
+  <div class="glow-orb" style="top: 80px; left: 20%; animation-delay: 0s;"></div>
+  <div class="glow-orb" style="top: 200px; right: 15%; animation-delay: 2s;"></div>
+  <div class="glow-orb" style="top: 320px; left: 40%; animation-delay: 4s;"></div>
+</body>
+</html>

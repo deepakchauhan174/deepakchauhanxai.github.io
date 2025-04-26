@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alien Touch Panel – AI Bhai World</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #000000, #1a1a1a);
+      overflow-x: hidden;
+      overflow-y: auto;
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .symbol {
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, #00ffff 30%, #003344 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      color: black;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .symbol:hover {
+      transform: scale(1.2);
+      background: radial-gradient(circle, #ff00ff 30%, #330033 70%);
+      box-shadow: 0 0 30px #ff00ff, 0 0 60px #ff00ff;
+      color: white;
+    }
+
+    .symbol:active::after {
+      content: "✨";
+      position: absolute;
+      font-size: 40px;
+      color: #fff;
+      top: -10px;
+      right: -10px;
+      animation: sparkle 0.5s ease-out forwards;
+    }
+
+    @keyframes sparkle {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(2); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="symbol">A</div>
+<div class="symbol">I</div>
+<div class="symbol">B</div>
+<div class="symbol">X</div>
+<div class="symbol">D</div>
+<div class="symbol">C</div>
+
+</body>
+</html>

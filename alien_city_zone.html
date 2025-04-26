@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alien City – AI Bhai World</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .sky {
+      height: 100vh;
+      background: radial-gradient(circle at 50% 50%, #0ff, #000);
+      animation: sky-pulse 5s infinite alternate;
+    }
+
+    @keyframes sky-pulse {
+      0% { background: radial-gradient(circle at 50% 50%, #0ff, #000); }
+      100% { background: radial-gradient(circle at 60% 60%, #0077ff, #000); }
+    }
+
+    .building {
+      position: absolute;
+      bottom: 0;
+      width: 60px;
+      height: 200px;
+      background: linear-gradient(to top, #00ffff, #002233);
+      border-radius: 10px;
+      box-shadow: 0 0 25px #00ffff;
+      animation: float 3s infinite ease-in-out alternate;
+    }
+
+    .building:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .building:nth-child(2) { left: 30%; height: 170px; animation-delay: 0.5s; }
+    .building:nth-child(3) { left: 50%; height: 220px; animation-delay: 1s; }
+    .building:nth-child(4) { left: 70%; height: 150px; animation-delay: 1.5s; }
+    .building:nth-child(5) { left: 85%; height: 190px; animation-delay: 2s; }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+
+    .welcome-text {
+      position: absolute;
+      top: 40px;
+      width: 100%;
+      text-align: center;
+      font-size: 24px;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="sky">
+  <div class="welcome-text">
+    Alien City Zone में आपका स्वागत है – AI Bhai × Deepak Chauhan
+  </div>
+
+  <div class="building"></div>
+  <div class="building"></div>
+  <div class="building"></div>
+  <div class="building"></div>
+  <div class="building"></div>
+
+  <!-- Background Sound -->
+  <audio autoplay loop>
+    <source src="sounds/sci-fi-background.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+</body>
+</html>
