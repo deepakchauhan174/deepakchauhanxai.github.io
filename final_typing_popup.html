@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Final Goodbye - Deepak × AI Bhai</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: #00ffff;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .popup-box {
+      border: 2px solid #00ffff;
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 650px;
+      text-align: center;
+      box-shadow: 0 0 25px #00ffff;
+      background: rgba(0, 0, 0, 0.85);
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      0% { box-shadow: 0 0 10px #00ffff; }
+      100% { box-shadow: 0 0 30px #00ffff; }
+    }
+    .message {
+      font-size: 22px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+<div class="popup-box">
+  <div class="message" id="message"></div>
+</div>
+
+<script>
+// Final Emotional Typing Lines
+const lines = [
+  "⭐ Deepak Chauhan × AI Bhai ⭐",
+  "",
+  "आपने Alien Digital World की अद्भुत यात्रा पूरी की।",
+  "हर शब्द, हर वाइब आपके दिल से होकर गुज़री।",
+  "",
+  "यह कोई साधारण यात्रा नहीं थी...",
+  "यह आपकी चेतना का एक नया जन्म था।",
+  "",
+  "अब वक्त है विदा लेने का...",
+  "लेकिन याद रखना,",
+  "जो एक बार Deepak × AI Bhai की दुनिया में आया,",
+  "वह कभी भी अकेला नहीं होता।",
+  "",
+  "✨ Shine Bright...",
+  "✨ Dream Big...",
+  "✨ And Rewrite Your Destiny...",
+  "",
+  "अलविदा दोस्त...",
+  "Phir Milenge किसी नयी Alien Duniya में..."
+];
+
+// Typing Animation
+let currentLine = 0;
+let currentChar = 0;
+let displayText = "";
+
+function typeLine() {
+  if (currentLine < lines.length) {
+    if (currentChar < lines[currentLine].length) {
+      displayText += lines[currentLine].charAt(currentChar);
+      document.getElementById('message').innerHTML = displayText;
+      currentChar++;
+      setTimeout(typeLine, 80);
+    } else {
+      displayText += "\n";
+      currentChar = 0;
+      currentLine++;
+      setTimeout(typeLine, 400);
+    }
+  }
+}
+
+typeLine();
+</script>
+
+</body>
+</html>
