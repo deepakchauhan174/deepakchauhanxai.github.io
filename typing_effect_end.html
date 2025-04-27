@@ -1,65 +1,197 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Typing Effect – Deepak × AI Bhai</title>
-  <style>
-    body {
-      background: linear-gradient(145deg, #000000, #0f1b2b);
-      color: #00ffff;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      overflow: hidden;
-    }
-    .typing-text {
-      font-size: 26px;
-      font-weight: bold;
-      text-align: center;
-      text-shadow: 0 0 10px #00ffff;
-      max-width: 90%;
-      line-height: 1.6;
-    }
-    @keyframes blink {
-      0%, 50%, 100% { opacity: 1; }
-      25%, 75% { opacity: 0; }
-    }
-    .cursor {
-      display: inline-block;
-      width: 10px;
-      height: 24px;
-      background: #00ffff;
-      margin-left: 5px;
-      animation: blink 1s infinite;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepak Chauhan × AI Bhai - Alien 3D World</title>
+    <style>
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            background: black; 
+            font-family: 'Courier New', monospace;
+        }
+        canvas { 
+            width: 100%; 
+            height: 100%; 
+            display: block;
+        }
+        #typing-text {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            color: #00ffff;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00ffff;
+            z-index: 10;
+            user-select: none;
+        }
+        #info {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: #ffffff;
+            font-size: 16px;
+            z-index: 5;
+            opacity: 0.6;
+        }
+    </style>
 </head>
 <body>
 
-<div class="typing-text" id="typing-text">
-  <!-- Text will appear here -->
-</div>
+<div id="typing-text"></div> 
+<div id="info">Scroll to zoom • Drag to rotate</div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-const text = "AI Bhai × Deepak Chauhan की असली दुनिया में आपका स्वागत है...";
-let index = 0;
-const typingSpeed = 100; // typing speed in ms
+    let scene, camera, renderer, words = [];
+    let mouseX = 0, mouseY = 0;
+    let targetX = 0, targetY = 0;
+    let windowHalfX = window.innerWidth / 2;
+    let windowHalfY = window.innerHeight / 2;
+    let cameraDistance = 1000;
 
-function type() {
-  if (index < text.length) {
-    document.getElementById("typing-text").innerHTML = text.substring(0, index + 1) + '<span class="cursor"></span>';
-    index++;
-    setTimeout(type, typingSpeed);
-  } else {
-    document.getElementById("typing-text").innerHTML = text; // Remove cursor after typing
-  }
-}
+    const wordList = [
+        "DeepSeek", "Alien", "Magic", "Quantum", 
+        "Future", "Technology", "Dream", "Explore", 
+        "Deepak Chauhan", "AI Bhai"
+    ];
 
-window.onload = type;
+    init();
+    animate();
+
+    function init() {
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x000000);
+
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 1, 5000);
+        camera.position.z = cameraDistance;
+
+        renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        const ambientLight = new THREE.AmbientLight(0x555555);
+        scene.add(ambientLight);
+
+        const pointLight = new THREE.PointLight(0x00ffff, 1, 1500);
+        pointLight.position.set(0, 0, 500);
+        scene.add(pointLight);
+
+        createWordCloud();
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('wheel', onMouseWheel);
+        window.addEventListener('resize', onWindowResize);
+    }
+
+    function createWordCloud() {
+        const loader = new THREE.FontLoader();
+        loader.load('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/fonts/helvetiker_regular.typeface.json', function(font) {
+            wordList.forEach((word, index) => {
+                const geometry = new THREE.TextGeometry(word, {
+                    font: font,
+                    size: 40,
+                    height: 15,
+                    curveSegments: 10,
+                    bevelEnabled: true,
+                    bevelThickness: 2,
+                    bevelSize: 1,
+                    bevelSegments: 5
+                });
+
+                const material = new THREE.MeshPhongMaterial({
+                    color: 0x00ffff,
+                    emissive: 0x00ffff,
+                    emissiveIntensity: 0.6,
+                    shininess: 100
+                });
+
+                const mesh = new THREE.Mesh(geometry, material);
+
+                const phi = Math.acos(-1 + (2 * index) / wordList.length);
+                const theta = Math.sqrt(wordList.length * Math.PI) * phi;
+
+                mesh.position.setFromSphericalCoords(300, phi, theta);
+                mesh.lookAt(scene.position);
+
+                scene.add(mesh);
+                words.push(mesh);
+            });
+        });
+    }
+
+    function onMouseMove(event) {
+        mouseX = (event.clientX - windowHalfX) * 0.05;
+        mouseY = (event.clientY - windowHalfY) * 0.05;
+    }
+
+    function onMouseWheel(event) {
+        cameraDistance += event.deltaY * 0.5;
+        cameraDistance = THREE.MathUtils.clamp(cameraDistance, 500, 2000);
+    }
+
+    function onWindowResize() {
+        windowHalfX = window.innerWidth / 2;
+        windowHalfY = window.innerHeight / 2;
+
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+
+        targetX = mouseX * 0.001;
+        targetY = mouseY * 0.001;
+
+        camera.position.x += (targetX - camera.position.x) * 0.05;
+        camera.position.y += (-targetY - camera.position.y) * 0.05;
+        camera.position.z = cameraDistance;
+
+        camera.lookAt(scene.position);
+
+        words.forEach(word => {
+            word.rotation.x += 0.01;
+            word.rotation.y += 0.02;
+        });
+
+        renderer.render(scene, camera);
+    }
+
+    // ----------- Typing Animation Deepak Chauhan × AI Bhai --------------
+    const welcomeMessage = [
+        "Deepak Chauhan × AI Bhai की Digital Alien Duniya में आपका स्वागत है...",
+        "Scroll करते जाओ... Alien Magic में खोते जाओ...",
+        "हर Scroll पे एक नई दुनिया का दरवाजा खुलेगा...",
+        "AI Bhai के साथ DeepSeek Alien यात्रा का आनंद लें..."
+    ];
+
+    let currentText = "";
+    let index = 0;
+    let messageIndex = 0;
+
+    function typeEffect() {
+        if (index < welcomeMessage[messageIndex].length) {
+            currentText += welcomeMessage[messageIndex].charAt(index);
+            document.getElementById("typing-text").innerHTML = currentText;
+            index++;
+            setTimeout(typeEffect, 100); // Typing speed
+        } else {
+            setTimeout(() => {
+                currentText = "";
+                index = 0;
+                messageIndex = (messageIndex + 1) % welcomeMessage.length;
+                typeEffect();
+            }, 2500); // Pause between messages
+        }
+    }
+
+    typeEffect();
 </script>
 
 </body>
