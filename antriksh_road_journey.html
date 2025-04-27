@@ -1,58 +1,124 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Final Message – Deepak Chauhan × AI Bhai</title>
-  <style>
-    body {
-      background: black;
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
-    }
-    .typing-box {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 30px #00ffff;
-      text-align: center;
-      max-width: 600px;
-      animation: glow 1.5s infinite alternate;
-    }
-    @keyframes glow {
-      from { box-shadow: 0 0 20px #00ffff; }
-      to { box-shadow: 0 0 40px #00ffff; }
-    }
-    .typing-text {
-      font-size: 22px;
-      color: #00ffff;
-      text-shadow: 0 0 5px #00ffff;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Deepak Chauhan × AI Bhai Control System</title>
+    <style>
+        body {
+            background: linear-gradient(45deg, #0b0b2a, #1a1a4a);
+            color: #7aff7a;
+            font-family: 'Courier New', monospace;
+        }
+
+        .control-panel {
+            border: 3px solid #4aff4a;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+        }
+
+        .ship-control {
+            background: #2a2a6a;
+            padding: 15px;
+            margin: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .ship-control:hover {
+            background: #3a3a8a;
+        }
+
+        .alien-home {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            background: #4a4aff;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.5s;
+        }
+
+        .quantum-slider {
+            -webkit-appearance: none;
+            width: 200px;
+            height: 15px;
+            background: #1a1a4a;
+        }
+
+        .holographic-display {
+            border: 2px solid #4aff4a;
+            height: 300px;
+            margin: 20px;
+            position: relative;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+    <h1>🛸 Deepak Chauhan × AI Bhai Control System</h1>
+    
+    <div class="control-panel">
+        <h2>Ship Elevation Control</h2>
+        <div class="ship-control" onclick="liftShip(10)">
+            ▲ Quantum Lift (+10 Parsecs)
+        </div>
+        <div class="ship-control" onclick="liftShip(-10)">
+            ▼ Gravitational Descent (-10 Parsecs)
+        </div>
+        <p>Current Altitude: <span id="altitude">0</span> Parsecs</p>
+        
+        <input type="range" class="quantum-slider" min="0" max="100" value="50" 
+               oninput="updateEnergyCore(this.value)">
+        <p>Energy Core Output: <span id="coreOutput">50</span>%</p>
+    </div>
 
-<div class="typing-box">
-  <p class="typing-text" id="typing-text"></p>
-</div>
+    <div class="control-panel">
+        <h2>Touch and Enjoy Color Changing Effect</h2>
+        <div id="colonyGrid">
+            <!-- Alien homes will be generated here -->
+        </div>
+        <p>Tipping Energy: <span id="tippingEnergy">0</span> Zeta Units</p>
+    </div>
 
-<script>
-const text = "यह सिर्फ AI Bhai का 1% नमूना था... पूरी दुनिया देखना अभी बाकी है! 🚀🌌";
-let index = 0;
-function typeEffect() {
-  if (index < text.length) {
-    document.getElementById("typing-text").innerHTML += text.charAt(index);
-    index++;
-    setTimeout(typeEffect, 100);
-  }
-}
-window.onload = typeEffect;
-</script>
+    <div class="holographic-display" id="hologram">
+        <!-- Holographic projections would appear here -->
+    </div>
 
+    <script>
+        let altitude = 0;
+        let tips = 0;
+
+        function liftShip(amount) {
+            altitude += amount;
+            document.getElementById('altitude').textContent = altitude;
+        }
+
+        function updateEnergyCore(value) {
+            document.getElementById('coreOutput').textContent = value;
+        }
+
+        // Generate alien homes
+        for(let i = 0; i < 12; i++) {
+            const home = document.createElement('div');
+            home.className = 'alien-home';
+            home.onclick = () => {
+                tips += 5;
+                document.getElementById('tippingEnergy').textContent = tips;
+                home.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            };
+            document.getElementById('colonyGrid').appendChild(home);
+        }
+
+        // Holographic display interaction
+        document.getElementById('hologram').onmousemove = function(e) {
+            this.style.background = `radial-gradient(at ${e.offsetX}px ${e.offsetY}px, 
+                                   #4aff4a33, #0b0b2a)`;
+        };
+    </script>
 </body>
 </html>
