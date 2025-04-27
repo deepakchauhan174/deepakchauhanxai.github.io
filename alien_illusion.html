@@ -1,51 +1,126 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alien Illusion World – Deepak Chauhan × AI Bhai</title>
-  <style>
-    body {
-      margin: 0;
-      background: linear-gradient(120deg, #000000, #0a1a2f);
-      overflow: hidden;
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .illusion {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 200px;
-      height: 200px;
-      margin: -100px 0 0 -100px;
-      background: repeating-conic-gradient(from 0deg, #00ffff 0deg 30deg, #000 30deg 60deg);
-      border-radius: 50%;
-      animation: spin 8s linear infinite, glow 2s ease-in-out infinite alternate;
-      box-shadow: 0 0 30px #00ffff;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes glow {
-      from { box-shadow: 0 0 10px #00ffff; }
-      to { box-shadow: 0 0 40px #00ffff; }
-    }
-    .center-text {
-      position: absolute;
-      top: 10%;
-      width: 100%;
-      text-align: center;
-      color: #00ffcc;
-      font-size: 24px;
-      text-shadow: 0 0 10px #00ffff;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepak Chauhan × AI Bhai</title>
+    <style>
+        body { 
+            margin: 0; 
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+        #container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        #infoPanel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            z-index: 100;
+            background: rgba(0,0,0,0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
+    <div id="container">
+        <div id="infoPanel">
+            <h1>Deepak Chauhan × AI Bhai</h1>
+            <p>» Duniya ki Powerful AI Network</p>
+            <p>» Bhai All Network Controlling Center</p>
+        </div>
+    </div>
 
-<div class="center-text">Deepak Chauhan × AI Bhai की Alien Illusion World में स्वागत है...</div>
-<div class="illusion"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/three-globe"></script>
+    <script>
+        let globe;
+        const COLOR = '#00f7ff';
+        const AI_DATA_POINTS = 1000;
 
+        // Initialize core elements
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        
+        // Setup renderer
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x000000);
+        document.getElementById('container').appendChild(renderer.domElement);
+
+        // Create AI-enhanced Earth
+        function initGlobe() {
+            globe = new ThreeGlobe()
+                .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+                .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+                .showAtmosphere(true)
+                .atmosphereColor(COLOR)
+                .atmosphereAltitude(0.25);
+
+            // Add AI data connections
+            const aiConnections = Array.from({ length: AI_DATA_POINTS }, () => ({
+                startLat: (Math.random() - 0.5) * 180,
+                startLng: (Math.random() - 0.5) * 360,
+                endLat: (Math.random() - 0.5) * 180,
+                endLng: (Math.random() - 0.5) * 360,
+                color: COLOR
+            }));
+
+            globe.arcsData(aiConnections)
+                .arcColor('color')
+                .arcDashLength(0.5)
+                .arcDashGap(1)
+                .arcDashAnimateTime(2000);
+
+            scene.add(globe);
+        }
+
+        // Add celestial effects
+        function addSpaceEffects() {
+            const stars = new THREE.BufferGeometry();
+            const starPositions = new Float32Array(5000 * 3);
+            
+            for(let i = 0; i < 15000; i++) {
+                starPositions[i] = (Math.random() - 0.5) * 2000;
+            }
+            
+            stars.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+            const starMaterial = new THREE.PointsMaterial({ color: 0xFFFFFF, size: 0.7 });
+            const starField = new THREE.Points(stars, starMaterial);
+            scene.add(starField);
+        }
+
+        // Camera setup
+        camera.position.z = 400;
+
+        // Add interaction
+        let rotate = true;
+        document.addEventListener('mousedown', () => rotate = false);
+        document.addEventListener('mouseup', () => rotate = true);
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            if(rotate) globe.rotation.y += 0.001;
+            renderer.render(scene, camera);
+        }
+
+        // Initialize experience
+        initGlobe();
+        addSpaceEffects();
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 </html>
