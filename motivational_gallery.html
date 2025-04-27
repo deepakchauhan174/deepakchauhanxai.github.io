@@ -31,27 +31,52 @@
       overflow: hidden;
       max-width: 300px;
       width: 100%;
-      text-align: center;
+      cursor: pointer;
     }
     .image-card img {
       width: 100%;
       height: auto;
       display: block;
-      border-bottom: 1px solid #00ffff;
-      cursor: pointer;
     }
-    .caption {
-      padding: 10px 10px 0;
-      font-size: 16px;
-      color: #ffffff;
+    /* Modal Style */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .modal-content {
+      max-width: 90%;
+      max-height: 80%;
+      margin: 20px;
+    }
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    .modal-caption {
+      color: #00ffff;
+      margin-top: 10px;
+      font-size: 18px;
+      text-align: center;
     }
     .btn-group {
+      margin-top: 15px;
       display: flex;
-      justify-content: space-around;
-      margin: 10px;
+      justify-content: center;
+      gap: 20px;
     }
     .btn {
-      padding: 6px 12px;
+      padding: 8px 16px;
       border: none;
       border-radius: 6px;
       font-weight: bold;
@@ -65,49 +90,93 @@
       background: #ffd700;
       color: black;
     }
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <h1>Motivational Image Gallery</h1>
+
   <div class="gallery-box" id="Motivational_Images"></div>
 
+  <!-- Modal -->
+  <div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div class="modal-content" id="modalImageBox">
+      <img id="modalImage" src="" alt="Motivational Image">
+      <div class="modal-caption" id="modalCaption"></div>
+      <div class="btn-group">
+        <a id="downloadLink" class="btn download" target="_blank">Download</a>
+        <button onclick="shareImage()" class="btn share">Share</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    const gallery = document.getElementById("Motivational_Images");
+    const modal = document.getElementById("myModal");
+    const modalImage = document.getElementById("modalImage");
+    const modalCaption = document.getElementById("modalCaption");
+    const downloadLink = document.getElementById("downloadLink");
+
     fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Motivational_Images.json")
       .then(res => res.json())
       .then(data => {
-        const gallery = document.getElementById("Motivational_Images");
         gallery.innerHTML = "";
 
+        const items = [];
         for (let key in data) {
           const item = data[key];
           if (item && item.image && item.caption) {
-            const card = document.createElement("div");
-            card.className = "image-card";
-            card.innerHTML = `
-              <img src="${item.image}" alt="Motivational Image">
-              <div class="caption">${item.caption}</div>
-              <div class="btn-group">
-                <a href="${item.image}" download target="_blank" class="btn download">Download</a>
-                <button onclick="shareImage('${item.image}')" class="btn share">Share</button>
-              </div>
-            `;
-            gallery.appendChild(card);
+            items.push(item);
           }
         }
+
+        // Newest first (reverse order)
+        items.reverse();
+
+        items.forEach(item => {
+          const card = document.createElement("div");
+          card.className = "image-card";
+          card.innerHTML = `
+            <img src="${item.image}" alt="Motivational Image" onclick="openModal('${item.image}', '${item.caption}')">
+          `;
+          gallery.appendChild(card);
+        });
       })
       .catch(error => {
         console.error("Error fetching data:", error);
       });
 
-    function shareImage(url) {
+    function openModal(imageUrl, caption) {
+      modal.style.display = "flex";
+      modalImage.src = imageUrl;
+      modalCaption.innerText = caption;
+      downloadLink.href = imageUrl;
+    }
+
+    function closeModal() {
+      modal.style.display = "none";
+      setTimeout(() => {
+        location.reload(); // Refresh page after modal close
+      }, 300); 
+    }
+
+    function shareImage() {
       if (navigator.share) {
         navigator.share({
           title: "AI Bhai × Deepak Chauhan",
           text: "देखो ये ज़बरदस्त मोटिवेशनल इमेज!",
-          url: url,
+          url: modalImage.src,
         });
       } else {
-        alert("Sharing is not supported on this device.");
+        alert("Sharing not supported on this device.");
       }
     }
 
