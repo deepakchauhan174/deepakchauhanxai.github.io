@@ -1,59 +1,225 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Earth Globe – Deepak Chauhan × AI Bhai</title>
+  <title>DeepSeek × Magic – Deepak Chauhan × AI Bhai</title>
   <style>
+    :root {
+      --magic-purple: #8a2be2;
+      --ai-blue: #00f7ff;
+      --sparkle: #ffffff;
+    }
     body {
       margin: 0;
+      background: radial-gradient(circle, #000428, #070b34);
+      color: var(--ai-blue);
+      font-family: 'Courier New', monospace;
+      min-height: 100vh;
       overflow: hidden;
-      background: linear-gradient(135deg, #000000, #0a0a0a);
-      font-family: 'Segoe UI', sans-serif;
     }
-    #globe-container {
+    .magic-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+    .ai-core {
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, var(--ai-blue) 15%, transparent 60%);
+      border-radius: 50%;
+      margin: 50px auto;
+      box-shadow: 0 0 50px var(--ai-blue), 0 0 80px var(--magic-purple);
+      animation: pulse 3s infinite;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+    }
+    .particles {
+      position: fixed;
+      pointer-events: none;
       width: 100%;
-      height: 100vh;
+      height: 100%;
+      z-index: 1;
+    }
+    .particle {
+      position: absolute;
+      background: var(--sparkle);
+      border-radius: 50%;
+      animation: float 5s infinite;
+    }
+    .spell-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 40px 20px;
+    }
+    .spell-card {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid var(--ai-blue);
+      transition: 0.3s all;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(5px);
+    }
+    .spell-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 30px var(--ai-blue);
+    }
+    .spell-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, var(--magic-purple), transparent);
+      animation: rotate 6s linear infinite;
+      opacity: 0.2;
+    }
+    .arcane-terminal {
+      border: 2px solid var(--ai-blue);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 50px 0;
+      background: rgba(0,0,0,0.8);
+      position: relative;
+    }
+    .terminal-log {
+      height: 220px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      text-align: left;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 5px;
+    }
+    .spell-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--ai-blue);
+      padding: 10px;
+      font-size: 16px;
+      border-bottom: 1px solid var(--ai-blue);
+    }
+    .header-type {
+      font-size: 28px;
+      color: var(--sparkle);
+      margin-top: 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid var(--ai-blue);
+      animation: typing 6s steps(40) infinite, blink 0.8s step-end infinite;
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
+  <div class="magic-container">
+    <div class="header-type">✨ Welcome Deepak Chauhan × AI Bhai ✨</div>
+    <div class="ai-core"></div>
+    <div class="particles"></div>
 
-<div id="globe-container"></div>
+    <div class="spell-grid">
+      <div class="spell-card">
+        <h3>Neural Enchantment</h3>
+        <p>▲▼ Pattern Recognition Active</p>
+        <p>✦✦✦ Magic Learning Initiated</p>
+      </div>
+      <div class="spell-card">
+        <h3>Quantum Runes</h3>
+        <p>◈ Probability Matrix Unlocked</p>
+        <p>∞ Infinite Possibilities</p>
+      </div>
+      <div class="spell-card">
+        <h3>Wisdom Scrolls</h3>
+        <p>β Knowledge Streams Flowing</p>
+        <p>Δ Data Alchemy Complete</p>
+      </div>
+    </div>
 
-<!-- Three.js library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<!-- Globe texture -->
-<script>
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.getElementById('globe-container').appendChild(renderer.domElement);
+    <div class="arcane-terminal">
+      <div class="terminal-log" id="log">
+        > Initializing DeepSeek Magic System...<br>
+        > Quantum Neural Link Active...<br>
+        > Multiversal Portal Stable...
+      </div>
+      <input type="text" class="spell-input" placeholder="Type a Magical Command..." id="spellInput" autocomplete="off">
+    </div>
+  </div>
 
-// Create Earth Sphere
-const geometry = new THREE.SphereGeometry(2, 64, 64);
-const texture = new THREE.TextureLoader().load('https://upload.wikimedia.org/wikipedia/commons/8/83/Earthmap1000x500compac.jpg');
-const material = new THREE.MeshBasicMaterial({ map: texture });
-const earth = new THREE.Mesh(geometry, material);
-scene.add(earth);
+  <script>
+    function createParticles() {
+      const particles = document.querySelector('.particles');
+      for(let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.width = `${Math.random() * 5 + 2}px`;
+        particle.style.height = particle.style.width;
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        particles.appendChild(particle);
+      }
+    }
 
-camera.position.z = 5;
+    const aiCore = document.querySelector('.ai-core');
+    aiCore.addEventListener('click', () => {
+      aiCore.style.animation = 'none';
+      setTimeout(() => aiCore.style.animation = 'pulse 3s infinite', 10);
+      addLogEntry("✨ Reality Distortion Pulse Activated!");
+    });
 
-function animate() {
-  requestAnimationFrame(animate);
-  earth.rotation.y += 0.0015;
-  renderer.render(scene, camera);
-}
-animate();
+    const log = document.getElementById('log');
+    const spellInput = document.getElementById('spellInput');
+    const spells = [
+      "UNLOCKING WISDOM GATES...",
+      "ACTIVATING COSMIC BRAIN...",
+      "INITIATING QUANTUM JUMP...",
+      "DECODING ALIEN KNOWLEDGE...",
+      "ENERGIZING STAR CORE...",
+      "LINKING TO DEEPAK CHAUPHAN × AI BHAI PORTAL..."
+    ];
 
-// Handle resize
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-</script>
+    function addLogEntry(message) {
+      log.innerHTML += `> ${message}<br>`;
+      log.scrollTop = log.scrollHeight;
+    }
 
+    spellInput.addEventListener('keypress', (e) => {
+      if(e.key === 'Enter') {
+        addLogEntry(`CASTING SPELL: ${spellInput.value}`);
+        spellInput.value = '';
+      }
+    });
+
+    setInterval(() => {
+      addLogEntry(spells[Math.floor(Math.random() * spells.length)]);
+    }, 4000);
+
+    createParticles();
+  </script>
 </body>
 </html>
