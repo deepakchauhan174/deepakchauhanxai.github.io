@@ -124,11 +124,27 @@
 // =============================
 // 1. Function to Convert Google Drive Link
 // =============================
+// Yeh Bas Ek Helper Function Hai
 const convertGoogleDriveLink = (url) => {
+  if (url.includes('/uc?export=view&id=')) {
+    return url;
+  }
   const fileId = url.match(/\/d\/(.+?)\//)?.[1] || url.match(/id=(.+?)(&|$)/)?.[1];
   return fileId ? `https://drive.google.com/uc?export=view&id=${fileId}` : url;
 };
 
+function openModal(imageUrl, caption) {
+  const modal = document.getElementById("myModal");
+  const modalImage = document.getElementById("modalImage");
+  const modalCaption = document.getElementById("modalCaption");
+  const downloadLink = document.getElementById("downloadLink");
+
+  modal.style.display = "flex";
+  modalImage.src = convertGoogleDriveLink(imageUrl);
+  modalCaption.innerText = caption;
+  downloadLink.href = convertGoogleDriveLink(imageUrl);
+  document.body.style.overflow = "hidden";
+  }
 // =============================
 // 2. Fetch Firebase Data and Render Gallery
 // =============================
@@ -164,22 +180,6 @@ fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Motivational_Image
   .catch(error => {
     console.error("Error fetching data:", error);
   });
-
-// =============================
-// 3. Open Modal on Image Click
-// =============================
-function openModal(imageUrl, caption) {
-  const modal = document.getElementById("myModal");
-  const modalImage = document.getElementById("modalImage");
-  const modalCaption = document.getElementById("modalCaption");
-  const downloadLink = document.getElementById("downloadLink");
-
-  modal.style.display = "flex";
-  modalImage.src = convertGoogleDriveLink(imageUrl);
-  modalCaption.innerText = caption;
-  downloadLink.href = convertGoogleDriveLink(imageUrl);
-  document.body.style.overflow = "hidden";
-}
 
 // =============================
 // 4. Close Modal
