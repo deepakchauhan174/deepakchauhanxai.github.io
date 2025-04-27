@@ -1,63 +1,85 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Psychology Image Gallery</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
+      background-color: #000000;
       font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(#000015, #000);
-      color: white;
-      text-align: center;
+      color: #00ffff;
+      padding: 20px;
     }
     h1 {
-      padding: 2rem;
-      font-size: 2.5rem;
+      text-align: center;
       color: #00ffff;
-      text-shadow: 0 0 12px #00ffff;
+      font-size: 30px;
+      margin-bottom: 20px;
     }
-    .gallery {
+    .gallery-box {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      padding: 2rem;
-      max-width: 600px;
-      margin: auto;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
     }
-    .card {
-      background: #0d1b2a;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-      width: 100%;
-    }
-    .card img {
-      width: 100%;
-      border-radius: 8px;
+    .image-card {
+      background-color: #111;
       border: 2px solid #00ffff;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00ffff;
+      overflow: hidden;
+      max-width: 300px;
+      width: 100%;
       cursor: pointer;
     }
-    .card h3 {
-      color: #00ffff;
-      margin-top: 12px;
+    .image-card img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
-    .card p, .caption {
-      color: #ccc;
-      font-size: 0.95rem;
+    /* Modal Style */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .modal-content {
+      max-width: 90%;
+      max-height: 80%;
+      margin: 20px;
+    }
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    .modal-caption {
+      color: #00ffff;
+      margin-top: 10px;
+      font-size: 18px;
+      text-align: center;
     }
     .btn-group {
+      margin-top: 15px;
       display: flex;
-      justify-content: space-around;
-      margin-top: 10px;
+      justify-content: center;
+      gap: 20px;
     }
     .btn {
-      padding: 6px 12px;
-      font-weight: bold;
+      padding: 8px 16px;
       border: none;
       border-radius: 6px;
+      font-weight: bold;
       cursor: pointer;
     }
     .download {
@@ -68,64 +90,103 @@
       background: #ffd700;
       color: black;
     }
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+    }
   </style>
-  <script>
-    const FIREBASE_URL = "https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Psychology_Images.json";
-    let images = [];
-    let currentIndex = 0;async function loadImages() {
-  const res = await fetch(FIREBASE_URL);
-  const data = await res.json();
-  for (let key in data) {
-    images.push(data[key]);
-  }
-  renderImage();
-}
+</head>
+<body>
+  <h1>Psychology Image Gallery</h1>
 
-function renderImage() {
-  const gallery = document.getElementById("gallery");
-  gallery.innerHTML = "";
-  const item = images[currentIndex];
-  const card = document.createElement("div");
-  card.className = "card";
-  card.innerHTML = `
-    <img src="${item.image}" alt="Psychology Image" onclick="nextImage()">
-    <div class="caption">${item.caption}</div>
-    <div class="btn-group">
-      <a href="${item.image}" download target="_blank" class="btn download">Download</a>
-      <button onclick="shareImage('${item.image}')" class="btn share">Share</button>
+  <div class="gallery-box" id="Psychology_Images"></div>
+
+  <!-- Modal -->
+  <div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div class="modal-content" id="modalImageBox">
+      <img id="modalImage" src="" alt="Psychology Images">
+      <div class="modal-caption" id="modalCaption"></div>
+      <div class="btn-group">
+        <a id="downloadLink" class="btn download" target="_blank">Download</a>
+        <button onclick="shareImage()" class="btn share">Share</button>
+      </div>
     </div>
-  `;
-  gallery.appendChild(card);
+  </div>
+
+  <script>
+   const gallery = document.getElementById("Psychology_Images");
+const modal = document.getElementById("myModal");
+const modalImage = document.getElementById("modalImage");
+const modalCaption = document.getElementById("modalCaption");
+const downloadLink = document.getElementById("downloadLink");
+
+fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Psychology_Images.json")
+  .then(res => res.json())
+  .then(data => {
+    gallery.innerHTML = "";
+
+    const items = [];
+    for (let key in data) {
+      const item = data[key];
+      if (item && item.image && item.caption) {
+        items.push(item);
+      }
+    }
+
+    // Newest first
+    items.reverse();
+
+    items.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "image-card";
+      card.innerHTML = `
+        <img src="${item.image}" alt="Psychology Images" onclick="openModal('${item.image}', '${item.caption}')">
+      `;
+      gallery.appendChild(card);
+    });
+  })
+  .catch(error => {
+    console.error("Error fetching data:", error);
+  });
+
+function openModal(imageUrl, caption) {
+  modal.style.display = "flex";
+  modalImage.src = imageUrl;
+  modalCaption.innerText = caption;
+  downloadLink.href = imageUrl;
+  document.body.style.overflow = "hidden"; // Background scroll off
 }
 
-function nextImage() {
-  currentIndex = (currentIndex + 1) % images.length;
-  renderImage();
+function closeModal() {
+  modal.style.display = "none";
+  document.body.style.overflow = "auto"; // Background scroll on
+  setTimeout(() => {
+    location.reload(true); // Force hard refresh
+  }, 300);
 }
 
-function shareImage(url) {
+function shareImage() {
   if (navigator.share) {
     navigator.share({
       title: "AI Bhai × Deepak Chauhan",
-      text: "देखो ये ज़बरदस्त मोटिवेशनल इमेज!",
-      url: url,
+      text: "देखो ये ज़बरदस्त साइकोलॉजी इमेज!",
+      url: modalImage.src,
     });
   } else {
-    alert("Sharing is not supported on this device.");
+    alert("Sharing not supported on this device.");
   }
 }
 
-window.onload = loadImages;
 window.onpageshow = function(event) {
   if (event.persisted) {
     window.location.reload();
   }
-};
-
+}; 
   </script>
-</head>
-<body>
-  <h1>Psychology Thought Gallery</h1>
-  <div id="gallery" class="gallery"></div>
 </body>
 </html>
