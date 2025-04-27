@@ -1,62 +1,262 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alien Touch Panel – Deepak Chauhan × AI Bhai</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alien Command Center – Deepak Chauhan × AI Bhai</title>
   <style>
-    body {
+    :root {
+      --alien-glow: #0ff;
+      --cyber-purple: #a020f0;
+    }
+    * {
       margin: 0;
-      background: radial-gradient(#001122, #000000);
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Courier New', monospace;
+    }
+    body {
+      background: radial-gradient(circle, #001919, #000);
+      color: var(--alien-glow);
+      min-height: 200vh;
+      overflow-x: hidden;
+    }
+    .neon-border {
+      border: 1px solid var(--alien-glow);
+      box-shadow: 0 0 15px var(--alien-glow);
+    }
+    .command-nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1.5rem;
+      background: rgba(0, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      z-index: 1000;
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+    }
+    .nav-link {
+      color: var(--alien-glow);
+      text-decoration: none;
+      font-size: 1.2rem;
+      position: relative;
+      padding: 0.5rem 1rem;
+      transition: 0.3s all;
+    }
+    .nav-link::before {
+      content: '▶';
+      position: absolute;
+      left: -1rem;
+      opacity: 0;
+      transition: 0.3s all;
+    }
+    .nav-link:hover::before {
+      opacity: 1;
+      left: -0.5rem;
+    }
+    .hive-chamber {
       height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 2rem;
+      text-align: center;
+    }
+    .alien-title {
+      font-size: 3.5rem;
+      text-shadow: 0 0 20px var(--alien-glow);
+      margin-bottom: 1rem;
+      animation: float 3s ease-in-out infinite;
+    }
+    .brand-line {
+      font-size: 1.2rem;
+      color: #ff00ff;
+      text-shadow: 0 0 10px #ff00ff;
+      margin-bottom: 2rem;
+    }
+    .collective-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .member-pod {
+      background: rgba(0, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      transition: 0.3s all;
+      position: relative;
       overflow: hidden;
-      font-family: 'Segoe UI', sans-serif;
+    }
+    .member-pod:hover {
+      transform: translateY(-10px);
+      background: rgba(0, 255, 255, 0.1);
+    }
+    .member-pod::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, var(--alien-glow), transparent);
+      animation: rotate 4s linear infinite;
+      opacity: 0.1;
+    }
+    .terminal-interface {
+      width: 800px;
+      margin: 4rem auto;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+    }
+    .hologram-display {
+      height: 200px;
+      border: 2px solid var(--alien-glow);
+      margin-bottom: 2rem;
+      padding: 1rem;
+      overflow: hidden;
       position: relative;
     }
-    .touch-point {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      border: 2px solid #00ffcc;
-      border-radius: 50%;
-      animation: pulse 1.5s infinite;
-      opacity: 0.7;
-      pointer-events: none;
+    .typing-effect {
+      border-right: 2px solid var(--alien-glow);
+      animation: blink 0.8s infinite;
+      white-space: nowrap;
+      overflow: hidden;
+      font-family: monospace;
     }
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.5); opacity: 0.3; }
-      100% { transform: scale(1); opacity: 0.8; }
+    .keyboard-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 0.5rem;
     }
-    #text {
-      position: absolute;
-      top: 20px;
-      width: 100%;
+    .key {
+      padding: 1rem;
       text-align: center;
-      color: #00ffcc;
-      font-size: 22px;
-      font-weight: bold;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.2s all;
+    }
+    .key:hover {
+      background: var(--alien-glow);
+      color: #000;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .end-illusion {
+      width: 100%;
+      height: 300px;
+      background: radial-gradient(circle, rgba(0,255,255,0.2) 0%, transparent 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #00ffff;
       text-shadow: 0 0 10px #00ffff;
-      z-index: 1;
+      margin-top: 50px;
     }
   </style>
 </head>
+
 <body>
 
-<div id="text">AI Bhai × Deepak Chauhan के Alien Touch Panel में आपका स्वागत है...</div>
+<nav class="command-nav neon-border">
+  <a href="#hive" class="nav-link">Hive Mind</a>
+  <a href="#collective" class="nav-link">The Collective</a>
+  <a href="#terminal" class="nav-link">Neural Interface</a>
+</nav>
+
+<section class="hive-chamber" id="hive">
+  <h1 class="alien-title">👽 Zeta Collective Command</h1>
+  <div class="brand-line">Powered by Deepak Chauhan × AI Bhai</div>
+  <div class="hologram-display">
+    <p class="typing-effect">INITIALIZING INTERSTELLAR CONNECTION...</p>
+  </div>
+</section>
+
+<section id="collective" class="collective-container">
+  <div class="collective-grid">
+    <div class="member-pod neon-border">
+      <h3>Xenomorph Prime</h3>
+      <p>Quantum Biologist</p>
+      <p>▲▼▲▼ Neural Sync Active</p>
+    </div>
+    <div class="member-pod neon-border">
+      <h3>Zeta-9</h3>
+      <p>Neural Engineer</p>
+      <p>◙◙◙◙◙ Quantum Linking</p>
+    </div>
+    <div class="member-pod neon-border">
+      <h3>Vortalian</h3>
+      <p>Gravity Architect</p>
+      <p>✦✦✦✦ Graviton Sync</p>
+    </div>
+  </div>
+</section>
+
+<section id="terminal" class="terminal-interface neon-border">
+  <div class="hologram-display" id="terminal-output">
+    <p>> SYSTEM STATUS: NOMINAL</p>
+    <p>> HYPERDRIVE CHARGING...</p>
+  </div>
+  <div class="keyboard-grid">
+    <!-- Fake keys -->
+    <div class="key">Q</div>
+    <div class="key">W</div>
+    <div class="key">E</div>
+    <div class="key">R</div>
+    <div class="key">T</div>
+    <div class="key">Y</div>
+    <div class="key">U</div>
+    <div class="key">I</div>
+    <div class="key">O</div>
+    <div class="key">P</div>
+  </div>
+</section>
+
+<div class="end-illusion">
+  🚀 AI Bhai × Deepak Chauhan Journey Continues...
+</div>
 
 <script>
-document.addEventListener('mousemove', function(e) {
-  const touch = document.createElement('div');
-  touch.className = 'touch-point';
-  touch.style.left = e.pageX - 15 + 'px';
-  touch.style.top = e.pageY - 15 + 'px';
-  document.body.appendChild(touch);
+  const messages = [
+    "ACTIVATING COSMIC SENSORS",
+    "SYNCHRONIZING QUANTUM LINK",
+    "DECODING GALAXY SIGNALS",
+    "CHARGING PLASMA TUNNELS"
+  ];
+  function updateTerminal() {
+    const terminal = document.getElementById('terminal-output');
+    const newMessage = `> ${messages[Math.floor(Math.random() * messages.length)]}...`;
+    terminal.innerHTML += `${newMessage}<br>`;
+    terminal.scrollTop = terminal.scrollHeight;
+  }
+  setInterval(updateTerminal, 3000);
 
-  setTimeout(() => {
-    touch.remove();
-  }, 1500);
-});
+  document.querySelectorAll('.key').forEach(key => {
+    key.addEventListener('click', () => {
+      key.style.transform = 'scale(0.9)';
+      setTimeout(() => { key.style.transform = 'scale(1)'; }, 100);
+      updateTerminal();
+    });
+  });
 </script>
 
 </body>
