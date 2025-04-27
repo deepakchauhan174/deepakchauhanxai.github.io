@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Motivational Gallery</title>
+  <title>Motivational Image Gallery</title>
   <style>
     body {
       background-color: #000000;
@@ -101,24 +101,25 @@
   </style>
 </head>
 <body>
-  <h1>Motivational Image Gallery</h1>
 
-  <div class="gallery-box" id="Motivational_Images"></div>
+<h1>Motivational Image Gallery</h1>
 
-  <!-- Modal -->
-  <div id="myModal" class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <div class="modal-content" id="modalImageBox">
-      <img id="modalImage" src="" alt="Motivational Image">
-      <div class="modal-caption" id="modalCaption"></div>
-      <div class="btn-group">
-        <a id="downloadLink" class="btn download" target="_blank">Download</a>
-        <button onclick="shareImage()" class="btn share">Share</button>
-      </div>
+<div class="gallery-box" id="Motivational_Images"></div>
+
+<!-- Modal -->
+<div id="myModal" class="modal">
+  <span class="close" onclick="closeModal()">&times;</span>
+  <div class="modal-content" id="modalImageBox">
+    <img id="modalImage" src="" alt="Motivational Image">
+    <div class="modal-caption" id="modalCaption"></div>
+    <div class="btn-group">
+      <a id="downloadLink" class="btn download" target="_blank">Download</a>
+      <button onclick="shareImage()" class="btn share">Share</button>
     </div>
   </div>
+</div>
 
-  <!-- Final Combined JavaScript Code for Google Drive Image Support -->
+<!-- Final Combined JavaScript -->
 <script>
 // =============================
 // 1. Function to Convert Google Drive Link
@@ -131,10 +132,10 @@ const convertGoogleDriveLink = (url) => {
 // =============================
 // 2. Fetch Firebase Data and Render Gallery
 // =============================
-fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Psychology_Images.json")
+fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Motivational_Images.json")
   .then(res => res.json())
   .then(data => {
-    const gallery = document.getElementById("Motivational_Images"); // Apne gallery ka ID
+    const gallery = document.getElementById("Motivational_Images");
     gallery.innerHTML = "";
 
     const items = [];
@@ -144,12 +145,12 @@ fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Psychology_Images.
       if (item && item.image && item.caption) {
         items.push({
           ...item,
-          image: convertGoogleDriveLink(item.image) // Convert Image Link
+          image: convertGoogleDriveLink(item.image)
         });
       }
     }
 
-    items.reverse(); // Latest Images Pehle
+    items.reverse(); // Latest Images first
 
     items.forEach(item => {
       const card = document.createElement("div");
@@ -168,18 +169,43 @@ fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Psychology_Images.
 // 3. Open Modal on Image Click
 // =============================
 function openModal(imageUrl, caption) {
-  const convertedUrl = convertGoogleDriveLink(imageUrl); // Safety ke liye wapas convert
-  const modal = document.getElementById("mymodal");
+  const modal = document.getElementById("myModal");
   const modalImage = document.getElementById("modalImage");
   const modalCaption = document.getElementById("modalCaption");
   const downloadLink = document.getElementById("downloadLink");
 
   modal.style.display = "flex";
-  modalImage.src = convertedUrl;
+  modalImage.src = convertGoogleDriveLink(imageUrl);
   modalCaption.innerText = caption;
-  downloadLink.href = convertedUrl;
+  downloadLink.href = convertGoogleDriveLink(imageUrl);
   document.body.style.overflow = "hidden";
 }
+
+// =============================
+// 4. Close Modal
+// =============================
+function closeModal() {
+  const modal = document.getElementById("myModal");
+  modal.style.display = "none";
+  document.body.style.overflow = "auto";
+}
+
+// =============================
+// 5. Share Image (if supported)
+// =============================
+function shareImage() {
+  const url = document.getElementById("downloadLink").href;
+  if (navigator.share) {
+    navigator.share({
+      title: 'Motivational Image',
+      text: 'Check out this motivational image from Deepak Chauhan × AI Bhai!',
+      url: url
+    }).catch(err => console.error('Share failed:', err));
+  } else {
+    alert("Sharing is not supported on this device.");
+  }
+}
 </script>
+
 </body>
 </html>
