@@ -1,57 +1,85 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sachi Bate Gallery</title>
   <style>
     body {
-      background-color: #000814;
-      color: #00ffff;
+      background-color: #000000;
       font-family: 'Segoe UI', sans-serif;
+      color: #00ffff;
       padding: 20px;
-      text-align: center;
     }
     h1 {
-      font-size: 32px;
-      color: #ffd700;
+      text-align: center;
+      color: #00ffff;
+      font-size: 30px;
       margin-bottom: 20px;
-      text-shadow: 0 0 10px #00ffff;
     }
     .gallery-box {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
     }
     .image-card {
-      background: #001d3d;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 0 20px #00ffff;
-      max-width: 360px;
-      width: 90%;
+      background-color: #111;
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00ffff;
+      overflow: hidden;
+      max-width: 300px;
+      width: 100%;
+      cursor: pointer;
     }
     .image-card img {
       width: 100%;
-      border-radius: 10px;
-      border: 2px solid #00ffff;
-      cursor: pointer;
+      height: auto;
+      display: block;
     }
-    .caption {
+    /* Modal Style */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .modal-content {
+      max-width: 90%;
+      max-height: 80%;
+      margin: 20px;
+    }
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    .modal-caption {
+      color: #00ffff;
       margin-top: 10px;
-      font-size: 15px;
-      color: #ffffff;
+      font-size: 18px;
+      text-align: center;
     }
     .btn-group {
+      margin-top: 15px;
       display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
+      justify-content: center;
+      gap: 20px;
     }
     .btn {
-      padding: 6px 12px;
-      font-weight: bold;
+      padding: 8px 16px;
       border: none;
       border-radius: 6px;
+      font-weight: bold;
       cursor: pointer;
     }
     .download {
@@ -62,63 +90,103 @@
       background: #ffd700;
       color: black;
     }
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <h1>AI Bhai × Deepak Chauhan – Sachi Bate</h1>
-  <div id="Sachi_Images" class="gallery-box"></div>  <script>
-    const firebaseUrl = "https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Sachi_Images.json";
-    let images = [];
-    let currentIndex = 0;
+  <h1>Sachi Bate Image Gallery</h1>
 
-    fetch(firebaseUrl)
-      .then(res => res.json())
-      .then(data => {
-        for (const key in data) {
-          images.push(data[key]);
-        }
-        renderImage();
-      })
-      .catch(error => console.error("Firebase Error:", error));
+  <div class="gallery-box" id="Sachi_Images"></div>
 
-    function renderImage() {
-      const container = document.getElementById("Sachi_Images");
-      container.innerHTML = "";
-      const { image, caption } = images[currentIndex];
+  <!-- Modal -->
+  <div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div class="modal-content" id="modalImageBox">
+      <img id="modalImage" src="" alt="Sachi Image">
+      <div class="modal-caption" id="modalCaption"></div>
+      <div class="btn-group">
+        <a id="downloadLink" class="btn download" target="_blank">Download</a>
+        <button onclick="shareImage()" class="btn share">Share</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+   const gallery = document.getElementById("Sachi_Images");
+const modal = document.getElementById("myModal");
+const modalImage = document.getElementById("modalImage");
+const modalCaption = document.getElementById("modalCaption");
+const downloadLink = document.getElementById("downloadLink");
+
+fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Sachi_Images.json")
+  .then(res => res.json())
+  .then(data => {
+    gallery.innerHTML = "";
+
+    const items = [];
+    for (let key in data) {
+      const item = data[key];
+      if (item && item.image && item.caption) {
+        items.push(item);
+      }
+    }
+
+    // Newest first
+    items.reverse();
+
+    items.forEach(item => {
       const card = document.createElement("div");
       card.className = "image-card";
       card.innerHTML = `
-        <img src="${image}" alt="Sachi Image" onclick="nextImage()">
-        <div class="caption">${caption}</div>
-        <div class="btn-group">
-          <a href="${image}" download target="_blank" class="btn download">Download</a>
-          <button onclick="shareImage('${image}')" class="btn share">Share</button>
-        </div>
+        <img src="${item.image}" alt="Sachi Image" onclick="openModal('${item.image}', '${item.caption}')">
       `;
-      container.appendChild(card);
-    }
+      gallery.appendChild(card);
+    });
+  })
+  .catch(error => {
+    console.error("Error fetching data:", error);
+  });
 
-    function nextImage() {
-      currentIndex = (currentIndex + 1) % images.length;
-      renderImage();
-    }
+function openModal(imageUrl, caption) {
+  modal.style.display = "flex";
+  modalImage.src = imageUrl;
+  modalCaption.innerText = caption;
+  downloadLink.href = imageUrl;
+  document.body.style.overflow = "hidden"; // Background scroll off
+}
 
-    function shareImage(url) {
-      if (navigator.share) {
-        navigator.share({
-          title: "AI Bhai × Deepak Chauhan",
-          text: "देखो ये ज़बरदस्त सच्ची बात!",
-          url: url,
-        });
-      } else {
-        alert("Sharing is not supported on this device.");
-      }
-    }
+function closeModal() {
+  modal.style.display = "none";
+  document.body.style.overflow = "auto"; // Background scroll on
+  setTimeout(() => {
+    location.reload(true); // Force hard refresh
+  }, 300);
+}
 
-    window.onpageshow = function(event) {
-      if (event.persisted) {
-        window.location.reload();
-      }
-    };
-  </script></body>
+function shareImage() {
+  if (navigator.share) {
+    navigator.share({
+      title: "AI Bhai × Deepak Chauhan",
+      text: "देखो ये ज़बरदस्त मोटिवेशनल इमेज!",
+      url: modalImage.src,
+    });
+  } else {
+    alert("Sharing not supported on this device.");
+  }
+}
+
+window.onpageshow = function(event) {
+  if (event.persisted) {
+    window.location.reload();
+  }
+}; 
+  </script>
+</body>
 </html>
