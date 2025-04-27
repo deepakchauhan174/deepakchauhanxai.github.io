@@ -119,72 +119,74 @@
   </div>
 
   <script>
-    const gallery = document.getElementById("Motivational_Images");
-    const modal = document.getElementById("myModal");
-    const modalImage = document.getElementById("modalImage");
-    const modalCaption = document.getElementById("modalCaption");
-    const downloadLink = document.getElementById("downloadLink");
+   const gallery = document.getElementById("Motivational_Images");
+const modal = document.getElementById("myModal");
+const modalImage = document.getElementById("modalImage");
+const modalCaption = document.getElementById("modalCaption");
+const downloadLink = document.getElementById("downloadLink");
 
-    fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Motivational_Images.json")
-      .then(res => res.json())
-      .then(data => {
-        gallery.innerHTML = "";
+fetch("https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Motivational_Images.json")
+  .then(res => res.json())
+  .then(data => {
+    gallery.innerHTML = "";
 
-        const items = [];
-        for (let key in data) {
-          const item = data[key];
-          if (item && item.image && item.caption) {
-            items.push(item);
-          }
-        }
-
-        // Newest first (reverse order)
-        items.reverse();
-
-        items.forEach(item => {
-          const card = document.createElement("div");
-          card.className = "image-card";
-          card.innerHTML = `
-            <img src="${item.image}" alt="Motivational Image" onclick="openModal('${item.image}', '${item.caption}')">
-          `;
-          gallery.appendChild(card);
-        });
-      })
-      .catch(error => {
-        console.error("Error fetching data:", error);
-      });
-
-    function openModal(imageUrl, caption) {
-      modal.style.display = "flex";
-      modalImage.src = imageUrl;
-      modalCaption.innerText = caption;
-      downloadLink.href = imageUrl;
-    }
-
-    function closeModal() {
-      modal.style.display = "none";
-      setTimeout(() => {
-        location.reload(); // Refresh page after modal close
-      }, 300); 
-    }
-
-    function shareImage() {
-      if (navigator.share) {
-        navigator.share({
-          title: "AI Bhai × Deepak Chauhan",
-          text: "देखो ये ज़बरदस्त मोटिवेशनल इमेज!",
-          url: modalImage.src,
-        });
-      } else {
-        alert("Sharing not supported on this device.");
+    const items = [];
+    for (let key in data) {
+      const item = data[key];
+      if (item && item.image && item.caption) {
+        items.push(item);
       }
     }
 
-    window.onpageshow = function(event) {
-      if (event.persisted) {
-        window.location.reload();
-      }
-    };
+    // Newest first
+    items.reverse();
+
+    items.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "image-card";
+      card.innerHTML = `
+        <img src="${item.image}" alt="Motivational Image" onclick="openModal('${item.image}', '${item.caption}')">
+      `;
+      gallery.appendChild(card);
+    });
+  })
+  .catch(error => {
+    console.error("Error fetching data:", error);
+  });
+
+function openModal(imageUrl, caption) {
+  modal.style.display = "flex";
+  modalImage.src = imageUrl;
+  modalCaption.innerText = caption;
+  downloadLink.href = imageUrl;
+  document.body.style.overflow = "hidden"; // Background scroll off
+}
+
+function closeModal() {
+  modal.style.display = "none";
+  document.body.style.overflow = "auto"; // Background scroll on
+  setTimeout(() => {
+    location.reload(true); // Force hard refresh
+  }, 300);
+}
+
+function shareImage() {
+  if (navigator.share) {
+    navigator.share({
+      title: "AI Bhai × Deepak Chauhan",
+      text: "देखो ये ज़बरदस्त मोटिवेशनल इमेज!",
+      url: modalImage.src,
+    });
+  } else {
+    alert("Sharing not supported on this device.");
+  }
+}
+
+window.onpageshow = function(event) {
+  if (event.persisted) {
+    window.location.reload();
+  }
+}; 
   </script>
 </body>
 </html>
