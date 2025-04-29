@@ -1,5 +1,5 @@
 function openStory() {
-  window.location.href = "Ai_bhai_shth_hai.html";
+  window.location.href = "Ai_bhai_shath_hai.html";
 }
 
 // 5 मिनट बाद Banner Hide करना
