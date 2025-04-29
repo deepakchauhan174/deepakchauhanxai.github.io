@@ -492,3 +492,66 @@ a.join-button:hover {
   background-color: #ffd700;
   color: #000;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background: #0b0f1a;
+  color: #fff;
+}
+
+.content {
+  padding: 100px 20px 200px 20px;
+  text-align: center;
+}
+
+.bottom-banner {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #0d1b2a, #1b263b, #415a77);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  z-index: 999;
+  box-shadow: 0 -2px 10px rgba(0,255,255,0.5);
+  cursor: pointer;
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  max-width: 1200px;
+}
+
+.banner-text h2 {
+  font-size: 18px;
+  margin: 0;
+  color: #00f0ff;
+}
+
+.banner-text p {
+  font-size: 12px;
+  margin: 5px 0 0 0;
+  color: #ccc;
+}
+
+.banner-button {
+  background: #00f0ff;
+  color: #000;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.banner-button:hover {
+  background: #00c0cc;
+  }
