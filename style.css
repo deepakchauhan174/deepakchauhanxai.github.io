@@ -567,3 +567,27 @@ banner-button:hover {
 background: #00c0cc;
 
 }
+
+.circle-slider-fade {
+  width: 220px;
+  height: 220px;
+  margin: 20px auto;
+  position: relative;
+}
+
+.fade-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #00ffff;
+  box-shadow: 0 0 10px #00ffff;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.fade-img.active {
+  opacity: 1;
+  z-index: 1;
+}
