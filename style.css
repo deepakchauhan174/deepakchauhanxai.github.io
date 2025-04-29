@@ -564,22 +564,26 @@ body {
   justify-content: center;
 }
 
-.circle-slider {
-  display: flex;
-  animation: scroll 12s linear infinite;
+.circle-slider-fade {
+  width: 220px;
+  height: 220px;
+  margin: 20px auto;
+  position: relative;
 }
 
-.circle-img {
-  width: 180px;       /* थोड़ा बड़ा रखा गया */
-  height: 180px;
+.fade-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  margin: 0 10px;
   object-fit: cover;
   border: 3px solid #00ffff;
   box-shadow: 0 0 10px #00ffff;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
 
-@keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+.fade-img.active {
+  opacity: 1;
+  z-index: 1;
 }
