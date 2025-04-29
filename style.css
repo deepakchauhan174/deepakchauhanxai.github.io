@@ -506,84 +506,76 @@ body {
   text-align: center;
 }
 
+/* ========== Bottom Banner Fade Slider Final ========== */
 .bottom-banner {
   position: fixed;
   bottom: 0;
   width: 100%;
   background: linear-gradient(90deg, #0d1b2a, #1b263b, #415a77);
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 24px 10px;
-  z-index: 999;
-  box-shadow: 0 -2px 10px rgba(0,255,255,0.5);
-  cursor: pointer;
-}
-
-.banner-content {
-  display: flex;
-  align-items: center;
   justify-content: space-between;
-  width: 95%;
-  max-width: 1200px;
-}
-
-.banner-text h2 {
-  font-size: 22px;
-  margin: 0;
-  color: #00f0ff;
-}
-
-.banner-text p {
-  font-size: 14px;
-  margin: 5px 0 0 0;
-  color: #ccc;
-}
-
-.banner-button {
-  background: #00f0ff;
-  color: #000;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.banner-button:hover {
-  background: #00c0cc;
-  }
-
-.circle-slider-container {
-  width: 100%;
-  overflow: hidden;
-  padding: 10px 0;
-  display: flex;
-  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 -2px 15px rgba(0, 255, 255, 0.4);
+  z-index: 999;
+  flex-wrap: wrap;
 }
 
 .circle-slider-fade {
-  width: 220px;
-  height: 220px;
-  margin: 20px auto;
   position: relative;
+  width: 70px;
+  height: 70px;
+  margin-right: 20px;
 }
 
 .fade-img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #00ffff;
-  box-shadow: 0 0 10px #00ffff;
+  position: absolute;
+  top: 0;
+  left: 0;
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
 
 .fade-img.active {
   opacity: 1;
-  z-index: 1;
+  z-index: 2;
+}
+
+.banner-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.banner-text h2 {
+  font-size: 18px;
+  color: #00ffff;
+  margin: 0;
+}
+
+.banner-text p {
+  font-size: 12px;
+  color: #ccc;
+  margin: 0;
+}
+
+.banner-button {
+  background: #00ffff;
+  color: #000;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.banner-button:hover {
+  background: #00cccc;
 }
