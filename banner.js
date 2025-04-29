@@ -1,11 +1,10 @@
-function openStory() {
-  window.location.href = "Ai_bhai_shath_hai.html";
-}
+<script>
+  let current = 0;
+  const images = document.querySelectorAll('.fade-img');
 
-// 5 मिनट बाद Banner Hide करना
-setTimeout(function() {
-  var banner = document.getElementById('promoBanner');
-  if(banner) {
-    banner.style.display = 'none';
-  }
-}, 300000); // 5 minutes = 300000 milliseconds
+  setInterval(() => {
+    images[current].classList.remove('active');
+    current = (current + 1) % images.length;
+    images[current].classList.add('active');
+  }, 4000); // 4 seconds per image
+</script>
