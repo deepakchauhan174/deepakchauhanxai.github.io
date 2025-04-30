@@ -1,12 +1,8 @@
-<script>
-  let current = 0;
-  const images = document.querySelectorAll('.circle-img'); // पहले .fade-img था
+const images = document.querySelectorAll(".fade-img");
+let index = 0;
 
-  setTimeout(() => {
-    setInterval(() => {
-      images[current].classList.remove('active');
-      current = (current + 1) % images.length;
-      images[current].classList.add('active');
-    }, 4000); // हर 4 सेकंड में image बदले
-  }, 100); // पहली image थोड़ी देर तक रुके
-</script>
+setInterval(() => {
+  images[index].classList.remove("active");
+  index = (index + 1) % images.length;
+  images[index].classList.add("active");
+}, 4000);
