@@ -526,21 +526,22 @@ body {
 .circle-slider-container {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
+  justify-content: center;
+  padding: 10px 0;
 }
 
 .circle-slider-container img {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  box-shadow: 0 0 10px #0ff;
   border: 2px solid #0ff;
+  box-shadow: 0 0 10px #0ff;
+  transition: transform 0.3s ease;
 }
 
-.circle-slider-container img.active {
-  opacity: 1;
+.circle-slider-container img:hover {
+  transform: scale(1.1);
 }
 
 .banner-content {
@@ -586,11 +587,7 @@ body {
     text-align: center;
   }
 
-  .circle-slider-container {
-    margin-bottom: 10px;
-  }
-
   .banner-content {
     max-width: 100%;
   }
-  }
+  
