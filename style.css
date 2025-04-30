@@ -506,20 +506,6 @@ body {
   text-align: center;
 }
 
-.bottom-banner {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: linear-gradient(90deg, #0d1b2a, #1b263b, #415a77);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  z-index: 999;
-  box-shadow: 0 -2px 10px rgba(0,255,255,0.5);
-  cursor: pointer;
-}
-
 .banner-content {
   display: flex;
   align-items: center;
@@ -554,14 +540,6 @@ body {
 
 .banner-button:hover {
   background: #00c0cc;
-}
-
-.circle-slider-container {
-  width: 100%;
-  overflow: hidden;
-  padding: 10px 0;
-  display: flex;
-  justify-content: center;
 }
 
 .circle-img {
