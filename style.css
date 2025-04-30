@@ -584,21 +584,31 @@ body {
   100% { transform: translateX(-100%); }
 }
 
-.circle-slider-fade {
-  width: 240px;
-  height: 240px;
-  margin: 20px auto;
-  position: relative;
-  overflow: visible; /* ये ज़रूरी है */
-}
-
 .fade-img {
   opacity: 0;
   transition: opacity 1s ease-in-out;
   position: absolute;
 }
 
+.fade-img {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
 .fade-img.active {
   opacity: 1;
-  z-index: 1;
+  z-index: 2;
+}
+
+.circle-slider-container {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin: 30px auto;
+  overflow: hidden;
 }
