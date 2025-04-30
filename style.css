@@ -559,12 +559,19 @@ body {
 
 /* --- BANNER --- */
 .bottom-banner {
-  margin-top: 100px; /* पहले 50px था */
+  .bottom-banner {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #0d1b2a, #1b263b, #415a77);
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 20px;
-}
+  padding: 10px;
+  z-index: 999;
+  box-shadow: 0 -2px 10px rgba(0,255,255,0.5);
+  cursor: pointer;
+  }
 
 /* --- IMAGE FADE ROTATION --- */
 .fade-img {
