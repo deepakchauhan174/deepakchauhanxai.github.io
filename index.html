@@ -307,19 +307,28 @@ style="padding: 30px; font-size: 18px; background-color: #000000; box-shadow: 0 
     font-weight: bold;
     cursor: pointer;">समझ गया</button>
 </div>
-
+<!-- COMMIT: Popup repositioned above banner, scroll visibility & popup fix applied -->
+<!-- Splash Screen Script -->
 <script>
-  let current = 0;
-  const images = document.querySelectorAll('.fade-img');
-
-  setInterval(() => {
-    images[current].classList.remove('active');
-    current = (current + 1) % images.length;
-    images[current].classList.add('active');
-  }, 3000);
+  window.onload = function () {
+    const splash = document.getElementById("splash-screen");
+    if (!sessionStorage.getItem("splashDone")) {
+      splash.style.display = "flex";
+      document.body.style.overflow = "hidden";
+      setTimeout(() => {
+        splash.style.display = "none";
+        document.body.style.overflow = "auto";
+        sessionStorage.setItem("splashDone", "true");
+      }, 1800);
+    } else {
+      splash.style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+  };
 </script>
-
+  
 <!-- Banner Code Start -->
+  <div style="margin-top: 50px;"></div>
   <div style="margin-top: 50px;"></div>
   <div style="margin-top: 50px;"></div>
 <div class="bottom-banner" id="promoBanner" onclick="openStory()">
