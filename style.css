@@ -574,6 +574,21 @@ body {
   box-shadow: 0 0 10px #00ffff;
 }
 
+/* --- POPUP --- */
+#welcome-popup {
+  z-index: 10000; /* पहले से बड़ा */
+}
+
+/* --- BANNER --- */
+.bottom-banner {
+  margin-top: 100px; /* पहले 50px था */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* --- IMAGE FADE ROTATION --- */
 .fade-img {
   width: 240px;
   height: 240px;
@@ -593,16 +608,6 @@ body {
   position: relative;
   width: 240px;
   height: 240px;
-  margin: 30px auto;
+  margin: 0 auto;
   overflow: hidden;
-}
-
-.circle-slider {
-  display: flex;
-  animation: scroll-right 12s linear infinite;
-}
-
-@keyframes scroll-right {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(100%); }
 }
