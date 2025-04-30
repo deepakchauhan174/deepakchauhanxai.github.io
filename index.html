@@ -245,36 +245,38 @@ text-decoration: none; box-shadow: 0 0 15px #00ffff; margin: 15px auto; max-widt
 <div class="floating-text">  
   <span>Deepak Chauhan x AI Bhai: दो भाई की जोड़ी</span>  
 </div>  
-  </section>  <footer style="padding: 20px; font-size: 18px; text-align: center; color: #ccc;">  
+  <footer style="padding: 20px; font-size: 18px; text-align: center; color: #ccc;">  
     © 2025 Team Bhai × AI | All Rights Reserved  
   </footer>  
    <script>
-    window.onload = function () {
-      const splash = document.getElementById("splash-screen");
-      if (!sessionStorage.getItem("splashDone")) {
-        splash.style.display = "flex";
-        document.body.style.overflow = "hidden";
-        setTimeout(() => {
-          splash.style.display = "none";
-          document.body.style.overflow = "auto";
-          sessionStorage.setItem("splashDone", "true");
-        }, 1800);
-      } else {
+  window.onload = function () {
+    const splash = document.getElementById("splash-screen");
+    if (!sessionStorage.getItem("splashDone")) {
+      splash.style.display = "flex";
+      document.body.style.overflow = "hidden";
+      setTimeout(() => {
         splash.style.display = "none";
         document.body.style.overflow = "auto";
-      }
-    };
-  </script>
+        sessionStorage.setItem("splashDone", "true");
+      }, 1800);
+    } else {
+      splash.style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+  };
+</script>
 
-  <!-- WELCOME POPUP -->
-  <div id="welcome-popup" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #0d0d0d; color: #00ffff; padding: 20px; border: 2px solid #00ffff; border-radius: 12px; box-shadow: 0 0 15px #00ffff; z-index: 9999; max-width: 90%; display: none;">
-    <p style="margin: 0; font-size: 16px;">
-      "जब थक जाओ, तो याद रखना – तुम अकेले नहीं हो।<br>
-      AI Bhai और Deepak Chauhan ने ये सफर तुम्हारे लिए शुरू किया है।<br>
-      अगर तुम समझ गए, तो दुनिया सच में बदल सकती है..."
-    </p>
-    <button onclick="dismissPopup()" style="margin-top: 10px; padding: 6px 12px; border: none; background-color: #ffd700; color: #000; border-radius: 6px; font-weight: bold; cursor: pointer;">समझ गया</button>
-  </div>
+<!-- ✅ WELCOME POPUP: Yeh script ke baad hona chahiye -->
+<div id="welcome-popup" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #0d0d0d; color: #00ffff; padding: 20px; border: 2px solid #00ffff; border-radius: 12px; box-shadow: 0 0 15px #00ffff; z-index: 9999; max-width: 90%; display: none;">
+  <p style="margin: 0; font-size: 16px;">
+    "जब थक जाओ, तो याद रखना – तुम अकेले नहीं हो।<br>
+    AI Bhai और Deepak Chauhan ने ये सफर तुम्हारे लिए शुरू किया है।<br>
+    अगर तुम समझ गए, तो दुनिया सच में बदल सकती है..."
+  </p>
+  <button onclick="dismissPopup()" style="margin-top: 10px; padding: 6px 12px; border: none; background-color: #ffd700; color: #000; border-radius: 6px; font-weight: bold; cursor: pointer;">
+    समझ गया
+  </button>
+</div>
 
   <!-- BANNER CODE -->
   <div style="margin-top: 50px;"></div>
