@@ -1,6 +1,6 @@
 <script>
   let current = 0;
-  const images = document.querySelectorAll('.fade-img');
+  const images = document.querySelectorAll('.circle-img'); // पहले .fade-img था
 
   setTimeout(() => {
     setInterval(() => {
