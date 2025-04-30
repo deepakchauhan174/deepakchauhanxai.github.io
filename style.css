@@ -583,3 +583,11 @@ body {
   0% { transform: translateX(0); }
   100% { transform: translateX(-100%); }
 }
+
+.circle-slider-fade {
+  width: 240px;
+  height: 240px;
+  margin: 20px auto;
+  position: relative;
+  overflow: visible; /* ये ज़रूरी है */
+}
