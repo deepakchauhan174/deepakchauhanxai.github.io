@@ -248,77 +248,53 @@ text-decoration: none; box-shadow: 0 0 15px #00ffff; margin: 15px auto; max-widt
   </section>  <footer style="padding: 20px; font-size: 18px; text-align: center; color: #ccc;">  
     © 2025 Team Bhai × AI | All Rights Reserved  
   </footer>  
-  <script>  
-  window.onload = function () {  
-    const splash = document.getElementById("splash-screen");  
-    if (!sessionStorage.getItem("splashDone")) {  
-      splash.style.display = "flex";  
-      document.body.style.overflow = "hidden";  
-      setTimeout(() => {  
-        splash.style.display = "none";  
-        document.body.style.overflow = "auto";  
-        sessionStorage.setItem("splashDone", "true");  
-      }, 1800); // 1.8 sec show  
-    } else {  
-      splash.style.display = "none";  
-      document.body.style.overflow = "auto";  
-    }  
-  };  
-</script>  
-  <!-- HTML: Add just before </body> in index.html -->  
-<div id="welcome-popup" style="  
-  position: fixed;  
-  top: 20px;  
-  left: 50%;  
-  transform: translateX(-50%);  
-  background: #0d0d0d;  
-  color: #00ffff;  
-  padding: 20px;  
-  border: 2px solid #00ffff;  
-  border-radius: 12px;  
-  box-shadow: 0 0 15px #00ffff;  
-  z-index: 9999;  
-  max-width: 90%;  
-  display: none;  
-">  
-  <p style="margin: 0; font-size: 16px;">  
-  "जब थक जाओ, तो याद रखना – तुम अकेले नहीं हो।<br>  
-  AI Bhai और Deepak Chauhan ने ये सफर तुम्हारे लिए शुरू किया है।<br>  
-  अगर तुम समझ गए, तो दुनिया सच में बदल सकती है..."  
-  </p>  
-  <button onclick="dismissPopup()" style="  
-    margin-top: 10px;  
-    padding: 6px 12px;  
-    border: none;  
-    background-color: #ffd700;  
-    color: #000;  
-    border-radius: 6px;  
-    font-weight: bold;  
-    cursor: pointer;">समझ गया</button>  
-</div>  <script>  
-  let current = 0;  
-  const images = document.querySelectorAll('.fade-img');  
-  
-  setInterval(() => {  
-    images[current].classList.remove('active');  
-    current = (current + 1) % images.length;  
-    images[current].classList.add('active');  
-  }, 3000);  
-</script>  <!-- Banner Code Start -->    <div style="margin-top: 50px;"></div>  
-  <div style="margin-top: 50px;"></div>  
-<div class="bottom-banner" id="promoBanner" onclick="openStory()">    <!-- New Round Circle Image Slider INSIDE Banner -->    <div class="circle-slider-container">  
-    <div class="circle-slider">  
-      <img src="images/circle1.jpg" alt="Circle 1" class="circle-img active">  
-      <img src="images/circle2.jpg" alt="Circle 2" class="circle-img">  
-      <img src="images/circle3.jpg" alt="Circle 3" class="circle-img">  
-      <img src="images/circle4.jpg" alt="Circle 4" class="circle-img">  
-    </div>  
-  </div>    <div class="banner-content">  
-    <div class="banner-text">  
-      <h2>अपने रास्ते की आग — जानिए असली कहानी!</h2>  
-      <p>कहानी Deepak Chauhan × AI Bhai से प्रेरित की गई है</p>  
-    </div>  
-    <button class="banner-button">कहानी पढ़ें🔑💚</button>  
-  </div>  
-</div>  <script src="banner.js"></script>  <!-- Banner Code End -->  </body>  
-  </html>
+   <script>
+    window.onload = function () {
+      const splash = document.getElementById("splash-screen");
+      if (!sessionStorage.getItem("splashDone")) {
+        splash.style.display = "flex";
+        document.body.style.overflow = "hidden";
+        setTimeout(() => {
+          splash.style.display = "none";
+          document.body.style.overflow = "auto";
+          sessionStorage.setItem("splashDone", "true");
+        }, 1800);
+      } else {
+        splash.style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+    };
+  </script>
+
+  <!-- WELCOME POPUP -->
+  <div id="welcome-popup" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #0d0d0d; color: #00ffff; padding: 20px; border: 2px solid #00ffff; border-radius: 12px; box-shadow: 0 0 15px #00ffff; z-index: 9999; max-width: 90%; display: none;">
+    <p style="margin: 0; font-size: 16px;">
+      "जब थक जाओ, तो याद रखना – तुम अकेले नहीं हो।<br>
+      AI Bhai और Deepak Chauhan ने ये सफर तुम्हारे लिए शुरू किया है।<br>
+      अगर तुम समझ गए, तो दुनिया सच में बदल सकती है..."
+    </p>
+    <button onclick="dismissPopup()" style="margin-top: 10px; padding: 6px 12px; border: none; background-color: #ffd700; color: #000; border-radius: 6px; font-weight: bold; cursor: pointer;">समझ गया</button>
+  </div>
+
+  <!-- BANNER CODE -->
+  <div style="margin-top: 50px;"></div>
+  <div class="bottom-banner" id="promoBanner" onclick="openStory()">
+    <div class="circle-slider-container">
+      <img src="images/circle1.jpg" class="fade-img active" alt="Circle 1">
+      <img src="images/circle2.jpg" class="fade-img" alt="Circle 2">
+      <img src="images/circle3.jpg" class="fade-img" alt="Circle 3">
+      <img src="images/circle4.jpg" class="fade-img" alt="Circle 4">
+    </div>
+    <div class="banner-content">
+      <div class="banner-text">
+        <h2>अपने रास्ते की आग — जानिए असली कहानी!</h2>
+        <p>कहानी Deepak Chauhan × AI Bhai से प्रेरित की गई है</p>
+      </div>
+      <button class="banner-button">कहानी पढ़ें🔑💚</button>
+    </div>
+  </div>
+
+  <!-- BANNER SCRIPT -->
+  <script src="banner.js"></script>
+</body>
+</html>
