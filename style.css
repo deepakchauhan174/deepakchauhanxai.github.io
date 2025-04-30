@@ -564,11 +564,6 @@ body {
   justify-content: center;
 }
 
-.circle-slider {
-  display: flex;
-  animation: scroll 12s linear infinite;
-}
-
 .circle-img {
   width: 180px;       /* थोड़ा बड़ा रखा गया */
   height: 180px;
@@ -577,17 +572,6 @@ body {
   object-fit: cover;
   border: 3px solid #00ffff;
   box-shadow: 0 0 10px #00ffff;
-}
-
-@keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
-}
-
-.fade-img {
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  position: absolute;
 }
 
 .fade-img {
@@ -611,4 +595,14 @@ body {
   height: 240px;
   margin: 30px auto;
   overflow: hidden;
+}
+
+.circle-slider {
+  display: flex;
+  animation: scroll-right 12s linear infinite;
+}
+
+@keyframes scroll-right {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
 }
