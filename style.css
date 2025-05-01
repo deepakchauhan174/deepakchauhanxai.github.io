@@ -591,3 +591,30 @@ body {
     max-width: 100%;
   }
   
+.like-btn, .comment-btn {
+  margin: 5px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+  transition: 0.3s ease-in-out;
+}
+
+.like-btn {
+  background-color: #00bfff;
+  color: #fff;
+}
+
+.comment-btn {
+  background-color: #ff69b4;
+  color: #fff;
+}
+
+.like-btn:hover,
+.comment-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255,255,255,0.4);
+}
