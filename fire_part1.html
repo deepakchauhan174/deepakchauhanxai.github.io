@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fire Dialogues – Part 1</title>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
@@ -67,106 +67,111 @@
       margin-top: 10px;
     }
     input {
-      margin-top: 5px;
-      padding: 6px;
+      margin: 5px 0;
+      padding: 5px;
       border-radius: 5px;
       border: none;
       width: 100%;
     }
     button {
+      padding: 5px 10px;
       margin: 5px;
-      padding: 6px 12px;
     }
   </style>
 </head>
 <body>
-<div id="loader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: black; color: #00ffff; font-size: 22px; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 9999; text-align: center; padding: 20px; box-sizing: border-box; text-shadow: 0 0 10px #00ffff;">
-  Deepak Chauhan × AI Bhai के 🔥 Fire Dialogues Part 1 में आपका स्वागत है...
-</div>
-<h1>Fire Dialogues – Part 1</h1>
-<div id="dialogues-container"></div>
-<script>
-  const container = document.getElementById("dialogues-container");
-  const imagePaths = [
-    "images/fire_part_img1.jpg",
-    "images/fire_part_img2.jpg",
-    "images/fire_part_img3.jpg",
-    "images/fire_part_img4.jpg",
-    "images/fire_part_img5.jpg"
-  ];
+  <h1>Fire Dialogues – Part 1</h1>
+  <div id="dialogues-container"></div>
 
-  fetch("https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec")
-    .then(res => res.json())
-    .then(data => {
-      let index = 0;
-      Object.keys(data).forEach(key => {
-        const { fire, story, signature, title } = data[key];
-        const box = document.createElement("div");
-        box.className = "dialogue-box";
-        box.innerHTML = `
-          <h3>${fire}</h3>
-          <p class="story">${story}</p>
-          <p class="signature">${signature}</p>
-          <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image ${index+1}" onclick="likePost('${title}')">
-          <div class="button-group">
-            <p style="color:#66fcf1;">Likes: <span id="like-${title}">0</span></p>
-            <p style="color:#ff69b4; cursor:pointer;" onclick="toggleComments('${title}')">Comments (<span id="count-${title}">0</span>) ▼</p>
-            <div id="comments-${title}" style="display:none; color:#ccc; margin-top:5px;"></div>
-            <input type="text" id="input-${title}" placeholder="Apna comment likho...">
-            <button onclick="submitComment('${title}')">Submit</button>
-          </div>`;
-        container.appendChild(box);
-        listenToRealtime(title);
-        index++;
+  <script>
+    const container = document.getElementById("dialogues-container");
+    const imagePaths = [
+      "images/fire_part_img4.jpg",
+      "images/fire_part_img2.jpg",
+      "images/fire_part_img5.jpg",
+      "images/fire_part_img1.jpg",
+      "images/fire_part_img3.jpg"
+    ];
+
+    fetch("https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec")
+      .then(res => res.json())
+      .then(data => {
+        let index = 0;
+        Object.keys(data).forEach(key => {
+  const { fire, story, signature, title } = data[key];
+  const safeTitle = title && title.trim() !== "" ? title : `default-${key}`; // <-- YE LINE ZARURI HAI
+          const box = document.createElement("div");
+          box.className = "dialogue-box";
+          box.innerHTML = `
+  <h3>${fire}</h3>
+  <p class="story">${story}</p>
+  <p class="signature">${signature}</p>
+  <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image">
+  <div class="button-group">
+    <p style="color:#66fcf1;">Likes: <span id="like-${safeTitle}">0</span></p>
+    <p style="color:#ff69b4; cursor:pointer;" onclick="toggleComments('${safeTitle}')">
+      Comments (<span id="count-${safeTitle}">0</span>) ▼</p>
+    <div id="comments-${safeTitle}" style="display:none; color:#ccc; margin-top:5px;"></div>
+    <input type="text" id="name-${safeTitle}" placeholder="Apna naam likho...">
+    <input type="text" id="input-${safeTitle}" placeholder="Apna comment likho...">
+    <button onclick="submitComment('${safeTitle}')">Submit</button>
+    <button onclick="likePost('${safeTitle}')">Like</button>
+  </div>
+`;
+          container.appendChild(box);
+          listenToRealtime(title);
+          index++;
+        });
       });
-    });
 
-  function likePost(title) {
-    if (localStorage.getItem(`liked-${title}`)) return;
-    db.ref("Fire1_LikeComment/" + title + "/likes").transaction(current => (current || 0) + 1);
-    localStorage.setItem(`liked-${title}`, "true");
-  }
+    function likePost(title) {
+  const safeTitle = title && title.trim() !== "" ? title : "default"; // fallback
+  const likeRef = db.ref("Fire1_Likes/" + safeTitle);
+  likeRef.transaction(current => (current || 0) + 1);
+}
 
-  function submitComment(title) {
-    const input = document.getElementById(`input-${title}`);
-    const comment = input.value.trim();
-    if (!comment || localStorage.getItem(`commented-${title}`)) return;
-    db.ref("Fire1_LikeComment/" + title + "/comments").push(comment);
-    localStorage.setItem(`commented-${title}`, "true");
-    input.value = "";
-  }
+function submitComment(title) {
+  const safeTitle = title && title.trim() !== "" ? title : "default";
+  const input = document.getElementById(`input-${safeTitle}`);
+  const name = document.getElementById(`name-${safeTitle}`).value.trim();
+  const comment = input.value.trim();
+  if (!comment || !name) return;
 
-  function listenToRealtime(title) {
-    const ref = db.ref("Fire1_LikeComment/" + title);
-    ref.on("value", snapshot => {
-      const data = snapshot.val();
-      const count = document.getElementById(`count-${title}`);
-      const likes = document.getElementById(`like-${title}`);
-      const div = document.getElementById(`comments-${title}`);
-      if (data) {
-        likes.textContent = data.likes || 0;
-        const commentsList = data.comments ? Object.values(data.comments) : [];
-        div.innerHTML = commentsList.map(c => `<div>– ${c}</div>`).join("");
-        count.textContent = commentsList.length;
-      }
-    });
-  }
+  const ref = db.ref("Fire1_Comments/" + safeTitle);
+  ref.push(`${name}: ${comment}`);
+  input.value = "";
+}
 
-  function toggleComments(title) {
-    const box = document.getElementById(`comments-${title}`);
-    box.style.display = box.style.display === "none" ? "block" : "none";
-  }
+function listenToRealtime(title) {
+  const safeTitle = title && title.trim() !== "" ? title : "default";
+  const commentsRef = db.ref("Fire1_Comments/" + safeTitle);
+  const likeRef = db.ref("Fire1_Likes/" + safeTitle);
 
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      const loader = document.getElementById("loader");
-      loader.style.display = "none";
-    }, 4000);
+  commentsRef.on("value", snapshot => {
+    const data = snapshot.val();
+    const div = document.getElementById(`comments-${safeTitle}`);
+    const count = document.getElementById(`count-${safeTitle}`);
+    if (data) {
+      const list = Object.values(data);
+      div.innerHTML = list.map(c => `<div>– ${c}</div>`).join("");
+      count.textContent = list.length;
+    } else {
+      div.innerHTML = "";
+      count.textContent = "0";
+    }
   });
 
-  window.onpageshow = event => {
-    if (event.persisted) window.location.reload();
-  };
-</script>
+  likeRef.on("value", snapshot => {
+    const likeSpan = document.getElementById(`like-${safeTitle}`);
+    likeSpan.textContent = snapshot.val() || 0;
+  });
+}
+
+function toggleComments(title) {
+  const safeTitle = title && title.trim() !== "" ? title : "default";
+  const box = document.getElementById(`comments-${safeTitle}`);
+  box.style.display = box.style.display === "none" ? "block" : "none";
+    }
+  </script>
 </body>
 </html>
