@@ -51,7 +51,7 @@
       text-align: center;
       margin-top: 10px;
     }
-    .copy-btn, .share-btn {
+    .like-btn, .comment-btn {
       margin: 5px;
       padding: 6px 14px;
       font-size: 14px;
@@ -60,13 +60,13 @@
       cursor: pointer;
       border: none;
     }
-    .copy-btn {
-      background-color: #00ffff;
-      color: #000;
+    .like-btn {
+      background-color: #00bfff;
+      color: #fff;
     }
-    .share-btn {
-      background-color: #ffd700;
-      color: #000;
+    .comment-btn {
+      background-color: #ff69b4;
+      color: #fff;
     }
   </style>
 </head>
@@ -97,6 +97,7 @@
         const fire = data[key].fire;
         const story = data[key].story;
         const signature = data[key].signature;
+        const title = data[key].title;
 
         const box = document.createElement("div");
         box.className = "dialogue-box";
@@ -107,8 +108,8 @@
           <p class="signature">${signature}</p>
           <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image ${index+1}">
           <div class="button-group">
-            <button class="copy-btn" onclick="copyToClipboard(\`${story}\`)">Copy</button>
-            <button class="share-btn" onclick="shareText(\`${story}\`)">Share</button>
+            <button class="like-btn" onclick="likePost('${title}')">Like</button>
+            <button class="comment-btn" onclick="commentPost('${title}', prompt('Apna comment likho:'))">Comment</button>
           </div>
         `;
         container.appendChild(box);
@@ -116,21 +117,20 @@
       });
     });
 
-  function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-      alert("सर जी डायलॉग कॉपी हो गया!");
-    });
+  function likePost(title) {
+    fetch('https://script.google.com/macros/s/AKfycby6WAXdA6QEjg8FzFW3COL4RJMPyqLpboZ34lI-iXlD6OsJtGNGeJqft6JXaAHFyQlq/exec', {
+      method: 'POST',
+      body: JSON.stringify({ title: title, type: 'like' }),
+      headers: { 'Content-Type': 'application/json' }
+    }).then(() => alert("Liked!"));
   }
 
-  function shareText(text) {
-    if (navigator.share) {
-      navigator.share({
-        title: "Deepak Chauhan x AI Bhai",
-        text: text
-      });
-    } else {
-      alert("Sharing is not supported on this device.");
-    }
+  function commentPost(title, comment) {
+    fetch('https://script.google.com/macros/s/AKfycby6WAXdA6QEjg8FzFW3COL4RJMPyqLpboZ34lI-iXlD6OsJtGNGeJqft6JXaAHFyQlq/exec', {
+      method: 'POST',
+      body: JSON.stringify({ title: title, type: 'comment', comment: comment }),
+      headers: { 'Content-Type': 'application/json' }
+    }).then(() => alert("Comment added!"));
   }
 
   window.onpageshow = function(event) {
