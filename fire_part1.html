@@ -51,23 +51,6 @@
       text-align: center;
       margin-top: 10px;
     }
-    .like-btn, .comment-btn {
-      margin: 5px;
-      padding: 6px 14px;
-      font-size: 14px;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      border: none;
-    }
-    .like-btn {
-      background-color: #00bfff;
-      color: #fff;
-    }
-    .comment-btn {
-      background-color: #ff69b4;
-      color: #fff;
-    }
   </style>
 </head>
 <body>
@@ -98,6 +81,8 @@
         const story = data[key].story;
         const signature = data[key].signature;
         const title = data[key].title;
+        const likes = data[key].likes || 0;
+        const comments = data[key].comments || "";
 
         const box = document.createElement("div");
         box.className = "dialogue-box";
@@ -108,8 +93,16 @@
           <p class="signature">${signature}</p>
           <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image ${index+1}">
           <div class="button-group">
-            <button class="like-btn" onclick="likePost('${title}')">Like</button>
-            <button class="comment-btn" onclick="commentPost('${title}', prompt('Apna comment likho:'))">Comment</button>
+            <p style="color:#66fcf1;">Likes: <span id="like-${title}">${likes}</span></p>
+            <p style="color:#ff69b4; cursor:pointer;" onclick="toggleComments('${title}')">
+              Comments (<span id="count-${title}">${comments.split("|").filter(c => c.trim()).length}</span>) ▼
+            </p>
+            <div id="comments-${title}" style="display:none; color:#ccc; margin-top:5px;">
+              ${comments.split("|").map(c => `<div>– ${c.trim()}</div>`).join("")}
+            </div>
+            <input type="text" id="input-${title}" placeholder="Apna comment likho..." style="width:100%; margin-top:5px;"/>
+            <button onclick="submitComment('${title}')">Submit</button>
+            <button onclick="likePost('${title}')">Like</button>
           </div>
         `;
         container.appendChild(box);
@@ -122,15 +115,33 @@
       method: 'POST',
       body: JSON.stringify({ title: title, type: 'like' }),
       headers: { 'Content-Type': 'application/json' }
-    }).then(() => alert("Liked!"));
+    }).then(() => {
+      const count = document.getElementById(`like-${title}`);
+      count.textContent = parseInt(count.textContent) + 1;
+    });
   }
 
-  function commentPost(title, comment) {
+  function submitComment(title) {
+    const input = document.getElementById(`input-${title}`);
+    const comment = input.value.trim();
+    if (!comment) return;
+
     fetch('https://script.google.com/macros/s/AKfycby6WAXdA6QEjg8FzFW3COL4RJMPyqLpboZ34lI-iXlD6OsJtGNGeJqft6JXaAHFyQlq/exec', {
       method: 'POST',
       body: JSON.stringify({ title: title, type: 'comment', comment: comment }),
       headers: { 'Content-Type': 'application/json' }
-    }).then(() => alert("Comment added!"));
+    }).then(() => {
+      const div = document.getElementById(`comments-${title}`);
+      div.innerHTML += `<div>– ${comment}</div>`;
+      const count = document.getElementById(`count-${title}`);
+      count.textContent = parseInt(count.textContent) + 1;
+      input.value = "";
+    });
+  }
+
+  function toggleComments(title) {
+    const box = document.getElementById(`comments-${title}`);
+    box.style.display = box.style.display === "none" ? "block" : "none";
   }
 
   window.onpageshow = function(event) {
