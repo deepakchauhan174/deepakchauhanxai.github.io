@@ -1,153 +1,176 @@
-<!DOCTYPE html>  <html lang="hi">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
-  <title>Fire Dialogues – Part 1</title>    <!-- Firebase Scripts -->    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>    <script>  
-    const firebaseConfig = {  
-      apiKey: "AIzaSyAT8qbxGsbG_28uVUWMmCmXeHf8WQmbvVZQ",  
-      authDomain: "vip-team-bhai-x-ai.firebaseapp.com",  
-      databaseURL: "https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com",  
-      projectId: "vip-team-bhai-x-ai",  
-      storageBucket: "vip-team-bhai-x-ai.appspot.com",  
-      messagingSenderId: "984650632826",  
-      appId: "1:984650632826:web:7e3b8167fb5979537535c3"  
-    };  
-    firebase.initializeApp(firebaseConfig);  
-    const db = firebase.database();  
-  </script>    <style>  
-    body {  
-      background: linear-gradient(135deg, #000000, #0a0a0a);  
-      color: white;  
-      font-family: 'Segoe UI', sans-serif;  
-      padding: 20px;  
-    }  
-    h1 {  
-      text-align: center;  
-      color: #ff4444;  
-      margin-bottom: 30px;  
-      text-shadow: 0 0 10px #ff4444;  
-    }  
-    .dialogue-box {  
-      background: #111;  
-      padding: 20px;  
-      border-radius: 15px;  
-      margin: 20px 0;  
-      box-shadow: 0 0 15px #00ffff;  
-    }  
-    .dialogue-box h3 {  
-      color: #ff00ff;  
-      text-align: center;  
-    }  
-    .dialogue-box p.story {  
-      font-size: 20px;  
-      line-height: 1.8;  
-      color: #66fcf1;  
-    }  
-    .dialogue-box p.signature {  
-      color: #ccc;  
-      font-size: 14px;  
-      text-align: right;  
-      margin-top: 10px;  
-    }  
-    .dialogue-box img {  
-      display: block;  
-      margin: 20px auto 0;  
-      width: 220px;  
-      border-radius: 12px;  
-      border: 3px solid #00ffff;  
-      box-shadow: 0 0 15px #00ffff;  
-    }  
-    .button-group {  
-      text-align: center;  
-      margin-top: 10px;  
-    }  
-  </style>  </head>  <body>  <div id="loader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: black; color: #00ffff; font-size: 22px; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 9999; text-align: center; padding: 20px; box-sizing: border-box; text-shadow: 0 0 10px #00ffff;">  
-  Deepak Chauhan × AI Bhai के 🔥 Fire Dialogues Part 1 में आपका स्वागत है...  
-</div>  <h1>Fire Dialogues – Part 1</h1>  
-<div id="dialogues-container"></div>  <script>  
-  const container = document.getElementById("dialogues-container");  
-  const imagePaths = [  
-    "images/fire_part_img4.jpg",  
-    "images/fire_part_img2.jpg",  
-    "images/fire_part_img5.jpg",  
-    "images/fire_part_img1.jpg",  
-    "images/fire_part_img3.jpg"  
-  ];  
-  let index = 0;  
-  
-  fetch("https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec")  
-    .then(res => res.json())  
-    .then(data => {  
-      Object.keys(data).forEach(key => {  
-        const { fire, story, signature, title } = data[key];  
-        const box = document.createElement("div");  
-        box.className = "dialogue-box";  
-  
-        box.innerHTML = `  
-          <h3>${fire}</h3>  
-          <p class="story">${story}</p>  
-          <p class="signature">${signature}</p>  
-          <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image">  
-          <div class="button-group">  
-            <p style="color:#66fcf1;">Likes: <span id="like-${title}">0</span></p>  
-            <p style="color:#ff69b4; cursor:pointer;" onclick="toggleComments('${title}')">  
-              Comments (<span id="count-${title}">0</span>) ▼  
-            </p>  
-            <div id="comments-${title}" style="display:none; color:#ccc; margin-top:5px;"></div>  
-            <input type="text" id="input-${title}" placeholder="Apna comment likho..." style="width:100%; margin-top:5px;" />  
-            <button onclick="submitComment('${title}')">Submit</button>  
-            <button onclick="likePost('${title}')">Like</button>  
-          </div>  
-        `;  
-        container.appendChild(box);  
-        listenToRealtime(title);  
-        index++;  
-      });  
-    });  
-  
-  function submitComment(title) {  
-    const input = document.getElementById(`input-${title}`);  
-    const comment = input.value.trim();  
-    if (!comment) return;  
-    db.ref("Fire1_Comments/" + title).push(comment);  
-    input.value = "";  
-  }  
-  
-  function likePost(title) {  
-    const likeRef = db.ref("Fire1_Likes/" + title);  
-    likeRef.once("value").then(snapshot => {  
-      const current = snapshot.val() || 0;  
-      likeRef.set(current + 1);  
-    });  
-  }  
-  
-  function listenToRealtime(title) {  
-    const commentsDiv = document.getElementById(`comments-${title}`);  
-    const likeSpan = document.getElementById(`like-${title}`);  
-    const countSpan = document.getElementById(`count-${title}`);  
-  
-    db.ref("Fire1_Comments/" + title).on("value", snapshot => {  
-      const data = snapshot.val();  
-      const arr = data ? Object.values(data) : [];  
-      commentsDiv.innerHTML = arr.map(c => `<div>– ${c}</div>`).join("");  
-      countSpan.textContent = arr.length;  
-    });  
-  
-    db.ref("Fire1_Likes/" + title).on("value", snapshot => {  
-      const val = snapshot.val();  
-      likeSpan.textContent = val || 0;  
-    });  
-  }  
-  
-  window.addEventListener("load", function () {  
-    setTimeout(() => {  
-      const loader = document.getElementById("loader");  
-      loader.style.display = "none";  
-    }, 4000);  
-  });  
-  
-  window.onpageshow = function(event) {  
-    if (event.persisted) window.location.reload();  
-  };  
-</script>  </body>  
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fire Dialogues – Part 1</title>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAT8qbxGsbG_28uVUWMmCmXeHf8WQmbvVZQ",
+      authDomain: "vip-team-bhai-x-ai.firebaseapp.com",
+      databaseURL: "https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com",
+      projectId: "vip-team-bhai-x-ai",
+      storageBucket: "vip-team-bhai-x-ai.appspot.com",
+      messagingSenderId: "984650632826",
+      appId: "1:984650632826:web:7e3b8167fb5979537535c3"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+  </script>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #000000, #0a0a0a);
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ff4444;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px #ff4444;
+    }
+    .dialogue-box {
+      background: #111;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      box-shadow: 0 0 15px #00ffff;
+    }
+    .dialogue-box h3 {
+      color: #ff00ff;
+      text-align: center;
+    }
+    .dialogue-box p.story {
+      font-size: 20px;
+      line-height: 1.8;
+      color: #66fcf1;
+    }
+    .dialogue-box p.signature {
+      color: #ccc;
+      font-size: 14px;
+      text-align: right;
+      margin-top: 10px;
+    }
+    .dialogue-box img {
+      display: block;
+      margin: 20px auto 0;
+      width: 220px;
+      border-radius: 12px;
+      border: 3px solid #00ffff;
+      box-shadow: 0 0 15px #00ffff;
+    }
+    .button-group {
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+<div id="loader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: black; color: #00ffff; font-size: 22px; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 9999; text-align: center; padding: 20px; box-sizing: border-box; text-shadow: 0 0 10px #00ffff;">
+  Deepak Chauhan × AI Bhai के 🔥 Fire Dialogues Part 1 में आपका स्वागत है...
+</div>
+
+<h1>Fire Dialogues – Part 1</h1>
+<div id="dialogues-container"></div>
+
+<script>
+  const container = document.getElementById("dialogues-container");
+  const imagePaths = [
+    "images/fire_part_img4.jpg",
+    "images/fire_part_img2.jpg",
+    "images/fire_part_img5.jpg",
+    "images/fire_part_img1.jpg",
+    "images/fire_part_img3.jpg"
+  ];
+
+  fetch("https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec")
+    .then(res => res.json())
+    .then(data => {
+      Object.keys(data).forEach((key, index) => {
+        const { fire, story, signature, title } = data[key];
+        const postId = `post-${index}`;
+        const box = document.createElement("div");
+        box.className = "dialogue-box";
+
+        box.innerHTML = `
+          <h3>${fire}</h3>
+          <p class="story">${story}</p>
+          <p class="signature">${signature}</p>
+          <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image">
+          <div class="button-group">
+            <p style="color:#66fcf1;">Likes: <span id="like-${postId}">0</span></p>
+            <p style="color:#ff69b4; cursor:pointer;" onclick="toggleComments('${postId}')">
+              Comments (<span id="count-${postId}">0</span>) ▼
+            </p>
+            <div id="comments-${postId}" style="display:none; color:#ccc; margin-top:5px;"></div>
+            <input type="text" id="input-${postId}" placeholder="Apna comment likho..." style="width:100%; margin-top:5px;" />
+            <button onclick="submitComment('${postId}')">Submit</button>
+            <button onclick="likePost('${postId}')">Like</button>
+          </div>
+        `;
+
+        container.appendChild(box);
+        listenToRealtime(postId);
+      });
+    });
+
+  function likePost(postId) {
+    if (localStorage.getItem(`liked-${postId}`)) return;
+    const likeRef = db.ref("Fire1_Likes/" + postId);
+    likeRef.transaction(current => (current || 0) + 1);
+    localStorage.setItem(`liked-${postId}`, "true");
+  }
+
+  function submitComment(postId) {
+    if (localStorage.getItem(`commented-${postId}`)) return;
+    const input = document.getElementById(`input-${postId}`);
+    const comment = input.value.trim();
+    if (!comment) return;
+    db.ref("Fire1_Comments/" + postId).push(comment);
+    localStorage.setItem(`commented-${postId}`, "true");
+    input.value = "";
+  }
+
+  function listenToRealtime(postId) {
+    const commentsDiv = document.getElementById(`comments-${postId}`);
+    const likeSpan = document.getElementById(`like-${postId}`);
+    const countSpan = document.getElementById(`count-${postId}`);
+
+    db.ref("Fire1_Comments/" + postId).on("value", snapshot => {
+      const data = snapshot.val();
+      const arr = data ? Object.values(data) : [];
+      commentsDiv.innerHTML = arr.map(c => `<div>– ${c}</div>`).join("");
+      countSpan.textContent = arr.length;
+    });
+
+    db.ref("Fire1_Likes/" + postId).on("value", snapshot => {
+      likeSpan.textContent = snapshot.val() || 0;
+    });
+  }
+
+  function toggleComments(postId) {
+    const box = document.getElementById(`comments-${postId}`);
+    box.style.display = box.style.display === "none" ? "block" : "none";
+  }
+
+  window.addEventListener("load", function () {
+    setTimeout(() => {
+      const loader = document.getElementById("loader");
+      loader.style.display = "none";
+    }, 4000);
+  });
+
+  window.onpageshow = function(event) {
+    if (event.persisted) window.location.reload();
+  };
+</script>
+</body>
 </html>
