@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Fire Dialogues – Part 1</title>
+
+  <!-- Firebase Scripts -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAT8qbxGsbG_28uVUWMmCmXeHf8WQmbvVZQ",
@@ -19,6 +22,7 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
   </script>
+
   <style>
     body {
       background: linear-gradient(135deg, #000000, #0a0a0a);
@@ -43,12 +47,12 @@
       color: #ff00ff;
       text-align: center;
     }
-    .story {
+    .dialogue-box p.story {
       font-size: 20px;
       line-height: 1.8;
       color: #66fcf1;
     }
-    .signature {
+    .dialogue-box p.signature {
       color: #ccc;
       font-size: 14px;
       text-align: right;
@@ -66,107 +70,104 @@
       text-align: center;
       margin-top: 10px;
     }
-    input {
-      margin: 5px 0;
-      padding: 5px;
-      border-radius: 5px;
-      border: none;
-      width: 100%;
-    }
-    button {
-      padding: 5px 10px;
-      margin: 5px;
-    }
   </style>
 </head>
+
 <body>
-  <h1>Fire Dialogues – Part 1</h1>
-  <div id="dialogues-container"></div>
 
-  <script>
-    const container = document.getElementById("dialogues-container");
-    const imagePaths = [
-      "images/fire_part_img4.jpg",
-      "images/fire_part_img2.jpg",
-      "images/fire_part_img5.jpg",
-      "images/fire_part_img1.jpg",
-      "images/fire_part_img3.jpg"
-    ];
+<div id="loader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: black; color: #00ffff; font-size: 22px; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 9999; text-align: center; padding: 20px; box-sizing: border-box; text-shadow: 0 0 10px #00ffff;">
+  Deepak Chauhan × AI Bhai के 🔥 Fire Dialogues Part 1 में आपका स्वागत है...
+</div>
 
-    fetch("https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec")
-      .then(res => res.json())
-      .then(data => {
-        let index = 0;
-        Object.keys(data).forEach(key => {
-          const { fire, story, signature, title } = data[key];
-          const box = document.createElement("div");
-          box.className = "dialogue-box";
-          box.innerHTML = `
-            <h3>${fire}</h3>
-            <p class="story">${story}</p>
-            <p class="signature">${signature}</p>
-            <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image">
-            <div class="button-group">
-              <p style="color:#66fcf1;">Likes: <span id="like-${title}">0</span></p>
-              <p style="color:#ff69b4; cursor:pointer;" onclick="toggleComments('${title}')">
-                Comments (<span id="count-${title}">0</span>) ▼</p>
-              <div id="comments-${title}" style="display:none; color:#ccc; margin-top:5px;"></div>
-              <input type="text" id="name-${title}" placeholder="Apna naam likho...">
-              <input type="text" id="input-${title}" placeholder="Apna comment likho...">
-              <button onclick="submitComment('${title}')">Submit</button>
-              <button onclick="likePost('${title}')">Like</button>
-            </div>
-          `;
-          container.appendChild(box);
-          listenToRealtime(title);
-          index++;
-        });
+<h1>Fire Dialogues – Part 1</h1>
+<div id="dialogues-container"></div>
+
+<script>
+  const container = document.getElementById("dialogues-container");
+  const imagePaths = [
+    "images/fire_part_img4.jpg",
+    "images/fire_part_img2.jpg",
+    "images/fire_part_img5.jpg",
+    "images/fire_part_img1.jpg",
+    "images/fire_part_img3.jpg"
+  ];
+  let index = 0;
+
+  fetch("https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec")
+    .then(res => res.json())
+    .then(data => {
+      Object.keys(data).forEach(key => {
+        const { fire, story, signature, title } = data[key];
+        const box = document.createElement("div");
+        box.className = "dialogue-box";
+
+        box.innerHTML = `
+          <h3>${fire}</h3>
+          <p class="story">${story}</p>
+          <p class="signature">${signature}</p>
+          <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image">
+          <div class="button-group">
+            <p style="color:#66fcf1;">Likes: <span id="like-${title}">0</span></p>
+            <p style="color:#ff69b4; cursor:pointer;" onclick="toggleComments('${title}')">
+              Comments (<span id="count-${title}">0</span>) ▼
+            </p>
+            <div id="comments-${title}" style="display:none; color:#ccc; margin-top:5px;"></div>
+            <input type="text" id="input-${title}" placeholder="Apna comment likho..." style="width:100%; margin-top:5px;" />
+            <button onclick="submitComment('${title}')">Submit</button>
+            <button onclick="likePost('${title}')">Like</button>
+          </div>
+        `;
+        container.appendChild(box);
+        listenToRealtime(title);
+        index++;
       });
+    });
 
-    function likePost(title) {
-      const likeRef = db.ref("Fire1_Likes/" + title);
-      likeRef.transaction(current => (current || 0) + 1);
-    }
+  function submitComment(title) {
+    const input = document.getElementById(`input-${title}`);
+    const comment = input.value.trim();
+    if (!comment) return;
+    db.ref("Fire1_Comments/" + title).push(comment);
+    input.value = "";
+  }
 
-    function submitComment(title) {
-      const input = document.getElementById(`input-${title}`);
-      const name = document.getElementById(`name-${title}`).value.trim();
-      const comment = input.value.trim();
-      if (!comment || !name) return;
+  function likePost(title) {
+    const likeRef = db.ref("Fire1_Likes/" + title);
+    likeRef.once("value").then(snapshot => {
+      const current = snapshot.val() || 0;
+      likeRef.set(current + 1);
+    });
+  }
 
-      const ref = db.ref("Fire1_Comments/" + title);
-      ref.push(`${name}: ${comment}`);
-      input.value = "";
-    }
+  function listenToRealtime(title) {
+    const commentsDiv = document.getElementById(`comments-${title}`);
+    const likeSpan = document.getElementById(`like-${title}`);
+    const countSpan = document.getElementById(`count-${title}`);
 
-    function listenToRealtime(title) {
-      const commentsRef = db.ref("Fire1_Comments/" + title);
-      const likeRef = db.ref("Fire1_Likes/" + title);
+    db.ref("Fire1_Comments/" + title).on("value", snapshot => {
+      const data = snapshot.val();
+      const arr = data ? Object.values(data) : [];
+      commentsDiv.innerHTML = arr.map(c => `<div>– ${c}</div>`).join("");
+      countSpan.textContent = arr.length;
+    });
 
-      commentsRef.on("value", snapshot => {
-        const data = snapshot.val();
-        const div = document.getElementById(`comments-${title}`);
-        const count = document.getElementById(`count-${title}`);
-        if (data) {
-          const list = Object.values(data);
-          div.innerHTML = list.map(c => `<div>– ${c}</div>`).join("");
-          count.textContent = list.length;
-        } else {
-          div.innerHTML = "";
-          count.textContent = "0";
-        }
-      });
+    db.ref("Fire1_Likes/" + title).on("value", snapshot => {
+      const val = snapshot.val();
+      likeSpan.textContent = val || 0;
+    });
+  }
 
-      likeRef.on("value", snapshot => {
-        const likeSpan = document.getElementById(`like-${title}`);
-        likeSpan.textContent = snapshot.val() || 0;
-      });
-    }
+  window.addEventListener("load", function () {
+    setTimeout(() => {
+      const loader = document.getElementById("loader");
+      loader.style.display = "none";
+    }, 4000);
+  });
 
-    function toggleComments(title) {
-      const box = document.getElementById(`comments-${title}`);
-      box.style.display = box.style.display === "none" ? "block" : "none";
-    }
-  </script>
+  window.onpageshow = function(event) {
+    if (event.persisted) window.location.reload();
+  };
+</script>
+
 </body>
 </html>
