@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="hi">
+<!DOCTYPE html>
+<html lang="hi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -92,19 +93,80 @@
     "images/fire_part_img3.jpg",
     "images/fire_part_img4.jpg",
     "images/fire_part_img5.jpg"
-  ];fetch("https://script.google.com/macrous/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec") .then(res => res.json()) .then(data => { let index = 0; Object.keys(data).forEach(key => { const { fire, story, signature, title } = data[key]; const box = document.createElement("div"); box.className = "dialogue-box"; box.innerHTML =  <h3>${fire}</h3> <p class="story">${story}</p> <p class="signature">${signature}</p> <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image ${index+1}" onclick="likePost('${title}')"> <div class="button-group"> <p style="color:#66fcf1;">Likes: <span id="like-${title}">0</span></p> <p style="color:#ff69b4; cursor:pointer;" onclick="toggleComments('${title}')">Comments (<span id="count-${title}">0</span>) ▼</p> <div id="comments-${title}" style="display:none; color:#ccc; margin-top:5px;"></div> <input type="text" id="input-${title}" placeholder="Apna comment likho..."> <button onclick="submitComment('${title}')">Submit</button> </div>; container.appendChild(box); listenToRealtime(title); index++; }); });
+  ];
 
-function likePost(title) { if (localStorage.getItem(liked-${title})) return; db.ref("Fire1_LikeComment/" + title + "/likes").transaction(current => (current || 0) + 1); localStorage.setItem(liked-${title}, "true"); }
+  fetch("https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec")
+    .then(res => res.json())
+    .then(data => {
+      let index = 0;
+      Object.keys(data).forEach(key => {
+        const { fire, story, signature, title } = data[key];
+        const box = document.createElement("div");
+        box.className = "dialogue-box";
+        box.innerHTML = `
+          <h3>${fire}</h3>
+          <p class="story">${story}</p>
+          <p class="signature">${signature}</p>
+          <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image ${index+1}" onclick="likePost('${title}')">
+          <div class="button-group">
+            <p style="color:#66fcf1;">Likes: <span id="like-${title}">0</span></p>
+            <p style="color:#ff69b4; cursor:pointer;" onclick="toggleComments('${title}')">Comments (<span id="count-${title}">0</span>) ▼</p>
+            <div id="comments-${title}" style="display:none; color:#ccc; margin-top:5px;"></div>
+            <input type="text" id="input-${title}" placeholder="Apna comment likho...">
+            <button onclick="submitComment('${title}')">Submit</button>
+          </div>`;
+        container.appendChild(box);
+        listenToRealtime(title);
+        index++;
+      });
+    });
 
-function submitComment(title) { const input = document.getElementById(input-${title}); const comment = input.value.trim(); if (!comment || localStorage.getItem(commented-${title})) return; db.ref("Fire1_LikeComment/" + title + "/comments").push(comment); localStorage.setItem(commented-${title}, "true"); input.value = ""; }
+  function likePost(title) {
+    if (localStorage.getItem(`liked-${title}`)) return;
+    db.ref("Fire1_LikeComment/" + title + "/likes").transaction(current => (current || 0) + 1);
+    localStorage.setItem(`liked-${title}`, "true");
+  }
 
-function listenToRealtime(title) { const ref = db.ref("Fire1_LikeComment/" + title); ref.on("value", snapshot => { const data = snapshot.val(); const count = document.getElementById(count-${title}); const likes = document.getElementById(like-${title}); const div = document.getElementById(comments-${title}); if (data) { likes.textContent = data.likes || 0; const commentsList = data.comments ? Object.values(data.comments) : []; div.innerHTML = commentsList.map(c => <div>– ${c}</div>).join(""); count.textContent = commentsList.length; } }); }
+  function submitComment(title) {
+    const input = document.getElementById(`input-${title}`);
+    const comment = input.value.trim();
+    if (!comment || localStorage.getItem(`commented-${title}`)) return;
+    db.ref("Fire1_LikeComment/" + title + "/comments").push(comment);
+    localStorage.setItem(`commented-${title}`, "true");
+    input.value = "";
+  }
 
-function toggleComments(title) { const box = document.getElementById(comments-${title}); box.style.display = box.style.display === "none" ? "block" : "none"; }
+  function listenToRealtime(title) {
+    const ref = db.ref("Fire1_LikeComment/" + title);
+    ref.on("value", snapshot => {
+      const data = snapshot.val();
+      const count = document.getElementById(`count-${title}`);
+      const likes = document.getElementById(`like-${title}`);
+      const div = document.getElementById(`comments-${title}`);
+      if (data) {
+        likes.textContent = data.likes || 0;
+        const commentsList = data.comments ? Object.values(data.comments) : [];
+        div.innerHTML = commentsList.map(c => `<div>– ${c}</div>`).join("");
+        count.textContent = commentsList.length;
+      }
+    });
+  }
 
-window.addEventListener("load", () => { setTimeout(() => { const loader = document.getElementById("loader"); loader.style.display = "none"; }, 4000); });
+  function toggleComments(title) {
+    const box = document.getElementById(`comments-${title}`);
+    box.style.display = box.style.display === "none" ? "block" : "none";
+  }
 
-window.onpageshow = event => { if (event.persisted) window.location.reload(); }; </script>
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      const loader = document.getElementById("loader");
+      loader.style.display = "none";
+    }, 4000);
+  });
 
+  window.onpageshow = event => {
+    if (event.persisted) window.location.reload();
+  };
+</script>
 </body>
 </html>
