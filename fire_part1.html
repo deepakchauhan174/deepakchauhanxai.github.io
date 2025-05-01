@@ -111,7 +111,7 @@
     });
 
   function likePost(title) {
-    fetch('https://script.google.com/macros/s/AKfycby6WAXdA6QEjg8FzFW3COL4RJMPyqLpboZ34lI-iXlD6OsJtGNGeJqft6JXaAHFyQlq/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec', {
       method: 'POST',
       body: JSON.stringify({ title: title, type: 'like' }),
       headers: { 'Content-Type': 'application/json' }
@@ -126,7 +126,7 @@
     const comment = input.value.trim();
     if (!comment) return;
 
-    fetch('https://script.google.com/macros/s/AKfycby6WAXdA6QEjg8FzFW3COL4RJMPyqLpboZ34lI-iXlD6OsJtGNGeJqft6JXaAHFyQlq/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec', {
       method: 'POST',
       body: JSON.stringify({ title: title, type: 'comment', comment: comment }),
       headers: { 'Content-Type': 'application/json' }
