@@ -109,35 +109,55 @@
         index++;
       });
     });
+function likePost(title) {
+  fetch('https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      title: title,
+      type: 'like'
+    })
+  })
+  .then(res => res.text())
+  .then(response => {
+    console.log("Like success:", response);
+    const count = document.getElementById(`like-${title}`);
+    count.textContent = parseInt(count.textContent) + 1;
+  })
+  .catch(error => console.error("Like failed:", error));
+}
 
-  function likePost(title) {
-    fetch('https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec', {
-      method: 'POST',
-      body: JSON.stringify({ title: title, type: 'like' }),
-      headers: { 'Content-Type': 'application/json' }
-    }).then(() => {
-      const count = document.getElementById(`like-${title}`);
-      count.textContent = parseInt(count.textContent) + 1;
-    });
-  }
+function submitComment(title) {
+  const input = document.getElementById(`input-${title}`);
+  const comment = input.value.trim();
+  if (!comment) return;
 
-  function submitComment(title) {
-    const input = document.getElementById(`input-${title}`);
-    const comment = input.value.trim();
-    if (!comment) return;
-
-    fetch('https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec', {
-      method: 'POST',
-      body: JSON.stringify({ title: title, type: 'comment', comment: comment }),
-      headers: { 'Content-Type': 'application/json' }
-    }).then(() => {
-      const div = document.getElementById(`comments-${title}`);
-      div.innerHTML += `<div>– ${comment}</div>`;
-      const count = document.getElementById(`count-${title}`);
-      count.textContent = parseInt(count.textContent) + 1;
-      input.value = "";
-    });
-  }
+  fetch('https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      title: title,
+      type: 'comment',
+      comment: comment
+    })
+  })
+  .then(res => res.text())
+  .then(response => {
+    console.log("Comment success:", response);
+    const div = document.getElementById(`comments-${title}`);
+    div.innerHTML += `<div>– ${comment}</div>`;
+    const count = document.getElementById(`count-${title}`);
+    count.textContent = parseInt(count.textContent) + 1;
+    input.value = "";
+  })
+  .catch(error => console.error("Comment failed:", error));
+      }
 
   function toggleComments(title) {
     const box = document.getElementById(`comments-${title}`);
