@@ -86,11 +86,11 @@
   <script>
     const container = document.getElementById("dialogues-container");
     const imagePaths = [
-      "images/fire_part_img4.jpg",
-      "images/fire_part_img2.jpg",
-      "images/fire_part_img5.jpg",
       "images/fire_part_img1.jpg",
-      "images/fire_part_img3.jpg"
+      "images/fire_part_img2.jpg",
+      "images/fire_part_img3.jpg",
+      "images/fire_part_img4.jpg",
+      "images/fire_part_img5.jpg"
     ];
 
     fetch("https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec")
@@ -108,8 +108,7 @@
             <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image">
             <div class="button-group">
               <p style="color:#66fcf1;">Likes: <span id="like-${title}">0</span></p>
-              <p style="color:#ff69b4; cursor:pointer;" onclick="toggleComments('${title}')">
-                Comments (<span id="count-${title}">0</span>) ▼</p>
+              <p style="color:#ff69b4; cursor:pointer;" onclick="toggleComments('${title}')">Comments (<span id="count-${title}">0</span>) ▼</p>
               <div id="comments-${title}" style="display:none; color:#ccc; margin-top:5px;"></div>
               <input type="text" id="name-${title}" placeholder="Apna naam likho...">
               <input type="text" id="input-${title}" placeholder="Apna comment likho...">
@@ -124,44 +123,39 @@
       });
 
     function likePost(title) {
-  if (localStorage.getItem(`liked-${title}`)) return;
-
-  db.ref("Fire1_LikeComment/" + title + "/likes").transaction(current => (current || 0) + 1);
-  localStorage.setItem(`liked-${title}`, "true");
+      if (localStorage.getItem(`liked-${title}`)) return;
+      db.ref("Fire1_LikeComment/" + title + "/likes").transaction(current => (current || 0) + 1);
+      localStorage.setItem(`liked-${title}`, "true");
     }
 
     function submitComment(title) {
-  const name = document.getElementById(`name-${title}`).value.trim();
-  const comment = document.getElementById(`input-${title}`).value.trim();
-
-  if (!name || !comment || localStorage.getItem(`commented-${title}`)) return;
-
-  const newComment = `${name}: ${comment}`;
-  db.ref("Fire1_LikeComment/" + title + "/comments").push(newComment);
-  localStorage.setItem(`commented-${title}`, "true");
+      const name = document.getElementById(`name-${title}`).value.trim();
+      const comment = document.getElementById(`input-${title}`).value.trim();
+      if (!name || !comment || localStorage.getItem(`commented-${title}`)) return;
+      const newComment = `${name}: ${comment}`;
+      db.ref("Fire1_LikeComment/" + title + "/comments").push(newComment);
+      localStorage.setItem(`commented-${title}`, "true");
     }
 
     function listenToRealtime(title) {
-      const commentsRef = db.ref("Fire1_Comments/" + title);
-      const likeRef = db.ref("Fire1_Likes/" + title);
-
-      commentsRef.on("value", snapshot => {
+      const ref = db.ref("Fire1_LikeComment/" + title);
+      ref.on("value", snapshot => {
         const data = snapshot.val();
-        const div = document.getElementById(`comments-${title}`);
-        const count = document.getElementById(`count-${title}`);
-        if (data) {
-          const list = Object.values(data);
-          div.innerHTML = list.map(c => `<div>– ${c}</div>`).join("");
-          count.textContent = list.length;
-        } else {
-          div.innerHTML = "";
-          count.textContent = "0";
-        }
-      });
+        const commentBox = document.getElementById(`comments-${title}`);
+        const likeCount = document.getElementById(`like-${title}`);
+        const commentCount = document.getElementById(`count-${title}`);
 
-      likeRef.on("value", snapshot => {
-        const likeSpan = document.getElementById(`like-${title}`);
-        likeSpan.textContent = snapshot.val() || 0;
+        if (data) {
+          likeCount.textContent = data.likes || 0;
+          if (data.comments) {
+            const list = Object.values(data.comments);
+            commentBox.innerHTML = list.map(c => `<div>– ${c}</div>`).join("");
+            commentCount.textContent = list.length;
+          } else {
+            commentBox.innerHTML = "";
+            commentCount.textContent = "0";
+          }
+        }
       });
     }
 
