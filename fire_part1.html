@@ -124,19 +124,21 @@
       });
 
     function likePost(title) {
-      const likeRef = db.ref("Fire1_Likes/" + title);
-      likeRef.transaction(current => (current || 0) + 1);
+  if (localStorage.getItem(`liked-${title}`)) return;
+
+  db.ref("Fire1_LikeComment/" + title + "/likes").transaction(current => (current || 0) + 1);
+  localStorage.setItem(`liked-${title}`, "true");
     }
 
     function submitComment(title) {
-      const input = document.getElementById(`input-${title}`);
-      const name = document.getElementById(`name-${title}`).value.trim();
-      const comment = input.value.trim();
-      if (!comment || !name) return;
+  const name = document.getElementById(`name-${title}`).value.trim();
+  const comment = document.getElementById(`input-${title}`).value.trim();
 
-      const ref = db.ref("Fire1_Comments/" + title);
-      ref.push(`${name}: ${comment}`);
-      input.value = "";
+  if (!name || !comment || localStorage.getItem(`commented-${title}`)) return;
+
+  const newComment = `${name}: ${comment}`;
+  db.ref("Fire1_LikeComment/" + title + "/comments").push(newComment);
+  localStorage.setItem(`commented-${title}`, "true");
     }
 
     function listenToRealtime(title) {
