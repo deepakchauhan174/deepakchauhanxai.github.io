@@ -1,9 +1,28 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Fire Dialogues – Part 2</title>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAT8qbxGsbG_28uVUWMmCmXeHf8WQmbvVZQ",
+      authDomain: "vip-team-bhai-x-ai.firebaseapp.com",
+      databaseURL: "https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com",
+      projectId: "vip-team-bhai-x-ai",
+      storageBucket: "vip-team-bhai-x-ai.appspot.com",
+      messagingSenderId: "984650632826",
+      appId: "1:984650632826:web:7e3b8167fb5979537535c3"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+  </script>
+
   <style>
     body {
       background: linear-gradient(135deg, #000000, #0a0a0a);
@@ -51,27 +70,10 @@
       text-align: center;
       margin-top: 10px;
     }
-    .copy-btn, .share-btn {
-      margin: 5px;
-      padding: 6px 14px;
-      font-size: 14px;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      border: none;
-    }
-    .copy-btn {
-      background-color: #00ffff;
-      color: #000;
-    }
-    .share-btn {
-      background-color: #ffd700;
-      color: #000;
-    }
   </style>
 </head>
-<body>
 
+<body>
 <div id="loader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: black; color: #00ffff; font-size: 22px; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 9999; text-align: center; padding: 20px; box-sizing: border-box; text-shadow: 0 0 10px #00ffff;">
   Deepak Chauhan × AI Bhai के 🔥 Fire Dialogues Part 2 में आपका स्वागत है...
 </div>
@@ -80,24 +82,21 @@
 <div id="dialogues-container"></div>
 
 <script>
+  const container = document.getElementById("dialogues-container");
+  const imagePaths = [
+    "images/fire_part_img1.jpg",
+    "images/fire_part_img2.jpg",
+    "images/fire_part_img3.jpg",
+    "images/fire_part_img4.jpg",
+    "images/fire_part_img5.jpg"
+  ];
+
   fetch("https://script.google.com/macros/s/AKfycby6WAXdA6QEjg8FzFW3COL4RJMPyqLpboZ34lI-iXlD6OsJtGNGeJqft6JXaAHFyQlq/exec")
     .then(res => res.json())
     .then(data => {
-      const container = document.getElementById("dialogues-container");
-      const imagePaths = [
-        "images/fire_part_img1.jpg",
-        "images/fire_part_img2.jpg",
-        "images/fire_part_img3.jpg",
-        "images/fire_part_img4.jpg",
-        "images/fire_part_img5.jpg"
-      ];
-      let index = 0;
-
-      Object.keys(data).forEach(key => {
-        const fire = data[key].fire;
-        const story = data[key].story;
-        const signature = data[key].signature;
-
+      Object.keys(data).forEach((key, index) => {
+        const { fire, story, signature, title } = data[key];
+        const postId = `post-${index}`;
         const box = document.createElement("div");
         box.className = "dialogue-box";
 
@@ -105,49 +104,73 @@
           <h3>${fire}</h3>
           <p class="story">${story}</p>
           <p class="signature">${signature}</p>
-          <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image ${index+1}">
+          <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image">
           <div class="button-group">
-            <button class="copy-btn" onclick="copyToClipboard(\`${story}\`)">Copy</button>
-            <button class="share-btn" onclick="shareText(\`${story}\`)">Share</button>
+            <p style="color:#66fcf1;">Likes: <span id="like-${postId}">0</span></p>
+            <p style="color:#ff69b4; cursor:pointer;" onclick="toggleComments('${postId}')">
+              Comments (<span id="count-${postId}">0</span>) ▼
+            </p>
+            <div id="comments-${postId}" style="display:none; color:#ccc; margin-top:5px;"></div>
+            <input type="text" id="input-${postId}" placeholder="Apna comment likho..." style="width:100%; margin-top:5px;" />
+            <button onclick="submitComment('${postId}')">Submit</button>
+            <button onclick="likePost('${postId}')">Like</button>
           </div>
         `;
+
         container.appendChild(box);
-        index++;
+        listenToRealtime(postId);
       });
     });
 
-  function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-      alert("सर जी डायलॉग कॉपी हो गया!");
+  function likePost(postId) {
+    if (localStorage.getItem(`liked-${postId}`)) return;
+    const likeRef = db.ref("Fire2_Likes/" + postId);
+    likeRef.transaction(current => (current || 0) + 1);
+    localStorage.setItem(`liked-${postId}`, "true");
+  }
+
+  function submitComment(postId) {
+    if (localStorage.getItem(`commented-${postId}`)) return;
+    const input = document.getElementById(`input-${postId}`);
+    const comment = input.value.trim();
+    if (!comment) return;
+    db.ref("Fire2_Comments/" + postId).push(comment);
+    localStorage.setItem(`commented-${postId}`, "true");
+    input.value = "";
+  }
+
+  function listenToRealtime(postId) {
+    const commentsDiv = document.getElementById(`comments-${postId}`);
+    const likeSpan = document.getElementById(`like-${postId}`);
+    const countSpan = document.getElementById(`count-${postId}`);
+
+    db.ref("Fire2_Comments/" + postId).on("value", snapshot => {
+      const data = snapshot.val();
+      const arr = data ? Object.values(data) : [];
+      commentsDiv.innerHTML = arr.map(c => `<div>– ${c}</div>`).join("");
+      countSpan.textContent = arr.length;
+    });
+
+    db.ref("Fire2_Likes/" + postId).on("value", snapshot => {
+      likeSpan.textContent = snapshot.val() || 0;
     });
   }
 
-  function shareText(text) {
-    if (navigator.share) {
-      navigator.share({
-        title: "Deepak Chauhan x AI Bhai",
-        text: text
-      });
-    } else {
-      alert("Sharing is not supported on this device.");
-    }
+  function toggleComments(postId) {
+    const box = document.getElementById(`comments-${postId}`);
+    box.style.display = box.style.display === "none" ? "block" : "none";
   }
+
+  window.addEventListener("load", function () {
+    setTimeout(() => {
+      const loader = document.getElementById("loader");
+      loader.style.display = "none";
+    }, 4000);
+  });
 
   window.onpageshow = function(event) {
-    if (event.persisted) {
-      window.location.reload();
-    }
+    if (event.persisted) window.location.reload();
   };
 </script>
-
-<script>
-  window.addEventListener("load", function () {
-    const loader = document.getElementById("loader");
-    setTimeout(() => {
-      loader.style.display = "none";
-    }, 5000);
-  });
-</script>
-
 </body>
 </html>
