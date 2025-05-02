@@ -1,190 +1,178 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Motivational Image Gallery</title>
+  <title>Motivational - Deepak Chauhan × AI Bhai</title>
   <style>
-    body {
-      background-color: #000000;
-      font-family: 'Segoe UI', sans-serif;
-      color: #00ffff;
-      padding: 20px;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }
+
+    .gallery-container {
+      padding: 15px;
+      max-width: 1200px;
+      margin: auto;
     }
-    h1 {
-      text-align: center;
-      color: #00ffff;
-      font-size: 30px;
-      margin-bottom: 20px;
-    }
-    .gallery-box {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
     }
-    .image-card {
-      background-color: #111;
-      border: 2px solid #00ffff;
-      border-radius: 10px;
-      box-shadow: 0 0 15px #00ffff;
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       overflow: hidden;
-      max-width: 300px;
-      width: 100%;
       cursor: pointer;
+      transition: transform 0.3s ease, opacity 0.5s ease;
     }
-    .image-card img {
-      width: 100%;
-      height: auto;
-      display: block;
+
+    .card:hover { transform: translateY(-5px); }
+
+    .card img {
+      width: 100%; height: 200px;
+      object-fit: cover;
+      border-radius: 15px 15px 0 0;
     }
+
     .modal {
       display: none;
       position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.9);
-      align-items: center;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
       justify-content: center;
+      align-items: center;
+      z-index: 1000;
       flex-direction: column;
     }
+
     .modal-content {
       max-width: 90%;
-      max-height: 80%;
-      margin: 20px;
-    }
-    .modal-content img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-    }
-    .modal-caption {
-      color: #00ffff;
-      margin-top: 10px;
-      font-size: 18px;
+      max-height: 90vh;
       text-align: center;
     }
-    .btn-group {
-      margin-top: 15px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
+
+    .modal img {
+      max-height: 70vh;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
+
+    .caption {
+      color: white;
+      font-size: 1.1rem;
+      margin-top: 15px;
+      padding: 0 20px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+      justify-content: center;
+    }
+
     .btn {
-      padding: 8px 16px;
+      padding: 8px 14px;
       border: none;
-      border-radius: 6px;
+      border-radius: 5px;
       font-weight: bold;
       cursor: pointer;
     }
-    .download {
-      background: #00ffff;
-      color: black;
-    }
-    .share {
-      background: #ffd700;
-      color: black;
-    }
-    .close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 40px;
-      color: white;
-      cursor: pointer;
+
+    .download { background: #00d5ff; color: #000; }
+    .share { background: #ffc107; color: #000; }
+
+    @media (max-width: 768px) {
+      .grid { gap: 10px; }
+      .card img { height: 150px; }
     }
   </style>
-</head><body><h1>Motivational Image Gallery</h1><div class="gallery-box" id="Motivational_Images"></div><!-- Modal --><div id="myModal" class="modal">
-  <span class="close" onclick="closeModal()">&times;</span>
-  <div class="modal-content" id="modalImageBox">
-    <img id="modalImage" src="" alt="Motivational Image">
-    <div class="modal-caption" id="modalCaption"></div>
-    <div class="btn-group">
-      <a id="downloadLink" class="btn download" target="_blank">Download</a>
-      <button onclick="shareImage()" class="btn share">Share</button>
+</head>
+<body>
+  <div class="gallery-container">
+    <div class="grid" id="galleryGrid"></div>
+  </div>
+
+  <div class="modal" id="imageModal">
+    <div class="modal-content">
+      <img id="modalImage" alt="Motivational Image">
+      <div class="caption" id="imageCaption"></div>
+      <div class="btn-group">
+        <a id="downloadLink" class="btn download" download target="_blank">Download</a>
+        <button class="btn share" onclick="shareImage()">Share</button>
+      </div>
     </div>
   </div>
-</div><!-- Full JavaScript --><script>
-const convertGoogleDriveLink = (url) => {
-  if(url.includes('uc?id=') || url.includes('uc?export=view')) return url;
-  const match = url.match(/[/?](?:d|file|open|uc)\/([a-zA-Z0-9-_]+)|id=([a-zA-Z0-9-_]+)/i);
-  const fileId = match ? (match[1] || match[2]) : null;
-  return fileId ? `https://drive.google.com/uc?export=view&id=${fileId}` : url;
-};
 
-const createSafeHTML = (item) => {
-  const safeImage = encodeURIComponent(item.image);
-  const safeCaption = item.caption.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-  return `
-    <div class="image-card">
-      <img src="${item.image}" alt="${safeCaption}" loading="lazy"
-           onerror="this.onerror=null;this.src='https://via.placeholder.com/300x400/111/00ffff?text=Image+Loading+Error';"
-           onclick="openModal('${safeImage}', '${safeCaption}')">
-    </div>
-  `;
-};
-fetch("https://script.google.com/macros/s/AKfycbw1S9YauQ5XOgoz2UPGMWd54fIKEXlpKus58SN9IqLqYEmVy98BQezVKpv4rWpm9mFR/exec?type=motivational")
+  <script>
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const caption = document.getElementById('imageCaption');
+    const galleryGrid = document.getElementById('galleryGrid');
+    const downloadLink = document.getElementById('downloadLink');
+    let autoCloseTimeout;
+    let currentCard = null;
 
-  .then(res => res.json())
-  .then(data => {
-    const gallery = document.getElementById("Motivational_Images");
-    const items = Object.values(data)
-      .filter(item => item?.image && item?.caption)
-      .map(item => ({
-        ...item,
-        image: convertGoogleDriveLink(item.image),
-        caption: item.caption
-      }))
-      .reverse();
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
 
-    gallery.innerHTML = items.map(createSafeHTML).join('');
-  })
-  .catch(error => {
-    console.error("Fetch error:", error);
-    gallery.innerHTML = `<p style="color:#ff0000">Error loading images. Please try again later.</p>`;
-  });
+    fetch("https://script.google.com/macros/s/AKfycbw1S9YauQ5XOgoz2UPGMWd54fIKEXlpKus58SN9IqLqYEmVy98BQezVKpv4rWpm9mFR/exec?type=motivational")
+      .then(res => res.json())
+      .then(data => {
+        const shuffled = shuffle(data);
+        shuffled.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `<img src="${item.image}" loading="lazy">`;
+          card.addEventListener('click', () => openModal(item.image, item.caption, card));
+          galleryGrid.appendChild(card);
+        });
+      });
 
-function openModal(rawUrl, caption) {
-  const modal = document.getElementById("myModal");
-  const modalImage = document.getElementById("modalImage");
-  const modalCaption = document.getElementById("modalCaption");
-  const downloadLink = document.getElementById("downloadLink");
-  
-  const finalUrl = decodeURIComponent(rawUrl);
+    function openModal(imgSrc, imgCaption, card) {
+      modal.style.display = 'flex';
+      modalImage.src = imgSrc;
+      caption.innerText = imgCaption;
+      downloadLink.href = imgSrc;
+      currentCard = card;
+      autoCloseTimeout = setTimeout(closeModal, 5000);
+    }
 
-  modalImage.onload = () => modal.style.display = "flex";
-  modalImage.onerror = () => {
-    modalImage.src = 'https://via.placeholder.com/600x800/111/00ffff?text=Image+Load+Failed';
-    modal.style.display = "flex";
-  };
+    function closeModal() {
+      modal.style.display = 'none';
+      modalImage.src = '';
+      caption.innerText = '';
+      if (currentCard) {
+        currentCard.style.opacity = '0';
+        setTimeout(() => currentCard.remove(), 500);
+        currentCard = null;
+      }
+      clearTimeout(autoCloseTimeout);
+    }
 
-  modalImage.src = convertGoogleDriveLink(finalUrl);
-  modalCaption.textContent = caption;
-  downloadLink.href = convertGoogleDriveLink(finalUrl);
-  document.body.style.overflow = "hidden";
-}
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
 
-function closeModal() {
-  document.getElementById("myModal").style.display = "none";
-  document.body.style.overflow = "auto";
-}
-
-function shareImage() {
-  const { href: url } = document.getElementById('downloadLink');
-  const caption = document.getElementById('modalCaption').textContent;
-
-  if(navigator.share) {
-    navigator.share({
-      title: `Motivational Image: ${caption}`,
-      text: `Check this motivation from Deepak Chauhan × AI Bhai: ${caption}`,
-      url: url
-    }).catch(err => console.log('Sharing cancelled'));
-  } else {
-    prompt('Copy this direct image link:', url);
-  }
-}
-</script></body>
+    function shareImage() {
+      const url = modalImage.src;
+      const text = caption.innerText;
+      if (navigator.share) {
+        navigator.share({ title: 'Motivational Image', text, url })
+          .catch(() => console.log('Share cancelled'));
+      } else {
+        prompt('Copy this link:', url);
+      }
+    }
+  </script>
+</body>
 </html>
