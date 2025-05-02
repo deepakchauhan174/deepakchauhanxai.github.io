@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Motivational - Deepak Chauhan × AI Bhai</title>
+  <title>Motivational Gallery - Deepak × AI Bhai</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }
@@ -32,9 +32,8 @@
     .card:hover { transform: translateY(-5px); }
 
     .card img {
-      width: 100%; height: 200px;
+      width: 100%; height: 100%;
       object-fit: cover;
-      border-radius: 15px 15px 0 0;
     }
 
     .modal {
@@ -42,21 +41,24 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.9);
+      background: rgba(0,0,0,0.95);
       justify-content: center;
       align-items: center;
       z-index: 1000;
       flex-direction: column;
+      padding: 10px;
     }
 
     .modal-content {
-      max-width: 90%;
-      max-height: 90vh;
+      max-width: 95vw;
+      max-height: 95vh;
       text-align: center;
     }
 
     .modal img {
-      max-height: 70vh;
+      width: auto;
+      max-height: 80vh;
+      object-fit: contain;
       border-radius: 10px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
@@ -88,7 +90,6 @@
 
     @media (max-width: 768px) {
       .grid { gap: 10px; }
-      .card img { height: 150px; }
     }
   </style>
 </head>
@@ -114,7 +115,6 @@
     const caption = document.getElementById('imageCaption');
     const galleryGrid = document.getElementById('galleryGrid');
     const downloadLink = document.getElementById('downloadLink');
-    let autoCloseTimeout;
     let currentCard = null;
 
     function shuffle(array) {
@@ -144,7 +144,6 @@
       caption.innerText = imgCaption;
       downloadLink.href = imgSrc;
       currentCard = card;
-      autoCloseTimeout = setTimeout(closeModal, 5000);
     }
 
     function closeModal() {
@@ -156,7 +155,6 @@
         setTimeout(() => currentCard.remove(), 500);
         currentCard = null;
       }
-      clearTimeout(autoCloseTimeout);
     }
 
     modal.addEventListener('click', (e) => {
