@@ -1,165 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Motivational Deepak Chauhan x AI Bhai</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }
-    .gallery-container { padding: 15px; max-width: 1200px; margin: 0 auto; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: white;
-      border-radius: 15px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    .card:hover { transform: translateY(-4px); }
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 15px 15px 0 0;
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.95);
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 9999;
-    }
-    .modal.show { display: flex; animation: fadeIn 0.3s ease-in; }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .modal-content {
-      max-height: 80vh;
-      max-width: 90vw;
-      text-align: center;
-      position: relative;
-    }
-    .modal img {
-      max-width: 100%;
-      max-height: 70vh;
-      border-radius: 12px;
-      margin-bottom: 10px;
-    }
-    .caption {
-      color: white;
-      font-size: 1.2rem;
-      margin: 5px;
-    }
-    .btn-group {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 8px;
-    }
-    .btn {
-      padding: 8px 18px;
-      font-weight: bold;
-      border-radius: 5px;
-      border: none;
-      cursor: pointer;
-    }
-    .download { background: #00e1ff; color: black; }
-    .share { background: #ffd700; color: black; }
-    .close-btn {
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      background: red;
-      color: white;
-      font-size: 22px;
-      font-weight: bold;
-      border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motivational Gallery</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f8f9fa;
+        }
+
+        /* Gallery Grid */
+        .gallery-container {
+            padding: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px 12px 0 0;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .modal-img {
+            max-height: 60vh;
+            max-width: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .modal-caption {
+            margin: 1rem 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #333;
+            background: none;
+            border: none;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .modal-button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .download-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .share-btn {
+            background: #2196F3;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
+            .card-img {
+                height: 250px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
-  <div class="gallery-container">
-    <div class="grid" id="galleryGrid"></div>
-  </div>
-
-  <div class="modal" id="imageModal">
-    <div class="modal-content">
-      <button class="close-btn" onclick="closeModal()">×</button>
-      <img id="modalImage" alt="Motivational Image">
-      <div class="caption" id="imageCaption"></div>
-      <div class="btn-group">
-        <a id="downloadLink" class="btn download" target="_blank">Download</a>
-        <button onclick="shareImage()" class="btn share">Share</button>
-      </div>
+    <div class="gallery-container">
+        <div class="grid" id="galleryGrid"></div>
     </div>
-  </div>
 
-  <script>
-    const imageModal = document.getElementById('imageModal');
-    const modalImage = document.getElementById('modalImage');
-    const imageCaption = document.getElementById('imageCaption');
-    const downloadLink = document.getElementById('downloadLink');
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <img class="modal-img" id="modalImage" alt="Motivational Image">
+            <div class="modal-caption" id="modalCaption"></div>
+            <div class="modal-buttons">
+                <button class="modal-button download-btn" id="downloadBtn">Download</button>
+                <button class="modal-button share-btn" id="shareBtn">Share</button>
+            </div>
+        </div>
+    </div>
 
-    const galleryGrid = document.getElementById('galleryGrid');
+    <script>
+        // Fetch and display gallery
+        async function initGallery() {
+            try {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbw1S9YauQ5XOgoz2UPGMWd54fIKEXlpKus58SN9IqLqYEmVy98BQezVKpv4rWpm9mFR/exec?type=motivational');
+                const data = await response.json();
+                
+                // Randomize order
+                const shuffledData = data.sort(() => Math.random() - 0.5);
+                
+                const galleryGrid = document.getElementById('galleryGrid');
+                
+                shuffledData.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <img class="card-img" 
+                             src="${item.image}" 
+                             loading="lazy"
+                             data-caption="${item.caption}">
+                    `;
+                    
+                    card.addEventListener('click', () => openModal(item));
+                    galleryGrid.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Error loading gallery:', error);
+            }
+        }
 
-    // LIVE DATA: Replace this with your script URL
-    fetch("https://script.google.com/macros/s/AKfycbw1S9YauQ5XOgoz2UPGMWd54fIKEXlpKus58SN9IqLqYEmVy98BQezVKpv4rWpm9mFR/exec?type=motivational")
-      .then(res => res.json())
-      .then(data => {
-        const items = data.reverse();
-        galleryGrid.innerHTML = '';
+        // Modal functions
+        function openModal(item) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modalImg.src = item.image;
+            caption.textContent = item.caption;
+            
+            // Set download button
+            document.getElementById('downloadBtn').onclick = () => {
+                window.open(item.image, '_blank');
+            };
+            
+            // Set share button
+            document.getElementById('shareBtn').onclick = () => {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Motivational Image',
+                        text: item.caption,
+                        url: item.image
+                    });
+                } else {
+                    navigator.clipboard.writeText(item.image);
+                    alert('Image link copied to clipboard!');
+                }
+            };
+            
+            modal.style.display = 'flex';
+        }
 
-        items.forEach(item => {
-          const card = document.createElement('div');
-          card.className = 'card';
-          card.innerHTML = `<img src="${item.image}" alt="${item.caption}" loading="lazy">`;
-          card.onclick = () => openModal(item.image, item.caption);
-          galleryGrid.appendChild(card);
+        // Close modal
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Event listeners
+        document.querySelector('.modal-close').addEventListener('click', closeModal);
+        document.getElementById('imageModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('imageModal')) closeModal();
         });
-      });
 
-    function openModal(imgUrl, captionText) {
-      modalImage.src = imgUrl;
-      imageCaption.textContent = captionText;
-      downloadLink.href = imgUrl;
-      imageModal.classList.add('show');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      imageModal.classList.remove('show');
-      modalImage.src = "";
-      imageCaption.textContent = "";
-      document.body.style.overflow = 'auto';
-    }
-
-    function shareImage() {
-      const url = modalImage.src;
-      const caption = imageCaption.textContent;
-      if (navigator.share) {
-        navigator.share({
-          title: "Motivational Image",
-          text: caption,
-          url: url
-        });
-      } else {
-        prompt("Copy link to share:", url);
-      }
-    }
-  </script>
+        // Initialize gallery
+        initGallery();
+    </script>
 </body>
 </html>
