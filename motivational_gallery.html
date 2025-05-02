@@ -131,7 +131,7 @@ fetch("https://script.google.com/macros/s/AKfycbyqRDCotnfqag5k1HjDzJ_BrWKqMC6Nbd
   .then(res => res.json())
   .then(data => {
     const gallery = document.getElementById("Motivational_Images");
-    const items = Object.values(data)
+    const items = data
       .filter(item => item?.image && item?.caption)
       .map(item => ({
         ...item,
