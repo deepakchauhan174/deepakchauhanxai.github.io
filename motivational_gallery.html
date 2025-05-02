@@ -126,12 +126,12 @@ const createSafeHTML = (item) => {
     </div>
   `;
 };
+fetch("https://script.google.com/macros/s/AKfycbw1S9YauQ5XOgoz2UPGMWd54fIKEXlpKus58SN9IqLqYEmVy98BQezVKpv4rWpm9mFR/exec?type=motivational")
 
-fetch("https://script.google.com/macros/s/AKfycbyqRDCotnfqag5k1HjDzJ_BrWKqMC6NbdplxFJptwLuv8z4QVip4Cd3CiumAKMT1g1o/exec?type=motivational")
   .then(res => res.json())
   .then(data => {
     const gallery = document.getElementById("Motivational_Images");
-    const items = data
+    const items = Object.values(data)
       .filter(item => item?.image && item?.caption)
       .map(item => ({
         ...item,
