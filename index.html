@@ -64,42 +64,6 @@
     समझ गया
   </button>
 </div>
-  <!-- Floating Bonus Emoji (🎁) -->
-<style>
-#bonusEmoji {
-  position: fixed;
-  bottom: 90px;
-  right: 20px;
-  font-size: 40px;
-  z-index: 9999;
-  cursor: pointer;
-  animation: glow 1.5s infinite alternate;
-  filter: drop-shadow(0 0 5px #0ff);
-}
-@keyframes glow {
-  from {
-    transform: scale(1);
-    filter: drop-shadow(0 0 10px #0ff);
-  }
-  to {
-    transform: scale(1.2);
-    filter: drop-shadow(0 0 20px #00f6ff);
-  }
-}
-</style>
-
-<div id="bonusEmoji" title="स्वागत बोनस अलर्ट 🎁">🎁</div>
-
-<script>
-document.getElementById('bonusEmoji').addEventListener('click', function () {
-  const target = document.getElementById('box11');
-  if (target) {
-    target.scrollIntoView({ behavior: 'smooth' });
-  } else {
-    alert("Bonus section अभी उपलब्ध नहीं है।");
-  }
-});
-</script>
   <header>  
     <h1 style="font-size: 36px;">Team Bhai × AI - Dk_community</h1>  
     <p style="font-size: 22px; color: #00ffff;">Powered by Deepak Chauhan x AI Bhai</p>  
@@ -222,7 +186,44 @@ document.getElementById('bonusEmoji').addEventListener('click', function () {
   </p>  
   <a href="bonus_checking.html" class="join-button" target="_blank" style="font-size: 18px; padding: 10px 20px; background-color: #ffc107; border-radius: 5px; color: black; text-decoration: none;">  
     Open Bonus Page  
-  </a>  
+  </a> 
+  
+  <!-- Floating Bonus Emoji (🎁) -->
+<style>
+#bonusEmoji {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  font-size: 40px;
+  z-index: 9999;
+  cursor: pointer;
+  animation: glow 1.5s infinite alternate;
+  filter: drop-shadow(0 0 5px #0ff);
+}
+@keyframes glow {
+  from {
+    transform: scale(1);
+    filter: drop-shadow(0 0 10px #0ff);
+  }
+  to {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 20px #00f6ff);
+  }
+}
+</style>
+
+<div id="bonusEmoji" title="स्वागत बोनस अलर्ट 🎁">🎁</div>
+
+<script>
+document.getElementById('bonusEmoji').addEventListener('click', function () {
+  const target = document.getElementById('box11');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    alert("Bonus section अभी उपलब्ध नहीं है।");
+  }
+});
+</script>
 </div>  
       <section class="box-eight" style="padding: 30px; font-size: 18px; background-color: #98ff98; box-shadow: 0 0 25px 7px #00ff88; color: white; border-radius: 20px; margin-top: 40px;">  
   <h3 class="group-title" style="font-size: 26px; color: #00ff88; text-align: center;">AI Bhai की कहानियाँ</h3>  
