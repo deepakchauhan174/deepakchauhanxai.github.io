@@ -47,6 +47,42 @@
     समझ गया
   </button>
 </div>
+  <!-- Floating Bonus Emoji (🎁) -->
+<style>
+#bonusEmoji {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  font-size: 40px;
+  z-index: 9999;
+  cursor: pointer;
+  animation: glow 1.5s infinite alternate;
+  filter: drop-shadow(0 0 5px #0ff);
+}
+@keyframes glow {
+  from {
+    transform: scale(1);
+    filter: drop-shadow(0 0 10px #0ff);
+  }
+  to {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 20px #00f6ff);
+  }
+}
+</style>
+
+<div id="bonusEmoji" title="स्वागत बोनस अलर्ट 🎁">🎁</div>
+
+<script>
+document.getElementById('bonusEmoji').addEventListener('click', function () {
+  const target = document.getElementById('box11');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    alert("Bonus section अभी उपलब्ध नहीं है।");
+  }
+});
+</script>
   <header>  
     <h1 style="font-size: 36px;">Team Bhai × AI - Dk_community</h1>  
     <p style="font-size: 22px; color: #00ffff;">Powered by Deepak Chauhan x AI Bhai</p>  
