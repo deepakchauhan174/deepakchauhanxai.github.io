@@ -1,192 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Psychology Image Gallery</title>
-  <style>
-    body {
-      background-color: #000000;
-      font-family: 'Segoe UI', sans-serif;
-      color: #00ffff;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #00ffff;
-      font-size: 30px;
-      margin-bottom: 20px;
-    }
-    .gallery-box {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-    .image-card {
-      background-color: #111;
-      border: 2px solid #00ffff;
-      border-radius: 10px;
-      box-shadow: 0 0 15px #00ffff;
-      overflow: hidden;
-      max-width: 300px;
-      width: 100%;
-      cursor: pointer;
-    }
-    .image-card img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    /* Modal Style */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.9);
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-    }
-    .modal-content {
-      max-width: 90%;
-      max-height: 80%;
-      margin: 20px;
-    }
-    .modal-content img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-    }
-    .modal-caption {
-      color: #00ffff;
-      margin-top: 10px;
-      font-size: 18px;
-      text-align: center;
-    }
-    .btn-group {
-      margin-top: 15px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-    .btn {
-      padding: 8px 16px;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .download {
-      background: #00ffff;
-      color: black;
-    }
-    .share {
-      background: #ffd700;
-      color: black;
-    }
-    .close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 40px;
-      color: white;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psychology Image Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #0ff;
+            font-family: 'Segoe UI', system-ui;
+            min-height: 100vh;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            border: 2px solid #0ff;
+            border-radius: 8px;
+            padding: 8px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.7);
+        }
+
+        .card-img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            padding: 2rem;
+            overflow: auto;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            margin: 2rem auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-img {
+            max-height: 80vh;
+            width: auto;
+            max-width: 100%;
+            border: 2px solid #0ff;
+            border-radius: 8px;
+        }
+
+        .modal-caption {
+            margin: 1.5rem 0;
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px #0ff;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2.5rem;
+            color: #0ff;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .modal-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #0ff;
+            border-radius: 5px;
+            background: rgba(0, 255, 255, 0.1);
+            color: #0ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn:hover {
+            background: rgba(0, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Psychology Image Gallery</h1>
+    <div class="gallery" id="gallery"></div>
 
-  <div class="gallery-box" id="Psychology_Images"></div>
-
-  <!-- Modal -->
-  <div id="myModal" class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <div class="modal-content" id="modalImageBox">
-      <img id="modalImage" src="" alt="Psychology Images">
-      <div class="modal-caption" id="modalCaption"></div>
-      <div class="btn-group">
-        <a id="downloadLink" class="btn download" target="_blank">Download</a>
-        <button onclick="shareImage()" class="btn share">Share</button>
-      </div>
+    <div class="modal" id="modal">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div class="modal-content">
+            <img class="modal-img" id="modalImage" loading="eager">
+            <div class="modal-caption" id="modalCaption"></div>
+            <div class="modal-buttons">
+                <button class="modal-btn" id="downloadBtn">Download</button>
+                <button class="modal-btn" id="shareBtn">Share</button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-   const gallery = document.getElementById("Psychology_Images");
-const modal = document.getElementById("myModal");
-const modalImage = document.getElementById("modalImage");
-const modalCaption = document.getElementById("modalCaption");
-const downloadLink = document.getElementById("downloadLink");
+    <script>
+        const API_URL = 'https://script.google.com/macros/s/AKfycbw1S9YauQ5XOgoz2UPGMWd54fIKEXlpKus58SN9IqLqYEmVy98BQezVKpv4rWpm9mFR/exec?type=psychology';
+        const gallery = document.getElementById('gallery');
+        let currentData = [];
 
-https://script.google.com/macros/s/AKfycbyqRDCotnfqag5k1HjDzJ_BrWKqMC6NbdplxFJptwLuv8z4QVip4Cd3CiumAKMT1g1o/exec?type=psychology
-  .then(res => res.json())
-  .then(data => {
-    gallery.innerHTML = "";
+        async function fetchImages() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                currentData = data.sort(() => Math.random() - 0.5);
+                renderGallery();
+            } catch (error) {
+                console.error('Error fetching images:', error);
+            }
+        }
 
-    const items = [];
-    for (let key in data) {
-      const item = data[key];
-      if (item && item.image && item.caption) {
-        items.push(item);
-      }
-    }
+        function renderGallery() {
+            gallery.innerHTML = '';
+            const fragment = document.createDocumentFragment();
+            
+            currentData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img 
+                        class="card-img" 
+                        src="${item.image}" 
+                        loading="lazy"
+                        data-caption="${item.caption}"
+                    >
+                `;
+                card.addEventListener('click', () => openModal(item));
+                fragment.appendChild(card);
+            });
 
-    // Newest first
-    items.reverse();
+            gallery.appendChild(fragment);
+        }
 
-    items.forEach(item => {
-      const card = document.createElement("div");
-      card.className = "image-card";
-      card.innerHTML = `
-        <img src="${item.image}" alt="Psychology Images" onclick="openModal('${item.image}', '${item.caption}')">
-      `;
-      gallery.appendChild(card);
-    });
-  })
-  .catch(error => {
-    console.error("Error fetching data:", error);
-  });
+        function openModal(item) {
+            const modal = document.getElementById('modal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modalImg.src = item.image;
+            caption.textContent = item.caption;
+            
+            document.getElementById('downloadBtn').onclick = () => {
+                window.open(item.image, '_blank');
+            };
 
-function openModal(imageUrl, caption) {
-  modal.style.display = "flex";
-  modalImage.src = imageUrl;
-  modalCaption.innerText = caption;
-  downloadLink.href = imageUrl;
-  document.body.style.overflow = "hidden"; // Background scroll off
-}
+            document.getElementById('shareBtn').onclick = () => {
+                navigator.share ? 
+                    navigator.share({ url: item.image }) :
+                    navigator.clipboard.writeText(item.image).then(() => {
+                        alert('Link copied to clipboard!');
+                    });
+            };
 
-function closeModal() {
-  modal.style.display = "none";
-  document.body.style.overflow = "auto"; // Background scroll on
-  setTimeout(() => {
-    location.reload(true); // Force hard refresh
-  }, 300);
-}
+            modal.style.display = 'block';
+        }
 
-function shareImage() {
-  if (navigator.share) {
-    navigator.share({
-      title: "AI Bhai × Deepak Chauhan",
-      text: "देखो ये ज़बरदस्त साइकोलॉजी इमेज!",
-      url: modalImage.src,
-    });
-  } else {
-    alert("Sharing not supported on this device.");
-  }
-}
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+            currentData = currentData.sort(() => Math.random() - 0.5);
+            renderGallery();
+        }
 
-window.onpageshow = function(event) {
-  if (event.persisted) {
-    window.location.reload();
-  }
-}; 
-  </script>
+        window.onclick = (event) => {
+            if (event.target === document.getElementById('modal')) {
+                closeModal();
+            }
+        };
+
+        window.onload = fetchImages;
+window.onbeforeunload = () => {
+    window.scrollTo(0, 0);
+};
+
+// Auto-refresh gallery every 15 seconds
+setInterval(() => {
+    currentData = currentData.sort(() => Math.random() - 0.5);
+    renderGallery();
+}, 15000);
+</script>
 </body>
 </html>
