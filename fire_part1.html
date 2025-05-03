@@ -177,11 +177,14 @@ function initializePost(postId) {
     document.getElementById(`likeCount-${postId}`).textContent = snapshot.val() || 0;
   });
 
-  commentRef.on("value", snapshot => {
-    const comments = snapshot.val() ? Object.values(snapshot.val()) : [];
-    const commentList = document.getElementById(`comments-${postId}`);
-    commentList.innerHTML = comments.reverse().map(c => `<div>${c.text}</div>`).join("");
-  });
+  // Real-time comment updates (FINAL FIX)
+commentRef.on('value', (snapshot) => {
+  const comments = snapshot.val() ? Object.values(snapshot.val()) : [];
+  const commentList = document.getElementById(`comments-${postId}`);
+  commentList.innerHTML = comments.reverse()
+    .map(comment => typeof comment === 'string' ? `<div>${comment}</div>` : `<div>${comment.text}</div>`)
+    .join('');
+});
 }
 
 function handleLike(postId) {
