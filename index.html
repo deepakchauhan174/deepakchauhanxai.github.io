@@ -208,7 +208,7 @@
   <p class="group-subtext">Use all powerful tools in one dedicated space</p>  <a href="smart_tools.html" class="join-button" style="margin-top: 15px;">  
   Open Full Tools Panel  
   </a>  
-  </a>  <p style="margin-top: 20px; font-size: 14px; color: #999;">  
+  <p style="margin-top: 20px; font-size: 14px; color: #999;">  
     Tools now load separately to reduce homepage load time.  
   </p>  
   </div>  
@@ -395,43 +395,5 @@ text-decoration: none; box-shadow: 0 0 15px #00ffff; margin: 15px auto; max-widt
 <div style="margin-top: 20px;"></div>
   </div>
 </div>
-
-<script>
-  const popupShownTime = localStorage.getItem("welcomePopupShown");
-  const now = new Date().getTime();
-
-  if (!popupShownTime || now - popupShownTime > 5 * 60 * 60 * 1000) {
-    const welcome = document.getElementById("welcome-popup");
-    welcome.style.display = "block";
-
-    setTimeout(() => {
-      welcome.style.display = "none";
-    }, 17000);
-
-    localStorage.setItem("welcomePopupShown", now);
-  }
-
-  function dismissPopup() {
-    document.getElementById("welcome-popup").style.display = "none";
-  }
-</script>
-    <script>
-  let deferredPrompt;
-  const installBtn = document.getElementById('installBtn');
-  installBtn.style.display = 'none';
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBtn.style.display = 'inline-block';
-
-    installBtn.addEventListener('click', () => {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(() => {
-        installBtn.style.display = 'none';
-      });
-    });
-  });
-    </script>
     </body>
 </html>
