@@ -193,36 +193,50 @@ commentRef.on('value', (snapshot) => {
 });
 }
 
-function handleLike(postId) {
+  function handleLike(postId) {
   const key = `liked-${postId}`;
-  if (localStorage.getItem(key)) return alert("आप पहले ही लाइक कर चुके हैं!");
   const likeRef = firebase.database().ref(`Fire2_Likes/${postId}`);
-  likeRef.transaction(current => (current || 0) + 1);
-  localStorage.setItem(key, "true");
-}
   
-function postComment(postId) {
-  const key = `commented-${postId}`;
-  if (localStorage.getItem(key)) return alert("आप पहले ही कमेंट कर चुके हैं!");
+  likeRef.transaction(current => {
+    if (!localStorage.getItem(key)) {
+      localStorage.setItem(key, "true");
+      return (current || 0) + 1;
+    } else {
+      alert("आप पहले ही लाइक कर चुके हैं!");
+      return current;
+    }
+  });
+}
 
+function postComment(postId) {
   const input = document.getElementById(`commentInput-${postId}`);
-  const nameInput = document.getElementById(`commentName-${postId}`); // नया नाम input field
+  const nameInput = document.getElementById(`commentName-${postId}`);
   const comment = input.value.trim();
-  const name = nameInput ? nameInput.value.trim() : "Anonymous"; // default नाम
+  const name = nameInput ? nameInput.value.trim() : "Anonymous";
 
   if (!comment) return;
+
+  const key = `commented-${postId}`;
+  if (localStorage.getItem(key)) {
+    alert("आप पहले ही कमेंट कर चुके हैं!");
+    return;
+  }
 
   const commentRef = firebase.database().ref(`Fire2_Comments/${postId}`);
   commentRef.push({
     text: comment,
     name: name,
     timestamp: Date.now()
+  }, (error) => {
+    if (!error) {
+      localStorage.setItem(key, "true");
+      input.value = '';
+      if (nameInput) nameInput.value = '';
+    } else {
+      alert("कुछ गड़बड़ हो गई, दोबारा कोशिश करें");
+    }
   });
-
-  localStorage.setItem(key, "true");
-  input.value = '';
-  if (nameInput) nameInput.value = '';
-  }
+}
 </script>
 </body>
 </html>
