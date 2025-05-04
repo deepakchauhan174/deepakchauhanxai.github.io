@@ -1,0 +1,20 @@
+{
+  "name": "Deepak × AI Bhai",
+  "short_name": "AI Bhai",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#00ffff",
+  "icons": [
+    {
+      "src": "images/ai_bhai.jpg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/ai_bhai.jpg",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
