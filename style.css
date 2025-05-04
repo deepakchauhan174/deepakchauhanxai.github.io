@@ -608,3 +608,26 @@ body {
   transform: scale(1.05);
   box-shadow: 0 0 20px #00ffff;
 }
+
+.app-install-box {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#installBtn {
+  background-color: #00ffff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ffff;
+  transition: 0.3s;
+}
+
+#installBtn:hover {
+  background-color: #0ff;
+  box-shadow: 0 0 20px #0ff;
+}
