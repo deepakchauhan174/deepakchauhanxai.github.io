@@ -156,11 +156,13 @@ fetch("https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRp
           <div class="comment-terminal">
             <div id="comments-${postId}" class="comment-list"></div>
             <div class="comment-input">
-              <input type="text" id="commentInput-${postId}" class="cyber-input" placeholder="Enter comment...">
-              <button class="cyber-button" onclick="postComment('${postId}')">
-                <span class="glow-text">POST</span>
-              </button>
-            </div>
+           <input type="text" id="commentName-${postId}" class="cyber-input" placeholder="Apna naam likho..." />
+           <input type="text" id="commentTitle-${postId}" class="cyber-input" placeholder="Apna title likho..." />
+          <input type="text" id="commentInput-${postId}" class="cyber-input" placeholder="Apna comment likho..." />
+          <button class="cyber-button" onclick="postComment('${postId}')">
+          <span class="glow-text">POST</span>
+         </button>
+          </div>
           </div>
         </div>
       `;
@@ -182,7 +184,12 @@ commentRef.on('value', (snapshot) => {
   const comments = snapshot.val() ? Object.values(snapshot.val()) : [];
   const commentList = document.getElementById(`comments-${postId}`);
   commentList.innerHTML = comments.reverse()
-    .map(comment => typeof comment === 'string' ? `<div>${comment}</div>` : `<div>${comment.text}</div>`)
+    .map(comment => {
+  const name = comment.name || "Anonymous";
+  const title = comment.title || "";
+  const text = comment.text || comment;
+  return `<div><strong>${name}</strong> (${title}): ${text}</div>`;
+})
     .join('');
 });
 }
@@ -198,13 +205,31 @@ function handleLike(postId) {
 function postComment(postId) {
   const key = `commented-${postId}`;
   if (localStorage.getItem(key)) return alert("आप पहले ही कमेंट कर चुके हैं!");
+
   const input = document.getElementById(`commentInput-${postId}`);
+  const nameInput = document.getElementById(`commentName-${postId}`);
+  const titleInput = document.getElementById(`commentTitle-${postId}`);
+
   const comment = input.value.trim();
+  const name = nameInput ? nameInput.value.trim() : "Anonymous";
+  const title = titleInput ? titleInput.value.trim() : "";
+
   if (!comment) return;
+
   const commentRef = firebase.database().ref(`Fire1_Comments/${postId}`);
-  commentRef.push({ text: comment, timestamp: Date.now() });
+  commentRef.push({
+    name: name,
+    title: title,
+    text: comment,
+    timestamp: Date.now()
+  });
+
   localStorage.setItem(key, "true");
+
+  // Clear all input fields
   input.value = '';
+  if (nameInput) nameInput.value = '';
+  if (titleInput) titleInput.value = '';
 }
 </script>
 </body>
