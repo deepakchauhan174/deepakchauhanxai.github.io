@@ -355,6 +355,11 @@ text-decoration: none; box-shadow: 0 0 15px #00ffff; margin: 15px auto; max-widt
   </div>
 </div>
     <script>
+      navigator.serviceWorker.register('firebase-messaging-sw.js')
+.then(function(registration) {
+  console.log('Service Worker Registered!', registration);
+  messaging.useServiceWorker(registration);
+});
   // Firebase Configuration (तेरा config)
   const firebaseConfig = {
     apiKey: "AIzaSyAT8qbxGsbG_28uVUWmCmXeFH8wQmbvVZQ",
@@ -378,7 +383,7 @@ text-decoration: none; box-shadow: 0 0 15px #00ffff; margin: 15px auto; max-widt
     .then(() => {
       console.log("Notification permission granted.");
       return messaging.getToken({
-        vapidKey: "YOUR_VAPID_KEY_HERE"
+        vapidKey: "BCsVrsxPTxGDjysgvCivb40Vc-rdIjJrVh29f6MFzbMxuH3irWinuGkrO9Cf9dBmwMSs5LedtDsrxUipag9Eg9I"
       });
     })
     .then((token) => {
