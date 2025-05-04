@@ -125,6 +125,14 @@
     </style>
 </head>
 <body>
+    <div style="text-align: center; margin: 20px;">
+  <input 
+    type="text" 
+    id="searchInput" 
+    placeholder="Search by Serial Number or URL..." 
+    style="padding: 10px; width: 80%; max-width: 500px; font-size: 16px; border: 2px solid #0ff; border-radius: 6px;"
+  >
+    </div>
     <div class="gallery" id="gallery"></div>
 
     <div class="modal" id="modal">
@@ -140,6 +148,22 @@
     </div>
 
     <script>
+        document.getElementById('searchInput').addEventListener('input', function () {
+  const keyword = this.value.toLowerCase();
+  const cards = document.querySelectorAll('.card');
+
+  cards.forEach(card => {
+    const img = card.querySelector('img');
+    const src = img.src.toLowerCase();
+    const caption = img.getAttribute('data-caption')?.toLowerCase() || '';
+
+    if (src.includes(keyword) || caption.includes(keyword)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+});
         const API_URL = 'https://script.google.com/macros/s/AKfycbw1S9YauQ5XOgoz2UPGMWd54fIKEXlpKus58SN9IqLqYEmVy98BQezVKpv4rWpm9mFR/exec?type=motivational';
         const gallery = document.getElementById('gallery');
         let currentData = [];
