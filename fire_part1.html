@@ -23,6 +23,7 @@
   </script>
 
   <style>
+    
     body {
       background: linear-gradient(135deg, #000000, #0a0a0a);
       color: white;
@@ -117,7 +118,25 @@
     }
   </style>
 </head>
-
+<div id="welcome-box" style="
+  display: none;
+  background: #330000;
+  color: #fff;
+  padding: 30px;
+  margin: 20px auto;
+  border: 2px solid #ff5555;
+  width: 90%;
+  max-width: 700px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #ff2222;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  transition: opacity 1s ease;
+">
+  <h2 id="welcome-title" style="color:#ff7777; margin-bottom: 10px;"></h2>
+  <p id="welcome-message" style="font-size: 18px; line-height: 1.6;"></p>
+  <p id="welcome-signature" style="color:#ccc; font-size: 14px; margin-top: 20px;"></p>
+</div>
 <body>
 <h1>Fire Dialogues – Part 1</h1>
 <div id="dialogues-container"></div>
@@ -226,5 +245,28 @@ function postComment(postId) {
   if (nameInput) nameInput.value = '';
 }
 </script>
+
+<script>
+  // Welcome Message Loader
+  fetch('https://script.google.com/macros/s/AKfycbydoL8o9kRYcsE8CHT2ExYm2Q6WXezG2PTeI6oyB6tHT5P1dlNVoRQ4eZnGGX0-ySvv/exec')
+    .then(res => res.json())
+    .then(data => {
+      const firstRow = Object.values(data)[0]; // पहली लाइन
+      if (firstRow) {
+        document.getElementById('welcome-title').innerText = firstRow.title || "";
+        document.getElementById('welcome-message').innerText = firstRow.message || "";
+        document.getElementById('welcome-signature').innerText = firstRow.signature || "";
+
+        const box = document.getElementById('welcome-box');
+        box.style.display = "block";
+
+        setTimeout(() => {
+          box.style.opacity = "0";
+          setTimeout(() => box.remove(), 1000); // fade + remove
+        }, 8000); // 8 seconds
+      }
+    })
+    .catch(err => console.error("Welcome box error:", err));
+</script>  
 </body>
 </html>
