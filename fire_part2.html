@@ -8,7 +8,6 @@
   <!-- Firebase Scripts -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAT8qbxGsbG_28uVUWMmCmXeHf8WQmbvVZQ",
@@ -66,111 +65,164 @@
       border: 3px solid #00ffff;
       box-shadow: 0 0 15px #00ffff;
     }
-    .button-group {
-      text-align: center;
-      margin-top: 10px;
+    .interaction-container {
+      border: 2px solid #00ffff;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 15px;
+      background: rgba(0, 20, 30, 0.9);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    }
+    .cyber-button {
+      background: #00222d;
+      border: 1px solid #00ffff;
+      color: #00ffff;
+      padding: 8px 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin: 5px;
+    }
+    .cyber-button:hover {
+      background: #00394d;
+      box-shadow: 0 0 10px #00ffff;
+    }
+    .counter {
+      color: #00ff00;
+      margin-left: 10px;
+      font-family: 'Courier New', monospace;
+    }
+    .comment-terminal {
+      margin-top: 15px;
+      border-top: 1px solid #00ffff;
+      padding-top: 10px;
+    }
+    .comment-list {
+      max-height: 150px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+    .comment-list div {
+      padding: 5px;
+      border-bottom: 1px solid #004455;
+      color: #00ffff;
+      font-family: 'Courier New', monospace;
+    }
+    .cyber-input {
+      background: #001a1a;
+      border: 1px solid #00ffff;
+      color: #00ffff;
+      padding: 8px;
+      width: 70%;
+      margin-right: 10px;
     }
   </style>
 </head>
 
 <body>
-<div id="loader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: black; color: #00ffff; font-size: 22px; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 9999; text-align: center; padding: 20px; box-sizing: border-box; text-shadow: 0 0 10px #00ffff;">
-  Deepak Chauhan × AI Bhai के 🔥 Fire Dialogues Part 2 में आपका स्वागत है...
-</div>
-
 <h1>Fire Dialogues – Part 2</h1>
 <div id="dialogues-container"></div>
 
 <script>
-  const container = document.getElementById("dialogues-container");
-  const imagePaths = [
-    "images/fire_part_img1.jpg",
-    "images/fire_part_img2.jpg",
-    "images/fire_part_img3.jpg",
-    "images/fire_part_img4.jpg",
-    "images/fire_part_img5.jpg"
-  ];
+const container = document.getElementById("dialogues-container");
+const imagePaths = [
+  "images/fire_part_img5.jpg",
+  "images/fire_part_img3.jpg",
+  "images/fire_part_img1.jpg",
+  "images/fire_part_img4.jpg",
+  "images/fire_part_img2.jpg"
+];
 
-  fetch("https://script.google.com/macros/s/AKfycby6WAXdA6QEjg8FzFW3COL4RJMPyqLpboZ34lI-iXlD6OsJtGNGeJqft6JXaAHFyQlq/exec")
-    .then(res => res.json())
-    .then(data => {
-      Object.keys(data).forEach((key, index) => {
-        const { fire, story, signature, title } = data[key];
-        const postId = `post-${index}`;
-        const box = document.createElement("div");
-        box.className = "dialogue-box";
+fetch("https://script.google.com/macros/s/AKfycby6WAXdA6QEjg8FzFW3COL4RJMPyqLpboZ34lI-iXlD6OsJtGNGeJqft6JXaAHFyQlq/exec")
+  .then(res => res.json())
+  .then(data => {
+    Object.keys(data).forEach((key, index) => {
+      const { fire, story, signature } = data[key];
+      const postId = `post-${index}`;
 
-        box.innerHTML = `
-          <h3>${fire}</h3>
-          <p class="story">${story}</p>
-          <p class="signature">${signature}</p>
-          <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image">
-          <div class="button-group">
-            <p style="color:#66fcf1;">Likes: <span id="like-${postId}">0</span></p>
-            <p style="color:#ff69b4; cursor:pointer;" onclick="toggleComments('${postId}')">
-              Comments (<span id="count-${postId}">0</span>) ▼
-            </p>
-            <div id="comments-${postId}" style="display:none; color:#ccc; margin-top:5px;"></div>
-            <input type="text" id="input-${postId}" placeholder="Apna comment likho..." style="width:100%; margin-top:5px;" />
-            <button onclick="submitComment('${postId}')">Submit</button>
-            <button onclick="likePost('${postId}')">Like</button>
-          </div>
-        `;
-
-        container.appendChild(box);
-        listenToRealtime(postId);
-      });
+      const box = document.createElement("div");
+      box.className = "dialogue-box";
+      
+      box.innerHTML = `
+  <h3>${fire}</h3>
+  <p class="story">${story}</p>
+  <p class="signature">${signature}</p>
+  <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image">
+  <div class="interaction-container" data-postid="${postId}">
+    <div class="status-bar">
+      <button class="cyber-button" onclick="handleLike('${postId}')">
+        <span class="glow-text">LIKE</span>
+      </button>
+      <span id="likeCount-${postId}" class="counter">0</span>
+    </div>
+    <div class="comment-terminal">
+      <div id="comments-${postId}" class="comment-list"></div>
+      <div class="comment-input">
+        <input type="text" id="commentName-${postId}" class="cyber-input" placeholder="Apna naam likho..." />
+        <input type="text" id="commentInput-${postId}" class="cyber-input" placeholder="Apna comment likho..." />
+        <button class="cyber-button" onclick="postComment('${postId}')">
+          <span class="glow-text">POST</span>
+        </button>
+      </div>
+    </div>
+  </div>
+`;
+      container.appendChild(box);
+      initializePost(postId);
     });
-
-  function likePost(postId) {
-    if (localStorage.getItem(`liked-${postId}`)) return;
-    const likeRef = db.ref("Fire2_Likes/" + postId);
-    likeRef.transaction(current => (current || 0) + 1);
-    localStorage.setItem(`liked-${postId}`, "true");
-  }
-
-  function submitComment(postId) {
-    if (localStorage.getItem(`commented-${postId}`)) return;
-    const input = document.getElementById(`input-${postId}`);
-    const comment = input.value.trim();
-    if (!comment) return;
-    db.ref("Fire2_Comments/" + postId).push(comment);
-    localStorage.setItem(`commented-${postId}`, "true");
-    input.value = "";
-  }
-
-  function listenToRealtime(postId) {
-    const commentsDiv = document.getElementById(`comments-${postId}`);
-    const likeSpan = document.getElementById(`like-${postId}`);
-    const countSpan = document.getElementById(`count-${postId}`);
-
-    db.ref("Fire2_Comments/" + postId).on("value", snapshot => {
-      const data = snapshot.val();
-      const arr = data ? Object.values(data) : [];
-      commentsDiv.innerHTML = arr.map(c => `<div>– ${c}</div>`).join("");
-      countSpan.textContent = arr.length;
-    });
-
-    db.ref("Fire2_Likes/" + postId).on("value", snapshot => {
-      likeSpan.textContent = snapshot.val() || 0;
-    });
-  }
-
-  function toggleComments(postId) {
-    const box = document.getElementById(`comments-${postId}`);
-    box.style.display = box.style.display === "none" ? "block" : "none";
-  }
-
-  window.addEventListener("load", function () {
-    setTimeout(() => {
-      const loader = document.getElementById("loader");
-      loader.style.display = "none";
-    }, 4000);
   });
 
-  window.onpageshow = function(event) {
-    if (event.persisted) window.location.reload();
-  };
+function initializePost(postId) {
+  const likeRef = firebase.database().ref(`Fire2_Likes/${postId}`);
+  const commentRef = firebase.database().ref(`Fire2_Comments/${postId}`);
+
+  likeRef.on("value", snapshot => {
+    document.getElementById(`likeCount-${postId}`).textContent = snapshot.val() || 0;
+  });
+
+  // Real-time comment updates (FINAL FIX)
+commentRef.on('value', (snapshot) => {
+  const comments = snapshot.val() ? Object.values(snapshot.val()) : [];
+  const commentList = document.getElementById(`comments-${postId}`);
+  commentList.innerHTML = comments.reverse()
+  .map(comment => {
+    const name = comment.name || "Anonymous";
+    const text = comment.text || comment;
+    return `<div><strong>${name}:</strong> ${text}</div>`;
+  })
+  .join('');
+});
+}
+
+function handleLike(postId) {
+  const key = `liked-${postId}`;
+  if (localStorage.getItem(key)) return alert("आप पहले ही लाइक कर चुके हैं!");
+  const likeRef = firebase.database().ref(`Fire2_Likes/${postId}`);
+  likeRef.transaction(current => (current || 0) + 1);
+  localStorage.setItem(key, "true");
+}
+  
+function postComment(postId) {
+  const key = `commented-${postId}`;
+  if (localStorage.getItem(key)) return alert("आप पहले ही कमेंट कर चुके हैं!");
+
+  const input = document.getElementById(`commentInput-${postId}`);
+  const nameInput = document.getElementById(`commentName-${postId}`); // नया नाम input field
+  const comment = input.value.trim();
+  const name = nameInput ? nameInput.value.trim() : "Anonymous"; // default नाम
+
+  if (!comment) return;
+
+  const commentRef = firebase.database().ref(`Fire2_Comments/${postId}`);
+  commentRef.push({
+    text: comment,
+    name: name,
+    timestamp: Date.now()
+  });
+
+  localStorage.setItem(key, "true");
+  input.value = '';
+  if (nameInput) nameInput.value = '';
+  }
 </script>
 </body>
 </html>
