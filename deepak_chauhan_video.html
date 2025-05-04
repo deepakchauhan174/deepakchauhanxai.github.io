@@ -101,13 +101,14 @@
     .then(res => res.json())  
     .then(data => {  
       const container = document.getElementById("video-container");  
-      Object.entries(data).forEach(([key, item]) => {  
+      Object.entries(data).forEach(([key, item]) => { 
+        const videoBlock = document.createElement("div");
         const viewsRef = `https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com/Deepak_Videos/${key}/views.json`;  
         fetch(viewsRef, {  
           method: "PUT",  
           body: JSON.stringify((item.views || 0) + 1)  
         });  
-  
+        
         let videoEmbed = "";
 
 if (item.videoUrl.endsWith(".mp4")) {
@@ -124,7 +125,7 @@ if (item.videoUrl.endsWith(".mp4")) {
       src="https://www.youtube.com/embed/${youtubeId}" 
       frameborder="0" 
       allowfullscreen 
-      style="width: 100%; aspect-ratio: 9/16; max-height: 90vh; border-radius: 12px; box-shadow: 0 0 15px #00ffff; display: block; margin: auto;">
+      style="width: 100%; aspect-ratio: 9/16; max-height: 90vh; border-radius: 12px; bojx-shadow: 0 0 15px #00ffff; display: block; margin: auto;">
     </iframe>
   `;
 }
