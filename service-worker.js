@@ -5,7 +5,7 @@ self.addEventListener("install", function(e) {
         "index.html",
         "style.css",
         "script.js",
-        "images/ai_bhai.jpg"
+        "images/dk_icon.png"
       ]);
     })
   );
