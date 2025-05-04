@@ -108,25 +108,35 @@
           body: JSON.stringify((item.views || 0) + 1)  
         });  
   
-        // Get YouTube video ID from full URL  
-        const youtubeId = getYouTubeId(item.videoUrl);  
-  
-        const videoBlock = document.createElement("div");  
-        videoBlock.innerHTML = `  
-          <h3 style="color: #ffd700;">${item.title}</h3>  
-        <iframe 
-  src="https://www.youtube.com/embed/${youtubeId}" 
-  frameborder="0" 
-  allowfullscreen 
-  style="width: 100%; aspect-ratio: 9/16; max-height: 90vh; border-radius: 12px; box-shadow: 0 0 15px #00ffff; display: block; margin: auto;">
-</iframe>
-          <p style="color: #ccc; margin-top: 10px;">${item.description}</p>  
-          <p style="color: #00ffcc;">Views: <span id="view-${key}">${(item.views || 0) + 1}</span>   
-          | Likes: <span id="like-${key}">${item.likes || 0}</span></p>  
-          <button onclick="likeVideo('${key}')" style="margin: 5px 0 30px; padding: 8px 20px; background: #ff4444;   
-            color: white; border: none; border-radius: 6px; cursor: pointer;">❤️ Like</button>  
-          <hr style="margin: 30px 0; border-color: #00ffff;">  
-        `;  
+        let videoEmbed = "";
+
+if (item.videoUrl.endsWith(".mp4")) {
+  videoEmbed = `
+    <video controls style="width:100%; max-height:90vh; border-radius:12px; box-shadow:0 0 15px #00ffff;">
+      <source src="${item.videoUrl}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  `;
+} else {
+  const youtubeId = getYouTubeId(item.videoUrl);
+  videoEmbed = `
+    <iframe 
+      src="https://www.youtube.com/embed/${youtubeId}" 
+      frameborder="0" 
+      allowfullscreen 
+      style="width: 100%; aspect-ratio: 9/16; max-height: 90vh; border-radius: 12px; box-shadow: 0 0 15px #00ffff; display: block; margin: auto;">
+    </iframe>
+  `;
+}
+
+videoBlock.innerHTML = `
+  <h3 style="color: #ffd700;">${item.title}</h3>
+  ${videoEmbed}
+  <p style="color: #ccc; margin-top: 10px;">${item.description}</p>
+  <p style="color: #00ffcc;">Views: <span id="view-${key}">${(item.views || 0) + 1}</span> | Likes: <span id="like-${key}">${item.likes || 0}</span></p>
+  <button onclick="likeVideo('${key}')" style="margin: 5px 0 30px; padding: 8px 20px; background: #ff4444; color: white; border: none; border-radius: 6px; cursor: pointer;">❤️ Like</button>
+  <hr style="margin: 30px 0; border-color: #00ffff;">
+`;
         container.appendChild(videoBlock);  
       });  
     });  
