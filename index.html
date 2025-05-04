@@ -1,7 +1,9 @@
 <!DOCTYPE html><html lang="en">  <head>  
   <meta charset="UTF-8" />  
   <title>Team Bhai × AI – Dk_community</title>  
-  <link rel="stylesheet" href="style.css" />  
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js"></script>
   <style>  
     #splash-screen {  
       position: fixed;  
@@ -352,5 +354,40 @@ text-decoration: none; box-shadow: 0 0 15px #00ffff; margin: 15px auto; max-widt
 <div style="margin-top: 20px;"></div>
   </div>
 </div>
+    <script>
+  // Firebase Configuration (तेरा config)
+  const firebaseConfig = {
+    apiKey: "AIzaSyAT8qbxGsbG_28uVUWmCmXeFH8wQmbvVZQ",
+    authDomain: "vip-team-bhai-x-ai.firebaseapp.com",
+    databaseURL: "https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com",
+    projectId: "vip-team-bhai-x-ai",
+    storageBucket: "vip-team-bhai-x-ai.firebasestorage.app",
+    messagingSenderId: "984650632826",
+    appId: "1:984650632826:web:7e3b8167fb5979537535c3"
+  };
+
+  // Firebase Initialize
+  firebase.initializeApp(firebaseConfig);
+    </script>
+    <script>
+  const messaging = firebase.messaging();
+
+  // Notification Permission
+  messaging
+    .requestPermission()
+    .then(() => {
+      console.log("Notification permission granted.");
+      return messaging.getToken({
+        vapidKey: "YOUR_VAPID_KEY_HERE"
+      });
+    })
+    .then((token) => {
+      console.log("FCM Token:", token);
+      // यहाँ आप token को server या firebase database में save कर सकते हो
+    })
+    .catch((err) => {
+      console.log("Permission denied or error:", err);
+    });
+    </script>
     </body>
 </html>
