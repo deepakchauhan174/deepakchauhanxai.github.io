@@ -562,6 +562,31 @@ body {
   margin: 5px 0;
 }
 
+.tools-box {
+  background-image: url('images/tools-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  padding: 40px 20px;
+  box-shadow: 0 0 20px #00ffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+.tools-box button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: white;
+  color: black;
+  box-shadow: 0 0 10px #00ffff;
+  cursor: pointer;
+  font-weight: bold;
+}
 .banner-button {
   background: #00ffd5;
   color: #000;
