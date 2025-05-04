@@ -263,7 +263,7 @@ function postComment(postId) {
         setTimeout(() => {
           box.style.opacity = "0";
           setTimeout(() => box.remove(), 1000); // fade + remove
-        }, 8000); // 8 seconds
+        }, 20000); // 20 seconds
       }
     })
     .catch(err => console.error("Welcome box error:", err));
