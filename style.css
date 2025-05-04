@@ -567,6 +567,14 @@ body {
   width: 100%;
   max-width: 1000px;
   margin: auto;
+  border: 3px solid #00ffff;              /* Cyan glowing border */
+  border-radius: 20px;
+  box-shadow: 0 0 30px #00ffff;           /* Outer glow */
+  overflow: hidden;
+}
+
+.ai-universe-section:hover {
+  box-shadow: 0 0 40px #00ffff, 0 0 60px #00ffff;  /* Extra glow on hover */
 }
 
 .universe-banner {
@@ -577,20 +585,26 @@ body {
 
 .button-container {
   position: absolute;
-  bottom: 30px;
+  bottom: 70px;                           /* ऊपर उठाया गया */
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
 }
 
 .button-container button {
-  padding: 12px 24px;
-  font-size: 16px;
+  padding: 16px 36px;                     /* बड़ा और attractive */
+  font-size: 18px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   background-color: white;
   color: black;
-  box-shadow: 0 0 10px #00ffff;
+  box-shadow: 0 0 12px #00ffff;
   cursor: pointer;
   font-weight: bold;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.button-container button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #00ffff;
 }
