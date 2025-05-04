@@ -194,7 +194,7 @@ commentRef.on('value', (snapshot) => {
 }
 
   function handleLike(postId) {
-  const key = `liked-${postId}`;
+  const key = `liked-Fire2-${postId}`;
   const likeRef = firebase.database().ref(`Fire2_Likes/${postId}`);
   
   likeRef.transaction(current => {
@@ -216,7 +216,7 @@ function postComment(postId) {
 
   if (!comment) return;
 
-  const key = `commented-${postId}`;
+  const key = `commented-Fire2${postId}`;
   if (localStorage.getItem(key)) {
     alert("आप पहले ही कमेंट कर चुके हैं!");
     return;
