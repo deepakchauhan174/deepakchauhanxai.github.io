@@ -2,6 +2,7 @@
   <meta charset="UTF-8" />  
   <title>Team Bhai × AI – Dk_community</title>  
   <link rel="stylesheet" href="style.css" />
+  <style>
     #splash-screen {  
       position: fixed;  
       width: 100%;  
@@ -26,7 +27,41 @@
       border-radius: 20px;  
       box-shadow: 0 0 30px #0ff;  
       margin-bottom: 20px;  
-    }  
+    } 
+
+  #notificationPopup {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: #001f1f;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 25px #00ff88;
+  z-index: 9999;
+  display: none;
+  color: #00ffaa;
+}
+
+#notificationPopup h3 {
+  color: #00ff88;
+}
+
+#notificationPopup input {
+  padding: 6px;
+  width: 70%;
+  border-radius: 6px;
+  border: none;
+  margin-top: 10px;
+}
+
+#notificationPopup button {
+  padding: 6px 12px;
+  background: #00ffaa;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  cursor: pointer;
+}
   </style>  
 </head>
   <style>
@@ -173,7 +208,7 @@
   <h3 class="group-title" style="font-size: 24px; color: #ffc107;">  
     AI Bhai x bonus x promotion  
   </h3>  
-  <h3 class="group-title" style="font-size: 20px; color: ffae42;">  
+  <h3 class="group-title" style="font-size: 20px; color: #ffae42;">  
     जहाँ पहचान बने प्रचार से, वहाँ भरोसा Deepak × AI Bhai पर होता है!"  
   </h3>  
   <p class="group-subtext">  
@@ -351,6 +386,40 @@ text-decoration: none; box-shadow: 0 0 15px #00ffff; margin: 15px auto; max-widt
 <div style="margin-top: 20px;"></div>
   </div>
 </div>
+    <div id="notificationPopup">
+  <h3>🔥 Bonus Notification</h3>
+  <div id="popupContent" style="font-size: 16px;"></div>
+  <input type="text" id="popupCode" placeholder="Enter code">
+  <button onclick="submitCode()">Submit</button>
+  <p id="popupResponse" style="margin-top: 10px; color:#0f0;"></p>
+    </div>
+    <script>
+  const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR8LhBMGZAcYZPAtY8oFbUDV6IRmceJ6ZOb1IG1Hd8vKqRl_N8YCuqUz0nh5-HOLmWz4sFZMCabVDl_/pub?output=csv";
+
+  fetch(sheetURL)
+    .then(res => res.text())
+    .then(data => {
+      const rows = data.split("\n");
+      const latest = rows[1].split(",");
+      document.getElementById("popupContent").innerHTML = `
+        <p><strong>Title:</strong> ${latest[0]}</p>
+        <p><strong>Message:</strong> ${latest[1]}</p>
+        <p><strong>Alert:</strong> ${latest[2]}</p>
+        <p><strong>Signature:</strong> ${latest[3]}</p>
+        <p><strong>Bonus:</strong> ${latest[4]}</p>
+        <p><strong>Today Code:</strong> ${latest[5]}</p>`;
+      document.getElementById("notificationPopup").style.display = "block";
+    });
+
+  function submitCode() {
+    const code = document.getElementById("popupCode").value.trim();
+    const response = document.getElementById("popupResponse");
+    if (code !== "") {
+      response.innerText = `✅ Code "${code}" भेज दिया गया है।`;
+    } else {
+      response.innerText = "कृपया कोई कोड दर्ज करें।";
+    }
+  }
     </script>
     </body>
 </html>
