@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Instagram Trending Dialogues</title>
+  <style>
+    body {
+      background-color: #111;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* Welcome Screen */
+    #welcome {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+      color: #ff69b4;
+      font-size: 24px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .dialogue-box {
+      background-color: #1a1a1a;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+      padding: 20px;
+      margin: 30px auto;
+      max-width: 600px;
+      transition: 0.3s;
+    }
+
+    .dialogue-box:hover {
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.7);
+    }
+
+    .dialogue-box img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .dialogue-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #ff69b4;
+      margin-bottom: 10px;
+    }
+
+    .story {
+      font-size: 16px;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    .signature {
+      text-align: right;
+      font-style: italic;
+      color: #f2f2f2;
+      margin-bottom: 10px;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn {
+      background-color: #ff69b4;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #ff85c1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Welcome Message -->
+  <div id="welcome">
+    <div>
+      <p>Welcome to Deepak Chauhan x AI Bhai dialogue</p>
+      <p>not copyright dialogue</p>
+      <p>Loading magic just for you...</p>
+    </div>
+  </div>
+
+  <h1 style="text-align: center; color: #ff69b4; margin-top: 80px;">Instagram Trending Dialogues</h1>
+  <div id="content"></div>
+
+  <script>
+    fetch("https://script.google.com/macros/s/AKfycbwrQtnQcTSBY1fwJpeFd9p4HhahZVaWSBe4NIQEaYuBM6S-t9M8-RB8f0bVUiu4HX31pw/exec")
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("content");
+        data.forEach(item => {
+          const box = document.createElement("div");
+          box.className = "dialogue-box";
+          const textToCopy = `${item.dialogue_title}\n\n${item.story}\n\n${item.signature}`;
+          box.innerHTML = `
+            <img src="${item.image_url}" alt="dialogue image" />
+            <div class="dialogue-title">${item.dialogue_title}</div>
+            <div class="story">${item.story}</div>
+            <div class="signature">${item.signature}</div>
+            <div class="btn-group">
+              <button class="btn" onclick="copyText(\`${textToCopy.replace(/`/g, '\\`')}\`)">Copy</button>
+              <button class="btn" onclick="shareText(\`${textToCopy.replace(/`/g, '\\`')}\`)">Share</button>
+            </div>
+          `;
+          container.appendChild(box);
+        });
+
+        // Hide welcome message
+        document.getElementById("welcome").style.display = "none";
+      });
+
+    function copyText(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Copied to clipboard!");
+      });
+    }
+
+    function shareText(text) {
+      if (navigator.share) {
+        navigator.share({
+          title: "Instagram Dialogue",
+          text: text,
+        }).catch(err => console.log("Share cancelled"));
+      } else {
+        alert("Sharing not supported in this browser.");
+      }
+    }
+  </script>
+
+</body>
+</html>
