@@ -368,8 +368,12 @@ style="padding: 30px; font-size: 18px; background-color: #000814; box-shadow: 0 
 <footer style="padding: 20px; font-size: 18px; text-align: center; color: #ccc;">  
   © 2025 Team Bhai × AI | All Rights Reserved  
 </footer>
-  <script>window.onload = function () {
-    const splash = document.getElementById("splash-screen");
+<script>
+window.onload = function () {
+  const splash = document.getElementById("splash-screen");
+
+  // Safety check
+  if (splash) {
     if (!sessionStorage.getItem("splashDone")) {
       splash.style.display = "flex";
       document.body.style.overflow = "hidden";
@@ -382,7 +386,11 @@ style="padding: 30px; font-size: 18px; background-color: #000814; box-shadow: 0 
       splash.style.display = "none";
       document.body.style.overflow = "auto";
     }
-  };
+  } else {
+    // Agar splash-screen nahi mila to bhi scroll allow
+    document.body.style.overflow = "auto";
+  }
+};
 </script>
 
   <button onclick="dismissPopup()" style="margin-top: 10px; padding: 6px 12px; border: none; background-color: #ffd700; color: #000; bor
@@ -449,6 +457,9 @@ style="padding: 30px; font-size: 18px; background-color: #000814; box-shadow: 0 
   function dismissPopup() {
     document.getElementById("welcome-popup").style.display = "none";
   }
+  </script>
+  <script>
+  document.body.style.overflow = "auto";
   </script>
     </body>
 </html>
