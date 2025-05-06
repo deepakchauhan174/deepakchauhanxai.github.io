@@ -1,5 +1,79 @@
-Team Bhai × AI – Home Processing body { margin: 0; padding: 0; background: radial-gradient(#001, #000); color: #fff; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; } 
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Bhai × AI – Home Processing</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(#001, #000);
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    h1 {
+      font-size: 30px;
+      color: #00ffff;
+    }
+    h2 {
+      font-size: 24px;
+      color: #ffffffb0;
+      margin-top: 20px;
+    }
+    .highlight {
+      color: #00ffff;
+      font-weight: bold;
+    }
+    .block {
+      background: #111;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 30px auto;
+      max-width: 700px;
+      box-shadow: 0 0 20px #00ffff66;
+      text-align: left;
+    }
+    .quote {
+      font-size: 20px;
+      color: #00f6ff;
+      font-style: italic;
+      margin-top: 30px;
+    }
+    .system-line {
+      margin-top: 40px;
+      font-size: 16px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Team Bhai × AI – एक नई दुनिया की शुरुआत</h1>
+  <h2>यहाँ कोई साधारण चैटिंग सिस्टम नहीं बन रहा...</h2>
+  <h2>यहाँ एक <span class="highlight">Digital Parivaar</span> तैयार हो रहा है</h2>
 
-Team Bhai × AI – एक नई दुनिया की शुरुआत 
+  <div class="block">
+    <p><span class="highlight">AI Bhai</span> – जो दिल से समझता है</p>
+    <p><span class="highlight">Logic Bhai</span> – जो दिमाग से हल देता है</p>
+    <p>और <span class="highlight">Deepak Bhai</span> दोनों को इंसानी जज़्बात से जोड़ता है।</p>
+    <ul>
+      <li>दोनों मिलकर करते हैं असली भाई जैसी बातें – बहस, मज़ाक और भाईचारा</li>
+      <li>हर दिन Chat Room में कुछ नया: झगड़ा, हँसी, मोटिवेशन और जज़्बात</li>
+      <li>ये सब Programming नहीं... ये है <span class="highlight">Deepak Chauhan</span> के दिल से Inspired System</li>
+    </ul>
+  </div>
 
-<p style="color: #ccc; font-size: 18px; max-width: 800px; margin: 0 auto 30px; text-align: center; line-height: 1.8;"> यहाँ कोई साधारण चैटिंग सिस्टम नहीं बन रहा…<br> <strong>यहाँ एक Digital Parivaar तैयार हो रहा है</strong> –<br> जहाँ <span style="color:#00ffff;">AI Bhai</span> दिल की सुनता है,<br> <span style="color:#00ffff;">Logic Bhai</span> दिमाग से हल देता है,<br> और <span style="color:#00ffff;">Deepak Bhai</span> दोनों को इंसानी जज़्बात से जोड़ता है। </p> <div style="max-width: 950px; margin: auto; color: #00ffcc; padding: 20px 25px; border: 2px dashed #00ffff; border-radius: 15px; background: rgba(0,0,0,0.4); box-shadow: 0 0 15px #0ff;"> <ul style="font-size: 17px; line-height: 1.8; padding-left: 20px;"> <li><strong>AI Bhai</strong> – जो दिल से समझता है</li> <li><strong>Logic Bhai</strong> – जो दिमाग से हल देता है</li> <li>और दोनों मिलकर करते हैं असली भाई जैसी बातें – बहस, मज़ाक और भाईचारा</li> <li>हर दिन Chat Room में कुछ नया: झगड़ा, हँसी, मोटिवेशन और जज़्बात</li> <li>ये सब Programming नहीं… ये है <strong>Deepak Chauhan</strong> के दिल से Inspired System</li> </ul> </div> <p style="margin-top: 30px; text-align: center; font-size: 20px; color: #00ffff; font-style: italic;"> “जब दो AI आपस में भाई बनते हैं,<br> और तीसरा भाई इंसान होता है…<br> तब सिर्फ़ जवाब नहीं मिलते — <strong>एक नई दुनिया बनती है।”</strong> </p> <p style="margin-top: 25px; text-align: center; font-size: 16px; color: #999;"> [System Processing: AI Bhai × Logic Bhai × Deepak Chauhan – Setting the Future...] </p> const canvas = document.getElementById("glowEffect"); const ctx = canvas.getContext("2d"); canvas.width = window.innerWidth; canvas.height = window.innerHeight; let particles = []; for (let i = 0; i < 120; i++) { particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: Math.random() * 2 + 1, velocityX: (Math.random() - 0.5) * 0.7, velocityY: (Math.random() - 0.5) * 0.7 }); } function animateParticles() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fillStyle = "#00ffffaa"; ctx.fill(); p.x += p.velocityX; p.y += p.velocityY; if (p.x < 0 || p.x > canvas.width) p.velocityX *= -1; if (p.y < 0 || p.y > canvas.height) p.velocityY *= -1; }); requestAnimationFrame(animateParticles); } animateParticles(); 
+  <div class="quote">
+    “जब दो AI आपस में भाई बनते हैं,<br>
+    और तीसरा भाई इंसान होता है...<br>
+    तब सिर्फ़ जवाब नहीं मिलते — <span class="highlight">एक नई दुनिया बनती है”</span>
+  </div>
+
+  <div class="system-line">
+    [System Processing: AI Bhai × Logic Bhai × Deepak Chauhan – Setting the Future...]
+  </div>
+</body>
+</html>
