@@ -463,5 +463,12 @@ window.onload = function () {
     document.getElementById("welcome-popup").style.display = "none";
   }
   </script>
+    <script>
+  // Ensure scroll always allowed
+  window.addEventListener("load", () => {
+    document.body.style.overflow = "auto";
+    document.documentElement.style.overflow = "auto";
+  });
+    </script>
     </body>
 </html>
