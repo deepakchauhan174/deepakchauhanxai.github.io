@@ -631,3 +631,9 @@ body {
   background-color: #0ff;
   box-shadow: 0 0 20px #0ff;
 }
+
+html, body {
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+}
