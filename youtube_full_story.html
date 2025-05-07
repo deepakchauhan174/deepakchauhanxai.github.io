@@ -1,7 +1,7 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YouTube Full Story</title>
   <style>
     body {
@@ -9,7 +9,7 @@
       font-family: Arial, sans-serif;
       color: #fff;
       margin: 0;
-      padding: 0;
+      padding: 20px;
     }
     .story-box {
       max-width: 700px;
@@ -22,7 +22,6 @@
     }
     .story-img {
       width: 100%;
-      height: auto;
       border-radius: 10px;
       margin-bottom: 20px;
     }
@@ -52,11 +51,34 @@
   </style>
 </head>
 <body>
-  <div class="story-box">
-    <img src="images/youtube_full_short.jpg" alt="YouTube Full Story" class="story-img">
-    <a href="https://script.google.com/macros/s/AKfycbxU8clwOhpexF9Qb5bPl_1bxgJw71_HExii35pCJCh3GpUFvOx6spKKCCfN2BiyfXz7fg/exec" target="_blank" class="open-button">Open Now</a>
-    <div class="signature">Deepak Chauhan × AI Bhai</div>
-    <div class="copyright">not copyright ©️</div>
-  </div>
+
+  <div id="story-container"></div>
+
+  <script>
+    fetch("https://script.google.com/macros/s/AKfycbxU8clwOhpexF9Qb5bPl_1bxgJw71_HExii35pCJCh3GpUFvOx6spKKCCfN2BiyfXz7fg/exec")
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("story-container");
+
+        data.forEach(item => {
+          const box = document.createElement("div");
+          box.className = "story-box";
+
+          box.innerHTML = `
+            <img src="${item['img URL']}" class="story-img" alt="Story Image">
+            <a href="${item['full video story']}" target="_blank" class="open-button">Open Now</a>
+            <div class="signature">${item['signature']}</div>
+            <div class="copyright">${item['not copyrigh ©']}</div>
+          `;
+
+          container.appendChild(box);
+        });
+      })
+      .catch(err => {
+        console.error("Data load error:", err);
+        document.getElementById("story-container").innerHTML = "<p style='color:red;'>Failed to load story data.</p>";
+      });
+  </script>
+
 </body>
 </html>
