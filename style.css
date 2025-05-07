@@ -637,3 +637,23 @@ html, body {
   min-height: 100%;
   overflow-x: hidden;
 }
+
+.banner-button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  background-color: #00ffaa;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 0 12px #00ffaa;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.banner-button:hover {
+  background-color: #00ddcc;
+  color: #000;
+}
