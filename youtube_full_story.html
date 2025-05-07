@@ -1,84 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>YouTube Full Story</title>
   <style>
     body {
       background-color: #000;
       font-family: Arial, sans-serif;
-      color: #fff;
       margin: 0;
       padding: 20px;
+      color: white;
     }
+
     .story-box {
       max-width: 700px;
-      margin: 40px auto;
+      margin: 30px auto;
       background-color: #111;
       border-radius: 12px;
       box-shadow: 0 0 35px #ffff66;
       padding: 20px;
       text-align: center;
     }
+
     .story-img {
       width: 100%;
       border-radius: 10px;
       margin-bottom: 20px;
     }
-    .open-button {
-      display: inline-block;
-      padding: 12px 30px;
-      font-size: 18px;
+
+    .story-title {
+      font-size: 20px;
       font-weight: bold;
-      background-color: #ffeb3b;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      text-decoration: none;
-      box-shadow: 0 0 10px #ffeb3b;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
+      color: #ffeb3b;
     }
+
+    .story-content {
+      font-size: 16px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
     .signature {
-      font-weight: bold;
       color: #00ffff;
+      font-weight: bold;
       margin-top: 15px;
     }
+
     .copyright {
-      color: #ccc;
       font-size: 14px;
+      color: #ccc;
       margin-top: 5px;
     }
   </style>
 </head>
 <body>
 
-  <div id="story-container"></div>
+  <div id="story-container">
+    <div style="text-align: center;">Loading...</div>
+  </div>
 
   <script>
     fetch("https://script.google.com/macros/s/AKfycbxU8clwOhpexF9Qb5bPl_1bxgJw71_HExii35pCJCh3GpUFvOx6spKKCCfN2BiyfXz7fg/exec")
       .then(res => res.json())
       .then(data => {
-        const container = document.getElementById("story-container");
+        const container = document.getElementById('story-container');
+        container.innerHTML = ""; // clear loading
 
         data.forEach(item => {
           const box = document.createElement("div");
           box.className = "story-box";
 
           box.innerHTML = `
-            <img src="${item['img URL']}" class="story-img" alt="Story Image">
-            <a href="${item['full video story']}" target="_blank" class="open-button">Open Now</a>
-            <div class="signature">${item['signature']}</div>
-            <div class="copyright">${item['not copyrigh ©']}</div>
+            <img src="${item.imgUrl}" alt="story image" class="story-img" />
+            <div class="story-title">${item.storyTitle}</div>
+            <div class="story-content">${item.fullStory}</div>
+            <div class="signature">${item.signature}</div>
+            <div class="copyright">not copyright ©️</div>
           `;
 
           container.appendChild(box);
         });
       })
       .catch(err => {
-        console.error("Data load error:", err);
-        document.getElementById("story-container").innerHTML = "<p style='color:red;'>Failed to load story data.</p>";
+        document.getElementById('story-container').innerHTML = "<p style='color:red;'>Error loading stories. Please check URL or Sheet!</p>";
       });
   </script>
-
 </body>
 </html>
