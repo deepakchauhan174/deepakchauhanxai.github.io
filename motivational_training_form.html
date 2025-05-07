@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motivational Training Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      padding: 20px;
+    }
+    .form-box {
+      max-width: 600px;
+      margin: auto;
+      background: #111;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px #00ffff;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: none;
+      font-size: 16px;
+    }
+    button {
+      padding: 12px 25px;
+      background: #00ffff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ffff;
+    }
+    h2 {
+      color: #00ffff;
+    }
+    .tagline {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-box">
+    <h2>Deepak Chauhan × AI Bhai – Motivational Training Form</h2>
+    <p class="tagline">जहाँ इंसान की मेहनत और Motivational की ताकत साथ हो — वहां सिर्फ़ बदलाव नहीं, इतिहास लिखा जाता है।</p>
+
+    <form id="motivationForm">
+      <input type="text" name="name" placeholder="आपका नाम क्या हैं?" required />
+      <input type="email" name="email" placeholder="आपका Email ID" required />
+      <input type="text" name="mobile" placeholder="मोबाइल नंबर" required />
+      <input type="text" name="whatsapp" placeholder="WhatsApp नंबर" required />
+      <textarea name="reason" placeholder="आप इस ट्रेनिंग के लिए क्यों अप्लाई कर रहे हैं?" rows="3" required></textarea>
+      <textarea name="message" placeholder="कोई मैसेज या सवाल जो आप Deepak या AI Bhai को देना चाहते हैं?" rows="3"></textarea>
+
+      <button type="submit">भेजें – AI Bhai तक</button>
+    </form>
+
+    <p id="response" style="margin-top: 15px; color: #00ff99;"></p>
+
+    <p style="margin-top: 25px; font-style: italic;">जब आवाज़ आग बन जाए — Deepak Chauhan x AI Bhai Fire 🔥</p>
+  </div>
+
+  <script>
+    document.getElementById("motivationForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+
+      fetch("https://script.google.com/macros/s/AKfycbyQhhrtb0JgX_DB7IxCuYAK5piqu-nxlm1n0KPRa-sEUqEM_R-4gZzn9ZAstIqpk8YZ6w/exec", {
+        method: "POST",
+        body: data
+      })
+      .then(res => res.text())
+      .then(msg => {
+        document.getElementById("response").innerText = "आपका मैसेज भेज दिया गया है!";
+        form.reset();
+      })
+      .catch(err => {
+        document.getElementById("response").innerText = "भेजने में कोई गलती हो गई। कृपया फिर कोशिश करें।";
+      });
+    });
+  </script>
+
+</body>
+</html>
