@@ -393,26 +393,25 @@ document.getElementById('bonusEmoji').addEventListener('click', function () {
 <div style="margin-top: 30px;"></div>  
 <div style="margin-top: 30px;"></div>  
      <div style="margin-top: 20px;"></div>  
-<div class="bottom-banner" id="promoBanner" onclick="openStory()">  
-  <div class="circle-slider-container">  
-  <img src="images/circle1.jpg" alt="Circle 1">  
-  <img src="images/circle2.jpg" alt="Circle 2">  
-  <img src="images/circle3.jpg" alt="Circle 3">  
-  <img src="images/circle4.jpg" alt="Circle 4">  
-  </div>  
-  <div class="banner-content">  
-    <div class="banner-text">  
-      <h2>अपने रास्ते की आग — जानिए असली कहानी!</h2>  
-      <p>कहानी Deepak Chauhan × AI Bhai से प्रेरित की गई है</p>  
-    </div>  
-     <a href="Ai_bhai_shath_hai.html" target="_blank" class="banner-button">
-  कहानी पढ़ें🔑💚
-     </a>
-        </button>  
+<!-- Add this inside <body> के लास्ट में -->
+<div class="bottom-banner" onclick="openStory()">
+  <div class="circle-slider-container">
+    <img src="images/circle1.jpg" alt="Circle 1">
+    <img src="images/circle2.jpg" alt="Circle 2">
+    <img src="images/circle3.jpg" alt="Circle 3">
+    <img src="images/circle4.jpg" alt="Circle 4">
+  </div>
+  <div class="banner-content">
+    <div class="banner-text">
+      <h2>अपने रास्ते की आग — जानिए असली कहानी!</h2>
+      <p>कहानी Deepak Chauhan × AI Bhai से प्रेरित की गई है</p>
+    </div>
+    <a href="Ai_bhai_shath_hai.html" target="_blank" class="banner-button">
+      कहानी पढ़ें🔑💚
+    </a>
+  </div>
+</div>
     <div style="margin-top: 20px;"></div>  
-<div style="margin-top: 20px;"></div>  
-  </div>  
-</div>  
     <div id="notificationPopup">  
   <h3>🔥 Bonus Notification</h3>  
   <div id="popupContent" style="font-size: 16px;"></div>  
