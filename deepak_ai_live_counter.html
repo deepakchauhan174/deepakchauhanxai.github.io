@@ -1,0 +1,35 @@
+<section style="padding: 30px 10px; display: flex; justify-content: center;">
+  <div style="background: #000814; padding: 25px; border-radius: 15px; box-shadow: 0 0 25px #00ffaa; text-align: center; color: #00ffaa; width: 100%; max-width: 500px;">
+    
+    <h2 style="font-size: 26px; margin-bottom: 20px;">🌍 Live World Population</h2>
+
+    <div id="counter" style="font-size: 30px; font-weight: bold; margin-bottom: 15px; letter-spacing: 2px;">
+      8,143,201,512
+    </div>
+
+    <a href="https://www.worldometers.info/world-population/" target="_blank"
+       style="display: inline-block; padding: 10px 20px; background-color: #00ffaa; color: #000; font-weight: bold; border-radius: 8px; text-decoration: none; box-shadow: 0 0 15px #00ffaa;">
+      View Live on Worldometer
+    </a>
+
+    <p style="margin-top: 15px; font-size: 13px; color: #ccc;">
+      Estimated AI-based growth | Powered by AI Bhai × Deepak
+    </p>
+  </div>
+</section>
+
+<script>
+  let currentPopulation = 8143201512;  // Starting from this number
+  const counterElement = document.getElementById('counter');
+
+  function formatNumber(num) {
+    return num.toLocaleString('en-IN');
+  }
+
+  function updateCounter() {
+    currentPopulation += Math.floor(Math.random() * 3); // Random +1 to +2
+    counterElement.textContent = formatNumber(currentPopulation);
+  }
+
+  setInterval(updateCounter, 1000); // Update every 1 sec
+</script>
