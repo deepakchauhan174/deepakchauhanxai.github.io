@@ -442,7 +442,14 @@ document.getElementById('bonusEmoji').addEventListener('click', function () {
     </a>
   </div>
 </div>
-   <script>
+   <!-- Notification Section -->
+<div id="notificationPopup" style="display:none; background:#000; color:#0ff; padding:20px; border-radius:10px; text-align:left; box-shadow: 0 0 20px #0ff; max-width:600px; margin: 40px auto;">
+  <h3>💰 Bonus Notification</h3>
+  <div id="popupContent" style="font-size: 16px;"></div>
+</div>
+
+<!-- Google Sheet to Notification -->
+<script>
   fetch("https://script.google.com/macros/s/AKfycbz3BCbR6nulRgsJEP8AG3WPmaVn-bVGsiLRhedTM4Z_WlIB7aeMKISAmdqX3j_HsuJQ/exec")
     .then(res => res.json())
     .then(data => {
@@ -457,15 +464,15 @@ document.getElementById('bonusEmoji').addEventListener('click', function () {
         <p><strong>Prize:</strong> ${data.prize}</p>`;
       document.getElementById("notificationPopup").style.display = "block";
     });
-   </script>
+</script>
+
+<!-- Embed Google Form -->
+<div style="margin: 40px auto; max-width: 640px; background: #0a0a0a; padding: 20px; border-radius: 15px; box-shadow: 0 0 15px #00ffff;">
+  <h3 style="color:#0ff;">Submit Your Code</h3>
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdWi3P2GI-1W7DAEpZkNwoTzBu0NDnnf8ztl3_eqtV6iH1y1w/viewform?embedded=true" width="100%" height="750" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+</div>
     
-<!-- GOOGLE FORM EMBEDDED (VISIBLE & RESPONSIVE) -->
-<div style="margin: 30px auto; max-width: 700px; background: #0a0a0a; padding: 20px; border-radius: 12px; box-shadow: 0 0 15px #00ffff;">
-  <h3 style="color:#00ffff;">Submit Your Code</h3>
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdWi3P2GI-1W7DAEpZkNwoTzBu0NDnnf8ztl3_eqtV6iH1y1w/viewform?embedded=true" width="100%" height="750" frameborder="0" marginheight="0" marginwidth="0" style="border-radius: 10px;">Loading…</iframe>
-</div> 
-    
-    <script>
+  <script>
   fetch("https://script.google.com/macros/s/AKfycbymUjv2qf6EQt00nQivEhWJLrxUld8aQKiGZbyBoqPxCkGQMyL10D-zI6IJiX9AGc-Bdw/exec")
     .then(response => response.json())
     .then(data => {
