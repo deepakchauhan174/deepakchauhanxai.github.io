@@ -1,0 +1,187 @@
+<!DOCTYPE html>  <html lang="hi">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Live Meeting – Deepak × AI Bhai</title>  
+  <link rel="stylesheet" href="style.css">  
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>  
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>  
+  <style>  
+    body { background: #000814; color: #fff; font-family: 'Segoe UI', sans-serif; padding: 20px; }  
+    .section-box { margin: 20px auto; padding: 20px; border-radius: 12px; max-width: 800px; background: #111; position: relative; }  
+    .typing-box { padding-top: 50px; box-shadow: 0 0 20px #00f7ff; }  
+    .section-video { box-shadow: 0 0 25px #ff6600; padding: 10px; }  
+    .section-bottom { padding-top: 50px; box-shadow: 0 0 25px #a700ff; }  
+    .copy-button, .share-button {  
+      position: absolute;  
+      top: 10px;  
+      z-index: 10;  
+    }  
+    .copy-button { left: 10px; }  
+    .share-button { right: 10px; }  
+    .copy-button button, .share-button button {  
+      background: #00ffaa;  
+      border: none;  
+      border-radius: 6px;  
+      padding: 6px 10px;  
+      color: black;  
+      font-weight: bold;  
+      cursor: pointer;  
+    }  
+    .signature {  
+      text-align: right;  
+      margin-top: 10px;  
+      font-weight: bold;  
+      color: #00f7ff;  
+    }  
+    .comment-box {  
+      margin-top: 40px;  
+      max-width: 800px;  
+      background: #111;  
+      padding: 20px;  
+      border-radius: 10px;  
+      box-shadow: 0 0 20px #00ffaa;  
+    }  
+    .comment-box input, .comment-box textarea {  
+      width: 100%;  
+      margin-bottom: 10px;  
+      padding: 8px;  
+      border-radius: 6px;  
+      border: none;  
+    }  
+    .comment-box button {  
+      background: #00ffaa;  
+      color: black;  
+      border: none;  
+      padding: 10px 20px;  
+      font-weight: bold;  
+      border-radius: 6px;  
+      cursor: pointer;  
+    }  
+  </style>  
+</head>  
+<body>  
+  <div class="section-box typing-box">  
+    <div class="copy-button"><button onclick="copyText(topText)">कॉपी</button></div>  
+    <div class="share-button"><button onclick="shareText(topText)">शेयर</button></div>  
+    <div id="topTextContent"></div>  
+    <div class="signature">Deepak Chauhan × AI Bhai</div>  
+  </div>    <div id="video-section" class="section-box section-video">  
+    <div class="signature">Deepak Chauhan × AI Bhai</div>  
+    <div id="videoEmbed"></div>  
+  </div>    <div class="section-box section-bottom">  
+    <div class="copy-button"><button onclick="copyText(bottomText)">कॉपी</button></div>  
+    <div class="share-button"><button onclick="shareText(bottomText)">शेयर</button></div>  
+    <div id="bottomTextContent"></div>  
+    <div class="signature">Deepak Chauhan × AI Bhai</div>  
+  </div>    <div class="comment-box">  
+    <input type="text" id="userName" placeholder="आपका नाम">  
+    <textarea id="userComment" rows="3" placeholder="अपना कमेंट लिखें..."></textarea>  
+    <button onclick="submitComment()">कमेंट सबमिट करें</button>  
+    <div id="commentsList" style="margin-top: 20px;"></div>  
+  </div>    <script>  
+    let topText = "", bottomText = "", entry = {};  
+  
+    fetch("https://script.google.com/macros/s/AKfycbzu4qIv1yviT49_KPjnhdfQTpbkrbUUvZB3D-Eqq-eUZK9IFn461IeQU_K4f6pkPC05/exec")  
+      .then(res => res.json())  
+      .then(data => {  
+        if (data.length > 0) {  
+          entry = data[0];  
+          topText = entry.TopDialog;  
+          bottomText = entry.BottomDialog;  
+          document.getElementById("topTextContent").innerText = topText;  
+          document.getElementById("bottomTextContent").innerText = bottomText;  
+          setupCountdownOrVideo(entry);  
+        }  
+      });  
+  
+    function setupCountdownOrVideo(entry) {  
+      const videoContainer = document.getElementById("videoEmbed");  
+      const targetTime = new Date(entry.MeetingDateTime).getTime();  
+      const now = new Date().getTime();  
+  
+      if (entry.ShowVideo.toLowerCase() === "yes" && now >= targetTime) {  
+        loadVideo(entry.VideoURL);  
+      } else if (now < targetTime) {  
+        const countdown = document.createElement("div");  
+        countdown.setAttribute("id", "countdownTimer");  
+        countdown.style = "text-align:center; font-size: 22px; color:#0ff; padding: 20px;";  
+        videoContainer.appendChild(countdown);  
+  
+        const interval = setInterval(() => {  
+          const current = new Date().getTime();  
+          const diff = targetTime - current;  
+  
+          if (diff <= 0) {  
+            clearInterval(interval);  
+            videoContainer.innerHTML = "";  
+            loadVideo(entry.VideoURL);  
+          } else {  
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));  
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));  
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));  
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);  
+            countdown.innerHTML = `<p>Next Meeting Starts In:</p><strong>${days}d : ${hours}h : ${minutes}m : ${seconds}s</strong>`;  
+          }  
+        }, 1000);  
+      } else {  
+        videoContainer.innerHTML = `<div style="text-align:center; font-size:18px; color: #ccc; padding: 20px;">Meeting Over. Stay connected for the next one!</div>`;  
+      }  
+    }  
+  
+    function loadVideo(url) {  
+      const embedURL = url.includes("youtube.com") ? url.replace("watch?v=", "embed/") : url;  
+      const videoTag = url.includes("youtube.com")  
+        ? `<iframe width='100%' height='400' src='${embedURL}' frameborder='0' allowfullscreen></iframe>`  
+        : `<video width='100%' height='400' controls><source src='${embedURL}' type='video/mp4'>Your browser does not support the video tag.</video>`;  
+      document.getElementById("videoEmbed").innerHTML = videoTag;  
+    }  
+  
+    function copyText(text) {  
+      navigator.clipboard.writeText(text);  
+      alert("कॉपी किया गया: " + text);  
+    }  
+  
+    function shareText(text) {  
+      if (navigator.share) {  
+        navigator.share({ text: text });  
+      } else {  
+        alert("शेयरिंग इस डिवाइस पर सपोर्टेड नहीं है");  
+      }  
+    }  
+  
+    const firebaseConfig = {  
+      apiKey: "AIzaSyAT8qbxGsbG_28uVUWmCmXeFH8wQmbvVZQ",  
+      authDomain: "vip-team-bhai-x-ai.firebaseapp.com",  
+      databaseURL: "https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com",  
+      projectId: "vip-team-bhai-x-ai",  
+      storageBucket: "vip-team-bhai-x-ai.appspot.com",  
+      messagingSenderId: "984650632826",  
+      appId: "1:984650632826:web:7e3b8167fb5979537535c3"  
+    };  
+    firebase.initializeApp(firebaseConfig);  
+    const db = firebase.database();  
+  
+    function submitComment() {  
+      const name = document.getElementById("userName").value.trim();  
+      const comment = document.getElementById("userComment").value.trim();  
+      if (!name || !comment) {  
+        alert("नाम और कमेंट दोनों ज़रूरी हैं!");  
+        return;  
+      }  
+      const newCommentRef = db.ref("comments").push();  
+      newCommentRef.set({ name: name, comment: comment, timestamp: Date.now() });  
+      document.getElementById("userName").value = "";  
+      document.getElementById("userComment").value = "";  
+    }  
+  
+    const commentList = document.getElementById("commentsList");  
+    db.ref("comments").on("child_added", function(snapshot) {  
+      const data = snapshot.val();  
+      const commentEl = document.createElement("p");  
+      commentEl.innerHTML = `<strong>${data.name}:</strong> ${data.comment}`;  
+      commentList.prepend(commentEl);  
+    });  
+  </script>  
+  </body>  
+</html>  
