@@ -450,23 +450,21 @@ document.getElementById('bonusEmoji').addEventListener('click', function () {
 
 <!-- Google Sheet to Notification -->
 <script>
-  const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR8LhBMGZAcYZPAtY8oFbUDV6IRmceJ6ZOb1IG1Hd8vKqRl_N8YCuqUz0nh5-HOLmWz4sFZMCabVDl_/pub?output=csv";
-  fetch(sheetURL)
-    .then(res => res.text())
+  fetch("https://script.google.com/macros/s/AKfycbz3BCbR6nulRgsJEP8AG3WPmaVn-bVGsiLRhedTM4Z_WlIB7aeMKISAmdqX3j_HsuJQ/exec")
+    .then(res => res.json())
     .then(data => {
-      const rows = data.split("\n");
-      const latest = rows[1].split(",");
       document.getElementById("popupContent").innerHTML = `
-        <p><strong>Title:</strong> ${latest[0]}</p>
-        <p><strong>Message:</strong> ${latest[1]}</p>
-        <p><strong>Alert:</strong> ${latest[2]}</p>
-        <p><strong>Signature:</strong> ${latest[3]}</p>
-        <p><strong>Bonus:</strong> ${latest[4]}</p>
-        <p><strong>Today Code:</strong> <span style="color:yellow; font-weight:bold;">${latest[5]}</span></p>`;
+        <p><strong>Title:</strong> ${data.title}</p>
+        <p><strong>Message:</strong> ${data.notificationMsg}</p>
+        <p><strong>Alert:</strong> ${data.alertMsg}</p>
+        <p><strong>Bonus:</strong> ${data.bonusMsg}</p>
+        <p><strong>Signature:</strong> ${data.signature}</p>
+        <p><strong>Today Code:</strong> <span style="color:yellow; font-weight:bold;">${data.todayCode}</span></p>
+        <p><strong>Winner:</strong> ${data.winnerName}</p>
+        <p><strong>Prize:</strong> ${data.prize}</p>`;
       document.getElementById("notificationPopup").style.display = "block";
     });
 </script>
-
 <!-- Embed Google Form -->
 <div style="margin: 40px auto; max-width: 640px; background: #0a0a0a; padding: 20px; border-radius: 15px; box-shadow: 0 0 15px #00ffff;">
   <h3 style="color:#0ff;">Submit Your Code</h3>
