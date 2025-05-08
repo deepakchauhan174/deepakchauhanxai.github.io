@@ -442,20 +442,12 @@ document.getElementById('bonusEmoji').addEventListener('click', function () {
     </a>
   </div>
 </div>
-   <!-- NOTIFICATION POPUP -->
-<div id="notificationPopup" style="display:none; background:#000; color:#0ff; padding:20px; border-radius:12px; text-align:left; box-shadow: 0 0 25px #0ff; max-width:680px; margin:40px auto; position:relative;">
-  <button onclick="dismissPopup()" style="position:absolute; top:10px; right:10px; background:#ff0055; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">cancel❌</button>
-  <h3 style="color: #00ff00; font-size: 22px;">💰 Bonus Notification</h3>
-  <div id="popupContent" style="font-size: 16px; line-height: 1.6;"></div>
-</div>
-
-<!-- SCRIPT TO FETCH FROM GOOGLE APPS SCRIPT -->
-<script>
+   <script>
   fetch("https://script.google.com/macros/s/AKfycbz3BCbR6nulRgsJEP8AG3WPmaVn-bVGsiLRhedTM4Z_WlIB7aeMKISAmdqX3j_HsuJQ/exec")
     .then(res => res.json())
     .then(data => {
       document.getElementById("popupContent").innerHTML = `
-        <p><strong>Title:</strong> <span style="color:#33ff00">${data.title}</span></p>
+        <p><strong>Title:</strong> ${data.title}</p>
         <p><strong>Message:</strong> ${data.notificationMsg}</p>
         <p><strong>Alert:</strong> ${data.alertMsg}</p>
         <p><strong>Bonus:</strong> ${data.bonusMsg}</p>
@@ -464,17 +456,8 @@ document.getElementById('bonusEmoji').addEventListener('click', function () {
         <p><strong>Winner:</strong> ${data.winnerName}</p>
         <p><strong>Prize:</strong> ${data.prize}</p>`;
       document.getElementById("notificationPopup").style.display = "block";
-
-      // Auto hide after 20 sec
-      setTimeout(() => {
-        document.getElementById("notificationPopup").style.display = "none";
-      }, 20000);
     });
-
-  function dismissPopup() {
-    document.getElementById("notificationPopup").style.display = "none";
-  }
-</script>
+   </script>
     
 <!-- GOOGLE FORM EMBEDDED (VISIBLE & RESPONSIVE) -->
 <div style="margin: 30px auto; max-width: 700px; background: #0a0a0a; padding: 20px; border-radius: 12px; box-shadow: 0 0 15px #00ffff;">
