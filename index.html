@@ -469,6 +469,11 @@ document.getElementById('bonusEmoji').addEventListener('click', function () {
   setTimeout(() => {
     document.getElementById("notificationPopup").style.display = "none";
   }, 20000); // 20,000ms = 20 seconds
+
+  function dismissPopup() {
+    const popup = document.getElementById("notificationPopup");
+    popup.style.display = "none";
+  }
 </script>
 
 <!-- Embed Google Form -->
