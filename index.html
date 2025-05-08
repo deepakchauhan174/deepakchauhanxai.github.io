@@ -444,6 +444,7 @@ document.getElementById('bonusEmoji').addEventListener('click', function () {
 </div>
    <!-- Notification Section -->
 <div id="notificationPopup" style="display:none; background:#000; color:#0ff; padding:20px; border-radius:10px; text-align:left; box-shadow: 0 0 20px #0ff; max-width:600px; margin: 40px auto;">
+  <p onclick="dismissPopup()" style=" color: #ff4444; font-size: 16px; font-weight: bold; text-align: right; cursor: pointer; margin: 0;">Cancel ❌</p>
   <h3>💰 Bonus Notification</h3>
   <div id="popupContent" style="font-size: 16px;"></div>
 </div>
@@ -464,6 +465,10 @@ document.getElementById('bonusEmoji').addEventListener('click', function () {
         <p><strong>Prize:</strong> ${data.prize}</p>`;
       document.getElementById("notificationPopup").style.display = "block";
     });
+  // Hide after 20 seconds
+  setTimeout(() => {
+    document.getElementById("notificationPopup").style.display = "none";
+  }, 20000); // 20,000ms = 20 seconds
 </script>
 
 <!-- Embed Google Form -->
