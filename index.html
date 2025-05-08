@@ -470,6 +470,17 @@ response.innerText = "कृपया कोई कोड दर्ज करे
 }
 }
 </script>
-</body>
-</html>
+    <script>
+  fetch("https://script.google.com/macros/s/AKfycbymUjv2qf6EQt00nQivEhWJLrxUld8aQKiGZbyBoqPxCkGQMyL10D-zI6IJiX9AGc-Bdw/exec")
+    .then(response => response.json())
+    .then(data => {
+      if (data.length > 0 && data[0].ImageURL) {
+        const imageUrl = data[0].ImageURL;
+        document.getElementById("box11-image").style.backgroundImage = `url('${imageUrl}')`;
+      }
+    })
+    .catch(error => console.error("Image fetch failed:", error));
+    </script>
+      </body>
+         </html>
 
