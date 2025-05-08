@@ -657,3 +657,35 @@ html, body {
   background-color: #00ddcc;
   color: #000;
 }
+
+.box11-wrapper {
+  width: 100%;
+  max-width: 800px;
+  margin: 30px auto;
+}
+
+.image-box {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 25px #00f7ff;
+}
+
+.live-button {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #00f7ff;
+  color: black;
+  font-weight: bold;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00f7ff;
+}
