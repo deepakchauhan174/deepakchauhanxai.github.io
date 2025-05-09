@@ -181,7 +181,7 @@ transition: all 0.3s ease-in-out;
 
   <div style="display: flex; flex-direction: column; justify-content: space-between; min-width: 320px; max-width: 350px; border-radius: 12px; box-shadow: 0 0 25px #00ffaa; overflow: hidden;">
     <img src="images/Word_globl.jpg" style="width: 100%; height: auto;">
-    <a href="deepak_ai_live_counter.html" target="_blank" style="font-size: 16px; padding: 10px 18px; margin: 15px auto; background-color: #00ffaa; color: black; border-radius: 6px; text-align: center; width: fit-content; box-shadow: 0 0 10px #00ffaa;">View Live World Population</a>
+    <a href="deepak_ai_live_counter.html" target="_blank" style="font-size: 16px; padding: 10px 18px; margin: 15px auto; background-color: #ffffff; color: black; border-radius: 6px; text-align: center; width: fit-content; box-shadow: 0 0 10px #00ffaa;">View Live World Population</a>
   </div>
 </section>
   
@@ -467,10 +467,10 @@ document.getElementById('bonusEmoji').addEventListener('click', function () {
         <p><strong>Prize:</strong> ${data.prize}</p>`;
       document.getElementById("notificationPopup").style.display = "block";
     });
-  // Hide after 30 seconds
+  // Hide after 40 seconds
   setTimeout(() => {
     document.getElementById("notificationPopup").style.display = "none";
-  }, 30000); // 30,000ms = 20 seconds
+  }, 40000); // 40000ms = 20 seconds
 
   function dismissPopup() {
     const popup = document.getElementById("notificationPopup");
