@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Submit Panel – Deepak Chauhan × AI Bhai</title>
+  <style>
+    body {
+      background: #000814;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .back-button {
+      display: inline-block;
+      margin-bottom: 20px;
+      background: #ffffff;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 12px #00ffff;
+    }
+    h1 {
+      font-size: 24px;
+      color: #00ffff;
+      margin-bottom: 30px;
+    }
+    form {
+      max-width: 600px;
+      margin: 0 auto 40px;
+      background: #001f3f;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00ffff;
+      text-align: left;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #00ffff;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: none;
+      background: #e0e0e0;
+    }
+    input[type="submit"] {
+      margin-top: 20px;
+      background: #00ffff;
+      color: #000;
+      padding: 12px 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .success-message {
+      color: #00ff88;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    .video-box {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #111;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #33f0ff;
+    }
+    .video-box h2 {
+      font-size: 20px;
+      color: #33f0ff;
+      margin-bottom: 15px;
+    }
+    .video-box p {
+      font-size: 16px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-button">🔙 Back to Home</a>
+
+  <h1>AI Bhai × Deepak Chauhan की 🔥 Official Code Entry Panel</h1>
+
+  <form id="submitForm">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="code">Today Code</label>
+    <input type="text" id="code" name="code" required>
+
+    <label for="mobile">Mobile Number (Last 6 digits)</label>
+    <input type="text" id="mobile" name="mobile" pattern="\\d{6}" maxlength="6" required>
+
+    <input type="submit" value="भेजें">
+    <div class="success-message" id="responseMsg"></div>
+  </form>
+
+  <div class="video-box">
+    <h2>Winner Video Panel</h2>
+    <p>Winner Video जल्द ही उपलब्ध कराया जाएगा। कृपया बाद में दोबारा देखें।</p>
+  </div>
+
+  <script>
