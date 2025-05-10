@@ -149,29 +149,28 @@ transition: all 0.3s ease-in-out;
 <!-- FIXED BOX WRAPPER -->
 <section class="footer-boxes" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 20px;">
 
-  <!-- BOX 1 -->
-  <div class="box group-box" style="width: 320px; height: 420px; overflow: hidden; font-size: 18px; text-align: center; background-color: #1a1a1a; border-radius: 12px; box-shadow: 0 0 45px rgba(255, 105, 180, 0.4); display: flex; flex-direction: column; justify-content: space-between;">
+  <!-- BOX FIXED: 320x640 with dialogue + image + button -->
+<div class="box group-box" style="width: 320px; height: 640px; background-color: #1a1a1a; border-radius: 12px; box-shadow: 0 0 45px rgba(255, 105, 180, 0.4); overflow: hidden; position: relative; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
 
-    <!-- Dialogue from Google Sheet -->
-    <p id="ai-dynamic-text" style="color: white; font-weight: bold; font-size: 16px; margin: 10px 10px 0 10px; min-height: 50px;"></p>
+  <!-- Dialogue Text (Google Sheet से) -->
+  <p id="ai-dynamic-text" style="color: white; font-weight: bold; font-size: 16px; padding: 12px; z-index: 2; background: rgba(0,0,0,0.4); margin: 0;">
+    <!-- Google Sheet से आने वाला टेक्स्ट यहां दिखेगा -->
+  </p>
 
-    <!-- Image from Google Sheet -->
-    <div style="width: 100%; flex-grow: 1;">
-      <img id="ai-dynamic-image" src="" alt="Dynamic AI Image" 
-        style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; display: block;" />
-    </div>
+  <!-- Dynamic Image -->
+  <img id="ai-dynamic-image" src="" alt="Dynamic AI Image" 
+    style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1;" />
 
-    <!-- Button -->
-    <a href="instagram_trending_dialogue.html">  
-      <button class="join-button" style="font-size: 18px; padding: 10px 20px; margin-top: 5px;">Open trending short 🔥</button>  
+  <!-- Button & Title Wrapper -->
+  <div style="z-index: 3; position: relative; background: rgba(26,26,26,0.85); padding: 20px 10px 10px; margin-top: auto;">
+    <a href="instagram_trending_dialogue.html">
+      <button class="join-button" style="font-size: 18px; padding: 10px 20px; margin-top: 5px;">Open trending short 🔥</button>
     </a>
-
-    <!-- Static Instagram Title -->
-    <p class="group-note" style="margin: 5px 0 10px; font-weight: bold; font-size: 18px; color: cyan;">
+    <p class="group-note" style="margin: 8px 0 0; font-weight: bold; font-size: 18px; color: cyan;">
       Instagram Trending Short Dialogue
     </p>
-
   </div>
+</div>
 
   <!-- BOX 2 -->
   <div class="box" style="width: 320px; height: 640px; background-color: #1a1a1a; border-radius: 12px; box-shadow: 0 0 45px #0ff; overflow: hidden; text-align: center;">  
@@ -186,7 +185,6 @@ transition: all 0.3s ease-in-out;
   </div>
 </section>
 
-<!-- Script to fetch image and text from Google Sheet -->
 <script>
   fetch("https://script.google.com/macros/s/AKfycbwLTQmHZ1W264SfhqJG3CTajCAF8E4RzLIKaQYZEDi8VFBSaT8zyRaGCDfx7A2HaSyL8A/exec")
     .then(response => response.json())
