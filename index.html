@@ -145,15 +145,36 @@ transition: all 0.3s ease-in-out;
   <p style="font-size: 20px; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #ccc;">    
     "स्वागत है उस दुनिया में, जहाँ हर सोच को उड़ान मिलती है!"  
   </p>    
-</section>    <!-- FIXED BOX WRAPPER -->  <section class="footer-boxes" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 20px;">
-  <!-- BOX 1 -->    <div class="box group-box" style="width: 320px; padding: 0; font-size: 18px; text-align: center; background-color: #1a1a1a; border-radius: 12px; box-shadow: 0 0 45px rgba(255, 105, 180, 0.4);">  
-    <img src="images/Deepak_AI_Bhai_fire.jpg" alt="Deepak Chauhan x AI Bhai" style="width: 100%; border-radius: 10px;">  
+
+<!-- FIXED BOX WRAPPER -->
+<section class="footer-boxes" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 20px;">
+
+  <!-- BOX 1 -->
+  <div class="box group-box" style="width: 320px; height: 420px; overflow: hidden; font-size: 18px; text-align: center; background-color: #1a1a1a; border-radius: 12px; box-shadow: 0 0 45px rgba(255, 105, 180, 0.4); display: flex; flex-direction: column; justify-content: space-between;">
+
+    <!-- Dialogue from Google Sheet -->
+    <p id="ai-dynamic-text" style="color: white; font-weight: bold; font-size: 16px; margin: 10px 10px 0 10px; min-height: 50px;"></p>
+
+    <!-- Image from Google Sheet -->
+    <div style="width: 100%; flex-grow: 1;">
+      <img id="ai-dynamic-image" src="" alt="Dynamic AI Image" 
+        style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; display: block;" />
+    </div>
+
+    <!-- Button -->
     <a href="instagram_trending_dialogue.html">  
-      <button class="join-button" style="font-size: 18px; padding: 10px 20px; margin-top: 15px;">Open trending short 🔥</button>  
-    </a>  
-    <p class="group-note" style="margin: 10px 0 15px; font-weight: bold; font-size: 20px;">Instagram Trending Short Dialogue</p>  
-  </div>   
-  <!-- BOX 2 -->    <div class="box" style="width: 320px; height: 640px; background-color: #1a1a1a; border-radius: 12px; box-shadow: 0 0 45px #0ff; overflow: hidden; text-align: center;">  
+      <button class="join-button" style="font-size: 18px; padding: 10px 20px; margin-top: 5px;">Open trending short 🔥</button>  
+    </a>
+
+    <!-- Static Instagram Title -->
+    <p class="group-note" style="margin: 5px 0 10px; font-weight: bold; font-size: 18px; color: cyan;">
+      Instagram Trending Short Dialogue
+    </p>
+
+  </div>
+
+  <!-- BOX 2 -->
+  <div class="box" style="width: 320px; height: 640px; background-color: #1a1a1a; border-radius: 12px; box-shadow: 0 0 45px #0ff; overflow: hidden; text-align: center;">  
     <div style="position: relative; width: 100%; height: 100%;">  
       <img src="images/ai_deepak_box.jpg" alt="AI Deepak" style="width: 100%; height: 100%; object-fit: cover; display: block;">  
       <a href="bhai_chatroom.html" target="_blank">  
@@ -165,6 +186,17 @@ transition: all 0.3s ease-in-out;
   </div>
 </section>
 
+<!-- Script to fetch image and text from Google Sheet -->
+<script>
+  fetch("https://script.google.com/macros/s/AKfycbwLTQmHZ1W264SfhqJG3CTajCAF8E4RzLIKaQYZEDi8VFBSaT8zyRaGCDfx7A2HaSyL8A/exec")
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("ai-dynamic-image").src = data.image;
+      document.getElementById("ai-dynamic-text").textContent = data.dialogue;
+    })
+    .catch(error => console.error("Error loading dynamic content:", error));
+</script>
+  
   <section>
     <div class="box11-wrapper">
   <div id="box11-image" class="image-box">
