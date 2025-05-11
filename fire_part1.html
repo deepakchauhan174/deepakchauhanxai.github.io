@@ -114,6 +114,49 @@
       opacity: 0.7;
     }
 
+    .button-group {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-copy {
+      background-color: #ffcc00;
+      color: #000;
+    }
+
+    .btn-copy:hover {
+      background-color: #ffd633;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 204, 0, 0.4);
+    }
+
+    .btn-share {
+      background-color: #00cc99;
+      color: #000;
+    }
+
+    .btn-share:hover {
+      background-color: #00e6b3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 204, 153, 0.4);
+    }
+
     @media (max-width: 600px) {
       .card-content {
         padding: 16px;
@@ -127,11 +170,16 @@
         padding: 16px 16px 16px 40px;
         font-size: 1rem;
       }
+
+      .button-group {
+        flex-direction: column;
+        gap: 12px;
+      }
     }
   </style>
 </head>
 <body>
-  <h2 style="text-align:center; margin-bottom: 20px;">Deepak Chauhan x AI Bhai short story no copyright©️</h2>
+  <h2 style="text-align:center; margin-bottom: 20px;">Deepak Chauhan × AI Bhai — Daily Fire Story</h2>
 
   <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz06HAT-dqDcSLl8UkuiJTSJ7tco3z3gzPaoSfBft6gMEfTq5ZwJh9KSKAVc_g-IQY0/exec?t=' + Date.now();
@@ -151,15 +199,42 @@
               <div class="story-text">${data.fullStory}</div>
               <p class="signature">— ${data.signature}</p>
               <p class="copyright">${data.copyright ? '' : 'not copyright ©'}</p>
+              <div class="button-group">
+                <button class="btn btn-copy">Copy</button>
+                <button class="btn btn-share">Share</button>
+              </div>
             </div>
           `;
+
+          const copyBtn = card.querySelector('.btn-copy');
+          const shareBtn = card.querySelector('.btn-share');
+
+          copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(data.fullStory)
+              .then(() => copyBtn.textContent = 'Copied!')
+              .catch(() => alert('Copy failed'));
+          });
+
+          shareBtn.addEventListener('click', () => {
+            if (navigator.share) {
+              navigator.share({
+                title: data.storyTitle,
+                text: data.fullStory,
+                url: window.location.href
+              });
+            } else {
+              const shareUrl = `mailto:?subject=${encodeURIComponent(data.storyTitle)}&body=${encodeURIComponent(data.fullStory + '\n\n— ' + data.signature)}`;
+              window.open(shareUrl, '_blank');
+            }
+          });
+
           document.body.appendChild(card);
         });
-      } catch (error) {
-        console.error('Error fetching stories:', error);
-        const errorMsg = document.createElement('p');
-        errorMsg.textContent = "Story fetch failed. Please try again later.";
-        document.body.appendChild(errorMsg);
+      } catch (err) {
+        console.error('Fetch error:', err);
+        const msg = document.createElement('p');
+        msg.textContent = 'Story load failed. Try again.';
+        document.body.appendChild(msg);
       }
     }
 
