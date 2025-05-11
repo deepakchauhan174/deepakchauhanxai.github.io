@@ -359,337 +359,49 @@ document.getElementById('bonusEmoji').addEventListener('click', function () {
   </p>    
       </section>    
 <!-- Box 9: Motivational Fire | Final Updated -->    
-   <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIRE ZONE – Unbreakable Energy Chamber</title>
-    <style>
-        :root {
-            --fire-core: #ff2800;
-            --fire-blaze: #ff6a00;
-            --fire-glow: #ff9a00;
-            --fire-spark: #ffcc00;
-            --chamber-dark: #120a06;
-            --chamber-light: #1e140f;
-            --ember-pulse: 0 0 20px rgba(255, 40, 0, 0.7);
-            --text-flame: rgba(255, 255, 255, 0.95);
-            --text-smoke: rgba(255, 255, 255, 0.6);
-        }
+   <section style="padding: 30px; background: radial-gradient(circle, #1a0000, #000); border-radius: 20px; box-shadow: 0 0 20px #ff4500; color: white; text-align: center; margin: 40px auto; max-width: 800px;">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Bebas Neue', 'Anton', sans-serif;
-        }
+  <h2 style="font-size: 24px; margin-bottom: 15px; text-shadow: 0 0 10px #ff6a00;">
+    🔥 THE UNBREAKABLE ENERGY CHAMBER
+  </h2>
 
-        body {
-            background: radial-gradient(ellipse at center, #250c00 0%, #120800 100%);
-            color: var(--text-flame);
-            min-height: 100vh;
-            padding: 20px;
-        }
+  <p style="font-size: 18px; line-height: 1.8; color: #ffcc99; margin-bottom: 20px;">
+    यह सिर्फ एक सेक्शन नहीं है – यह वो जोश है जो हार मानने वालों को जला देता है।<br>
+    जब भी मन डगमगाए, यहाँ लौट आओ – क्योंकि यहाँ हर शब्द में आग है, और हर लाइन में फौलाद।
+  </p>
 
-        .fire-zone-container {
-            max-width: 800px;
-            margin: 0 auto;
-            border: 2px solid var(--fire-core);
-            border-radius: 5px;
-            background: linear-gradient(160deg, var(--chamber-dark), var(--chamber-light));
-            box-shadow: 0 0 30px rgba(255, 40, 0, 0.3);
-            overflow: hidden;
-            position: relative;
-        }
+  <img src="images/Fire_Dialogues.jpg" alt="Fire Zone" style="width: 100%; max-width: 400px; border-radius: 12px; border: 2px solid #ff6a00; margin: 20px auto; box-shadow: 0 0 15px #ff6a00;">
 
-        .fire-zone-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                var(--fire-core), 
-                var(--fire-blaze), 
-                var(--fire-glow), 
-                var(--fire-spark),
-                transparent);
-            animation: firePulse 3s infinite;
-        }
+  <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+    <a href="fire_part1.html" class="fire-btn" style="
+      background: linear-gradient(to right, #ff4500, #ff8c00);
+      padding: 12px 30px;
+      color: #fff;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 10px #ff6a00;
+      transition: all 0.3s ease;
+    ">🔥 Fire Dialogues – Part 1</a>
 
-        @keyframes firePulse {
-            0% { opacity: 0.7; }
-            50% { opacity: 1; }
-            100% { opacity: 0.7; }
-        }
+    <a href="fire_part2.html" class="fire-btn" style="
+      background: linear-gradient(to right, #ff4500, #ff8c00);
+      padding: 12px 30px;
+      color: #fff;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 10px #ff6a00;
+      transition: all 0.3s ease;
+    ">🔥 Fire Dialogues – Part 2</a>
+  </div>
 
-        .warrior-soul-section {
-            padding: 30px;
-            text-align: center;
-            border-bottom: 1px dashed var(--fire-core);
-        }
-
-        .warrior-soul-section p {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: linear-gradient(90deg, var(--fire-glow), var(--fire-spark));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .warrior-soul-section .fire-signature {
-            font-size: 1.1rem;
-            color: var(--fire-core);
-            margin-top: 15px;
-            font-style: italic;
-        }
-
-        .story-image-container {
-            position: relative;
-            height: 300px;
-            overflow: hidden;
-        }
-
-        .story-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: sepia(50%) brightness(80%) contrast(120%);
-        }
-
-        .fire-tagline {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: white;
-            text-shadow: 0 0 10px var(--fire-core), 0 0 20px var(--fire-blaze);
-            padding: 0 20px;
-        }
-
-        .story-content {
-            padding: 30px;
-        }
-
-        .fire-buttons {
-            display: flex;
-            gap: 20px;
-            margin-top: 30px;
-            justify-content: center;
-        }
-
-        .fire-btn {
-            padding: 15px 25px;
-            border: none;
-            border-radius: 3px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .fire-btn::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: linear-gradient(45deg, 
-                var(--fire-core), 
-                var(--fire-blaze), 
-                var(--fire-glow), 
-                var(--fire-spark));
-            z-index: -1;
-            opacity: 0.7;
-            transition: all 0.3s ease;
-        }
-
-        .fire-btn:hover::before {
-            opacity: 1;
-            transform: scale(1.05);
-        }
-
-        .fire-btn span {
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-line {
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9rem;
-            color: var(--text-smoke);
-            border-top: 1px dashed var(--fire-core);
-            letter-spacing: 1px;
-        }
-
-        @media (max-width: 768px) {
-            .warrior-soul-section p {
-                font-size: 1.1rem;
-            }
-            
-            .fire-tagline {
-                font-size: 1.4rem;
-            }
-            
-            .fire-buttons {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .fire-btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="fire-zone-container">
-        <div class="warrior-soul-section">
-            <p>यह सिर्फ एक खंड नहीं है - यह योद्धाओं की आत्मा है, सेनानियों का हृदय है, तथा उन लोगों की सांस है जो हार मानने से इनकार करते हैं।.</p>
-            <p>यहाँ हर शब्द एक चिंगारी है। हर पंक्ति एक ज्वाला है.</p>
-            <p>जब आपका उद्देश्य धुंधला हो जाए और आपकी दृष्टि धुंधली हो जाए, तो यहां वापस आएं - क्योंकि यहां, दीपक चौहान × एआई भाई ने उस आग को उकेरा है जो कभी नहीं बुझती।</p>
-            <div class="fire-signature">THE UNBREAKABLE ENERGY CHAMBER</div>
-        </div>
-        
-        <div class="story-image-container">
-            <img class="story-image" id="storyImage" src="" alt="Fire Zone Story">
-            <div class="fire-tagline">"Let your fire speak louder than your fears."</div>
-        </div>
-        
-        <style>
-  .fire-btn {
-    display: inline-block;
-    background: linear-gradient(45deg, #ff4500, #ff8c00, #ffd700);
-    color: #000;
-    padding: 12px 24px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1rem;
-    box-shadow: 0 0 15px #ff6a00;
-    transition: 0.3s ease-in-out;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .fire-btn:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 0 25px #ff4500;
-  }
-
-  .fire-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin-top: 30px;
-  }
-</style>
-
-<div class="fire-buttons">
-  <a href="fire_part1.html" class="fire-btn">🔥 Fire Dialogues – Part 1</a>
-  <a href="fire_part2.html" class="fire-btn">🔥 Fire Dialogues – Part 2</a>
-</div>
-        
-        <div class="footer-line">
-            Deepak Chauhan × AI Bhai × DK_Community
-        </div>
-    </div>
-
-    <script>
-        // Your Google Apps Script Web App URL
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzqc1Iikkz9qnuelVPAP6cFCYH7aZKJsu2WtuIFtPUcUi40MH1XsVp5nMuGN2YbFQU1LA/exec';
-        
-        // DOM elements
-        const storyImage = document.getElementById('storyImage');
-        const storyText = document.getElementById('storyText');
-        const fireBtn1 = document.getElementById('fireBtn1');
-        const fireBtn2 = document.getElementById('fireBtn2');
-
-        // Fetch data from Google Apps Script
-        async function fetchFireStory() {
-            try {
-                // Add timestamp to avoid caching issues
-                const url = `${SCRIPT_URL}?t=${Date.now()}`;
-                const response = await fetch(url);
-                
-                if (!response.ok) throw new Error('Network response was not ok');
-                
-                const data = await response.json();
-                
-                // Validate the response structure
-                if (!data.imgUrl || !data.fullStory) {
-                    throw new Error('Invalid data structure received');
-                }
-                
-                populateFireStory(data);
-            } catch (error) {
-                console.error('Error fetching story:', error);
-                storyText.textContent = 'The fire is temporarily contained. Warriors, stand by for reignition...';
-            }
-        }
-
-        // Populate the fire story
-        function populateFireStory(data) {
-            storyImage.src = data.imgUrl;
-            storyText.textContent = data.fullStory;
-            
-            // Set up button functionality
-            fireBtn1.addEventListener('click', () => {
-                navigator.clipboard.writeText(data.fullStory)
-                    .then(() => {
-                        fireBtn1.innerHTML = '<span>🔥 COPIED TO YOUR SOUL</span>';
-                        setTimeout(() => {
-                            fireBtn1.innerHTML = '<span>🔥 Fire Dialogues – Part 1</span>';
-                        }, 2000);
-                    })
-                    .catch(err => {
-                        console.error('Failed to copy text: ', err);
-                    });
-            });
-
-            fireBtn2.addEventListener('click', () => {
-                if (navigator.share) {
-                    navigator.share({
-                        title: 'Fire Zone Wisdom',
-                        text: data.fullStory,
-                        url: window.location.href
-                    }).catch(err => {
-                        console.log('Error sharing:', err);
-                    });
-                } else {
-                    const shareUrl = `mailto:?subject=${encodeURIComponent('Fire Zone Wisdom')}&body=${encodeURIComponent(data.fullStory + '\n\n— Deepak Chauhan × AI Bhai × DK_Community')}`;
-                    window.open(shareUrl, '_blank');
-                }
-            });
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', fetchFireStory);
-    </script>
-</body>
-</html>
+  <p style="margin-top: 25px; font-size: 14px; color: #999;">
+    Deepak Chauhan × AI Bhai × DK_Community
+  </p>
+   </section> 
       <!-- Box 10: AI Universe Portal | Deepak Chauhan × AI Bhai -->     
       <section class="ai-universe-section">  
   <img src="images/ai_universe_banner.jpg" alt="AI Bhai × Deepak" class="universe-banner">  
