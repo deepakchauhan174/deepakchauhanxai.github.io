@@ -1,272 +1,169 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fire Dialogues – Part 1</title>
-
-  <!-- Firebase Scripts -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAT8qbxGsbG_28uVUWMmCmXeHf8WQmbvVZQ",
-      authDomain: "vip-team-bhai-x-ai.firebaseapp.com",
-      databaseURL: "https://vip-team-bhai-x-ai-default-rtdb.firebaseio.com",
-      projectId: "vip-team-bhai-x-ai",
-      storageBucket: "vip-team-bhai-x-ai.appspot.com",
-      messagingSenderId: "984650632826",
-      appId: "1:984650632826:web:7e3b8167fb5979537535c3"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-  </script>
-
+  <title>Motivational Stories</title>
   <style>
-    
+    :root {
+      --neon-glow: 0 0 10px rgba(0, 255, 255, 0.8);
+      --primary-color: #00ffff;
+      --secondary-color: #ff00ff;
+      --text-light: rgba(255, 255, 255, 0.9);
+      --text-faded: rgba(255, 255, 255, 0.6);
+      --bg-dark: #121212;
+      --bg-darker: #0a0a0a;
+      --highlight: rgba(0, 255, 255, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
     body {
-      background: linear-gradient(135deg, #000000, #0a0a0a);
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-darker);
+      color: var(--text-light);
       padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
     }
-    h1 {
-      text-align: center;
-      color: #ff4444;
-      margin-bottom: 30px;
-      text-shadow: 0 0 10px #ff4444;
-    }
-    .dialogue-box {
-      background: #111;
-      padding: 20px;
-      border-radius: 15px;
+
+    .story-card {
+      max-width: 600px;
+      width: 100%;
+      background: var(--bg-dark);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
       margin: 20px 0;
-      box-shadow: 0 0 15px #00ffff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .dialogue-box h3 {
-      color: #ff00ff;
+
+    .story-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), var(--neon-glow);
+    }
+
+    .story-image {
+      width: 100%;
+      height: auto;
+      max-height: 300px;
+      object-fit: cover;
+      border-bottom: 2px solid var(--primary-color);
+      filter: brightness(0.9) contrast(1.1);
+    }
+
+    .card-content {
+      padding: 24px;
+    }
+
+    .story-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--primary-color);
       text-align: center;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
     }
-    .dialogue-box p.story {
-      font-size: 20px;
+
+    .story-text {
+      font-size: 1.1rem;
       line-height: 1.8;
-      color: #66fcf1;
+      margin-bottom: 24px;
+      padding: 20px;
+      background: var(--highlight);
+      border-radius: 8px;
+      border-left: 3px solid var(--primary-color);
+      position: relative;
     }
-    .dialogue-box p.signature {
-      color: #ccc;
-      font-size: 14px;
+
+    .story-text::before {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 3rem;
+      color: var(--primary-color);
+      opacity: 0.2;
+      font-family: serif;
+    }
+
+    .signature {
+      font-style: italic;
       text-align: right;
-      margin-top: 10px;
+      color: var(--text-faded);
+      font-size: 1rem;
+      margin-bottom: 8px;
     }
-    .dialogue-box img {
-      display: block;
-      margin: 20px auto 0;
-      width: 220px;
-      border-radius: 12px;
-      border: 3px solid #00ffff;
-      box-shadow: 0 0 15px #00ffff;
+
+    .copyright {
+      font-size: 0.75rem;
+      text-align: right;
+      color: var(--text-faded);
+      opacity: 0.7;
     }
-    .interaction-container {
-      border: 2px solid #00ffff;
-      border-radius: 5px;
-      padding: 15px;
-      margin-top: 15px;
-      background: rgba(0, 20, 30, 0.9);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-    }
-    .cyber-button {
-      background: #00222d;
-      border: 1px solid #00ffff;
-      color: #00ffff;
-      padding: 8px 15px;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin: 5px;
-    }
-    .cyber-button:hover {
-      background: #00394d;
-      box-shadow: 0 0 10px #00ffff;
-    }
-    .counter {
-      color: #00ff00;
-      margin-left: 10px;
-      font-family: 'Courier New', monospace;
-    }
-    .comment-terminal {
-      margin-top: 15px;
-      border-top: 1px solid #00ffff;
-      padding-top: 10px;
-    }
-    .comment-list {
-      max-height: 150px;
-      overflow-y: auto;
-      margin-bottom: 10px;
-    }
-    .comment-list div {
-      padding: 5px;
-      border-bottom: 1px solid #004455;
-      color: #00ffff;
-      font-family: 'Courier New', monospace;
-    }
-    .cyber-input {
-      background: #001a1a;
-      border: 1px solid #00ffff;
-      color: #00ffff;
-      padding: 8px;
-      width: 70%;
-      margin-right: 10px;
+
+    @media (max-width: 600px) {
+      .card-content {
+        padding: 16px;
+      }
+
+      .story-title {
+        font-size: 1.5rem;
+      }
+
+      .story-text {
+        padding: 16px 16px 16px 40px;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
-<div id="welcome-box" style="
-  display: none;
-  background: #330000;
-  color: #fff;
-  padding: 30px;
-  margin: 20px auto;
-  border: 2px solid #ff5555;
-  width: 90%;
-  max-width: 700px;
-  border-radius: 15px;
-  box-shadow: 0 0 20px #ff2222;
-  font-family: 'Segoe UI', sans-serif;
-  text-align: center;
-  transition: opacity 1s ease;
-">
-  <h2 id="welcome-title" style="color:#ff7777; margin-bottom: 10px;"></h2>
-  <p id="welcome-message" style="font-size: 18px; line-height: 1.6;"></p>
-  <p id="welcome-signature" style="color:#ccc; font-size: 14px; margin-top: 20px;"></p>
-</div>
 <body>
-<h1>Fire Dialogues – Part 1</h1>
-<div id="dialogues-container"></div>
+  <h2 style="text-align:center; margin-bottom: 20px;">Deepak Chauhan x AI Bhai short story no copyright©️ please wait loading all story....</h2>
 
-<script>
-const container = document.getElementById("dialogues-container");
-const imagePaths = [
-  "images/fire_part_img1.jpg",
-  "images/fire_part_img2.jpg",
-  "images/fire_part_img3.jpg",
-  "images/fire_part_img4.jpg",
-  "images/fire_part_img5.jpg"
-];
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzqc1Iikkz9qnuelVPAP6cFCYH7aZKJsu2WtuIFtPUcUi40MH1XsVp5nMuGN2YbFQU1LA/exec';
 
-fetch("https://script.google.com/macros/s/AKfycbxBzvwMeTpl-STR1zx2wUbb71wnOyeTRpl_ckMUgsucEqRo69vUnAdpnh6s5MdEV2F_tg/exec")
-  .then(res => res.json())
-  .then(data => {
-    Object.keys(data).forEach((key, index) => {
-      const { fire, story, signature } = data[key];
-      const postId = `post-${index}`;
+    async function fetchStoryData() {
+      try {
+        const response = await fetch(SCRIPT_URL);
+        const stories = await response.json();
 
-      const box = document.createElement("div");
-      box.className = "dialogue-box";
-      box.innerHTML = `
-        <h3>${fire}</h3>
-        <p class="story">${story}</p>
-        <p class="signature">${signature}</p>
-        <img src="${imagePaths[index % imagePaths.length]}" alt="Fire Image">
-        <div class="interaction-container" data-postid="${postId}">
-          <div class="status-bar">
-            <button class="cyber-button" onclick="handleLike('${postId}')">
-              <span class="glow-text">LIKE</span>
-            </button>
-            <span id="likeCount-${postId}" class="counter">0</span>
-          </div>
-          <div class="comment-terminal">
-            <div id="comments-${postId}" class="comment-list"></div>
-            <div class="comment-input">
-           <input type="text" id="commentName-${postId}" class="cyber-input" placeholder="Apna naam likho..." />
-          <input type="text" id="commentInput-${postId}" class="cyber-input" placeholder="Apna comment likho..." />
-          <button class="cyber-button" onclick="postComment('${postId}')">
-          <span class="glow-text">POST</span>
-         </button>
-          </div>
-          </div>
-        </div>
-      `;
-      container.appendChild(box);
-      initializePost(postId);
-    });
-  });
-
-function initializePost(postId) {
-  const likeRef = firebase.database().ref(`Fire1_Likes/${postId}`);
-  const commentRef = firebase.database().ref(`Fire1_Comments/${postId}`);
-
-  likeRef.on("value", snapshot => {
-    document.getElementById(`likeCount-${postId}`).textContent = snapshot.val() || 0;
-  });
-
-  // Real-time comment updates (FINAL FIX)
-commentRef.on('value', (snapshot) => {
-  const comments = snapshot.val() ? Object.values(snapshot.val()) : [];
-  const commentList = document.getElementById(`comments-${postId}`);
-  commentList.innerHTML = comments.reverse()
-    .map(comment => {
-  const name = comment.name || "Anonymous";
-  const text = comment.text || comment;
-  return `<div><strong>${name}</strong>; ${text}</div>`;
-})
-    .join('');
-});
-}
-
-function handleLike(postId) {
-  const key = `liked-${postId}`;
-  if (localStorage.getItem(key)) return alert("आप पहले ही लाइक कर चुके हैं!");
-  const likeRef = firebase.database().ref(`Fire1_Likes/${postId}`);
-  likeRef.transaction(current => (current || 0) + 1);
-  localStorage.setItem(key, "true");
-}
-
-function postComment(postId) {
-  const key = `commented-${postId}`;
-  if (localStorage.getItem(key)) return alert("आप पहले ही कमेंट कर चुके हैं!");
-
-  const input = document.getElementById(`commentInput-${postId}`);
-  const nameInput = document.getElementById(`commentName-${postId}`);
-
-  const comment = input.value.trim();
-  const name = nameInput ? nameInput.value.trim() : "Anonymous";
-
-  if (!comment) return;
-
-  const commentRef = firebase.database().ref(`Fire1_Comments/${postId}`);
-  commentRef.push({
-    name: name,
-    text: comment,
-    timestamp: Date.now()
-  });
-
-  localStorage.setItem(key, "true");
-
-  // Clear all input fields
-  input.value = '';
-  if (nameInput) nameInput.value = '';
-}
-</script>
-
-<script>
-  // Welcome Message Loader
-  fetch('https://script.google.com/macros/s/AKfycbwcaJZrHbw5t8KhHXIm3XGiyNI0EezyOfr2PXVzv2ILTIMM9vWyoo59HOVb3BtTBElw/exec?sheet=Fire1')
-    .then(res => res.json())
-    .then(data => {
-      const firstRow = Object.values(data)[0]; // पहली लाइन
-      if (firstRow) {
-        document.getElementById('welcome-title').innerText = firstRow.title || "";
-        document.getElementById('welcome-message').innerText = firstRow.message || "";
-        document.getElementById('welcome-signature').innerText = firstRow.signature || "";
-
-        const box = document.getElementById('welcome-box');
-        box.style.display = "block";
-
-        setTimeout(() => {
-          box.style.opacity = "0";
-          setTimeout(() => box.remove(), 1000); // fade + remove
-        }, 20000); // 20 seconds
+        stories.forEach(data => {
+          const card = document.createElement('div');
+          card.className = 'story-card';
+          card.innerHTML = `
+            <img class="story-image" src="${data.imgUrl}" alt="${data.storyTitle}">
+            <div class="card-content">
+              <h1 class="story-title">${data.storyTitle}</h1>
+              <div class="story-text">${data.fullStory}</div>
+              <p class="signature">— ${data.signature}</p>
+              <p class="copyright">${data.copyright ? '' : 'not copyright ©'}</p>
+            </div>
+          `;
+          document.body.appendChild(card);
+        });
+      } catch (error) {
+        console.error('Error fetching stories:', error);
+        const errorMsg = document.createElement('p');
+        errorMsg.textContent = "Story fetch failed. Please try again later.";
+        document.body.appendChild(errorMsg);
       }
-    })
-    .catch(err => console.error("Welcome box error:", err));
-</script>  
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchStoryData);
+  </script>
 </body>
 </html>
