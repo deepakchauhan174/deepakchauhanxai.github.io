@@ -94,7 +94,15 @@ transition: all 0.3s ease-in-out;
   <button onclick="dismissPopup()" style="margin-top: 10px; padding: 6px 12px; border: none; background-color: #ffd700; color: #000; border-radius: 6px;">  
   समझ गया  
   </button>  
-</div>  
+</div>
+  <script>
+  function dismissPopup() {
+    const popupBox = document.getElementById('welcome-popup');
+    if (popupBox) {
+      popupBox.style.display = 'none';
+    }
+  }
+  </script>
   <header>    
     <h1 style="font-size: 36px;">Team Bhai × AI - Dk_community</h1>    
     <p style="font-size: 22px; color: #00ffff;">Powered by Deepak Chauhan x AI Bhai</p>    
@@ -128,8 +136,9 @@ transition: all 0.3s ease-in-out;
     font-size: 18px;    
     color: #00ffcc;    
     margin-top: 15px;    
-  }    
-</style>  <nav class="nav-section">    
+  } 
+</script>
+  <nav class="nav-section">    
   <a href="index.html">Home</a>    
   <a href="motivational_category.html">Motivational</a>    
   <a href="ai_bhai_video.html">Deepak Chauhan x AI Bhai reels</a>    
@@ -139,7 +148,7 @@ transition: all 0.3s ease-in-out;
   <a href="about.html">About</a>    
 </nav>    
   <!-- START: AI Bhai × Deepak Popup Box -->
-<div id="ai-popup-box" style="min-height: 300px; width: 95%; margin: 40px auto; padding: 25px; background: #0a0a0a; border: 2px solid #00ffc3; border-radius: 20px; box-shadow: 0 0 30px #00ffc3; font-family: 'Poppins', sans-serif; color: white;">
+<div id="ai-popup-box" style="width: 95%; margin: 40px auto; padding: 25px; background: #0a0a0a; border: 2px solid #00ffc3; border-radius: 20px; box-shadow: 0 0 30px #00ffc3; font-family: 'Poppins', sans-serif; color: white;">
   
   <!-- Title -->
   <div style="text-align: center; margin-bottom: 25px;">
@@ -152,24 +161,6 @@ transition: all 0.3s ease-in-out;
   <!-- Stories (Live) -->
   <div id="popup-stories" style="margin-bottom: 40px;"></div>
 
-  <!-- START: Story Card Glow -->
-<div style="
-  background-color: #111;
-  border: 1px solid rgba(0, 255, 195, 0.3);
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 255, 195, 0.2);
-  padding: 15px;
-  margin-bottom: 25px;
-  transition: transform 0.3s, box-shadow 0.3s;"
-  onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 0 25px rgba(0,255,195,0.6)';"
-  onmouseout="this.style.transform='none'; this.style.boxShadow='0 0 15px rgba(0,255,195,0.2)';">
-  
-  <h3 style="color: #00ffc3;">Demo Story Title</h3>
-  <p style="margin: 10px 0;">Yeh ek demo kahani hai jo glow card ke effect ko dikhane ke लिए बनाई गई है.</p>
-  <div style="text-align: right; font-style: italic; color: #888;">~ Deepak Chauhan</div>
-</div>
-<!-- END: Story Card Glow -->
-  
   <!-- Comments (Live) -->
   <div id="popup-comments" style="margin-bottom: 40px;"></div>
 
@@ -182,7 +173,6 @@ transition: all 0.3s ease-in-out;
     </a>
   </div>
 </div>
-<!-- END -->
   <script>
 const storyURL = 'https://script.google.com/macros/s/AKfycbzf3TZAO2nDu_J98PahqIMNd5n_Uk57IPez1bvuuxCU51g1A-ISLQK6VglOuQG2gGwr/exec';
 const commentURL = 'https://script.google.com/macros/s/AKfycbxIPMirk3tp92_t0RyxDviTh7xblod7hjeiUiMO4GgBAEwcoQJbJauc6RGnRXTJFqgqDQ/exec';
