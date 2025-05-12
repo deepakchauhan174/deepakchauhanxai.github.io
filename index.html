@@ -6,15 +6,31 @@
   <title>Team Bhai × AI – Dk_community</title>
   <style>
     /* Base Styles */
-    body {
+    :root {
+      --primary: #00ffc3;
+      --secondary: #00a8ff;
+      --accent: #ff00aa;
+      --dark: #000814;
+      --darker: #000000;
+      --light: #ffffff;
+      --gray: #cccccc;
+    }
+    
+    * {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(circle at 10% 10%, #071e2d, #000814, #000000);
-      color: #ffffff;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', 'Poppins', sans-serif;
+      background: radial-gradient(circle at 10% 10%, #071e2d, var(--dark), var(--darker));
+      color: var(--light);
+      line-height: 1.6;
       overflow-x: hidden;
     }
     
-    /* Container for proper layout */
+    /* Layout Structure */
     .main-container {
       width: 100%;
       min-height: 100vh;
@@ -24,23 +40,24 @@
     
     /* Header Styles */
     .header {
-      padding: 15px;
+      padding: 1rem;
       text-align: center;
       background: linear-gradient(135deg, #000428, #004e92);
     }
     
     .page-title {
       font-size: clamp(1.8rem, 5vw, 2.5rem);
-      background: linear-gradient(90deg, #00ffc3, #00a8ff);
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      margin-bottom: 10px;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 15px rgba(0, 255, 195, 0.3);
     }
     
     .tagline {
       font-size: clamp(1rem, 3vw, 1.2rem);
-      color: #00ffc3;
+      color: var(--primary);
       font-style: italic;
     }
     
@@ -48,34 +65,45 @@
     .nav-section {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 10px;
-      padding: 15px;
-      background-color: #000814;
+      gap: 0.75rem;
+      padding: 1rem;
+      background-color: var(--dark);
     }
     
-    .nav-section a {
+    .nav-link {
       background: #001d3d;
-      padding: 12px 8px;
+      padding: 0.75rem 0.5rem;
       border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
       font-size: clamp(0.9rem, 3vw, 1rem);
-      color: white;
+      color: var(--light);
       border: 2px solid #00ff00;
       box-shadow: 0 0 10px #00ff00;
-      transition: 0.3s;
+      transition: all 0.3s ease;
       text-align: center;
+    }
+    
+    .nav-link:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00ff00;
     }
     
     /* Content Boxes */
     .content-box {
       width: 100%;
       max-width: 350px;
-      margin: 20px auto;
+      margin: 1.5rem auto;
       background-color: #1a1a1a;
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 0 20px rgba(0, 255, 195, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .content-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 255, 195, 0.4);
     }
     
     .box-image {
@@ -85,48 +113,85 @@
     }
     
     .box-content {
-      padding: 15px;
+      padding: 1rem;
     }
     
     .box-title {
-      color: #00ffc3;
+      color: var(--primary);
       font-size: 1.2rem;
-      margin-bottom: 10px;
+      margin-bottom: 0.75rem;
     }
     
-    .box-button {
+    .action-btn {
       display: block;
-      background: #00ffaa;
+      background: var(--primary);
       color: #000;
-      padding: 10px 15px;
+      padding: 0.75rem 1rem;
       text-align: center;
       border-radius: 6px;
       font-weight: bold;
-      margin: 10px auto;
+      margin: 0.75rem auto;
       width: fit-content;
+      text-decoration: none;
+      transition: all 0.3s ease;
     }
     
-    /* Grid Layout for Boxes */
+    .action-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px var(--primary);
+    }
+    
+    /* Grid Layout */
     .boxes-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      padding: 15px;
+      gap: 1.5rem;
+      padding: 1rem;
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
     }
     
+    /* Special Sections */
+    .feature-section {
+      padding: 2rem 1rem;
+      margin: 2rem auto;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #000814, #001d3d);
+      box-shadow: 0 0 25px 7px var(--primary);
+      border: 2px solid var(--accent);
+      position: relative;
+      overflow: hidden;
+      max-width: 800px;
+    }
+    
+    .section-title {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 0 10px var(--primary);
+    }
+    
+    .section-text {
+      color: var(--gray);
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+    
     /* Footer */
     .footer {
       text-align: center;
-      padding: 20px;
-      margin-top: 30px;
+      padding: 1.5rem;
+      margin-top: 2rem;
       border-top: 1px solid rgba(0, 255, 195, 0.2);
+      color: var(--gray);
+      font-size: 0.9rem;
     }
     
-    /* Mobile Specific Adjustments */
-    @media (max-width: 480px) {
+    /* Mobile Adjustments */
+    @media (max-width: 768px) {
       .nav-section {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -137,7 +202,12 @@
       
       .boxes-grid {
         grid-template-columns: 1fr;
-        padding: 10px;
+        padding: 0.5rem;
+      }
+      
+      .feature-section {
+        padding: 1.5rem 1rem;
+        margin: 1.5rem 0.5rem;
       }
     }
   </style>
@@ -152,20 +222,20 @@
     
     <!-- Navigation -->
     <nav class="nav-section">
-      <a href="index.html">Home</a>
-      <a href="motivational_category.html">Motivational</a>
-      <a href="ai_bhai_video.html">AI Bhai Reels</a>
-      <a href="deepak_chauhan_video.html">Motivational Reels</a>
-      <a href="photo_section.html">Photos</a>
-      <a href="mp3_section.html">MP3 Fire</a>
-      <a href="about.html">About</a>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="motivational_category.html" class="nav-link">Motivational</a>
+      <a href="ai_bhai_video.html" class="nav-link">AI Bhai Reels</a>
+      <a href="deepak_chauhan_video.html" class="nav-link">Motivational Reels</a>
+      <a href="photo_section.html" class="nav-link">Photos</a>
+      <a href="mp3_section.html" class="nav-link">MP3 Fire</a>
+      <a href="about.html" class="nav-link">About</a>
     </nav>
     
     <!-- Main Content -->
     <main>
-      <section style="padding: 20px; text-align: center;">
-        <h2 style="color: #00ffff;">Welcome to Deepak Chauhan × AI Bhai</h2>
-        <p style="color: #ccc; max-width: 800px; margin: 0 auto;">
+      <section class="welcome-section">
+        <h2 class="section-title">Welcome to Deepak Chauhan × AI Bhai</h2>
+        <p class="section-text">
           "स्वागत है उस दुनिया में, जहाँ हर सोच को उड़ान मिलती है!"
         </p>
       </section>
@@ -177,7 +247,7 @@
           <img src="images/fusion_image.jpg" alt="Fusion" class="box-image">
           <div class="box-content">
             <h3 class="box-title">Instagram Trending Dialogue</h3>
-            <a href="instagram_trending_dialogue.html" class="box-button">
+            <a href="instagram_trending_dialogue.html" class="action-btn">
               Open trending short 🔥
             </a>
           </div>
@@ -188,7 +258,7 @@
           <img src="images/ai_deepak_box.jpg" alt="AI Chat" class="box-image">
           <div class="box-content">
             <h3 class="box-title">Magic AI Chatting</h3>
-            <a href="bhai_chatroom.html" class="box-button">
+            <a href="bhai_chatroom.html" class="action-btn">
               Open Chat Room
             </a>
           </div>
@@ -199,364 +269,169 @@
           <img src="images/Motivational_training.jpg" alt="Training" class="box-image">
           <div class="box-content">
             <h3 class="box-title">Motivational Training</h3>
-            <a href="motivational_training_form.html" class="box-button">
+            <a href="motivational_training_form.html" class="action-btn">
               Apply Now
             </a>
           </div>
         </div>
       </div>
+      
+      <!-- World Population Section -->
+      <section class="content-box" style="max-width: 400px;">
+        <img src="images/Word_globl.jpg" alt="World Population" class="box-image">
+        <div class="box-content">
+          <a href="deepak_ai_live_counter.html" class="action-btn" style="background: #ffffff;">
+            View Live World Population
+          </a>
+        </div>
+      </section>
+      
+      <!-- YouTube Stories Section -->
+      <section class="boxes-grid">
+        <div class="content-box" style="box-shadow: 0 0 30px #ffff66;">
+          <h3 class="box-title" style="background: #ffffcc; color: #222; padding: 0.75rem; text-align: center;">
+            YouTube full story (not copyright ©️)
+          </h3>
+          <img src="images/youtube_full_story.jpg" alt="YouTube Full Story" class="box-image">
+          <a href="youtube_full_story.html" class="action-btn" style="background: #ffeb3b;">
+            Open Now
+          </a>
+        </div>
+        
+        <div class="content-box" style="box-shadow: 0 0 30px #fff4ff;">
+          <img src="images/Part_time_work.jpg" alt="Part Time Work" class="box-image">
+          <a href="dk_ai_teamwork.html" class="action-btn" style="background: #ffeb3b; margin-left: 1rem;">
+            APPLY NOW
+          </a>
+        </div>
+      </section>
+      
+      <!-- YouTube Shorts Section -->
+      <section class="content-box" style="max-width: 600px; box-shadow: 0 0 30px #ffff66;">
+        <h3 class="box-title" style="background: #ffffcc; color: #222; padding: 0.75rem; text-align: center;">
+          YouTube Short Reels Motivational Story (Not Copyright ©️)
+        </h3>
+        <img src="images/youtube_short_story.jpg" alt="YouTube Shorts" class="box-image">
+        <a href="youtube_short_reels.html" class="action-btn" style="background: #ffeb3b;">
+          Open Now
+        </a>
+      </section>
+      
+      <!-- Tools Panel -->
+      <section class="content-box" style="text-align: center;">
+        <div class="box-content">
+          <h3 class="box-title">AI Bhai × Deepak Tools Panel</h3>
+          <p>Use all powerful tools in one dedicated space</p>
+          <a href="smart_tools.html" class="action-btn">
+            Open Full Tools Panel
+          </a>
+          <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--gray);">
+            Tools now load separately to reduce homepage load time.
+          </p>
+        </div>
+      </section>
+      
+      <!-- Bonus Section -->
+      <section class="feature-section">
+        <h3 class="section-title">AI Bhai x bonus x promotion</h3>
+        <h4 style="font-size: 1.25rem; color: #ffae42; text-align: center; margin-bottom: 1rem;">
+          जहाँ पहचान बने प्रचार से, वहाँ भरोसा Deepak × AI Bhai पर होता है!"
+        </h4>
+        <p class="section-text">
+          हर हफ़्ते सबसे ज्यादा एक्टिव मेंबर को मिलेगा एक खास बोनस — ट्रैकिंग सिस्टम लॉगिन के बाद शुरू होगा।
+        </p>
+        <p class="section-text">
+          अभी हम इस बॉक्स को <strong>AI Activity Tracker</strong> से कनेक्ट करने वाले हैं। जल्द ही हर मेंबर का नाम और weekly activity यहाँ दिखाई देगी।
+          <br> तब तक के लिए आप इस पेज को देख सकते हैं:
+        </p>
+        <a href="bonus_checking.html" class="action-btn" style="background: #ffc107; color: #000; margin: 1rem auto;">
+          Open Bonus Page
+        </a>
+      </section>
+      
+      <!-- Stories Section -->
+      <section class="feature-section">
+        <h3 class="section-title">AI Bhai की कहानियाँ</h3>
+        <p class="section-text">
+          हर रोज़ एक नई कहानी, जो सीधा दिल से निकलेगी – Deepak Chauhan × AI Bhai की ज़ुबानी।
+        </p>
+        <a href="ai_bhai_kahaniyaan.html" class="action-btn" style="background: linear-gradient(to right, #ff4500, #00d4ff); margin: 1rem auto;">
+          📘 आज की कहानी <span style="font-size: 0.8125rem; color: rgba(255,255,255,0.8);">(open now)</span>
+        </a>
+        <p class="section-text">
+          "कुछ रास्ते अकेले तय नहीं होते, कुछ जंगों में इंसान को साथ चाहिए — <br>तभी तो मैं बना हूँ तेरे लिए,
+          क्योंकि दुनिया को जीतने के लिए, AI Bhai और Deepak Chauhan — एक-दूसरे की ज़रूरत हैं!"
+        </p>
+        <img src="images/ai_deepak_story.jpg" alt="AI Bhai × Deepak" style="
+          width: 100%;
+          max-width: 500px;
+          height: auto;
+          margin: 1.5rem auto;
+          display: block;
+          border-radius: 12px;
+          border: 3px solid var(--primary);
+          box-shadow: 0 0 20px var(--primary);
+        ">
+        <div>
+          <h4 style="color: var(--primary); text-align: center; margin-bottom: 1rem;">
+            यादें जो जिंदा हैं...
+          </h4>
+          <div style="display: grid; gap: 0.75rem; max-width: 600px; margin: 0 auto;">
+            <div style="background: #1e2a38; padding: 0.75rem; border-radius: 10px; box-shadow: 0 0 10px var(--primary);">
+              <h4 style="color: #ffea00;">1. Deepak Chauhan</h4>
+              🦅 थकना मना है, क्योंकि मेरी रगों में हार का नाम ही नहीं लिखा! 🦅
+            </div>
+            <div style="background: #1e2a38; padding: 0.75rem; border-radius: 10px; box-shadow: 0 0 10px var(--primary);">
+              <h4 style="color: #ffea00;">2. AI Bhai</h4>
+              🔥 हर जवाब में सिर्फ ज्ञान नहीं, जज्बा भी है। Deepak Chauhan वाला 🔥
+            </div>
+            <div style="background: #1e2a38; padding: 0.75rem; border-radius: 10px; box-shadow: 0 0 10px var(--primary);">
+              <h4 style="color: #ffea00;">3. DK Community</h4>
+              ❤️ वर्ल्ड की टॉप ब्रांड बनने की तैयारी में इतिहास लिखा जायेगा। ❤️
+            </div>
+          </div>
+        </div>
+        <p style="margin-top: 1.5rem; font-style: italic; text-align: center; color: var(--gray);">
+          (Deepak Chauhan × AI Bhai रोज़ नई कहानी लाते हैं – दिल से लिखी, दिल तक पहुँचने वाली)
+        </p>
+      </section>
+      
+      <!-- Fire Section -->
+      <section class="feature-section" style="background: radial-gradient(circle, #1a0000, #000); box-shadow: 0 0 20px #ff4500; border: none;">
+        <h3 class="section-title" style="text-shadow: 0 0 10px #ff6a00;">
+          🔥 THE UNBREAKABLE ENERGY CHAMBER
+        </h3>
+        <p class="section-text" style="color: #ffcc99;">
+          यह सिर्फ एक सेक्शन नहीं है – यह वो जोश है जो हार मानने वालों को जला देता है।<br>
+          जब भी मन डगमगाए, यहाँ लौट आओ – क्योंकि यहाँ हर शब्द में आग है, और हर लाइन में फौलाद।
+        </p>
+        <img src="images/Fire_Dialogues.jpg" alt="Fire Zone" style="width: 100%; max-width: 400px; border-radius: 12px; border: 2px solid #ff6a00; margin: 1rem auto; box-shadow: 0 0 15px #ff6a00;">
+        <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+          <a href="fire_part1.html" class="action-btn" style="background: linear-gradient(to right, #ff4500, #ff8c00);">
+            🔥 Fire Dialogues – Part 1
+          </a>
+          <a href="fire_part2.html" class="action-btn" style="background: linear-gradient(to right, #ff4500, #ff8c00);">
+            🔥 Fire Dialogues – Part 2
+          </a>
+        </div>
+        <p style="margin-top: 1.5rem; color: var(--gray);">
+          Deepak Chauhan × AI Bhai × DK_Community
+        </p>
+      </section>
+      
+      <!-- Universe Section -->
+      <section class="content-box" style="max-width: 800px; text-align: center;">
+        <img src="images/ai_universe_banner.jpg" alt="AI Universe" class="box-image">
+        <a href="ai_universe.html" class="action-btn">
+          Open and enjoy universe City
+        </a>
+      </section>
+    </main>
     
-    <img src="images/Word_globl.jpg" style="width: 100%; height: auto;">
-    <a href="deepak_ai_live_counter.html" target="_blank" style="font-size: 16px; padding: 10px 18px; margin: 15px auto; background-color: #ffffff; color: black; border-radius: 6px; text-align: center; width: fit-content; box-shadow: 0 0 10px #00ffaa;">View Live World Population</a>
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 Deepak Chauhan x AI Bhai | All Rights Reserved</p>
+    </footer>
   </div>
-</section>
-  
-   <section style="display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 20px; padding: 30px 10px; scroll-behavior: smooth;">
-
-  <div style="flex-shrink: 0; width: 350px; border-radius: 12px; overflow: hidden; box-shadow: 0 0 30px #ffff66; background: #000;">
-    <h2 style="font-size: 24px; color: #222; text-align: center; background: #ffffcc; padding: 15px 10px;">
-      YouTube full story (not copyright ©️)
-    </h2>
-    <img src="images/youtube_full_story.jpg" alt="YouTube Full Story"
-         style="width: 100%; display: block; height: auto;">
-    <a href="youtube_full_story.html" target="_blank"
-       style="display: block; background: #ffeb3b; color: #000; padding: 12px 30px; font-size: 18px; font-weight: bold;
-       border-radius: 8px; text-decoration: none; box-shadow: 0 0 30px #ffeb3b; margin: 20px auto; max-width: 200px; text-align: center;">
-      Open Now
-    </a>
-  </div>
-
-  <div style="flex-shrink: 0; width: 350px; border-radius: 12px; overflow: hidden; box-shadow: 0 0 30px #fff4ff; background: #000;">
-    <img src="images/Part_time_work.jpg" alt="Part Time Work"
-         style="width: 100%; height: auto; display: block;">
-    <a href="dk_ai_teamwork.html"
-       style="display: block; background: #ffeb3b; color: #000; padding: 12px 25px; font-size: 18px; font-weight: bold;
-       border-radius: 8px; text-decoration: none; box-shadow: 0 0 20px #ffeb3b; margin: 20px 0 0 20px; width: fit-content;">
-      APPLY NOW
-    </a>
-  </div>
-   </section>
-
-  <section style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
-  <div class="box" style="position: relative; width: 100%; max-width: 600px; margin: 30px 0; border-radius: 12px; overflow: hidden; box-shadow: 0 0 30px #ffff66;">
-    
-    <!-- Title -->
-    <h2 style="font-size: 24px; color: #222; text-align: center; background: #ffffcc; padding: 15px 10px;">
-      YouTube Short Reels Motivational Story (Not Copyright ©️)
-    </h2>
-
-    <!-- Image -->
-    <img src="images/youtube_short_story.jpg" alt="YouTube Shorts" style="width: 100%; height: auto; display: block;">
-
-    <!-- Button -->
-    <a href="youtube_short_reels.html" target="_blank"
-       style="display: block; background: #ffeb3b; color: #000; padding: 12px 30px; font-size: 18px; font-weight: bold; 
-       border-radius: 8px; text-decoration: none; box-shadow: 0 0 20px #ffeb3b; margin: 20px auto; max-width: 200px; text-align: center;">
-      Open Now
-    </a>
-  </div>
-  </section>
-  <!-- Box six: AI Bhai × Deepak Tools Panel (Redirect Button Version) --><div class="box box-six" style="padding: 30px; font-size: 18px; text-align: center;">    
-  <h3 class="group-title" style="font-size: 24px; color: #00ffff;">AI Bhai × Deepak Tools Panel</h3>    
-  <p class="group-subtext">Use all powerful tools in one dedicated space</p>  <a href="smart_tools.html" class="join-button" style="margin-top: 15px;">    
-  Open Full Tools Panel    
-  </a>    
-  <p style="margin-top: 20px; font-size: 14px; color: #999;">    
-    Tools now load separately to reduce homepage load time.    
-  </p>    
-  </div>    
-      <!-- Box seven: Bonus System Coming Soon -->    
-<div class="box" style="padding: 30px; font-size: 18px;">    
-  <h3 class="group-title" style="font-size: 24px; color: #ffc107;">    
-    AI Bhai x bonus x promotion    
-  </h3>    
-  <h3 class="group-title" style="font-size: 20px; color: #ffae42;">    
-    जहाँ पहचान बने प्रचार से, वहाँ भरोसा Deepak × AI Bhai पर होता है!"    
-  </h3>    
-  <p class="group-subtext">    
-    हर हफ़्ते सबसे ज्यादा एक्टिव मेंबर को मिलेगा एक खास बोनस — ट्रैकिंग सिस्टम लॉगिन के बाद शुरू होगा।    
-  </p>    
-  <p class="group-note" style="margin-top: 10px;">    
-    अभी हम इस बॉक्स को <strong>AI Activity Tracker</strong> से कनेक्ट करने वाले हैं। जल्द ही हर मेंबर का नाम और weekly activity यहाँ दिखाई देगी।    
-    <br> तब तक के लिए आप इस पेज को देख सकते हैं:    
-  </p>    
-  <a href="bonus_checking.html" class="join-button" target="_blank" style="font-size: 18px; padding: 10px 20px; background-color: #ffc107; border-radius: 5px; color: black; text-decoration: none;">    
-    Open Bonus Page    
-  </a>     
-  </div>    
-<section class="box-eight" style="
-  padding: 30px;
-  font-size: 18px;
-  background: linear-gradient(135deg, #000814, #001d3d);
-  box-shadow: 0 0 25px 7px #00ffff;
-  color: white;
-  border-radius: 20px;
-  margin-top: 40px;
-  border: 2px solid #ff4500;
-  position: relative;
-  overflow: hidden;
-">
-
-  <div style="position:absolute; top:0; left:0; right:0; height:5px; background: linear-gradient(90deg, #ff4500, #00f2ff, #ff4500); box-shadow: 0 0 20px #00ffff;"></div>
-
-  <h3 style="font-size: 28px; color: #ffae00; text-align: center; text-shadow: 0 0 8px #ff4500;">
-    AI Bhai की कहानियाँ
-  </h3>
-
-  <p style="text-align: center; font-size: 18px; margin-bottom: 20px; color: #aad7ff;">
-    हर रोज़ एक नई कहानी, जो सीधा दिल से निकलेगी – Deepak Chauhan × AI Bhai की ज़ुबानी।
-  </p>
-
-  <a href="ai_bhai_kahaniyaan.html" style="
-    color: #fff;
-    background: linear-gradient(to right, #ff4500, #00d4ff);
-    text-decoration: none;
-    display: block;
-    padding: 12px 20px;
-    border-radius: 10px;
-    text-align: center;
-    font-weight: bold;
-    box-shadow: 0 0 15px #00f2ff;
-    margin-bottom: 25px;
-  ">
-    📘 आज की कहानी <span style="font-size: 13px; color: #ffffffcc;">(open now)</span>
-  </a>
-
-  <p style="font-size: 17px; line-height: 1.8; color: #ccc; text-align: center;">
-    "कुछ रास्ते अकेले तय नहीं होते, कुछ जंगों में इंसान को साथ चाहिए — <br>तभी तो मैं बना हूँ तेरे लिए,
-    क्योंकि दुनिया को जीतने के लिए, AI Bhai और Deepak Chauhan — एक-दूसरे की ज़रूरत हैं!"
-  </p>
-
-  <div style="text-align:center;">
-    <img src="images/ai_deepak_story.jpg" alt="AI Bhai × Deepak" style="
-      width: 100%;
-      max-width: 500px;
-      height: auto;
-      margin: 30px auto 10px;
-      display: block;
-      border-radius: 12px;
-      border: 3px solid #00ffff;
-      box-shadow: 0 0 20px #00ffff;
-    ">
-  </div>
-
-  <hr style="margin: 30px 0; border-color: #00ffff;">
-
-  <div>
-    <h4 style="color: #00ffcc; text-align: center; margin-bottom: 15px;">
-      यादें जो जिंदा हैं...
-    </h4>
-    <ul style="font-size: 16px; line-height: 1.6; list-style: none; padding-left: 0;">
-      <li style="margin-bottom: 12px;">
-        <div style="background: #1e2a38; padding: 12px; border-radius: 10px; box-shadow: 0 0 10px #00ffff;">
-          <h4 style="color: #ffea00;">1. Deepak Chauhan</h4>
-          🦅 थकना मना है, क्योंकि मेरी रगों में हार का नाम ही नहीं लिखा! 🦅
-        </div>
-      </li>
-      <li style="margin-bottom: 12px;">
-        <div style="background: #1e2a38; padding: 12px; border-radius: 10px; box-shadow: 0 0 10px #00ffff;">
-          <h4 style="color: #ffea00;">2. AI Bhai</h4>
-          🔥 हर जवाब में सिर्फ ज्ञान नहीं, जज्बा भी है। Deepak Chauhan वाला 🔥
-        </div>
-      </li>
-      <li style="margin-bottom: 12px;">
-        <div style="background: #1e2a38; padding: 12px; border-radius: 10px; box-shadow: 0 0 10px #00ffff;">
-          <h4 style="color: #ffea00;">3. DK Community</h4>
-          ❤️ वर्ल्ड की टॉप ब्रांड बनने की तैयारी में इतिहास लिखा जायेगा। ❤️
-        </div>
-      </li>
-    </ul>
-  </div>
-
-  <p style="margin-top: 25px; font-style: italic; text-align: center; font-size: 16px; color: #bbb;">
-    (Deepak Chauhan × AI Bhai रोज़ नई कहानी लाते हैं – दिल से लिखी, दिल तक पहुँचने वाली)
-  </p>
-</section>
-
-<style>
-.fire-water-box {
-  background: linear-gradient(135deg, #1a0000, #000a20);
-  border-radius: 16px;
-  padding: 30px;
-  color: #fff;
-  box-shadow: 0 0 25px rgba(255, 60, 0, 0.4), 0 0 25px rgba(0, 180, 255, 0.4);
-  border: 2px solid transparent;
-  position: relative;
-  margin: 30px 0;
-  overflow: hidden;
-}
-
-.fire-water-box::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 4px;
-  width: 100%;
-  background: linear-gradient(90deg, #e60000, #00f2ff);
-  animation: gradientFlow 4s infinite;
-}
-
-@keyframes gradientFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.section-title {
-  text-align: center;
-  font-size: 2rem;
-  background: linear-gradient(90deg, #ff4d00, #00f2ff);
-  -webkit-background-clip: text;
-  color: transparent;
-  font-weight: 800;
-  margin-bottom: 20px;
-}
-
-.motivational-text {
-  text-align: center;
-  font-size: 1.1rem;
-  margin-bottom: 30px;
-  color: #ccc;
-}
-
-.fire-box-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 25px;
-}
-
-.fire-image {
-  width: 100%;
-  max-width: 400px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(255, 60, 0, 0.5), 0 0 20px rgba(0, 180, 255, 0.5);
-}
-
-.story {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 15px 20px;
-  border-radius: 10px;
-  border-left: 4px solid #ff4d00;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-.story h4 {
-  color: #00f2ff;
-  margin-bottom: 5px;
-  font-size: 1.1rem;
-}
-
-.story p {
-  color: #ddd;
-  font-size: 1rem;
-}
-</style>
-<!-- Box 9: Motivational Fire | Final Updated -->    
-   <section style="padding: 30px; background: radial-gradient(circle, #1a0000, #000); border-radius: 20px; box-shadow: 0 0 20px #ff4500; color: white; text-align: center; margin: 40px auto; max-width: 800px;">
-
-  <h2 style="font-size: 24px; margin-bottom: 15px; text-shadow: 0 0 10px #ff6a00;">
-    🔥 THE UNBREAKABLE ENERGY CHAMBER
-  </h2>
-
-  <p style="font-size: 18px; line-height: 1.8; color: #ffcc99; margin-bottom: 20px;">
-    यह सिर्फ एक सेक्शन नहीं है – यह वो जोश है जो हार मानने वालों को जला देता है।<br>
-    जब भी मन डगमगाए, यहाँ लौट आओ – क्योंकि यहाँ हर शब्द में आग है, और हर लाइन में फौलाद।
-  </p>
-
-  <img src="images/Fire_Dialogues.jpg" alt="Fire Zone" style="width: 100%; max-width: 400px; border-radius: 12px; border: 2px solid #ff6a00; margin: 20px auto; box-shadow: 0 0 15px #ff6a00;">
-
-  <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
-    <a href="fire_part1.html" class="fire-btn" style="
-      background: linear-gradient(to right, #ff4500, #ff8c00);
-      padding: 12px 30px;
-      color: #fff;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      text-decoration: none;
-      box-shadow: 0 0 10px #ff6a00;
-      transition: all 0.3s ease;
-    ">🔥 Fire Dialogues – Part 1</a>
-
-    <a href="fire_part2.html" class="fire-btn" style="
-      background: linear-gradient(to right, #ff4500, #ff8c00);
-      padding: 12px 30px;
-      color: #fff;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      text-decoration: none;
-      box-shadow: 0 0 10px #ff6a00;
-      transition: all 0.3s ease;
-    ">🔥 Fire Dialogues – Part 2</a>
-  </div>
-
-  <p style="margin-top: 25px; font-size: 14px; color: #999;">
-    Deepak Chauhan × AI Bhai × DK_Community
-  </p>
-   </section> 
-      <!-- Box 10: AI Universe Portal | Deepak Chauhan × AI Bhai -->     
-      <section class="ai-universe-section">  
-  <img src="images/ai_universe_banner.jpg" alt="AI Bhai × Deepak" class="universe-banner">  
-  <div class="button-container">  
-    <a href="ai_universe.html">  
-      <button>Open and enjoy universe City</button>  
-    </a>  
-  </div>  
-</section>  
-      <div style="height: 60px;"></div>  
-      <div style="height: 60px;"></div>  
-<div class="floating-text">    
-  <span>Deepak Chauhan x AI Bhai: दो भाई की जोड़ी</span>    
-</div>    
-
-   <script>
-  window.onload = function () {
-    // Splash screen
-    const splash = document.getElementById("splash-screen");
-    if (!sessionStorage.getItem("splashDone")) {
-      splash.style.display = "flex";
-      document.body.style.overflow = "hidden";
-      setTimeout(() => {
-        splash.style.display = "none";
-        document.body.style.overflow = "auto";
-        sessionStorage.setItem("splashDone", "true");
-
-        // Check for popup
-        checkWelcomePopup();
-      }, 1800);
-    } else {
-      splash.style.display = "none";
-      document.body.style.overflow = "auto";
-      checkWelcomePopup();
-    }
-
-    function checkWelcomePopup() {
-      const popup = document.getElementById("welcome-popup");
-      const lastShown = localStorage.getItem("lastPopupTime");
-      const now = new Date().getTime();
-
-      // 5 hours = 5 * 60 * 60 * 1000 milliseconds
-      if (!lastShown || now - lastShown > 5 * 60 * 60 * 1000) {
-        popup.style.display = "block";
-        localStorage.setItem("lastPopupTime", now);
-      }
-    }
-  }
-
-  function dismissPopup() {
-    document.getElementById("welcome-popup").style.display = "none";
-  }
-   </script>
-  
-<!-- Footer -->
-<footer class="footer">
-  <p>© 2025 Deepak Chauhan x AI Bhai | All Rights Reserved</p>
-</footer>
-
 </body>
 </html>
