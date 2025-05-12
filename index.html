@@ -1,4 +1,4 @@
-.<!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -67,7 +67,7 @@
     font-size: 14px;
     padding: 15px;
   }
-}
+}  
   </style>
 </head>
 <body><!-- Splash Screen --><div id="splash-screen">
@@ -161,27 +161,32 @@
  
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px;">
 
-  <!-- BOX 1: Motivational Training -->
-  <div style="width: 100%; max-width: 340px; background: #111d2d; border-radius: 12px; box-shadow: 0 0 12px #00ffaa; overflow: hidden; text-align: center;">
-    <img src="images/Motivational_training.jpg" style="width: 100%; height: auto;" alt="Training">
-    <div style="padding: 15px;">
-      <h3 style="color: #00ffaa; font-size: 16px;">Motivational Training</h3>
-      <p style="font-size: 14px; color: #ccc;">Deepak Chauhan × AI Bhai</p>
-      <a href="motivational_training_form.html" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: #00ffaa; color: black; border-radius: 6px; text-decoration: none;">Apply Now</a>
-    </div>
+  <!-- BOX: Instagram Trending Dialogue -->
+<div class="box group-box" style="width: 100%; max-width: 360px; margin: 20px auto; background-color: #1a1a1a; border-radius: 12px; box-shadow: 0 0 25px #00ffff; overflow: hidden; position: relative; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+  <p id="ai-dynamic-text" style="color: white; font-weight: bold; font-size: 16px; padding: 12px; z-index: 2; background: rgba(0,0,0,0.5); margin: 0;">
+    <!-- Google Sheet से आने वाला टेक्स्ट यहां दिखेगा -->
+  </p>
+  <img id="ai-dynamic-image" src="images/placeholder.jpg" alt="Dynamic AI Image" 
+    style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1;" />
+  <div style="z-index: 3; position: relative; background: rgba(26,26,26,0.85); padding: 20px 10px 10px; margin-top: auto;">
+    <a href="instagram_trending_dialogue.html">
+      <button class="join-button" style="font-size: 18px; padding: 10px 20px; margin-top: 5px; border: none; border-radius: 8px; background: #00ffaa; color: black; box-shadow: 0 0 12px #00ffaa;">Open trending short 🔥</button>
+    </a>
+    <p style="margin-top: 10px; font-weight: bold; font-size: 16px; color: cyan;">Instagram Trending Short Dialogue</p>
   </div>
+</div>
 
-  <!-- BOX 2: Live Global Counter -->
-  <div style="width: 100%; max-width: 340px; background: #111d2d; border-radius: 12px; box-shadow: 0 0 12px #00ffff; overflow: hidden; text-align: center;">
-    <img src="images/Word_globl.jpg" style="width: 100%; height: auto;" alt="Global Counter">
-    <div style="padding: 15px;">
-      <h3 style="color: #00ffff; font-size: 16px;">Live Global Counter</h3>
-      <p style="font-size: 14px; color: #ccc;">Real-time Stats</p>
-      <a href="deepak_ai_live_counter.html" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: #ffffff; color: black; border-radius: 6px; text-decoration: none;">View Live</a>
-    </div>
+<!-- BOX: AI Bhai Chatroom -->
+<div class="box" style="width: 100%; max-width: 360px; margin: 20px auto; background-color: #1a1a1a; border-radius: 12px; box-shadow: 0 0 25px #00ffaa; overflow: hidden; text-align: center;">
+  <div style="position: relative; width: 100%; height: 100%;">
+    <img src="images/ai_deepak_box.jpg" alt="AI Deepak" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+    <a href="bhai_chatroom.html" target="_blank">
+      <button style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 2; padding: 10px 22px; background-color: #00ffaa; color: #000; font-weight: bold; border: none; border-radius: 10px; box-shadow: 0 0 10px #00ffaa;">
+        Open Magic AI Chatting
+      </button>
+    </a>
   </div>
-
-</div>o
+</div>
   <!-- BOX 3: Live Meeting (Google Sheet Connected) -->
   <div class="box11-wrapper" style="width: 100%; max-width: 400px; margin: 20px auto; position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 0 25px #00f2ff;">
   <div id="box11-image" class="image-box" style="width: 100%; height: 250px; background: url('images/live_meeting_bg.jpg') no-repeat center center / cover;">
@@ -189,7 +194,8 @@
       Live देखें
     </button>
   </div>
-</div><!-- BOX 4 & 5: Motivational Training + Global Counter (Responsive Grid 2 Columns) --><section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; padding: 20px;">  <!-- Motivational Training Box -->  <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 0 25px #00f6ff; background: #000; text-align: center;">
+</div>
+  <!-- BOX 4 & 5: Motivational Training + Global Counter (Responsive Grid 2 Columns) --><section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; padding: 20px;">  <!-- Motivational Training Box -->  <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 0 25px #00f6ff; background: #000; text-align: center;">
     <img src="images/Motivational_training.jpg" alt="Motivational Training" style="width: 100%; height: auto;">
     <div style="padding: 15px;">
       <p style="color: #fff; font-size: 14px; line-height: 1.6;">
