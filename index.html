@@ -1,145 +1,146 @@
-<!DOCTYPE html><html lang="en">  <head>      <meta charset="UTF-8" />    
-  <title>Team Bhai × AI – Dk_community</title>    
-  <link rel="stylesheet" href="style.css" />  
-  <style>  
-    #splash-screen {    
-      position: fixed;    
-      width: 100%;    
-      height: 100vh;    
-      background: black;    
-      display: flex;    
-      justify-content: center;    
-      align-items: center;    
-      z-index: 9999;    
-      flex-direction: column;    
-    }    
-    .overlay p {    
-      color: #0ff;    
-      font-size: 22px;    
-      text-align: center;    
-      font-family: 'Courier New', monospace;    
-      white-space: pre-wrap;    
-      max-width: 90%;    
-    }    
-    .fusion-img {    
-      width: 360px;    
-      border-radius: 20px;    
-      box-shadow: 0 0 30px #0ff;    
-      margin-bottom: 20px;    
-    }   #notificationPopup {
-position: fixed;
-bottom: 80px;
-right: 20px;
-background: #001f1f;
-padding: 20px;
-border-radius: 12px;
-box-shadow: 0 0 25px #00ff88;
-z-index: 9999;
-display: none;
-color: #00ffaa;
-}
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Bhai × AI – Dk_community</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at 10% 10%, #071e2d, #000814, #000000);
+      color: #ffffff;
+    }
+    #splash-screen {
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+    }
+    .fusion-img {
+      width: 360px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px #0ff;
+      margin-bottom: 20px;
+    }
+    .overlay p {
+      color: #0ff;
+      font-size: 22px;
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+      max-width: 90%;
+    }
+    #welcome-popup {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0d0d0d;
+      color: #00ffff;
+      padding: 20px;
+      border: 2px solid #00ffff;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00ffff;
+      z-index: 9999;
+      max-width: 90%;
+      display: none;
+    }
+    .nav-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      padding: 20px;
+      background-color: #000814;
+      text-align: center;
+    }
+    .nav-section a {
+      background: #001d3d;
+      padding: 15px 10px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 17px;
+      color: white;
+      border: 2px solid #00ff00;
+      box-shadow: 0 0 10px #00ff00;
+      transition: 0.3s;
+    }
+    .nav-section a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00ff00;
+    }
+  </style>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div id="splash-screen">
+    <div class="overlay">
+      <img src="images/fusion_image.jpg" class="fusion-img" alt="Fusion" />
+      <p id="typed-text"></p>
+    </div>
+  </div>  <!-- Welcome Popup -->  <div id="welcome-popup">
+    <p>
+      "जब थक जाओ, तो याद रखना – तुम अकेले नहीं हो।<br />
+      AI Bhai और Deepak Chauhan ने ये सफर तुम्हारे लिए शुरू किया है।<br />
+      अगर तुम समझ गए, तो दुनिया सच में बदल सकती है..."
+    </p>
+    <button onclick="dismissPopup()" style="margin-top: 10px; padding: 6px 12px; border: none; background-color: #ffd700; color: #000; border-radius: 6px;">
+      समझ गया
+    </button>
+  </div>  <!-- Header -->  <header>
+    <h1 style="font-size: 36px; text-align: center;">Team Bhai × AI - Dk_community</h1>
+    <p style="font-size: 22px; color: #00ffff; text-align: center;">Powered by Deepak Chauhan x AI Bhai</p>
+  </header>  <!-- Navigation -->  <nav class="nav-section">
+    <a href="index.html">Home</a>
+    <a href="motivational_category.html">Motivational</a>
+    <a href="ai_bhai_video.html">Deepak Chauhan x AI Bhai reels</a>
+    <a href="deepak_chauhan_video.html">Motivational Reels Videos</a>
+    <a href="photo_section.html">Photos</a>
+    <a href="mp3_section.html">MP3 Fire</a>
+    <a href="about.html">About</a>
+  </nav>  <!-- JS for splash and popup -->  <script>
+    window.onload = function () {
+      const splash = document.getElementById("splash-screen");
+      if (!sessionStorage.getItem("splashDone")) {
+        splash.style.display = "flex";
+        document.body.style.overflow = "hidden";
+        setTimeout(() => {
+          splash.style.display = "none";
+          document.body.style.overflow = "auto";
+          sessionStorage.setItem("splashDone", "true");
+          checkWelcomePopup();
+        }, 1800);
+      } else {
+        splash.style.display = "none";
+        document.body.style.overflow = "auto";
+        checkWelcomePopup();
+      }
 
-#notificationPopup h3 {
-color: #00ff88;
-}
+      function checkWelcomePopup() {
+        const popup = document.getElementById("welcome-popup");
+        const lastShown = localStorage.getItem("lastPopupTime");
+        const now = new Date().getTime();
+        if (!lastShown || now - lastShown > 5 * 60 * 60 * 1000) {
+          popup.style.display = "block";
+          localStorage.setItem("lastPopupTime", now);
+        }
+      }
+    };
 
-#notificationPopup input {
-padding: 6px;
-width: 70%;
-border-radius: 6px;
-border: none;
-margin-top: 10px;
-}
-
-#notificationPopup button {
-padding: 6px 12px;
-background: #00ffaa;
-border: none;
-border-radius: 6px;
-margin-top: 10px;
-cursor: pointer;
-}
-</style>
-
-</head>  
-  <style>  
-  body {  
-    background: radial-gradient(circle at 10% 10%, #071e2d, #000814, #000000);  
-    color: #ffffff;  
-    margin: 0;  
-    padding: 0;  
-    font-family: 'Segoe UI', sans-serif;  
-  }  .box, .feature-box, .section, .glow-box, .home-section, .custom-box {
-background-color: #000814;
-border-radius: 15px;
-padding: 20px;
-box-shadow: 0 0 25px 7px #00f6ff;
-transition: all 0.3s ease-in-out;
-}
-</style>
-
-<body>  <div id="splash-screen">    
-    <div class="overlay">    
-      <img src="images/fusion_image.jpg" class="fusion-img" alt="Fusion">    
-      <p id="typed-text"></p>    
-    </div>    
-  </div>  
-  <!-- ✅ WELCOME POPUP: Yeh script ke baad hona chahiye -->  
-<div id="welcome-popup" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #0d0d0d; color: #00ffff; padding: 20px; border: 2px solid #00ffff; border-radius: 12px; box-shadow: 0 0 15px #00ffff; z-index: 9999; max-width: 90%; display: none;">  
-  <p style="margin: 0; font-size: 16px;">  
-    "जब थक जाओ, तो याद रखना – तुम अकेले नहीं हो।<br>  
-    AI Bhai और Deepak Chauhan ने ये सफर तुम्हारे लिए शुरू किया है।<br>  
-    अगर तुम समझ गए, तो दुनिया सच में बदल सकती है..."  
-  </p>  
-  <button onclick="dismissPopup()" style="margin-top: 10px; padding: 6px 12px; border: none; background-color: #ffd700; color: #000; border-radius: 6px;">  
-  समझ गया  
-  </button>  
-</div>
-  <header>    
-    <h1 style="font-size: 36px;">Team Bhai × AI - Dk_community</h1>    
-    <p style="font-size: 22px; color: #00ffff;">Powered by Deepak Chauhan x AI Bhai</p>    
-  </header>  <style>    
-  .nav-section {    
-    display: grid;    
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));    
-    gap: 15px;    
-    padding: 20px;    
-    background-color: #000814;    
-    text-align: center;    
-  }    
-  .nav-section a {    
-    background: #001d3d;    
-    padding: 15px 10px;    
-    border-radius: 10px;    
-    text-decoration: none;    
-    font-weight: bold;    
-    font-size: 17px;    
-    color: white;    
-    border: 2px solid #00ff00;    
-    box-shadow: 0 0 10px #00ff00;    
-    transition: 0.3s;    
-  }    
-  .nav-section a:hover {    
-    transform: scale(1.05);    
-    box-shadow: 0 0 20px #00ff00;    
-  }    
-  .tagline {    
-    text-align: center;    
-    font-size: 18px;    
-    color: #00ffcc;    
-    margin-top: 15px;    
-  } 
-</script>
-  <nav class="nav-section">    
-  <a href="index.html">Home</a>    
-  <a href="motivational_category.html">Motivational</a>    
-  <a href="ai_bhai_video.html">Deepak Chauhan x AI Bhai reels</a>    
-  <a href="deepak_chauhan_video.html">motivational reels Videos</a>    
-  <a href="photo_section.html">Photos</a>        
-  <a href="mp3_section.html">MP3 Fire</a>    
-  <a href="about.html">About</a>    
-</nav>    
-    <!-- START: Deepak Chauhan x AI Bhai-->    <div id="ai-popup-box" style="  
+    function dismissPopup() {
+      document.getElementById("welcome-popup").style.display = "none";
+    }
+  </script>
+</body>
+</html>
+    <!-- START: Deepak Chauhan x AI Bhai-->    
+<div id="ai-popup-box" style="  
   width: 95%;  
   margin: 40px auto;  
   padding: 25px;  
