@@ -58,279 +58,127 @@
     margin-top: 10px;
     box-shadow: 0 0 10px #00ffc3;
   }
-  
-    /* Base Styles */
+     <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Bhai × AI – Dk_community</title>
+  <style>
     :root {
       --primary: #00ffc3;
       --secondary: #00a8ff;
-      --accent: #ff00aa;
+      --glow: #00ff00;
       --dark: #000814;
-      --darker: #000000;
       --light: #ffffff;
-      --gray: #cccccc;
     }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
+
     body {
-      font-family: 'Segoe UI', 'Poppins', sans-serif;
-      background: radial-gradient(circle at 10% 10%, #071e2d, var(--dark), var(--darker));
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at 10% 10%, #071e2d, #000814, #000000);
       color: var(--light);
-      line-height: 1.6;
       overflow-x: hidden;
     }
-    
-    /* Layout Structure */
-    .main-container {
-      width: 100%;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    /* Header Styles */
+
+    /* HEADER */
     .header {
-      padding: 1rem;
       text-align: center;
+      padding: 30px 15px 10px;
       background: linear-gradient(135deg, #000428, #004e92);
     }
-    
-    .page-title {
-      font-size: clamp(1.8rem, 5vw, 2.5rem);
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 0 15px rgba(0, 255, 195, 0.3);
-    }
-    
-    .tagline {
-      font-size: clamp(1rem, 3vw, 1.2rem);
-      color: var(--primary);
-      font-style: italic;
-    }
-    
-    /* Navigation */
-.nav-section {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: 10px;
-  padding: 1rem;
-  background-color: var(--dark);
-  justify-content: flex-start;
-}
 
-.nav-link {
-  background: #001d3d;
-  padding: 12px 20px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: clamp(0.9rem, 3vw, 1rem);
-  color: var(--light);
-  border: 2px solid #00ff00;
-  box-shadow: 0 0 10px #00ff00;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  flex: 0 0 auto;
-}
-    
+    .page-title {
+      font-size: clamp(2rem, 6vw, 2.8rem);
+      color: var(--primary);
+      font-weight: 900;
+      text-shadow: 0 0 15px var(--primary);
+    }
+
+    .tagline {
+      color: var(--secondary);
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      font-style: italic;
+      margin-top: 5px;
+    }
+
+    /* NAVIGATION */
+    .nav-section {
+      display: flex;
+      overflow-x: auto;
+      gap: 15px;
+      padding: 15px 10px;
+      background-color: var(--dark);
+      scrollbar-width: none;
+    }
+
+    .nav-section::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-link {
+      flex: 0 0 auto;
+      background: #001d3d;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      color: white;
+      font-size: 1rem;
+      border: 2px solid var(--glow);
+      box-shadow: 0 0 10px var(--glow);
+      transition: 0.3s ease;
+      white-space: nowrap;
+    }
+
     .nav-link:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 20px #00ff00;
+      box-shadow: 0 0 20px var(--glow);
     }
-    
-    /* Content Boxes */
-    .content-box {
-      width: 100%;
-      max-width: 350px;
-      margin: 1.5rem auto;
-      background-color: #1a1a1a;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 20px rgba(0, 255, 195, 0.2);
-      transition: all 0.3s ease;
-    }
-    
-    .content-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 30px rgba(0, 255, 195, 0.4);
-    }
-    
-    .box-image {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    
-    .box-content {
-      padding: 1rem;
-    }
-    
-    .box-title {
-      color: var(--primary);
-      font-size: 1.2rem;
-      margin-bottom: 0.75rem;
-    }
-    
-    .action-btn {
-      display: block;
-      background: var(--primary);
-      color: #000;
-      padding: 0.75rem 1rem;
+
+    /* WELCOME SECTION */
+    .welcome-section {
       text-align: center;
-      border-radius: 6px;
-      font-weight: bold;
-      margin: 0.75rem auto;
-      width: fit-content;
-      text-decoration: none;
-      transition: all 0.3s ease;
+      padding: 30px 20px 10px;
     }
-    
-    .action-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px var(--primary);
-    }
-    
-    /* Grid Layout */
-    .boxes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      padding: 1rem;
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    /* Special Sections */
-    .feature-section {
-      padding: 2rem 1rem;
-      margin: 2rem auto;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #000814, #001d3d);
-      box-shadow: 0 0 25px 7px var(--primary);
-      border: 2px solid var(--accent);
-      position: relative;
-      overflow: hidden;
-      max-width: 800px;
-    }
-    
-    .section-title {
-      font-size: clamp(1.5rem, 4vw, 2rem);
+
+    .welcome-title {
       color: var(--primary);
-      text-align: center;
-      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
       text-shadow: 0 0 10px var(--primary);
     }
-    
-    .section-text {
-      color: var(--gray);
-      text-align: center;
-      margin-bottom: 1.5rem;
-      font-size: 1.1rem;
+
+    .welcome-sub {
+      color: #cccccc;
+      margin-top: 10px;
+      font-size: 1rem;
     }
-    
-    /* Footer */
-    .footer {
-      text-align: center;
-      padding: 1.5rem;
-      margin-top: 2rem;
-      border-top: 1px solid rgba(0, 255, 195, 0.2);
-      color: var(--gray);
-      font-size: 0.9rem;
-    }
-    
-    /* Mobile Adjustments */
-    @media (max-width: 768px) {
-      .nav-section {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .content-box {
-        max-width: 100%;
-      }
-      
-      .boxes-grid {
-        grid-template-columns: 1fr;
-        padding: 0.5rem;
-      }
-      
-      .feature-section {
-        padding: 1.5rem 1rem;
-        margin: 1.5rem 0.5rem;
-      }
-
-      .nav-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-  padding: 20px 10px;
-  background: #000814;
-}
-
-.nav-buttons a {
-  background-color: #001d3d;
-  color: white;
-  padding: 12px 22px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px;
-  border: 2px solid #00ff00;
-  box-shadow: 0 0 10px #00ff00;
-  transition: 0.3s ease;
-}
-
-.nav-buttons a:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #00ff00;
-}
-
-@media (max-width: 480px) {
-  .nav-buttons a {
-    flex: 1 1 45%;
-    text-align: center;
-  }
-}
   </style>
 </head>
 <body>
-  <div class="main-container">
-    <!-- Header -->
-    <header class="header">
-      <h1 class="page-title">Team Bhai × AI - Dk_community</h1>
-      <p class="tagline">Powered by Deepak Chauhan x AI Bhai</p>
-    </header>
-    
-    <!-- Navigation -->
-    <!-- Navigation Section Start -->
-<div class="nav-buttons">
-  <a href="index.html">Home</a>
-  <a href="motivational_category.html">Motivational</a>
-  <a href="ai_bhai_video.html">AI Bhai Reels</a>
-  <a href="deepak_chauhan_video.html">Motivational Reels</a>
-  <a href="photo_section.html">Photos</a>
-  <a href="mp3_section.html">MP3 Fire</a>
-  <a href="about.html">About</a>
-</div>
-    
-    <!-- Main Content -->
-    <main>
-      <section class="welcome-section">
-        <h2 class="section-title">Welcome to Deepak Chauhan × AI Bhai</h2>
-        <p class="section-text">
-          "स्वागत है उस दुनिया में, जहाँ हर सोच को उड़ान मिलती है!"
-        </p>
-      </section>
-      
+
+  <div class="header">
+    <h1 class="page-title">Team Bhai × AI - Dk_community</h1>
+    <p class="tagline">Powered by Deepak Chauhan x AI Bhai</p>
+  </div>
+
+  <nav class="nav-section">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="motivational_category.html" class="nav-link">Motivational</a>
+    <a href="ai_bhai_video.html" class="nav-link">AI Bhai Reels</a>
+    <a href="deepak_chauhan_video.html" class="nav-link">Motivational Reels</a>
+    <a href="photo_section.html" class="nav-link">Photos</a>
+    <a href="mp3_section.html" class="nav-link">MP3 Fire</a>
+    <a href="about.html" class="nav-link">About</a>
+  </nav>
+
+  <section class="welcome-section">
+    <h2 class="welcome-title">Welcome to Deepak Chauhan × AI Bhai</h2>
+    <p class="welcome-sub">"स्वागत है उस दुनिया में, जहाँ हर सोच को उड़ान मिलती है!"</p>
+  </section>
+
+</body>
+</html> 
       <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; padding: 20px;">
 
 <div style="display: flex; gap: 20px; overflow-x: auto; padding: 20px; scroll-behavior: smooth;">
