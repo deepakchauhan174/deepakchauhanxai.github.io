@@ -116,27 +116,30 @@
     }
     
     /* Navigation */
-    .nav-section {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 0.75rem;
-      padding: 1rem;
-      background-color: var(--dark);
-    }
-    
-    .nav-link {
-      background: #001d3d;
-      padding: 0.75rem 0.5rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: clamp(0.9rem, 3vw, 1rem);
-      color: var(--light);
-      border: 2px solid #00ff00;
-      box-shadow: 0 0 10px #00ff00;
-      transition: all 0.3s ease;
-      text-align: center;
-    }
+.nav-section {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 1rem;
+  background-color: var(--dark);
+  justify-content: flex-start;
+}
+
+.nav-link {
+  background: #001d3d;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: clamp(0.9rem, 3vw, 1rem);
+  color: var(--light);
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 10px #00ff00;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
     
     .nav-link:hover {
       transform: scale(1.05);
