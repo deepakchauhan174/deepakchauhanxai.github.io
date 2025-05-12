@@ -104,47 +104,14 @@
     <a href="photo_section.html">Photos</a>
     <a href="mp3_section.html">MP3 Fire</a>
     <a href="about.html">About</a>
-  </nav> 
-  <!-- JS for splash and popup -->  
-  <script>
-    window.onload = function () {
-      const splash = document.getElementById("splash-screen");
-      if (!sessionStorage.getItem("splashDone")) {
-        splash.style.display = "flex";
-        document.body.style.overflow = "hidden";
-        setTimeout(() => {
-          splash.style.display = "none";
-          document.body.style.overflow = "auto";
-          sessionStorage.setItem("splashDone", "true");
-          checkWelcomePopup();
-        }, 1800);
-      } else {
-        splash.style.display = "none";
-        document.body.style.overflow = "auto";
-        checkWelcomePopup();
-      }
-
-      function checkWelcomePopup() {
-        const popup = document.getElementById("welcome-popup");
-        const lastShown = localStorage.getItem("lastPopupTime");
-        const now = new Date().getTime();
-        if (!lastShown || now - lastShown > 5 * 60 * 60 * 1000) {
-          popup.style.display = "block";
-          localStorage.setItem("lastPopupTime", now);
-        }
-      }
-    };
-
-    function dismissPopup() {
-      document.getElementById("welcome-popup").style.display = "none";
-    }
-  </script>
-  
+  </nav>
+  <p class="tagline">"जब आवाज़ आग बन जाए – AI Bhai Fire MP3"</p>  <section style="padding: 40px 10px;">
   <h2 style="font-size: 28px; color: #00ffff;">Welcome to Deepak Chauhan × AI Bhai</h2>    
   <h2 style="font-size: 26px; color: #ffffff;">Team Bhai × AI vs Deepak Chauhan का मिशन</h2>    
   <p style="font-size: 20px; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #ccc;">    
     "स्वागत है उस दुनिया में, जहाँ हर सोच को उड़ान मिलती है!"  
-  </p>    
+  </p> 
+  </section>
 
 <!-- FIXED BOX WRAPPER -->
 <section class="footer-boxes" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 20px;">
