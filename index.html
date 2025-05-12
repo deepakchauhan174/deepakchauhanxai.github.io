@@ -548,50 +548,6 @@
     <a href="Ai_bhai_shath_hai.html" target="_blank" class="banner-button">कहानी पढ़ें🔑💚</a>
   </div>
 </div>
-<!-- LIVE BONUS NOTIFICATION -->
-<section id="notificationPopup" style="padding: 20px; max-width: 700px; margin: 40px auto; background: #000814; border: 2px solid #ffd700; border-radius: 12px; box-shadow: 0 0 20px #ffd700; color: white; display: none;">
-
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-    <h3 style="font-size: 22px; color: #ffd700;">💰 Bonus Notification</h3>
-    <button onclick="dismissPopup()" style="background: red; color: white; border: none; padding: 4px 10px; border-radius: 5px; font-size: 16px;">X</button>
-  </div>
-
-  <div id="popupContent">
-    <p>Loading...</p>
-  </div>
-</section>
-
-<!-- Notification Script -->
-<script>
-  fetch("https://script.google.com/macros/s/AKfycbz3BCbR6nulRgsJEP8AG3WPmaVn-bVGsiLRhedTM4Z_WlIB7aeMKISAmdqX3j_HsuJQ/exec")
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("popupContent").innerHTML = `
-        <p><strong>Title:</strong> ${data.title}</p>
-        <p><strong>Message:</strong> ${data.notificationMsg}</p>
-        <p><strong>Alert:</strong> ${data.alertMsg}</p>
-        <p><strong>Bonus:</strong> ${data.bonusMsg}</p>
-        <p><strong>Signature:</strong> ${data.signature}</p>
-        <p><strong>Today Code:</strong> <span style="color:yellow; font-weight:bold;">${data.todayCode}</span></p>
-        <div class="code-button-container">
-          <a href="submit_code_form.html" target="_blank" class="code-button" style="display: inline-block; margin-top: 10px; padding: 10px 20px; background: #00ffcc; color: black; border-radius: 8px; text-decoration: none; font-weight: bold;">👉Click Here👈</a>
-        </div>
-        <p><strong>Winner:</strong> ${data.winnerName}</p>
-        <p><strong>Prize:</strong> ${data.prize}</p>`;
-      document.getElementById("notificationPopup").style.display = "block";
-    })
-    .catch(err => console.error("Error loading notification:", err));
-
-  // Hide after 40 seconds
-  setTimeout(() => {
-    document.getElementById("notificationPopup").style.display = "none";
-  }, 40000);
-
-  function dismissPopup() {
-    const popup = document.getElementById("notificationPopup");
-    popup.style.display = "none";
-  }
-</script>
   <script>
   fetch("https://script.google.com/macros/s/AKfycbymUjv2qf6EQt00nQivEhWJLrxUld8aQKiGZbyBoqPxCkGQMyL10D-zI6IJiX9AGc-Bdw/exec")
     .then(response => response.json())
