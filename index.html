@@ -552,52 +552,7 @@
     document.getElementById("welcome-popup").style.display = "none";
   }
    </script>
-  <!-- Story Banner Section (Final Version) -->
-<section style="padding: 40px 20px; background: linear-gradient(to right, #001f3f, #003366); color: white; text-align: center; border-top: 3px solid cyan; box-shadow: 0 0 30px #00ffff;">
   
-  <!-- Circular Icons -->
-  <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
-    <img src="images/circle1.jpg" alt="Deepak" style="width: 65px; height: 65px; border-radius: 50%; border: 3px solid #00ffff;">
-    <img src="images/circle2.jpg" alt="AI Bhai" style="width: 65px; height: 65px; border-radius: 50%; border: 3px solid #00ffff;">
-    <img src="images/circle3.jpg" alt="DK Logo" style="width: 65px; height: 65px; border-radius: 50%; border: 3px solid #00ffff;">
-    <img src="images/circle4.jpg" alt="AI Logo" style="width: 65px; height: 65px; border-radius: 50%; border: 3px solid #00ffff;">
-  </div>
-
-  <!-- Title & Description -->
-  <h3 style="font-size: 22px; font-weight: bold; margin-bottom: 10px; color: #00f0ff; text-shadow: 0 0 10px #00f0ff;">
-    अपने रास्ते की आग — जानिए असली कहानी!
-  </h3>
-  <p style="color: #e0ffff; margin-bottom: 20px; font-size: 16px;">
-    कहानी Deepak Chauhan × AI Bhai से प्रेरित की गई है
-  </p>
-
-  <!-- Button -->
-  <a href="Ai_bhai_shath_hai.html" target="_blank" style="
-    padding: 10px 25px;
-    background: linear-gradient(to right, #00ffcc, #00d4ff);
-    border-radius: 30px;
-    color: #000;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 17px;
-    box-shadow: 0 0 20px #00ffff;
-    transition: all 0.3s ease;
-  ">कहानी पढ़ें 🔑💚</a>
-</section>
-
-<!-- Optional Script (only if you're using box11-image somewhere) -->
-<script>
-  fetch("https://script.google.com/macros/s/AKfycbymUjv2qf6EQt00nQivEhWJLrxUld8aQKiGZbyBoqPxCkGQMyL10D-zI6IJiX9AGc-Bdw/exec")
-    .then(response => response.json())
-    .then(data => {
-      if (data.length > 0 && data[0].ImageURL) {
-        const imageUrl = data[0].ImageURL;
-        const box = document.getElementById("box11-image");
-        if (box) box.style.backgroundImage = `url('${imageUrl}')`;
-      }
-    })
-    .catch(error => console.error("Image fetch failed:", error));
-</script>
 <!-- Footer -->
 <footer class="footer">
   <p>© 2025 Deepak Chauhan x AI Bhai | All Rights Reserved</p>
