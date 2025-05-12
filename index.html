@@ -205,11 +205,13 @@ function loadPopupComments() {
       const container = document.getElementById("popup-comments");
       data.slice(0, 3).forEach(comment => {
         const html = `
-          <div style="margin-bottom: 15px; background: #111; padding: 15px; border-left: 3px solid #ff00aa;">
-            <strong style="color: #ffcc00;">${comment.title}</strong>
-            <p>${comment.commentText}</p>
-            <div style="text-align: right; font-style: italic; color: #aaa;">~ ${comment.username}</div>
-          </div>`;
+          const html = `
+         <div style="margin-bottom: 25px; border-left: 4px solid #00ffc3; padding-left: 15px;">
+       ${story.imgUrl ? `<img src="${story.imgUrl}" style="width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;">` : ''}
+    <h3 style="color: #00ffc3;">${story.storyTitle}</h3>
+   <p style="margin: 10px 0;">${story.fullStory}</p>
+  <div style="text-align: right; font-style: italic; color: #888;">~ ${story.signature || 'Anonymous'}</div>
+  </div>`;
         container.innerHTML += html;
       });
     });
