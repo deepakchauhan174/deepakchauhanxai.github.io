@@ -263,7 +263,40 @@
         padding: 1.5rem 1rem;
         margin: 1.5rem 0.5rem;
       }
-    }
+
+      .nav-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  padding: 20px 10px;
+  background: #000814;
+}
+
+.nav-buttons a {
+  background-color: #001d3d;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 10px #00ff00;
+  transition: 0.3s ease;
+}
+
+.nav-buttons a:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #00ff00;
+}
+
+@media (max-width: 480px) {
+  .nav-buttons a {
+    flex: 1 1 45%;
+    text-align: center;
+  }
+}
   </style>
 </head>
 <body>
@@ -275,15 +308,16 @@
     </header>
     
     <!-- Navigation -->
-    <nav class="nav-section">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="motivational_category.html" class="nav-link">Motivational</a>
-      <a href="ai_bhai_video.html" class="nav-link">AI Bhai Reels</a>
-      <a href="deepak_chauhan_video.html" class="nav-link">Motivational Reels</a>
-      <a href="photo_section.html" class="nav-link">Photos</a>
-      <a href="mp3_section.html" class="nav-link">MP3 Fire</a>
-      <a href="about.html" class="nav-link">About</a>
-    </nav>
+    <!-- Navigation Section Start -->
+<div class="nav-buttons">
+  <a href="index.html">Home</a>
+  <a href="motivational_category.html">Motivational</a>
+  <a href="ai_bhai_video.html">AI Bhai Reels</a>
+  <a href="deepak_chauhan_video.html">Motivational Reels</a>
+  <a href="photo_section.html">Photos</a>
+  <a href="mp3_section.html">MP3 Fire</a>
+  <a href="about.html">About</a>
+</div>
     
     <!-- Main Content -->
     <main>
