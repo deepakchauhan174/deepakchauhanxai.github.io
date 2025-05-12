@@ -104,7 +104,9 @@
     <a href="photo_section.html">Photos</a>
     <a href="mp3_section.html">MP3 Fire</a>
     <a href="about.html">About</a>
-  </nav>  <!-- JS for splash and popup -->  <script>
+  </nav> 
+  <!-- JS for splash and popup -->  
+  <script>
     window.onload = function () {
       const splash = document.getElementById("splash-screen");
       if (!sessionStorage.getItem("splashDone")) {
@@ -137,69 +139,7 @@
       document.getElementById("welcome-popup").style.display = "none";
     }
   </script>
-<body>
-    <!-- START: Deepak Chauhan x AI Bhai-->    
-<div id="ai-popup-box" style="  
-  width: 95%;  
-  margin: 40px auto;  
-  padding: 25px;  
-  background: linear-gradient(to right, rgba(10,10,10,0.9), rgba(10,10,10,0.9)), url('Images/team.jpg');  
-  background-size: cover;  
-  background-position: center;  
-  background-blend-mode: overlay;  
-  border: 2px solid #00ffc3;  
-  border-radius: 20px;  
-  box-shadow: 0 0 30px #00ffc3;  
-  font-family: 'Poppins', sans-serif;  
-  color: white;  
-">  
-  <!-- Title -->  
-  <div style="text-align: center; margin-bottom: 25px;">  
-    <h2 style="font-size: 28px; background: linear-gradient(90deg, #00ffc3, #00aaff); -webkit-background-clip: text; color: transparent; text-shadow: 0 0 10px #00ffc3;">  
-      यहाँ काम नहीं, मतलब मिलेगा!  
-    </h2>  
-    <p style="font-style: italic; color: #00ffc3;">Apni Kahani Likho – Duniya Ko Dikhao</p>  
-  </div>    <!-- Stories (Live) -->    <div id="popup-stories" style="margin-bottom: 40px;"></div>    <!-- Comments (Live) -->    <div id="popup-comments" style="margin-bottom: 40px;"></div>    <!-- Submit Button -->    <div style="text-align: center;">  
-    <a href="submit_story.html">  
-      <button style="padding: 15px 30px; background: linear-gradient(45deg, #ff00aa, #00ffc3); color: white; border: none; border-radius: 30px; font-size: 16px; font-weight: bold; box-shadow: 0 0 15px #00ffc3; cursor: pointer;">  
-        अपनी कहानी भेजें  
-      </button>  
-    </a>  
-  </div>  
-  </body>
-</html>
-<!-- END -->  
-<script>  
-const storyURL = 'https://script.google.com/macros/s/AKfycbzf3TZAO2nDu_J98PahqIMNd5n_Uk57IPez1bvuuxCU51g1A-ISLQK6VglOuQG2gGwr/exec';  
-const commentURL = 'https://script.google.com/macros/s/AKfycbxIPMirk3tp92_t0RyxDviTh7xblod7hjeiUiMO4GgBAEwcoQJbJauc6RGnRXTJFqgqDQ/exec';  function loadPopupStories() {
-fetch(storyURL)
-.then(res => res.json())
-.then(data => {
-const container = document.getElementById("popup-stories");
-data.filter(s => s.storyTitle && s.fullStory).slice(0, 2).forEach(story => {
-const html =    <div style="margin-bottom: 25px; border-left: 4px solid #00ffc3; padding-left: 15px;">   <h3 style="color: #00ffc3;">${story.storyTitle}</h3>   <p style="margin: 10px 0;">${story.fullStory}</p>   <div style="text-align: right; font-style: italic; color: #888;">~ ${story.signature || 'Anonymous'}</div>   </div>;
-container.innerHTML += html;
-});
-});
-}
-
-function loadPopupComments() {
-fetch(commentURL)
-.then(res => res.json())
-.then(data => {
-const container = document.getElementById("popup-comments");
-data.slice(0, 3).forEach(comment => {
-const html =    <div style="margin-bottom: 15px; background: #111; padding: 15px; border-left: 3px solid #ff00aa;">   <strong style="color: #ffcc00;">${comment.title}</strong>   <p>${comment.commentText}</p>   <div style="text-align: right; font-style: italic; color: #aaa;">~ ${comment.username}</div>   </div>;
-container.innerHTML += html;
-});
-});
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-loadPopupStories();
-loadPopupComments();
-});
-</script>
+  
   <h2 style="font-size: 28px; color: #00ffff;">Welcome to Deepak Chauhan × AI Bhai</h2>    
   <h2 style="font-size: 26px; color: #ffffff;">Team Bhai × AI vs Deepak Chauhan का मिशन</h2>    
   <p style="font-size: 20px; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #ccc;">    
