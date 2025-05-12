@@ -152,6 +152,26 @@ transition: all 0.3s ease-in-out;
   <!-- Stories (Live) -->
   <div id="popup-stories" style="margin-bottom: 40px;"></div>
 
+  <!-- START: Story Card Glow -->
+<div style="
+  background-color: #111;
+  border: 1px solid rgba(0, 255, 195, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 255, 195, 0.2);
+  padding: 15px;
+  margin-bottom: 25px;
+  transition: transform 0.3s, box-shadow 0.3s;"
+  onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 0 25px rgba(0,255,195,0.6)';"
+  onmouseout="this.style.transform='none'; this.style.boxShadow='0 0 15px rgba(0,255,195,0.2)';">
+
+  <img src="Images/demo.jpg" style="width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;">
+  
+  <h3 style="color: #00ffc3;">Demo Story Title</h3>
+  <p style="margin: 10px 0;">Yeh ek demo kahani hai jo glow card ke effect ko dikhane ke लिए बनाई गई है.</p>
+  <div style="text-align: right; font-style: italic; color: #888;">~ Deepak Chauhan</div>
+</div>
+<!-- END: Story Card Glow -->
+  
   <!-- Comments (Live) -->
   <div id="popup-comments" style="margin-bottom: 40px;"></div>
 
@@ -202,7 +222,7 @@ function loadPopupComments() {
       }
       data.slice(0, 3).forEach(comment => {
         const html = `
-          <div style="margin-bottom: 15px; background: #111; padding: 15px; border-left: 3px solid #ff00aa;">
+           <div class="story-card-glow">
             <strong style="color: #ffcc00;">${comment.title}</strong>
             <p>${comment.commentText}</p>
             <div style="text-align: right; font-style: italic; color: #aaa;">~ ${comment.username}</div>
