@@ -69,6 +69,78 @@
       color: white;
       border: 2px solid #00ff00;
       box-shadow: 0 0 10px #00ff00;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Team Bhai × AI – Dk_community</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at 10% 10%, #071e2d, #000814, #000000);
+      color: #ffffff;
+    }
+    #splash-screen {
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+    }
+    .fusion-img {
+      width: 360px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px #0ff;
+      margin-bottom: 20px;
+    }
+    .overlay p {
+      color: #0ff;
+      font-size: 22px;
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+      max-width: 90%;
+    }
+    #welcome-popup {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0d0d0d;
+      color: #00ffff;
+      padding: 20px;
+      border: 2px solid #00ffff;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00ffff;
+      z-index: 9999;
+      max-width: 90%;
+      display: none;
+    }
+    .nav-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      padding: 20px;
+      background-color: #000814;
+      text-align: center;
+    }
+    .nav-section a {
+      background: #001d3d;
+      padding: 15px 10px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 17px;
+      color: white;
+      border: 2px solid #00ff00;
+      box-shadow: 0 0 10px #00ff00;
       transition: 0.3s;
     }
     .nav-section a:hover {
@@ -84,19 +156,26 @@
       <img src="images/fusion_image.jpg" class="fusion-img" alt="Fusion" />
       <p id="typed-text"></p>
     </div>
-  </div>  
-  <!-- Welcome Popup -->  <div id="welcome-popup">
+  </div>
+
+  <!-- Welcome Popup -->
+  <div id="welcome-popup">
     <p>
       "जब थक जाओ, तो याद रखना – तुम अकेले नहीं हो।<br />
       AI Bhai और Deepak Chauhan ने ये सफर तुम्हारे लिए शुरू किया है।<br />
       अगर तुम समझ गए, तो दुनिया सच में बदल सकती है..."
     </p>
     <button onclick="dismissPopup()" style="margin-top: 10px; padding: 6px 12px; border: none; background-color: #ffd700; color: #000; border-radius: 6px;">समझ गया</button>
-  </div>  
-  <!-- Header -->  <header>
+  </div>
+
+  <!-- Header -->
+  <header>
     <h1 style="font-size: 36px; text-align: center;">Team Bhai × AI - Dk_community</h1>
     <p style="font-size: 22px; color: #00ffff; text-align: center;">Powered by Deepak Chauhan x AI Bhai</p>
-  </header>  <!-- Navigation -->  <nav class="nav-section">
+  </header>
+
+  <!-- Navigation -->
+  <nav class="nav-section">
     <a href="index.html">Home</a>
     <a href="motivational_category.html">Motivational</a>
     <a href="ai_bhai_video.html">Deepak Chauhan x AI Bhai reels</a>
@@ -105,19 +184,22 @@
     <a href="mp3_section.html">MP3 Fire</a>
     <a href="about.html">About</a>
   </nav>
-  <p class="tagline">"जब आवाज़ आग बन जाए – AI Bhai Fire MP3"</p>  <section style="padding: 40px 10px;">
-  <h2 style="font-size: 28px; color: #00ffff;">Welcome to Deepak Chauhan × AI Bhai</h2>    
-  <h2 style="font-size: 26px; color: #ffffff;">Team Bhai × AI vs Deepak Chauhan का मिशन</h2>    
-  <p style="font-size: 20px; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #ccc;">    
-    "स्वागत है उस दुनिया में, जहाँ हर सोच को उड़ान मिलती है!"  
-  </p> 
+
+  <p class="tagline">"जब आवाज़ आग बन जाए – AI Bhai Fire MP3"</p>
+
+  <section style="padding: 40px 10px;">
+    <h2 style="font-size: 28px; color: #00ffff;">Welcome to Deepak Chauhan × AI Bhai</h2>    
+    <h2 style="font-size: 26px; color: #ffffff;">Team Bhai × AI vs Deepak Chauhan का मिशन</h2>    
+    <p style="font-size: 20px; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #ccc;">    
+      "स्वागत है उस दुनिया में, जहाँ हर सोच को उड़ान मिलती है!"  
+    </p> 
   </section>
 
 <!-- FIXED BOX WRAPPER -->
 <section class="footer-boxes" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 20px;">
 
   <!-- BOX FIXED: 320x640 with dialogue + image + button -->
-<div class="box group-box" style="width: 320px; height: 640px; background-color: #1a1a1a; border-radius: 12px; box-shadow: 0 0 45px #0ff; rgba(255, 105, 180, 0.4); overflow: hidden; position: relative; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+<div class="box group-box" style="width: 320px; height: auto; background-color: #1a1a1a; border-radius: 12px; box-shadow: 0 0 45px #0ff; rgba(255, 105, 180, 0.4); overflow: hidden; position: relative; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
 
   <!-- Dialogue Text (Google Sheet से) -->
   <p id="ai-dynamic-text" style="color: white; font-weight: bold; font-size: 16px; padding: 12px; z-index: 2; background: rgba(0,0,0,0.4); margin: 0;">
