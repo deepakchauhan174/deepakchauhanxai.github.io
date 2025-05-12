@@ -1,264 +1,211 @@
-<!DOCTYPE html><html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Team Bhai × AI – Dk_community</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(circle at 10% 10%, #071e2d, #000814, #000000);
-      color: #ffffff;
-    }
-    #splash-screen {
-      position: fixed;
-      width: 100%;
-      height: 100vh;
-      background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      flex-direction: column;
-    }
-    .fusion-img {
-      width: 360px;
-      border-radius: 20px;
-      box-shadow: 0 0 30px #0ff;
-      margin-bottom: 20px;
-    }
-    .overlay p {
-      color: #0ff;
-      font-size: 22px;
-      text-align: center;
-      font-family: 'Courier New', monospace;
-      white-space: pre-wrap;
-      max-width: 90%;
-    }
-    #welcome-popup {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #0d0d0d;
-      color: #00ffff;
-      padding: 20px;
-      border: 2px solid #00ffff;
-      border-radius: 12px;
-      box-shadow: 0 0 15px #00ffff;
-      z-index: 9999;
-      max-width: 90%;
-      display: none;
-    }
-    .nav-section {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 15px;
-      padding: 20px;
-      background-color: #000814;
-      text-align: center;
-    }
-    .nav-section a {
-      background: #001d3d;
-      padding: 15px 10px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 17px;
-      color: white;
-      border: 2px solid #00ff00;
-      box-shadow: 0 0 10px #00ff00;
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Team Bhai × AI – Dk_community</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
+    /* Base Styles */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background: radial-gradient(circle at 10% 10%, #071e2d, #000814, #000000);
       color: #ffffff;
+      overflow-x: hidden;
     }
-    #splash-screen {
-      position: fixed;
+    
+    /* Container for proper layout */
+    .main-container {
       width: 100%;
-      height: 100vh;
-      background: black;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
       flex-direction: column;
     }
-    .fusion-img {
-      width: 360px;
-      border-radius: 20px;
-      box-shadow: 0 0 30px #0ff;
-      margin-bottom: 20px;
-    }
-    .overlay p {
-      color: #0ff;
-      font-size: 22px;
+    
+    /* Header Styles */
+    .header {
+      padding: 15px;
       text-align: center;
-      font-family: 'Courier New', monospace;
-      white-space: pre-wrap;
-      max-width: 90%;
+      background: linear-gradient(135deg, #000428, #004e92);
     }
-    #welcome-popup {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #0d0d0d;
-      color: #00ffff;
-      padding: 20px;
-      border: 2px solid #00ffff;
-      border-radius: 12px;
-      box-shadow: 0 0 15px #00ffff;
-      z-index: 9999;
-      max-width: 90%;
-      display: none;
+    
+    .page-title {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      background: linear-gradient(90deg, #00ffc3, #00a8ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 10px;
     }
+    
+    .tagline {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      color: #00ffc3;
+      font-style: italic;
+    }
+    
+    /* Navigation */
     .nav-section {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 15px;
-      padding: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      padding: 15px;
       background-color: #000814;
-      text-align: center;
     }
+    
     .nav-section a {
       background: #001d3d;
-      padding: 15px 10px;
-      border-radius: 10px;
+      padding: 12px 8px;
+      border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
-      font-size: 17px;
+      font-size: clamp(0.9rem, 3vw, 1rem);
       color: white;
       border: 2px solid #00ff00;
       box-shadow: 0 0 10px #00ff00;
       transition: 0.3s;
+      text-align: center;
     }
-    .nav-section a:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #00ff00;
+    
+    /* Content Boxes */
+    .content-box {
+      width: 100%;
+      max-width: 350px;
+      margin: 20px auto;
+      background-color: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 255, 195, 0.2);
+    }
+    
+    .box-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .box-content {
+      padding: 15px;
+    }
+    
+    .box-title {
+      color: #00ffc3;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    
+    .box-button {
+      display: block;
+      background: #00ffaa;
+      color: #000;
+      padding: 10px 15px;
+      text-align: center;
+      border-radius: 6px;
+      font-weight: bold;
+      margin: 10px auto;
+      width: fit-content;
+    }
+    
+    /* Grid Layout for Boxes */
+    .boxes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 15px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+      border-top: 1px solid rgba(0, 255, 195, 0.2);
+    }
+    
+    /* Mobile Specific Adjustments */
+    @media (max-width: 480px) {
+      .nav-section {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .content-box {
+        max-width: 100%;
+      }
+      
+      .boxes-grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Splash Screen -->
-  <div id="splash-screen">
-    <div class="overlay">
-      <img src="images/fusion_image.jpg" class="fusion-img" alt="Fusion" />
-      <p id="typed-text"></p>
-    </div>
-  </div>
-
-  <!-- Welcome Popup -->
-  <div id="welcome-popup">
-    <p>
-      "जब थक जाओ, तो याद रखना – तुम अकेले नहीं हो।<br />
-      AI Bhai और Deepak Chauhan ने ये सफर तुम्हारे लिए शुरू किया है।<br />
-      अगर तुम समझ गए, तो दुनिया सच में बदल सकती है..."
-    </p>
-    <button onclick="dismissPopup()" style="margin-top: 10px; padding: 6px 12px; border: none; background-color: #ffd700; color: #000; border-radius: 6px;">समझ गया</button>
-  </div>
-
-  <!-- Header -->
-  <header>
-    <h1 style="font-size: 36px; text-align: center;">Team Bhai × AI - Dk_community</h1>
-    <p style="font-size: 22px; color: #00ffff; text-align: center;">Powered by Deepak Chauhan x AI Bhai</p>
-  </header>
-
-  <!-- Navigation -->
-  <nav class="nav-section">
-    <a href="index.html">Home</a>
-    <a href="motivational_category.html">Motivational</a>
-    <a href="ai_bhai_video.html">Deepak Chauhan x AI Bhai reels</a>
-    <a href="deepak_chauhan_video.html">Motivational Reels Videos</a>
-    <a href="photo_section.html">Photos</a>
-    <a href="mp3_section.html">MP3 Fire</a>
-    <a href="about.html">About</a>
-  </nav>
-
-  <p class="tagline">"जब आवाज़ आग बन जाए – AI Bhai Fire MP3"</p>
-
-  <section style="padding: 40px 10px;">
-    <h2 style="font-size: 28px; color: #00ffff;">Welcome to Deepak Chauhan × AI Bhai</h2>    
-    <h2 style="font-size: 26px; color: #ffffff;">Team Bhai × AI vs Deepak Chauhan का मिशन</h2>    
-    <p style="font-size: 20px; max-width: 800px; margin: 0 auto; line-height: 1.8; color: #ccc;">    
-      "स्वागत है उस दुनिया में, जहाँ हर सोच को उड़ान मिलती है!"  
-    </p> 
-  </section>
-
-<!-- FIXED BOX WRAPPER -->
-<section class="footer-boxes" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 20px;">
-
-  <!-- BOX FIXED: 320x640 with dialogue + image + button -->
-<div class="box group-box" style="width: 320px; height: 640px; background-color: #1a1a1a; border-radius: 12px; box-shadow: 0 0 45px #0ff; rgba(255, 105, 180, 0.4); overflow: hidden; position: relative; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
-
-  <!-- Dialogue Text (Google Sheet से) -->
-  <p id="ai-dynamic-text" style="color: white; font-weight: bold; font-size: 16px; padding: 12px; z-index: 2; background: rgba(0,0,0,0.4); margin: 0;">
-    <!-- Google Sheet से आने वाला टेक्स्ट यहां दिखेगा -->
-  </p>
-
-  <!-- Dynamic Image -->
-  <img id="ai-dynamic-image" src="" alt="Dynamic AI Image" 
-    style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1;" />
-
-  <!-- Button & Title Wrapper -->
-  <div style="z-index: 3; position: relative; background: rgba(26,26,26,0.85); padding: 20px 10px 10px; margin-top: auto;">
-    <a href="instagram_trending_dialogue.html">
-      <button class="join-button" style="font-size: 18px; padding: 10px 20px; margin-top: 5px;">Open trending short 🔥</button>
-    </a>
-    <p class="group-note" style="margin: 8px 0 0; font-weight: bold; font-size: 18px; color: cyan;">
-      Instagram Trending Short Dialogue
-    </p>
-  </div>
-</div>
-
-  <!-- BOX 2 -->
-  <div class="box" style="width: 320px; height: 640px; background-color: #1a1a1a; border-radius: 12px; box-shadow: 0 0 45px #0ff; overflow: hidden; text-align: center;">  
-    <div style="position: relative; width: 100%; height: 100%;">  
-      <img src="images/ai_deepak_box.jpg" alt="AI Deepak" style="width: 100%; height: 100%; object-fit: cover; display: block;">  
-      <a href="bhai_chatroom.html" target="_blank">  
-        <button style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 2; padding: 10px 22px; background-color: #00ffaa; color: #000; font-weight: bold; border: none; border-radius: 10px; box-shadow: 0 0 10px #00ffaa;">  
-          Open Magic AI Chatting  
-        </button>  
-      </a>  
-    </div>  
-  </div>
-</section>
-
-<script>
-  fetch("https://script.google.com/macros/s/AKfycbwLTQmHZ1W264SfhqJG3CTajCAF8E4RzLIKaQYZEDi8VFBSaT8zyRaGCDfx7A2HaSyL8A/exec")
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById("ai-dynamic-image").src = data.image;
-      document.getElementById("ai-dynamic-text").textContent = data.dialogue;
-    })
-    .catch(error => console.error("Error loading dynamic content:", error));
-</script>
-  
-  <section>
-    <div class="box11-wrapper">
-  <div id="box11-image" class="image-box">
-    <button class="live-button" onclick="window.location.href='meeting_live.html'">Live देखें</button>
-  </div>
-  </div>
-  </section>
-  
-<section style="display: flex; justify-content: center; gap: 20px; padding: 30px 10px; flex-wrap: wrap;">
-  <div style="display: flex; flex-direction: column; justify-content: space-between; min-width: 320px; max-width: 350px; border-radius: 12px; box-shadow: 0 0 25px #00f6ff; overflow: hidden;">
-    <img src="images/Motivational_training.jpg" style="width: 100%; height: auto;">
-    <a href="motivational_training_form.html" target="_blank" style="font-size: 16px; padding: 10px 18px; margin: 15px auto; background-color: #00ffaa; color: black; border-radius: 6px; text-align: center; width: fit-content; box-shadow: 0 0 10px #00ffaa;">Apply Now</a>
-  </div>
-
-  <div style="display: flex; flex-direction: column; justify-content: space-between; min-width: 320px; max-width: 350px; border-radius: 12px; box-shadow: 0 0 25px #00ffaa; overflow: hidden;">
+  <div class="main-container">
+    <!-- Header -->
+    <header class="header">
+      <h1 class="page-title">Team Bhai × AI - Dk_community</h1>
+      <p class="tagline">Powered by Deepak Chauhan x AI Bhai</p>
+    </header>
+    
+    <!-- Navigation -->
+    <nav class="nav-section">
+      <a href="index.html">Home</a>
+      <a href="motivational_category.html">Motivational</a>
+      <a href="ai_bhai_video.html">AI Bhai Reels</a>
+      <a href="deepak_chauhan_video.html">Motivational Reels</a>
+      <a href="photo_section.html">Photos</a>
+      <a href="mp3_section.html">MP3 Fire</a>
+      <a href="about.html">About</a>
+    </nav>
+    
+    <!-- Main Content -->
+    <main>
+      <section style="padding: 20px; text-align: center;">
+        <h2 style="color: #00ffff;">Welcome to Deepak Chauhan × AI Bhai</h2>
+        <p style="color: #ccc; max-width: 800px; margin: 0 auto;">
+          "स्वागत है उस दुनिया में, जहाँ हर सोच को उड़ान मिलती है!"
+        </p>
+      </section>
+      
+      <!-- Boxes Grid -->
+      <div class="boxes-grid">
+        <!-- Box 1 -->
+        <div class="content-box">
+          <img src="images/fusion_image.jpg" alt="Fusion" class="box-image">
+          <div class="box-content">
+            <h3 class="box-title">Instagram Trending Dialogue</h3>
+            <a href="instagram_trending_dialogue.html" class="box-button">
+              Open trending short 🔥
+            </a>
+          </div>
+        </div>
+        
+        <!-- Box 2 -->
+        <div class="content-box">
+          <img src="images/ai_deepak_box.jpg" alt="AI Chat" class="box-image">
+          <div class="box-content">
+            <h3 class="box-title">Magic AI Chatting</h3>
+            <a href="bhai_chatroom.html" class="box-button">
+              Open Chat Room
+            </a>
+          </div>
+        </div>
+        
+        <!-- Box 3 -->
+        <div class="content-box">
+          <img src="images/Motivational_training.jpg" alt="Training" class="box-image">
+          <div class="box-content">
+            <h3 class="box-title">Motivational Training</h3>
+            <a href="motivational_training_form.html" class="box-button">
+              Apply Now
+            </a>
+          </div>
+        </div>
+      </div>
+    
     <img src="images/Word_globl.jpg" style="width: 100%; height: auto;">
     <a href="deepak_ai_live_counter.html" target="_blank" style="font-size: 16px; padding: 10px 18px; margin: 15px auto; background-color: #ffffff; color: black; border-radius: 6px; text-align: center; width: fit-content; box-shadow: 0 0 10px #00ffaa;">View Live World Population</a>
   </div>
@@ -607,8 +554,10 @@
     document.getElementById("welcome-popup").style.display = "none";
   }
    </script>
-  <button>onclick="dismissPopup()" style="margin-top: 10px; padding: 6px 12px; border: none; background-color: #ffd700; color: #000; bor
-
+  
+<button onclick="dismissPopup()" style="margin-top: 10px; padding: 6px 12px; border: none; background-color: #ffd700; color: #000; border-radius: 6px;">
+  समझ गया
+</button>
   <!-- BANNER CODE -->  <div style="margin-top: 30px;"></div>
 
 <div style="margin-top: 30px;"></div>  
@@ -639,7 +588,7 @@
       }
     })
     .catch(error => console.error("Image fetch failed:", error));
-    </script>
-      </body>
-         </html>
-
+    
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 Team Bhai × AI | All 
