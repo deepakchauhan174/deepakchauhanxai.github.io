@@ -559,10 +559,10 @@
 
   <!-- Circular Icons -->
   <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
-    <img src="images/deepak.jpg" alt="Deepak" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #00ffff;">
-    <img src="images/ai_bhai.jpg" alt="AI Bhai" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #00ffff;">
-    <img src="images/dk_logo.jpg" alt="DK Logo" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #00ffff;">
-    <img src="images/ai_logo.jpg" alt="AI Logo" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #00ffff;">
+    <img src="images/Circle1.jpg" alt="Deepak" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #00ffff;">
+    <img src="images/Circle2.jpg" alt="AI Bhai" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #00ffff;">
+    <img src="images/Circle3.jpg" alt="DK Logo" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #00ffff;">
+    <img src="images/Circle4.jpg" alt="AI Logo" style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #00ffff;">
   </div>
 
   <!-- Title & Description -->
@@ -582,15 +582,19 @@
   ">कहानी पढ़ें 🔑💚</a>
 </section>
 
+<!-- Optional Script (only if you're using box11-image somewhere) -->
+<script>
   fetch("https://script.google.com/macros/s/AKfycbymUjv2qf6EQt00nQivEhWJLrxUld8aQKiGZbyBoqPxCkGQMyL10D-zI6IJiX9AGc-Bdw/exec")
     .then(response => response.json())
     .then(data => {
       if (data.length > 0 && data[0].ImageURL) {
         const imageUrl = data[0].ImageURL;
-        document.getElementById("box11-image").style.backgroundImage = `url('${imageUrl}')`;
+        const box = document.getElementById("box11-image");
+        if (box) box.style.backgroundImage = `url('${imageUrl}')`;
       }
     })
     .catch(error => console.error("Image fetch failed:", error));
+</script>
     
     <!-- Footer -->
     <footer class="footer">
