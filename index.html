@@ -5,6 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Team Bhai × AI – Dk_community</title>
   <style>
+  .custom-boxes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .custom-box {
+    background-color: #000c1a;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 25px rgba(0, 255, 195, 0.6), 0 0 25px rgba(255, 0, 150, 0.4);
+    transition: 0.4s ease;
+    border: 2px solid #00ffff;
+  }
+
+  .custom-box:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 35px #00ffff, 0 0 20px #ff0099;
+  }
+
+  .custom-box img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .custom-box-content {
+    padding: 15px;
+    text-align: center;
+  }
+
+  .custom-box-title {
+    color: #00ffc3;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .custom-box-button {
+    background: linear-gradient(to right, #00ffc3, #00a8ff);
+    color: black;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    box-shadow: 0 0 10px #00ffc3;
+  }
+  
     /* Base Styles */
     :root {
       --primary: #00ffc3;
