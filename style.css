@@ -177,7 +177,7 @@ body {
   font-weight: bold;
 }
 
-.box-row-1 {
+.box-row {
   display: flex;
   flex-direction: row;
   gap: 20px;
@@ -187,7 +187,7 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-.box-row-1::-webkit-scrollbar {
+.box-row::-webkit-scrollbar {
   display: none; /* Hide scrollbar on mobile */
 }
 
@@ -287,7 +287,7 @@ body {
   box-shadow: 0 0 18px #ff1a1a;
 }
 
-.scroll-row-4 {
+.scroll-row {
   display: flex;
   overflow-x: auto;
   gap: 20px;
@@ -339,7 +339,7 @@ body {
   box-shadow: 0 0 10px #00ffaa;
 }
 
-.scroll-row-6 {
+.scroll-row {
   display: flex;
   overflow-x: auto;
   gap: 20px;
@@ -347,7 +347,7 @@ body {
   scroll-snap-type: x mandatory;
 }
 
-.scroll-row-6::-webkit-scrollbar {
+.scroll-row::-webkit-scrollbar {
   display: none;
 }
 
