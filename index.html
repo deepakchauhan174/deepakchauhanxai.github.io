@@ -53,32 +53,42 @@
     <p class="sub-text">Deepak Chauhan × AI Bhai की डिजिटल जोड़ी</p>
   </header>
 <main class="main-section">
-  <div class="container">
-    <!-- Header -->
-    <header class="header">
-      <h1 class="page-title">AI Bhai × Deepak Chauhan – Kahaniyon Ki Duniya</h1>
-      <p class="tagline">"जहाँ सोच रुकती है, वहाँ से हमारी कहानियाँ शुरू होती हैं..."</p>
-      <link rel="stylesheet" href="style.css" />
-    </header>
+  <div id="ai-popup-box" class="glowing-box">
+    <!-- Header Title -->
+    <div class="motivational-header">
+      <h1>यहाँ काम नहीं, मतलब मिलेगा!</h1>
+      <p class="subtext"><i>Apni Kahani Likho – Duniya Ko Dikhao</i></p>
+    </div>
 
-    <!-- Stories Section -->
-    <section id="stories-section">
-      <h2 class="section-heading">Today's Fire Stories</h2>
-      <div id="stories-container" class="scroll-box">Loading stories...</div>
-    </section>
+    <!-- Content Section -->
+    <div class="content-container">
+      
+      <!-- Success Stories Section -->
+      <div class="stories-section">
+        <h2 class="glowing-title">Success Stories</h2>
+        <div id="stories-container" class="stories-container">
+          <!-- Google Sheet से Success Stories यहाँ आएँगी -->
+        </div>
+      </div>
 
-    <!-- Comments Section -->
-    <section id="comments-section">
-      <h2 class="section-heading">Top Comments</h2>
-      <div id="comments-container" class="scroll-box">Loading comments...</div>
-    </section>
+      <!-- Community Comments Section -->
+      <div class="comments-section">
+        <h2 class="glowing-title">Community Voices</h2>
+        <div id="comments-container" class="comments-container">
+          <!-- Google Sheet से Comments यहाँ आएँगे -->
+        </div>
+      </div>
+
+    </div>
 
     <!-- Submit Button -->
-    <section class="submit-section">
-      <a href="submit_story.html">
-        <button class="submit-btn">अपनी कहानी भेजें – Show Your Fire</button>
+    <div class="button-container">
+      <a href="submit_story.html" target="_blank">
+        <button id="submit-story-btn" class="glowing-button">
+          अपनी कहानी भेजें – Show Your Fire
+        </button>
       </a>
-    </section>
+    </div>
   </div>
 </main>
   <!-- Scroll Row for Box 1 and 2 -->
