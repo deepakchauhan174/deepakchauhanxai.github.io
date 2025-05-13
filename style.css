@@ -947,7 +947,7 @@ body {
 /* style.css for AI Bhai × Deepak Chauhan – Kahani Section */
 /* Main Glowing Box */
 #ai-popup-box {
-  background: none;
+  background: transparent;
   background-size: cover;
   background-position: center;
   border-radius: 15px;
