@@ -33,10 +33,10 @@ body {
 
 .main-header {
   text-align: center;
-  padding: 20px 10px;
+  padding: ,8px 5px;
   background-color: rgba(0, 0, 0, 0.6);
   color: #00ffee;
-  box-shadow: 0 0 20px #00ffee;
+  box-shadow: 0 0 10px #00ffee;
 }
 
 .main-header h1 {
