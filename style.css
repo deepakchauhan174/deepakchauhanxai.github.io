@@ -350,3 +350,56 @@ body {
   font-size: 15px;
   color: cyan;
 }
+
+/* Typing Effect CSS */
+.dynamic-box {
+  max-width: 360px;
+  width: 100%;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0 0 25px #00ffaa;
+  margin: 20px auto;
+  overflow: hidden;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dynamic-box img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+
+#ai-dynamic-text {
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  margin: 0;
+}
+
+.box-footer {
+  padding: 15px;
+  background: rgba(26, 26, 26, 0.85);
+}
+
+.join-button {
+  font-size: 16px;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 8px;
+  background: #00ffaa;
+  color: black;
+  font-weight: bold;
+  box-shadow: 0 0 12px #00ffaa;
+}
+
+.box-caption {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  color: cyan;
+}
