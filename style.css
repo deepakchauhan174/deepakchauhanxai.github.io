@@ -13,50 +13,64 @@ body {
   min-height: 100vh;
   padding: 0;
 }
-/* Navigation Bar Styling */
+
+/* HEADER AREA */
+.main-header {
+  text-align: center;
+  padding: 30px 15px 15px;
+  background: linear-gradient(to right, #001f3f, #000c1a);
+}
+
+.main-header h1 {
+  font-size: 2rem;
+  background: linear-gradient(to right, #00ffc3, #00a8ff);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 15px #00ffff;
+}
+
+.main-header p {
+  margin-top: 10px;
+  color: #00ffc3;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* NAVIGATION BAR */
 .nav-bar {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #000c1a;
+  padding: 20px 10px;
+  background: #000c1a;
 }
 
-/* Glowing Button Style */
 .nav-bar a {
   background: #001d3d;
-  padding: 12px 18px;
+  padding: 12px 20px;
   border-radius: 12px;
-  color: #ffffff;
+  color: white;
   font-weight: bold;
   text-decoration: none;
   font-size: 0.95rem;
   border: 2px solid #00ffcc;
   box-shadow: 0 0 15px #00ffc3;
-  transition: all 0.3s ease;
+  transition: 0.3s ease;
 }
 
 .nav-bar a:hover {
-  transform: scale(1.1);
+  transform: scale(1.08);
   box-shadow: 0 0 25px #00ffc3, 0 0 10px #00ffc3 inset;
   background: #002b5b;
 }
 
-/* Active Page Highlight */
 .nav-bar a.active {
-  background-color: #00ffc31f;
-}
-/* Body background */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at top left, #001d3d, #000814, #000);
-  color: #fff;
+  background-color: rgba(0, 255, 195, 0.15);
+  border-color: #00ffc3;
 }
 
-/* Box Container Grid */
+/* BOX CONTAINER */
 .box-container {
   display: flex;
   flex-wrap: wrap;
@@ -65,7 +79,7 @@ body {
   padding: 40px 20px;
 }
 
-/* Custom 3D Paper Box Style */
+/* 3D PAPER STYLE BOX */
 .paper-box {
   width: 300px;
   height: 300px;
@@ -78,7 +92,6 @@ body {
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* Paper-style Fold Effect (Corners mimic folded paper) */
 .paper-box::before,
 .paper-box::after {
   content: '';
@@ -105,7 +118,6 @@ body {
   box-shadow: 0 0 40px #00ffaa, inset 0 0 20px #00ffc3;
 }
 
-/* Box Content */
 .paper-box-content {
   position: relative;
   z-index: 2;
@@ -117,7 +129,6 @@ body {
   text-align: center;
 }
 
-/* Button Style */
 .paper-box-content button {
   background-color: #00ffaa;
   color: #000;
@@ -135,84 +146,6 @@ body {
   box-shadow: 0 0 20px #00ffaa;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .paper-box {
-    width: 90%;
-    height: 300px;
-  }
-}
-
-/* GLOBAL RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-body {
-  background: radial-gradient(circle at top left, #000814, #001d3d, #000);
-  color: #ffffff;
-  min-height: 100vh;
-  padding: 0;
-}
-
-/* HEADER AREA */
-.main-header {
-  text-align: center;
-  padding: 30px 15px 15px;
-  background: linear-gradient(to right, #001f3f, #000c1a);
-}
-
-.main-header h1 {
-  font-size: 2rem;
-  background: linear-gradient(to right, #00ffc3, #00a8ff);
-  -webkit-background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 15px #00ffff;
-}
-
-.main-header p {
-  margin-top: 10px;
-  color: #00ffc3;
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-/* NAVIGATION BUTTONS */
-.nav-bar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 14px;
-  padding: 20px 10px;
-  background: #000c1a;
-}
-
-.nav-bar a {
-  background: #001d3d;
-  padding: 12px 20px;
-  border-radius: 12px;
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-  border: 2px solid #00ffcc;
-  box-shadow: 0 0 15px #00ffc3;
-  transition: 0.3s ease;
-}
-
-.nav-bar a:hover {
-  background: #002a4a;
-  box-shadow: 0 0 25px #00ffc3, 0 0 10px #00ffc3 inset;
-  transform: scale(1.08);
-}
-
-.nav-bar a.active {
-  background: rgba(0, 255, 195, 0.15);
-  border-color: #00ffc3;
-}
-
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .nav-bar a {
@@ -222,5 +155,10 @@ body {
 
   .main-header h1 {
     font-size: 1.5rem;
+  }
+
+  .paper-box {
+    width: 90%;
+    height: 300px;
   }
 }
