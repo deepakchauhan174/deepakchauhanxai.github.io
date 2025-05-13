@@ -947,8 +947,7 @@ body {
 /* style.css for AI Bhai × Deepak Chauhan – Kahani Section */
 /* Main Glowing Box */
 #ai-popup-box {
-  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
-              url('https://example.com/your-background-image.jpg');
+  background: none;
   background-size: cover;
   background-position: center;
   border-radius: 15px;
