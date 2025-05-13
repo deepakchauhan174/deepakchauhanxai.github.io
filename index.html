@@ -5,6 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Team Bhai × AI – Dk_community</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Typing Effect CSS */
+    .typing-box {
+      color: #00ffee;
+      font-size: 1.2rem;
+      text-align: center;
+      padding: 10px 20px;
+      animation: blinkCursor 0.7s steps(40) infinite normal;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #00ffee;
+      width: fit-content;
+      margin: 20px auto;
+    }
+
+    @keyframes blinkCursor {
+      from { border-color: transparent; }
+      to { border-color: #00ffee; }
+    }
+  </style>
 </head>
 <body>
 
@@ -13,9 +33,7 @@
     <h1>Team Bhai × AI – Dk_community</h1>
     <p>Powered by Deepak Chauhan × AI Bhai</p>
 
-    <div class="nav-wrapper-box">
-  <nav class="nav-bar">
-    <!-- NAVIGATION BAR -->
+    <!-- NAVIGATION -->
     <nav class="nav-bar">
       <a href="index.html" class="active">Home</a>
       <a href="motivational_category.html">Motivational</a>
@@ -27,18 +45,33 @@
     </nav>
   </div>
 
-  <!-- BOX SECTION -->
+  <!-- Typing Title -->
+  <div class="typing-box" id="typing"></div>
+
+  <!-- MAIN BOX SECTION -->
   <div class="box-container">
     <div class="paper-box">
-      <div class="paper-box-content">
-        <h3>Motivational Fire</h3>
-        <p>AI Bhai × Deepak Chauhan का पावरफुल जोश</p>
-        <button onclick="window.location.href='motivational_fire.html'">Explore Now</button>
-      </div>
+      <h2>Motivational Fire</h2>
+      <p>AI Bhai × Deepak Chauhan का पावरफुल जोश</p>
+      <button onclick="window.location.href='motivational_fire.html'">Explore Now</button>
     </div>
-
-    <!-- Add more .paper-box below as needed -->
   </div>
+
+  <!-- Typing Script -->
+  <script>
+    const text = "Team Bhai × AI – Powered by Unity and Fire!";
+    let index = 0;
+    const speed = 70;
+
+    function typeWriter() {
+      if (index < text.length) {
+        document.getElementById("typing").innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+    window.onload = typeWriter;
+  </script>
 
 </body>
 </html>
