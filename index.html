@@ -194,13 +194,31 @@
   </div>
 </div>
   <!-- BOX 3: Live Meeting (Google Sheet Connected) -->
-  <div class="box11-wrapper" style="width: 100%; max-width: 400px; margin: 20px auto; position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 0 25px #00f2ff;">
-  <div id="box11-image" class="image-box" style="width: 100%; height: 250px;">
-    <button class="live-button" onclick="window.location.href='meeting_live.html'" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 10px 22px; background-color: #00ffaa; color: #000; font-weight: bold; border: none; border-radius: 10px; box-shadow: 0 0 10px #00ffaa;">
+<div class="box11-wrapper" style="...">
+  <div id="box11-image" class="image-box" style="...">
+    <button class="live-button" onclick="window.location.href='meeting_live.html'">
       Live देखें
     </button>
   </div>
-  </div>
+</div>
+<script>
+  fetch("https://script.google.com/macros/s/AKfycbymUjv2qf6EQt00nQivEhWJLrxUld8aQKiGZbyBoqPxCkGQMyL10D-zI6IJiX9AGc-Bdw/exec")
+    .then(response => response.json())
+    .then(data => {
+      const imageData = data.find(row => row.title === "title1");
+      if (imageData && imageData.ImageURL) {
+        const box = document.getElementById("box11-image");
+        if (box) {
+          box.style.backgroundImage = `url('${imageData.ImageURL}')`;
+          box.style.backgroundSize = "cover";
+          box.style.backgroundPosition = "center";
+        }
+      }
+    })
+    .catch(error => {
+      console.error("Box11 Image Load Error:", error);
+    });
+</script>
   <!-- BOX 4 & 5: Motivational Training + Global Counter (Responsive Grid 2 Columns) --><section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; padding: 20px;">  <!-- Motivational Training Box -->  <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 0 25px #00f6ff; background: #000; text-align: center;">
     <img src="images/Motivational_training.jpg" alt="Motivational Training" style="width: 100%; height: auto;">
     <div style="padding: 15px;">
