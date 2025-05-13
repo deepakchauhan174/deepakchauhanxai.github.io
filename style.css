@@ -180,55 +180,57 @@ body {
 .box {
   max-width: 360px;
   width: 90%;
-  background-color: #1a1a1a;
+  margin: 40px auto;
+  background-color: #0a0a0a;
   border-radius: 15px;
   box-shadow: 0 0 25px #00ffaa;
-  margin: 30px auto;
   overflow: hidden;
   text-align: center;
 }
 
 .box-text {
-  padding: 15px 10px;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 15px;
   color: #00ffee;
-  background: rgba(0, 0, 0, 0.6);
-  margin: 0;
+  padding: 12px 10px;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .box-image {
   width: 100%;
   height: auto;
-  display: block;
   object-fit: cover;
+  display: block;
+  border-top: 2px solid #00ffaa;
+  border-bottom: 2px solid #00ffaa;
 }
 
 .box-footer {
-  padding: 15px;
-  background: rgba(0, 0, 0, 0.9);
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.85);
 }
 
 .join-button {
-  font-size: 16px;
   padding: 10px 22px;
-  border: none;
-  border-radius: 8px;
   background: #00ffaa;
+  border: none;
+  border-radius: 10px;
   color: black;
   font-weight: bold;
-  box-shadow: 0 0 12px #00ffaa;
+  font-size: 16px;
   cursor: pointer;
-  transition: 0.3s ease;
+  box-shadow: 0 0 12px #00ffaa;
+  transition: 0.3s;
 }
 
 .join-button:hover {
   background: #00e6e6;
+  box-shadow: 0 0 18px #00e6e6;
 }
 
 .box-caption {
   margin-top: 10px;
-  font-weight: bold;
   font-size: 14px;
   color: cyan;
+  font-weight: bold;
   }
