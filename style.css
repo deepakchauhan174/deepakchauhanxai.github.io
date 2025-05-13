@@ -177,34 +177,41 @@ body {
   font-weight: bold;
 }
 
-
-.ai-custom-box {
+.box {
   max-width: 360px;
   width: 90%;
   background-color: #1a1a1a;
   border-radius: 15px;
   box-shadow: 0 0 25px #00ffaa;
-  margin: 40px auto;
+  margin: 30px auto;
   overflow: hidden;
   text-align: center;
+}
+
+.box-text {
+  padding: 15px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #00ffee;
+  background: rgba(0, 0, 0, 0.6);
+  margin: 0;
 }
 
 .box-image {
   width: 100%;
   height: auto;
-  object-fit: cover;
   display: block;
-  border-bottom: 2px solid #00ffaa;
+  object-fit: cover;
 }
 
 .box-footer {
   padding: 15px;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.9);
 }
 
 .join-button {
   font-size: 16px;
-  padding: 10px 20px;
+  padding: 10px 22px;
   border: none;
   border-radius: 8px;
   background: #00ffaa;
@@ -224,4 +231,4 @@ body {
   font-weight: bold;
   font-size: 14px;
   color: cyan;
-}
+  }
