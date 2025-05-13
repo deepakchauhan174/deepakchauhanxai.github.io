@@ -978,11 +978,11 @@ body {
 
 .header {
   text-align: center;
-  padding: 20px 0;
+  padding: 10px 0;
 }
 
 .page-title {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
   -webkit-background-clip: text;
   color: transparent;
@@ -990,7 +990,7 @@ body {
 }
 
 .tagline {
-  font-size: 1rem;
+  font-size: 0.90rem;
   font-style: italic;
   color: var(--primary-glow);
   margin-top: 5px;
@@ -998,8 +998,8 @@ body {
 
 .section-heading {
   text-align: center;
-  font-size: 1.4rem;
-  margin: 20px 0 10px;
+  font-size: 1rem;
+  margin: 15px 0 10px;
   text-shadow: 0 0 10px var(--primary-glow);
 }
 
@@ -1007,7 +1007,7 @@ body {
   content: '';
   display: block;
   height: 2px;
-  width: 80px;
+  width: 50px;
   margin: 8px auto;
   background: var(--primary-glow);
   box-shadow: 0 0 6px var(--primary-glow);
@@ -1038,7 +1038,7 @@ body {
 }
 
 .story-content, .comment-text {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   margin-bottom: 5px;
 }
 
@@ -1051,15 +1051,15 @@ body {
 
 .submit-section {
   text-align: center;
-  margin: 30px 0;
+  margin: 25px 0;
 }
 
 .submit-btn {
-  padding: 10px 30px;
+  padding: 8px 25px;
   font-size: 1rem;
   background: linear-gradient(45deg, #ff00aa, #00ffc3);
   border: none;
-  border-radius: 30px;
+  border-radius: 25px;
   color: white;
   font-weight: bold;
   cursor: pointer;
