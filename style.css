@@ -1171,6 +1171,29 @@ body {
   }
     }
 
+.story-box-fixed {
+  max-height: 200px; /* जितना दिखाना है उतना फिक्स कर दो */
+  overflow-y: auto;
+  background-color: #111;
+  padding: 15px;
+  border-radius: 12px;
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  margin-bottom: 20px;
+}
+
+/* Scrollbar को Custom Neon Look देने के लिए */
+.story-box-fixed::-webkit-scrollbar {
+  width: 6px;
+}
+.story-box-fixed::-webkit-scrollbar-thumb {
+  background: #00ffff;
+  border-radius: 10px;
+}
+.story-box-fixed::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 @media (max-width: 480px) {
   .scroll-box {
     flex: 0 0 280px;
