@@ -2,107 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Team Bhai × AI – Dk_community</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Team Bhai × AI – Dk_Community</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    /* Typing Effect CSS */
-    .typing-box {
-      color: #00ffee;
-      font-size: 1.2rem;
-      text-align: center;
-      padding: 10px 20px;
-      animation: blinkCursor 0.7s steps(40) infinite normal;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid #00ffee;
-      width: fit-content;
-      margin: 20px auto;
-    }
-
-    @keyframes blinkCursor {
-      from { border-color: transparent; }
-      to { border-color: #00ffee; }
-    }
-  </style>
 </head>
 <body>
 
-<div id="splash-screen">
-  <div class="overlay">
-    <img src="images/fusion_image.jpg" class="fusion-img" alt="Fusion" />
-    <p id="typed-text"></p>
-  </div>
-</div>
-  <!-- HEADER -->
-  <div class="main-header">
-    <h1>Team Bhai × AI – Dk_community</h1>
-    <p>Powered by Deepak Chauhan × AI Bhai</p>
+  <!-- Header -->
+  <header class="main-header">
+    <h1>Team Bhai × AI Bhai</h1>
+    <p style="font-size: 16px; color: #aaa;">Deepak Chauhan × AI Bhai की डिजिटल जोड़ी</p>
+  </header>
 
-    <!-- NAVIGATION -->
-    <nav class="nav-bar">
-      <a href="index.html" class="active">Home</a>
-      <a href="motivational_category.html">Motivational</a>
-      <a href="deepak_chauhan_video.html">Deepak Reels</a>
-      <a href="ai_bhai_video.html">AI Bhai Reels</a>
-      <a href="photo_section.html">Photos</a>
-      <a href="mp3_support.html">MP3 Fire</a>
-      <a href="about.html">About</a>
-    </nav>
-  </div>
-  <!-- Welcome Popup -->
-<div id="welcome-popup">
-  <div class="popup-box">
-    <p>
-      "जब थक जाओ, तो याद रखना – तुम अकेले नहीं हो।<br />
-      AI Bhai और Deepak Chauhan ने ये सफर तुम्हारे लिए शुरू किया है।<br />
-      अगर तुम समझ गए, तो दुनिया सच में बदल सकती है..."
-    </p>
-    <button onclick="dismissPopup()">समझ गया</button>
-  </div>
-</div>
+  <!-- Section Navigation Buttons -->
+  <nav class="main-nav">
+    <a href="motivational_category.html" class="nav-btn">Motivational</a>
+    <a href="photo_section.html" class="nav-btn">Photos</a>
+    <a href="ai_bhai_video.html" class="nav-btn">AI Bhai Videos</a>
+    <a href="deepak_chauhan_video.html" class="nav-btn">Deepak Videos</a>
+    <a href="mp3_support.html" class="nav-btn">AI Bhai MP3</a>
+    <a href="top_comments.html" class="nav-btn">Top Comments</a>
+    <a href="coming_soon.html" class="nav-btn">Coming Soon</a>
+  </nav>
 
-  <!-- Typing Title -->
-  <div class="typing-box" id="typing"></div>
+  <!-- Main Welcome Section -->
+  <main class="main-section">
+    <h2>Welcome to your digital motivational space</h2>
+    <p>जहाँ हर दिन Deepak Bhai और AI Bhai मिलकर एक नई कहानी लिखते हैं।</p>
+  </main>
 
-  <!-- MAIN BOX SECTION -->
-  <div class="box-container">
-    <div class="paper-box">
-      <h2>Motivational Fire</h2>
-      <p>AI Bhai × Deepak Chauhan का पावरफुल जोश</p>
-      <button onclick="window.location.href='motivational_fire.html'">Explore Now</button>
-    </div>
-  </div>
-
-  <div class="dynamic-box">
-  <p id="ai-dynamic-text"> <!-- JS से आएगा --> </p>
-
-  <img id="ai-dynamic-image" src="images/placeholder.jpg" alt="Dynamic AI Image" />
-
-  <div class="box-footer">
-    <a href="instagram_trending_dialogue.html">
-      <button class="join-button">Open trending short 🔥</button>
-    </a>
-    <p class="box-caption">Instagram Trending Short Dialogue</p>
-  </div>
-  </div>
-  <!-- Typing Script -->
-  <script>
-    const text = "Team Bhai × AI – Powered by Unity and Fire!";
-    let index = 0;
-    const speed = 70;
-
-    function typeWriter() {
-      if (index < text.length) {
-        document.getElementById("typing").innerHTML += text.charAt(index);
-        index++;
-        setTimeout(typeWriter, speed);
-      }
-    }
-    window.onload = typeWriter;
-  </script>
-  <script src="scripts/splash.js"></script>
-<script src="scripts/welcome_popup.js"></script>
-<script src="scripts/box1.js"></script>
 </body>
 </html>
