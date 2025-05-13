@@ -4,9 +4,10 @@
     .then(data => {
       const imageData = data.find(row => row.title === "title1");
       if (imageData && imageData.ImageURL) {
-        document.getElementById("box11-image").style.backgroundImage = `url('${imageData.ImageURL}')`;
-        document.getElementById("box11-image").style.backgroundSize = "cover";
-        document.getElementById("box11-image").style.backgroundPosition = "center";
+        const box = document.getElementById("box11-image");
+        box.style.backgroundImage = `url('${imageData.ImageURL}')`;
+        box.style.backgroundSize = "cover";
+        box.style.backgroundPosition = "center";
       }
     })
     .catch(error => {
