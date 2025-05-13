@@ -389,3 +389,82 @@ body {
   margin: 20px auto;
   max-width: 160px;
 }
+
+.scroll-row {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px;
+  scroll-snap-type: x mandatory;
+}
+
+.scroll-row::-webkit-scrollbar {
+  display: none;
+}
+
+/* Box 7 – YouTube Shorts */
+.box7 {
+  flex: 0 0 320px;
+  background: #000;
+  border-radius: 15px;
+  box-shadow: 0 0 25px #ffff66;
+  scroll-snap-align: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.box7-title {
+  font-size: 18px;
+  background: #ffffcc;
+  color: #000;
+  padding: 12px;
+}
+
+.box7-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.box7-btn {
+  display: inline-block;
+  background: #ffeb3b;
+  color: #000;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 0 15px #ffeb3b;
+  margin: 20px auto;
+}
+
+/* Box 8 – Revenue Trust Chain */
+.box8 {
+  flex: 0 0 320px;
+  background: #000;
+  border-radius: 15px;
+  box-shadow: 0 0 25px #00ffff, 0 0 25px #ff4444; /* Water + Fire */
+  scroll-snap-align: center;
+  color: #fff;
+  padding: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.box8-title {
+  color: #00ffff;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.box8-btn {
+  display: inline-block;
+  background: #ffeb3b;
+  color: #000;
+  padding: 10px 24px;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 0 12px #ffff33;
+}
