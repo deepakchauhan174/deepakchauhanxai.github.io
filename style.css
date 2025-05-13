@@ -974,13 +974,13 @@ body {
 .container {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 8px;
 }
 
 .header {
   text-align: center;
-  padding: 40px 0;
-  margin-bottom: 30px;
+  padding: 15px 0;
+  margin-bottom: 10px;
 }
 
 .page-title {
@@ -994,14 +994,14 @@ body {
 }
 
 .tagline {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--primary-glow);
   font-style: italic;
 }
 
 .section-heading {
   text-align: center;
-  margin: 50px 0 30px;
+  margin: 15px 0 12px;
   font-size: 2rem;
   color: var(--text-color);
   text-shadow: 0 0 10px var(--primary-glow);
@@ -1021,8 +1021,8 @@ body {
 .story-card {
   background-color: var(--card-bg);
   border-radius: 10px;
-  padding: 25px;
-  margin-bottom: 40px;
+  padding: 12px;
+  margin-bottom: 15px;
   border: 1px solid rgba(0, 255, 195, 0.2);
   box-shadow: 0 0 20px rgba(0, 255, 195, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
@@ -1099,7 +1099,7 @@ body {
 
 .submit-section {
   text-align: center;
-  margin: 60px 0;
+  margin: 25px 0;
 }
 
 .submit-btn {
