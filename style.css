@@ -7,12 +7,13 @@
 }
 
 /* BODY BACKGROUND */
-body {
-  background: radial-gradient(circle at top left, #000814, #001d3d, #000);
-  color: #ffffff;
+  body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
   min-height: 100vh;
-  padding: 0;
-}
+  background: radial-gradient(circle at center, #ff6b00, #ff3300, #1a0000);
+  color: #ffffff;
+  }
 
 /* HEADER AREA */
 .main-header {
