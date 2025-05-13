@@ -33,7 +33,7 @@ body {
 
 .main-header {
   text-align: center;
-  padding: ,8px 5px;
+  padding: 8px 5px;
   background-color: rgba(0, 0, 0, 0.6);
   color: #00ffee;
   box-shadow: 0 0 10px #00ffee;
@@ -1118,7 +1118,7 @@ body {
 #ai-popup-box {
   width: 95%;
   margin: 40px auto;
-  padding: 20px;
+  padding: 10px;
   height: auto;
   background: linear-gradient(to right, rgba(10,10,10,0.9), rgba(10,10,10,0.9)), url('Images/team.jpg');
   background-size: cover;
