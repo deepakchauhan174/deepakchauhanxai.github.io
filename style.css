@@ -1115,6 +1115,22 @@ body {
   color: #ff4444;
 }
 
+#ai-popup-box {
+  width: 95%;
+  margin: 40px auto;
+  padding: 20px;
+  height: auto;
+  background: linear-gradient(to right, rgba(10,10,10,0.9), rgba(10,10,10,0.9)), url('Images/team.jpg');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
+  border: 2px solid #00ffc3;
+  border-radius: 20px;
+  box-shadow: 0 0 30px #00ffc3;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+}
+
 @media (max-width: 480px) {
   .scroll-box {
     flex: 0 0 280px;
