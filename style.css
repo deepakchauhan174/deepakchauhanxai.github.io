@@ -664,6 +664,67 @@ body {
   color: #888;
 }
 
+.fire-box {
+  padding: 30px;
+  font-size: 16px;
+  background: radial-gradient(circle, #1a0000, #000);
+  border-radius: 20px;
+  box-shadow: 0 0 25px #ff4500;
+  color: white;
+  text-align: center;
+  margin: 40px auto;
+  border: 2px solid #ff6a00;
+  max-width: 800px;
+}
+
+.fire-box h2 {
+  font-size: 24px;
+  color: #ffae00;
+  text-shadow: 0 0 8px #ff4500;
+  margin-bottom: 15px;
+}
+
+.fire-box p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #ffcc99;
+  margin-bottom: 20px;
+}
+
+.fire-image {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  border: 2px solid #ff6a00;
+  margin: 20px auto;
+  box-shadow: 0 0 15px #ff6a00;
+  display: block;
+}
+
+.fire-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.fire-button-group a {
+  background: linear-gradient(to right, #ff4500, #ff8c00);
+  padding: 12px 30px;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 0 10px #ff6a00;
+}
+
+.fire-credit {
+  margin-top: 25px;
+  font-size: 14px;
+  color: #999;
+}
+
 @media (max-width: 480px) {
   .scroll-box {
     flex: 0 0 280px;
