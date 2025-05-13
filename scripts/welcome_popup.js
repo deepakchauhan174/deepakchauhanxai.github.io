@@ -1,10 +1,10 @@
-// Auto hide after 18 seconds
+// Auto-show popup after splash
 setTimeout(() => {
-  const popup = document.getElementById("welcome-popup");
-  if (popup) popup.style.display = "none";
-}, 18000);
+  const popup = document.getElementById("popup");
+  if (popup) popup.style.display = "flex";
+}, 12000); // After splash hides
 
-function dismissPopup() {
-  const popup = document.getElementById("welcome-popup");
-  if (popup) popup.style.display = "none";
-}
+// Close popup on button click
+document.getElementById("closePopup").addEventListener("click", () => {
+  document.getElementById("popup").style.display = "none";
+});
