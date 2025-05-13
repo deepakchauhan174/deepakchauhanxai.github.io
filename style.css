@@ -339,29 +339,16 @@ body {
   box-shadow: 0 0 10px #00ffaa;
 }
 
-.scroll-row {
-  display: flex;
-  overflow-x: auto;
-  gap: 20px;
-  padding: 20px;
-  scroll-snap-type: x mandatory;
-}
-
-.scroll-row::-webkit-scrollbar {
-  display: none;
-}
-
-.scroll-box6 {
-  flex: 0 0 300px;
+.box6-single {
+  max-width: 340px;
+  margin: 30px auto;
   background: #000;
   border-radius: 15px;
   box-shadow: 0 0 25px #ffff66;
-  scroll-snap-align: center;
   text-align: center;
-  overflow: hidden;
+  padding-bottom: 20px;
 }
 
-/* Box 6 Specific */
 .box6-title {
   font-size: 18px;
   background: #ffffcc;
@@ -370,14 +357,14 @@ body {
   margin: 0;
 }
 
-.box6-image {
+.box6-img {
   width: 100%;
-  display: block;
   height: auto;
+  display: block;
 }
 
 .box6-btn {
-  display: block;
+  display: inline-block;
   background: #ffeb3b;
   color: #000;
   padding: 12px 30px;
@@ -386,8 +373,7 @@ body {
   border-radius: 8px;
   text-decoration: none;
   box-shadow: 0 0 20px #ffeb3b;
-  margin: 20px auto;
-  max-width: 160px;
+  margin-top: 20px;
 }
 
 .scroll-row {
