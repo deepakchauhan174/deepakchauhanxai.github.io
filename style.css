@@ -177,23 +177,29 @@ body {
   font-weight: bold;
 }
 
+.box-row {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.box-row::-webkit-scrollbar {
+  display: none; /* Hide scrollbar on mobile */
+}
+
 .box {
-  max-width: 360px;
-  width: 90%;
-  margin: 40px auto;
+  flex: 0 0 auto;
+  width: 300px;
   background-color: #0a0a0a;
   border-radius: 15px;
   box-shadow: 0 0 25px #00ffaa;
   overflow: hidden;
   text-align: center;
-}
-
-.box-text {
-  font-size: 15px;
-  color: #00ffee;
-  padding: 6px 10px;
-  font-weight: bold;
-  background: rgba(0, 0, 0, 0.8);
+  scroll-snap-align: center;
 }
 
 .box-image {
@@ -201,36 +207,41 @@ body {
   height: auto;
   object-fit: cover;
   display: block;
-  border-top: 2px solid #00ffaa;
-  border-bottom: 2px solid #00ffaa;
 }
 
 .box-footer {
-  padding: 8px;
+  padding: 10px;
   background: rgba(0, 0, 0, 0.85);
 }
 
 .join-button {
-  padding: 10px 22px;
+  padding: 10px 20px;
   background: #00ffaa;
-  border: none;
-  border-radius: 10px;
   color: black;
+  border: none;
+  border-radius: 8px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
+  box-shadow: 0 0 10px #00ffaa;
   cursor: pointer;
-  box-shadow: 0 0 12px #00ffaa;
-  transition: 0.3s;
+  margin-top: 10px;
 }
 
 .join-button:hover {
   background: #00e6e6;
-  box-shadow: 0 0 18px #00e6e6;
 }
 
 .box-caption {
-  margin-top: 10px;
-  font-size: 14px;
+  margin-top: 8px;
   color: cyan;
+  font-size: 13px;
   font-weight: bold;
-  }
+}
+
+.box-button-overlay {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+    }
