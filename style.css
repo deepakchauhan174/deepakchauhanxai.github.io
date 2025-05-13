@@ -338,3 +338,48 @@ body {
   background: #00ffaa;
   box-shadow: 0 0 10px #00ffaa;
 }
+
+.box6-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 25px #ffff66;
+  background: #000;
+  text-align: center;
+  margin: 30px auto;
+  max-width: 400px;
+  padding-bottom: 20px;
+}
+
+.box6-title {
+  font-size: 18px;
+  color: #000;
+  background: #ffffcc;
+  padding: 12px;
+  margin: 0;
+}
+
+.box6-image {
+  width: 100%;
+  display: block;
+  height: auto;
+}
+
+.box6-button {
+  display: block;
+  background: #ffeb3b;
+  color: #000;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 0 20px #ffeb3b;
+  margin: 20px auto 0;
+  max-width: 160px;
+  transition: 0.3s ease;
+}
+
+.box6-button:hover {
+  background: #ffee58;
+  box-shadow: 0 0 25px #ffee58;
+}
