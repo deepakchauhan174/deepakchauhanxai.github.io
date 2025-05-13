@@ -578,6 +578,30 @@ body {
   color: #bbb;
 }
 
+.scroll-row-10 {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px;
+  scroll-snap-type: x mandatory;
+  justify-content: flex-start;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-row-10::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-box {
+  flex: 0 0 320px;
+  scroll-snap-align: center;
+  background: #000814;
+  border-radius: 16px;
+  box-shadow: 0 0 25px #00ffff;
+  padding: 20px;
+  text-align: center;
+  color: white;
+}
 /* Box 10 Styling */
 .box10-title {
   font-size: 20px;
