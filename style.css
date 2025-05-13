@@ -946,7 +946,7 @@ body {
 
 /* style.css for AI Bhai × Deepak Chauhan – Kahani Section */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 :root {
   --primary-glow: #00ffc3;
@@ -968,103 +968,82 @@ body {
   font-family: 'Poppins', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);
-  line-height: 1.6;
 }
 
 .container {
   max-width: 950px;
-  margin: 0 auto;
-  padding: 10px;
+  margin: auto;
+  padding: 15px;
 }
 
 .header {
   text-align: center;
-  padding: 10px 0;
-  margin-bottom: 10px;
+  padding: 20px 0;
 }
 
 .page-title {
-  font-size: 1rem;
+  font-size: 1.6rem;
   background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
   -webkit-background-clip: text;
   color: transparent;
-  text-shadow: 0 0 10px rgba(0, 255, 195, 0.4);
+  text-shadow: 0 0 10px rgba(0, 255, 195, 0.5);
 }
 
 .tagline {
-  font-size: 0.85rem;
-  color: var(--primary-glow);
+  font-size: 1rem;
   font-style: italic;
+  color: var(--primary-glow);
+  margin-top: 5px;
 }
 
 .section-heading {
   text-align: center;
-  margin: 20px 0 15px;
-  font-size: 1.2rem;
-  text-shadow: 0 0 6px var(--primary-glow);
+  font-size: 1.4rem;
+  margin: 20px 0 10px;
+  text-shadow: 0 0 10px var(--primary-glow);
 }
 
 .section-heading::after {
   content: '';
   display: block;
-  width: 80px;
   height: 2px;
-  margin: 10px auto 0;
+  width: 80px;
+  margin: 8px auto;
   background: var(--primary-glow);
   box-shadow: 0 0 6px var(--primary-glow);
 }
 
-.story-card,
-.comment-card {
+.scroll-box {
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 10px;
   background-color: var(--card-bg);
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 0 15px rgba(0, 255, 195, 0.1);
-}
-
-.story-img {
-  width: 100%;
   border-radius: 8px;
-  max-height: 300px;
-  object-fit: cover;
-  margin-bottom: 10px;
-  border: 1px solid rgba(0, 255, 195, 0.2);
+  box-shadow: 0 0 15px rgba(0, 255, 195, 0.2);
+  margin-bottom: 20px;
 }
 
-.story-title {
+.scroll-box::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll-box::-webkit-scrollbar-thumb {
+  background: var(--primary-glow);
+  border-radius: 10px;
+}
+
+.story-title, .comment-title {
   color: var(--primary-glow);
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 
-.story-content {
-  font-size: 0.95rem;
-  border-left: 3px solid var(--primary-glow);
-  padding-left: 10px;
-  margin-bottom: 8px;
+.story-content, .comment-text {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
 }
 
-.story-signature {
-  text-align: right;
-  font-style: italic;
-  font-size: 0.85rem;
-  color: var(--secondary-glow);
-}
-
-.comment-title {
-  font-weight: bold;
-  color: #ffcc00;
-  margin-bottom: 6px;
-}
-
-.comment-text {
-  font-size: 0.95rem;
-  margin-bottom: 6px;
-}
-
-.comment-user {
-  font-size: 0.85rem;
+.story-signature, .comment-user {
+  font-size: 0.8rem;
   text-align: right;
   font-style: italic;
   color: var(--muted-text);
@@ -1072,65 +1051,27 @@ body {
 
 .submit-section {
   text-align: center;
-  margin: 15px 0;
+  margin: 30px 0;
 }
 
 .submit-btn {
-  padding: 8px 20px;
-  font-size: 0.9rem;
-  border-radius: 25px;
+  padding: 10px 30px;
+  font-size: 1rem;
   background: linear-gradient(45deg, #ff00aa, #00ffc3);
   border: none;
+  border-radius: 30px;
   color: white;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(0, 255, 195, 0.4);
-  transition: transform 0.3s ease;
-}
-
-.submit-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(0, 255, 195, 0.7);
+  box-shadow: 0 0 15px rgba(0, 255, 195, 0.4);
 }
 
 .footer {
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   padding: 20px 0;
   color: var(--muted-text);
 }
-
-.loading,
-.error {
-  text-align: center;
-  padding: 15px;
-  font-size: 0.9rem;
-}
-
-.loading {
-  color: var(--primary-glow);
-}
-
-.error {
-  color: #ff4444;
-}
-
-#ai-popup-box {
-  width: 95%;
-  margin: 40px auto;
-  padding: 10px;
-  height: auto;
-  background: linear-gradient(to right, rgba(10,10,10,0.9), rgba(10,10,10,0.9)), url('Images/team.jpg');
-  background-size: cover;
-  background-position: center;
-  background-blend-mode: overlay;
-  border: 2px solid #00ffc3;
-  border-radius: 20px;
-  box-shadow: 0 0 30px #00ffc3;
-  font-family: 'Poppins', sans-serif;
-  color: white;
-}
-
 @media (max-width: 480px) {
   .scroll-box {
     flex: 0 0 280px;
