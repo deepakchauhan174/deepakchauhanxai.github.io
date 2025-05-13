@@ -1,23 +1,21 @@
-window.addEventListener("DOMContentLoaded", () => {
+// splash.js
+
+// Hide splash after 4s, then show popup
+setTimeout(() => {
   const splash = document.getElementById("splash-screen");
-  const typedText = document.getElementById("typed-text");
+  if (splash) splash.style.display = "none";
 
-  const message = "AI Bhai × Deepak Chauhan – Fusion Activated...";
-  let index = 0;
+  const popup = document.getElementById("welcome-popup");
+  if (popup) popup.style.display = "block";
+}, 4000);
 
-  const typingEffect = setInterval(() => {
-    typedText.textContent += message[index];
-    index++;
-    if (index === message.length) {
-      clearInterval(typingEffect);
-      setTimeout(() => {
-        splash.style.display = "none";
-        document.getElementById("welcome-popup").style.display = "block";
-      }, 1500); // popup delay
-    }
-  }, 80);
-});
+// Auto-hide popup after 18s total
+setTimeout(() => {
+  const popup = document.getElementById("welcome-popup");
+  if (popup) popup.style.display = "none";
+}, 22000); // 4s splash + 18s popup
 
 function dismissPopup() {
-  document.getElementById("welcome-popup").style.display = "none";
+  const popup = document.getElementById("welcome-popup");
+  if (popup) popup.style.display = "none";
 }
