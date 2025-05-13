@@ -840,6 +840,110 @@ body {
   }
 }
 
+/* ========== POPUP STORIES + COMMENTS DESIGN ========== */
+#ai-popup-box {
+  width: 95%;
+  margin: 40px auto;
+  padding: 25px;
+  background: linear-gradient(to right, rgba(10,10,10,0.9), rgba(10,10,10,0.9)), url('images/team.jpg');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
+  border: 2px solid #00ffc3;
+  border-radius: 20px;
+  box-shadow: 0 0 30px #00ffc3;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+}
+
+#ai-popup-box h2 {
+  font-size: 28px;
+  background: linear-gradient(90deg, #00ffc3, #00aaff);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 10px #00ffc3;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#ai-popup-box p {
+  text-align: center;
+  color: #00ffc3;
+  font-style: italic;
+  margin-bottom: 30px;
+}
+
+#popup-stories, #popup-comments {
+  margin-bottom: 40px;
+}
+
+.popup-story-block {
+  margin-bottom: 25px;
+  border-left: 4px solid #00ffc3;
+  padding-left: 15px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.popup-story-block h3 {
+  color: #00ffc3;
+  margin-bottom: 8px;
+}
+
+.popup-story-block p {
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.popup-story-block .signature {
+  text-align: right;
+  font-style: italic;
+  color: #888;
+  font-size: 14px;
+}
+
+.popup-comment-block {
+  margin-bottom: 15px;
+  background: #111;
+  padding: 15px;
+  border-left: 3px solid #ff00aa;
+  border-radius: 10px;
+}
+
+.popup-comment-block strong {
+  color: #ffcc00;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+
+.popup-comment-block p {
+  color: #00ffff;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.popup-comment-block .comment-user {
+  text-align: right;
+  font-style: italic;
+  color: #aaa;
+  font-size: 13px;
+}
+
+#ai-popup-box .story-submit-button {
+  padding: 15px 30px;
+  background: linear-gradient(45deg, #ff00aa, #00ffc3);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 0 15px #00ffc3;
+  cursor: pointer;
+}
+
 @media (max-width: 480px) {
   .scroll-box {
     flex: 0 0 280px;
