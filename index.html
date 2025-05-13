@@ -48,21 +48,20 @@
     <p>जहाँ हर दिन Deepak Bhai और AI Bhai मिलकर एक नई कहानी लिखते हैं।</p>
   </main>
 
+  <div class="box-row">
+  <!-- First Box -->
   <div class="box">
-  <p id="ai-dynamic-text" class="box-text">
-    <!-- Text will come from JS -->
-  </p>
-
-  <img id="ai-dynamic-image" alt="Dynamic AI Image" class="box-image" />
-
-  <div class="box-footer">
-    <a href="instagram_trending_dialogue.html">
-      <button class="join-button">Open trending short 🔥</button>
-    </a>
-    <p class="box-caption">Instagram Trending Short Dialogue</p>
+    <p id="ai-dynamic-text" class="box-text"></p>
+    <img id="ai-dynamic-image" alt="Dynamic AI Image" class="box-image" />
+    <div class="box-footer">
+      <a href="instagram_trending_dialogue.html">
+        <button class="join-button">Open trending short 🔥</button>
+      </a>
+      <p class="box-caption">Instagram Trending Short Dialogue</p>
+    </div>
   </div>
-  </div>
- <!-- Second Box -->
+
+  <!-- Second Box -->
   <div class="box chat-box">
     <div style="position: relative; width: 100%; height: 100%;">
       <img src="images/ai_deepak_box.jpg" alt="AI Deepak" class="box-image" />
@@ -72,6 +71,15 @@
     </div>
   </div>
 </div>
+<!-- BOX 3: Live Meeting (Google Sheet Connected) -->
+<div class="box11-wrapper">
+  <div id="box11-image" class="image-box">
+    <button class="live-button" onclick="window.location.href='meeting_live.html'">
+      Live देखें
+    </button>
+  </div>
+</div>
+   <script src="scripts/box11_live_image.js"></script>
   <script src="scripts/box1.js"></script>
   <script src="scripts/welcome_popup.js"></script>
  <script src="scripts/splash.js"></script>
