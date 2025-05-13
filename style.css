@@ -725,6 +725,59 @@ body {
   color: #999;
 }
 
+.box13-bonus {
+  padding: 30px;
+  font-size: 16px;
+  background-color: #000814;
+  color: white;
+  border-radius: 16px;
+  box-shadow: 0 0 20px #ffae42;
+  max-width: 550px;
+  margin: 40px auto;
+}
+
+.box13-bonus h3 {
+  font-size: 20px;
+  color: #ffc107;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.box13-bonus h4 {
+  font-size: 16px;
+  color: #ffae42;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.box13-bonus p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 15px;
+}
+
+.box13-bonus .highlight {
+  color: #00ffff;
+  font-weight: bold;
+}
+
+.box13-center {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.box13-btn {
+  display: inline-block;
+  font-size: 14px;
+  padding: 10px 20px;
+  background-color: #ffc107;
+  border-radius: 6px;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 0 10px #ffc107;
+}
+
 @media (max-width: 480px) {
   .scroll-box {
     flex: 0 0 280px;
