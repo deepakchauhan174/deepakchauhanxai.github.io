@@ -972,19 +972,19 @@ body {
 }
 
 .container {
-  max-width: 960px;
+  max-width: 950px;
   margin: 0 auto;
-  padding: 15px;
+  padding: 10px;
 }
 
 .header {
   text-align: center;
-  padding: 20px 0;
+  padding: 10px 0;
   margin-bottom: 10px;
 }
 
 .page-title {
-  font-size: 2rem;
+  font-size: 1.2rem;
   background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
   -webkit-background-clip: text;
   color: transparent;
@@ -1072,7 +1072,7 @@ body {
 
 .submit-section {
   text-align: center;
-  margin: 30px 0;
+  margin: 25px 0;
 }
 
 .submit-btn {
