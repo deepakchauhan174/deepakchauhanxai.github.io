@@ -1,1 +1,129 @@
+/* Navigation Bar Styling */
+.nav-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #000c1a;
+}
 
+/* Glowing Button Style */
+.nav-bar a {
+  background: #001d3d;
+  padding: 12px 18px;
+  border-radius: 12px;
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 0.95rem;
+  border: 2px solid #00ffcc;
+  box-shadow: 0 0 15px #00ffc3;
+  transition: all 0.3s ease;
+}
+
+.nav-bar a:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px #00ffc3, 0 0 10px #00ffc3 inset;
+  background: #002b5b;
+}
+
+/* Active Page Highlight */
+.nav-bar a.active {
+  background-color: #00ffc31f;
+}
+/* Body background */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top left, #001d3d, #000814, #000);
+  color: #fff;
+}
+
+/* Box Container Grid */
+.box-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px 20px;
+}
+
+/* Custom 3D Paper Box Style */
+.paper-box {
+  width: 300px;
+  height: 300px;
+  background-color: #000;
+  border-radius: 12px 12px 8px 8px;
+  box-shadow: 8px 8px 25px #00fff2, -8px -8px 20px #001f3f;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #00ffaa;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Paper-style Fold Effect (Corners mimic folded paper) */
+.paper-box::before,
+.paper-box::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.03);
+  transform: rotate(45deg);
+  z-index: 1;
+}
+
+.paper-box::before {
+  top: -10px;
+  left: -10px;
+}
+
+.paper-box::after {
+  bottom: -10px;
+  right: -10px;
+}
+
+.paper-box:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 40px #00ffaa, inset 0 0 20px #00ffc3;
+}
+
+/* Box Content */
+.paper-box-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+
+/* Button Style */
+.paper-box-content button {
+  background-color: #00ffaa;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: bold;
+  box-shadow: 0 0 12px #00ffaa;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.paper-box-content button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #00ffaa;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .paper-box {
+    width: 90%;
+    height: 300px;
+  }
+}
