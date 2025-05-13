@@ -1,3 +1,10 @@
+// Auto hide after 18 seconds
+setTimeout(() => {
+  const popup = document.getElementById("welcome-popup");
+  if (popup) popup.style.display = "none";
+}, 18000);
+
 function dismissPopup() {
-  document.getElementById("welcome-popup").style.display = "none";
+  const popup = document.getElementById("welcome-popup");
+  if (popup) popup.style.display = "none";
 }
