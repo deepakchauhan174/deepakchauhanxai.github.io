@@ -56,22 +56,24 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  padding: 15px 15px;
+  padding: 10px 5px;
+  margin-bottom: 15px;
   background: #000c1a;
 }
 
 .nav-bar a {
   background: #001d3d;
-  padding: 10px 14px;
-  min-width: 100px;
+  padding: 6px 10px;  /* और छोटा कर दिया */
   border-radius: 10px;
   color: white;
   font-weight: bold;
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 0.85rem;  /* थोड़ा छोटा text */
   border: 2px solid #00ffcc;
   box-shadow: 0 0 12px #00ffc3;
   transition: 0.3s ease;
+  min-width: 90px; /* fixed compact width */
+  text-align: center;
 }
 
 .nav-bar a:hover {
