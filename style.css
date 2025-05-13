@@ -1,3 +1,18 @@
+/* GLOBAL RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* BODY BACKGROUND */
+body {
+  background: radial-gradient(circle at top left, #000814, #001d3d, #000);
+  color: #ffffff;
+  min-height: 100vh;
+  padding: 0;
+}
 /* Navigation Bar Styling */
 .nav-bar {
   display: flex;
