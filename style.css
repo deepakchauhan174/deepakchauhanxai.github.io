@@ -12,7 +12,7 @@ body {
   font-family: 'Segoe UI', sans-serif;
   min-height: 100vh;
   color: #ffffff;
-  background: radial-gradient(circle at top left, #001f3f, #ff3300, #000000);
+  background: radial-gradient(circle at top left, #001f3f, #b30000, #000000);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -21,13 +21,13 @@ body {
 
 @keyframes fireWaterAI {
   0% {
-    background: radial-gradient(circle at top left, #001f3f, #ff3300, #000);
+    background: radial-gradient(circle at top left, #001f3f, #b30000, #000);
   }
   50% {
     background: radial-gradient(circle at center, #00e6e6, #ff6600, #000);
   }
   100% {
-    background: radial-gradient(circle at top left, #001f3f, #ff3300, #000);
+    background: radial-gradient(circle at top left, #001f3f, #b30000, #000);
   }
 }
 
