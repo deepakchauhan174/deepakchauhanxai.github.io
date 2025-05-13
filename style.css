@@ -984,7 +984,7 @@ body {
 }
 
 .page-title {
-  font-size: 1.2rem;
+  font-size: 1rem;
   background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
   -webkit-background-clip: text;
   color: transparent;
@@ -992,15 +992,15 @@ body {
 }
 
 .tagline {
-  font-size: 1rem;
+  font-size: 0.85rem;
   color: var(--primary-glow);
   font-style: italic;
 }
 
 .section-heading {
   text-align: center;
-  margin: 30px 0 20px;
-  font-size: 1.4rem;
+  margin: 20px 0 15px;
+  font-size: 1.2rem;
   text-shadow: 0 0 6px var(--primary-glow);
 }
 
@@ -1072,13 +1072,13 @@ body {
 
 .submit-section {
   text-align: center;
-  margin: 25px 0;
+  margin: 15px 0;
 }
 
 .submit-btn {
-  padding: 10px 25px;
-  font-size: 1rem;
-  border-radius: 30px;
+  padding: 8px 20px;
+  font-size: 0.9rem;
+  border-radius: 25px;
   background: linear-gradient(45deg, #ff00aa, #00ffc3);
   border: none;
   color: white;
@@ -1103,8 +1103,8 @@ body {
 .loading,
 .error {
   text-align: center;
-  padding: 20px;
-  font-size: 1rem;
+  padding: 15px;
+  font-size: 0.9rem;
 }
 
 .loading {
