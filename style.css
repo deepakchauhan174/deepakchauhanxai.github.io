@@ -286,3 +286,55 @@ body {
   background-color: #ff1a1a;
   box-shadow: 0 0 18px #ff1a1a;
 }
+
+.scroll-row {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px;
+  scroll-snap-type: x mandatory;
+}
+
+.scroll-box {
+  flex: 0 0 300px;
+  background: #000;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #00ffaa;
+  scroll-snap-align: center;
+  overflow: hidden;
+  text-align: center;
+}
+
+.box-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.box-text {
+  padding: 12px;
+  color: white;
+  font-size: 14px;
+}
+
+.box-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  color: black;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+/* Yellow Button */
+.box-btn.yellow {
+  background: #ffd700;
+  box-shadow: 0 0 10px #ffd700;
+}
+
+/* Green Button */
+.box-btn.green {
+  background: #00ffaa;
+  box-shadow: 0 0 10px #00ffaa;
+}
