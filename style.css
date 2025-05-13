@@ -246,6 +246,28 @@ body {
   z-index: 2;
     }
 
+.scroll-row-1 {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px;
+  scroll-snap-type: x mandatory;
+}
+
+.scroll-row-1::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-box {
+  flex: 0 0 300px;
+  scroll-snap-align: center;
+  background: #000;
+  border-radius: 15px;
+  box-shadow: 0 0 25px #00ffaa;
+  overflow: hidden;
+  text-align: center;
+}
+
 .box11-wrapper {
   width: 100%;
   max-width: 360px;
