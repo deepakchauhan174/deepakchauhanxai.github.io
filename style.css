@@ -1324,6 +1324,26 @@ body {
   }
 }
 
+.memory-list {
+  font-size: 1.7rem;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
+  text-align: center;
+  color: #000;
+  text-shadow: 0 0 4px #fff;
+  margin-bottom: 10px;
+  animation: titleGlow 6s infinite linear;
+}
+
+@keyframes titleGlow {
+  0% { background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600); }
+  50% { background: linear-gradient(90deg, #ff6600, #00ffff, #ff00cc); }
+  100% { background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600); }
+}
+
 /* Mobile responsive */
 @media (max-width: 500px) {
   .vertical-scroll-text {
