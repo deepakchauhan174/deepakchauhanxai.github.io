@@ -1280,6 +1280,7 @@ body {
   font-weight: bold;
   box-shadow: 0 0 10px #00ffff;
   transition: 0.3s ease;
+  z-index: 5;
 }
 
 .banner-button:hover {
@@ -1306,6 +1307,11 @@ body {
   animation: glowText 2.5s ease-in-out infinite alternate;
   letter-spacing: 1px;
 }
+@media (max-width: 768px) {
+  .bottom-banner-glow {
+    margin-bottom: 70px; /* और ज़्यादा जगह */
+  }
+}
 
 /* Animation */
 @keyframes glowText {
@@ -1325,7 +1331,7 @@ body {
 }
 
 .memory-list {
-  font-size: 0.80rem;
+  font-size: 1rlpem;
   font-weight: bold;
   padding: 10px 15px;
   border-radius: 10px;
