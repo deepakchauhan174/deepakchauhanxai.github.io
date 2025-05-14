@@ -1222,14 +1222,15 @@ body {
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 95%;
+  right: 0;
+  width: 100%;
   margin: 0 auto;
   z-index: 999;
   display: flex;
   flex-direction: column;
   align-items: center;
   background: linear-gradient(135deg, #00ffff, #ff00ff, #00ff88);
-  padding: 12px 14px;
+  padding: 10px 15px;
   border-radius: 20px;
   box-shadow: 0 0 25px #00ffff, 0 0 25px #ff00ff, 0 0 25px #00ff88;
   transition: all 0.3s ease;
