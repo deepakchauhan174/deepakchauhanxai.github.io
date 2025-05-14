@@ -12,10 +12,12 @@
       padding: 20px;
       margin: 0;
     }
+    
     .container {
       max-width: 800px;
       margin: 0 auto;
     }
+    
     .story-box {
       background-color: #1a1a1a;
       border-radius: 10px;
@@ -23,16 +25,19 @@
       margin-bottom: 30px;
       box-shadow: 0 0 35px #b76e79;
     }
+    
     .story-img {
       width: 100%;
       border-radius: 8px;
       margin-bottom: 20px;
     }
+    
     .story-title {
       color: #ff4500;
       margin-top: 0;
       margin-bottom: 15px;
     }
+    
     .story-text {
       line-height: 1.6;
       min-height: 60px;
@@ -40,23 +45,27 @@
       padding-left: 15px;
       margin-bottom: 20px;
     }
+    
     .signature {
       color: #66b3ff;
       font-style: italic;
       text-align: right;
       margin-bottom: 10px;
     }
+    
     .copyright {
       font-size: 12px;
       color: #888;
       text-align: center;
     }
+    
     .loading {
       text-align: center;
       font-size: 18px;
       color: #b76e79;
       padding: 50px;
     }
+    
     button {
       padding: 8px 16px;
       font-size: 14px;
@@ -66,6 +75,26 @@
       border-radius: 6px;
       cursor: pointer;
     }
+    
+    .story-title {
+  font-size: 1.7rem;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
+  text-align: center;
+  color: #000;
+  text-shadow: 0 0 4px #fff;
+  margin-bottom: 10px;
+  animation: titleGlow 6s infinite linear;
+}
+
+@keyframes titleGlow {
+  0% { background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600); }
+  50% { background: linear-gradient(90deg, #ff6600, #00ffff, #ff00cc); }
+  100% { background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600); }
+}
   </style>
 </head>
 <body>
@@ -101,7 +130,7 @@
 
           storyBox.innerHTML = `
             ${story.imgUrl ? `<img src="${story.imgUrl}" class="story-img" alt="${story.storyTitle}">` : ''}
-            <h2 class="story-title">${story.storyTitle || 'Untitled Story'}</h2>
+            ${story.storyTitle || ''}
             <p class="story-text"></p>
             ${story.signature ? `<div class="signature">${story.signature}</div>` : ''}
             <div class="copyright">not copyright ©</div>
