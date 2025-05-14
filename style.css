@@ -1172,7 +1172,7 @@ body {
     }
 
 .story-box-fixed {
-  max-height: 200px; /* जितना दिखाना है उतना फिक्स कर दो */
+  max-height: 300px; /* जितना दिखाना है उतना फिक्स कर दो */
   overflow-y: auto;
   background-color: #111;
   padding: 15px;
@@ -1191,6 +1191,30 @@ body {
   border-radius: 10px;
 }
 .story-box-fixed::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.deepak-ai-fire {
+  max-height: 180px;
+  overflow-y: auto;
+  background-color: #1a0000;
+  padding: 15px;
+  border-radius: 12px;
+  border: 2px solid #ff4500;
+  box-shadow: 0 0 25px rgba(255, 69, 0, 0.6);
+  margin-bottom: 20px;
+  color: #ffccaa;
+}
+
+/* Scrollbar – Fire Style */
+.deepak-ai-fire::-webkit-scrollbar {
+  width: 6px;
+}
+.deepak-ai-fire::-webkit-scrollbar-thumb {
+  background: linear-gradient(#ff4500, #ff8c00);
+  border-radius: 10px;
+}
+.deepak-ai-fire::-webkit-scrollbar-track {
   background: transparent;
 }
 
