@@ -1224,7 +1224,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   background: linear-gradient(135deg, #00ffff, #ff00ff, #00ff88);
-  padding: 25px 15px;
+  padding: 10px 15px;
   border-radius: 20px;
   margin: 30px auto 0;
   width: 95%;
@@ -1234,10 +1234,10 @@ body {
 }
 
 .circle-slider-container img {
-  width: 55px;
-  height: 55px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  margin: 5px;
+  margin: 4px;
   border: 2px solid white;
   box-shadow: 0 0 12px #fff;
 }
@@ -1248,7 +1248,7 @@ body {
 }
 
 .banner-text h2 {
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   color: #fff;
   text-shadow: 0 0 8px #000;
 }
@@ -1256,13 +1256,13 @@ body {
 .banner-text p {
   font-size: 0.9rem;
   color: #ffe;
-  margin-top: 5px;
+  margin-top: 4px;
 }
 
 .banner-button {
   display: inline-block;
-  margin-top: 10px;
-  padding: 10px 20px;
+  margin-top: 8px;
+  padding: 8px 12px;
   background: #000;
   color: #00ffff;
   font-weight: bold;
