@@ -1172,7 +1172,7 @@ body {
     }
 
 .story-box-fixed {
-  max-height: 300px; /* जितना दिखाना है उतना फिक्स कर दो */
+  max-height: 260px; /* जितना दिखाना है उतना फिक्स कर दो */
   overflow-y: auto;
   background-color: #111;
   padding: 15px;
@@ -1195,7 +1195,7 @@ body {
 }
 
 .deepak-ai-fire {
-  max-height: 180px;
+  max-height: 120px;
   overflow-y: auto;
   background-color: #1a0000;
   padding: 15px;
