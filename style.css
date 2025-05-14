@@ -1219,60 +1219,64 @@ body {
 }
 
 .bottom-banner-glow {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  background: linear-gradient(135deg, #00ffff, #ff00ff, #00ff88);
-  padding: 20px 15px;
-  border-radius: 20px;
-  margin:8px auto 0;
-  width: 100%;
-  box-shadow: 0 0 25px #00ffff, 0 0 25px #ff00ff, 0 0 25px #00ff88;
-  cursor: pointer;
-  transition: all 0.3s ease;
   position: fixed;
   bottom: 0;
   left: 0;
+  width: 95%;
+  margin: 0 auto;
   z-index: 999;
-  justify-content: space-between;
-  border-top: 2px solid #00ffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #00ffff, #ff00ff, #00ff88);
+  padding: 12px 14px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px #00ffff, 0 0 25px #ff00ff, 0 0 25px #00ff88;
+  transition: all 0.3s ease;
+}
+
+/* Circle Images */
+.circle-slider-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 6px;
 }
 
 .circle-slider-container img {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
-  margin: 4px;
   border: 2px solid white;
-  box-shadow: 0 0 12px #fff;
+  box-shadow: 0 0 10px #fff;
 }
 
-.banner-content {
-  text-align: center;
-  margin-top: 10px;
-}
-
+/* Text + Button Section */
 .banner-text h2 {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  font-weight: bold;
   color: #fff;
-  text-shadow: 0 0 6px #000;
+  text-align: center;
+  margin: 2px 0;
+  text-shadow: 0 0 5px #000;
 }
 
 .banner-text p {
-  font-size: 0.9rem;
-  color: #ffe;
-  margin-top: 4px;
+  font-size: 0.65rem;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 6px;
 }
 
+/* Read Story Button */
 .banner-button {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 8px 12px;
+  font-size: 0.8rem;
+  padding: 6px 14px;
   background: #000;
   color: #00ffff;
-  font-weight: bold;
-  border-radius: 30px;
   text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
   box-shadow: 0 0 10px #00ffff;
   transition: 0.3s ease;
 }
@@ -1281,8 +1285,7 @@ body {
   background: #00ffff;
   color: #000;
   box-shadow: 0 0 20px #00ffff;
-  }
-
+}
 @media (max-width: 480px) {
   .scroll-box {
     flex: 0 0 280px;
