@@ -66,6 +66,25 @@
       border-radius: 6px;
       cursor: pointer;
     }
+    .story-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
+  text-align: center;
+  color: #000;
+  text-shadow: 0 0 4px #fff;
+  margin-bottom: 10px;
+  animation: titleGlow 6s infinite linear;
+}
+
+@keyframes titleGlow {
+  0% { background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600); }
+  50% { background: linear-gradient(90deg, #ff6600, #00ffff, #ff00cc); }
+  100% { background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600); }
+}
   </style>
 </head>
 <body>
@@ -101,7 +120,7 @@
 
           storyBox.innerHTML = `
             ${story.imgUrl ? `<img src="${story.imgUrl}" class="story-img" alt="${story.storyTitle}">` : ''}
-            <h2 class="story-title">${story.storyTitle || 'Untitled Story'}</h2>
+            ${story.storyTitle || ''}
             <p class="story-text"></p>
             ${story.signature ? `<div class="signature">${story.signature}</div>` : ''}
             <div class="copyright">not copyright ©</div>
