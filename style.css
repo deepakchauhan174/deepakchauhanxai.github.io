@@ -1287,6 +1287,51 @@ body {
   color: #000;
   box-shadow: 0 0 20px #00ffff;
 }
+
+.vertical-scroll-text {
+  position: fixed;
+  right: 0;
+  top: 40%;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 14px;
+  color: #00fff7;
+  text-shadow: 
+    0 0 5px #00fff7,
+    0 0 10px #00f7ff,
+    0 0 20px #00eaff;
+  font-weight: 600;
+  font-family: 'Segoe UI', sans-serif;
+  z-index: 999;
+  animation: glowText 2.5s ease-in-out infinite alternate;
+  letter-spacing: 1px;
+}
+
+/* Animation */
+@keyframes glowText {
+  from {
+    opacity: 0.4;
+    text-shadow:
+      0 0 3px #00fff7,
+      0 0 6px #00eaff;
+  }
+  to {
+    opacity: 1;
+    text-shadow:
+      0 0 10px #00fff7,
+      0 0 20px #00f7ff,
+      0 0 30px #00eaff;
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 500px) {
+  .vertical-scroll-text {
+    font-size: 11px;
+    top: 35%;
+  }
+}
+
 @media (max-width: 480px) {
   .scroll-box {
     flex: 0 0 280px;
