@@ -1,15 +1,20 @@
-const allScrollSections = document.querySelectorAll('.auto-scroll');
-  const alreadyScrolled = new Set();
+document.addEventListener("DOMContentLoaded", () => {
+  const row = document.querySelector(".scroll-row-1");
 
-  window.addEventListener("scroll", function () {
-    allScrollSections.forEach((section, index) => {
-      const pos = section.getBoundingClientRect();
-      if (pos.top < window.innerHeight / 1.2 && !alreadyScrolled.has(index)) {
-        section.scrollBy({
-          left: window.innerWidth * 0.6,
-          behavior: "smooth"
-        });
-        alreadyScrolled.add(index); // हर section पर सिर्फ एक बार
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Instead of scrolling to Box 2, just shift row a bit then restore
+        row.scrollLeft += 100;
+
+        setTimeout(() => {
+          row.scrollLeft -= 100;
+        }, 800); // वापस original position पर 0.8 सेकंड में
       }
     });
-  });
+  }, { threshold: 0.5 });
+
+  if (row) {
+    observer.observe(row);
+  }
+});
