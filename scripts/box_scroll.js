@@ -1,23 +1,26 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const rows = document.querySelectorAll(".auto-scroll");
+<script>
+  let scrolledOnce = false;
 
-  rows.forEach(row => {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Wait 3 seconds after entering view
-          setTimeout(() => {
-            row.scrollLeft += 150;
+  window.addEventListener("scroll", function () {
+    const section = document.getElementById("autoScrollSection");
+    const sectionPosition = section.getBoundingClientRect();
 
-            // Then reverse after 1.5 seconds
-            setTimeout(() => {
-              row.scrollLeft -= 150;
-            }, 1500);
-          }, 3000); // Delay before scroll starts
-        }
+    if (!scrolledOnce && sectionPosition.top < window.innerHeight / 1.2) {
+      // First scroll to right
+      section.scrollBy({
+        left: window.innerWidth * 0.6,
+        behavior: "smooth"
       });
-    }, { threshold: 0.6 });
 
-    observer.observe(row);
+      scrolledOnce = true;
+
+      // Then reverse scroll after 2 seconds
+      setTimeout(() => {
+        section.scrollBy({
+          left: -window.innerWidth * 0.6,
+          behavior: "smooth"
+        });
+      }, 2000); // 2 sec delay before reverse scroll
+    }
   });
-});
+</script>
