@@ -279,12 +279,16 @@ body {
   position: relative;
 }
 
+/* Image Container */
 .image-box {
   width: 100%;
-  height: auto;
-  background-size: cover;
+  height: 220px; /* Fixed height — most stable */
+  background-size: contain;  /* या contain - नीचे समझाया है */
+  background-repeat: no-repeat;
   background-position: center;
+  background-color: #000;
   position: relative;
+  text-align: center;
 }
 
 .live-button {
