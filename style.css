@@ -9,12 +9,14 @@
 /* ===== Animated Background ===== */
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  min-height: 100vh;
+  padding: 0;
+  padding-bottom: 140px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #ffffff;
-  animation: fireWaterAI 12s ease-in-out infinite;
-  background: radial-gradient(circle at top left, #001f3f, #ff3300, #000);
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #001f3f, #ff3300, #000); /* Fire-Water AI Background */
   background-size: 200% 200%;
+  animation: fireWaterAI 12s ease-in-out infinite;
 }
 
 /* Animation keyframes */
@@ -1223,15 +1225,6 @@ body {
 }
 
 /* General Page Styling */
-.main-section {  
-  margin: 0;
-  padding: 0;
-  padding-bottom: 140px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #000; /* Optional dark theme */
-  color: #fff;
-}
-
 .page-content {
   padding: 20px;
   padding-bottom: 150px; /* Space for fixed banner */
