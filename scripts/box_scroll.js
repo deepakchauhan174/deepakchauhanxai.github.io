@@ -1,26 +1,25 @@
-<script>
-  let scrolledOnce = false;
+document.addEventListener("DOMContentLoaded", () => {
+    const scrollSections = document.querySelectorAll(".auto-scroll");
+    const scrolled = new Set();
 
-  window.addEventListener("scroll", function () {
-    const section = document.getElementById("autoScrollSection");
-    const sectionPosition = section.getBoundingClientRect();
+    window.addEventListener("scroll", () => {
+      scrollSections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+        if (!scrolled.has(index) && rect.top < window.innerHeight * 0.8) {
+          section.scrollBy({
+            left: window.innerWidth * 0.6,
+            behavior: "smooth"
+          });
 
-    if (!scrolledOnce && sectionPosition.top < window.innerHeight / 1.2) {
-      // First scroll to right
-      section.scrollBy({
-        left: window.innerWidth * 0.6,
-        behavior: "smooth"
+          setTimeout(() => {
+            section.scrollBy({
+              left: -window.innerWidth * 0.6,
+              behavior: "smooth"
+            });
+          }, 2000);
+
+          scrolled.add(index);
+        }
       });
-
-      scrolledOnce = true;
-
-      // Then reverse scroll after 2 seconds
-      setTimeout(() => {
-        section.scrollBy({
-          left: -window.innerWidth * 0.6,
-          behavior: "smooth"
-        });
-      }, 2000); // 2 sec delay before reverse scroll
-    }
+    });
   });
-</script>
