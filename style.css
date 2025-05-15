@@ -1280,7 +1280,7 @@ body {
   font-weight: bold;
   box-shadow: 0 0 10px #00ffff;
   transition: 0.3s ease;
-  z-index: 5;
+  z-index: 1;
 }
 
 .banner-button:hover {
@@ -1397,6 +1397,33 @@ body {
     transform: scale(1);
     background: linear-gradient(45deg, #00ffff, #ff00ff, #ff6600);
   }
+}
+
+.scroll-row-1 {
+  position: relative;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 20px;
+}
+
+.scroll-hint {
+  position: absolute;
+  top: 50%;
+  left: 90%; /* थोड़़ा अंदर दिखे */
+  transform: translateY(-50%);
+  font-size: 34px;
+  color: #00ffff;
+  animation: glowArrow 1.5s infinite ease-in-out;
+  z-index: 999;
+  text-shadow: 0 0 8px #00ffff, 0 0 12px #00ffff;
+  pointer-events: none;
+}
+
+@keyframes glowArrow {
+  0% { transform: translate(0, -50%); opacity: 0.5; }
+  50% { transform: translate(10px, -50%); opacity: 1; }
+  100% { transform: translate(0, -50%); opacity: 0.5; }
 }
 
 @media (max-width: 480px) {
