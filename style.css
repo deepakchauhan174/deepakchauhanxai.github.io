@@ -1456,38 +1456,6 @@ body {
   100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 
-.ai-glow-top {
-  width: 180px;
-  height: 180px;
-  margin: 0 auto 10px;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, #00ffff, #ff00ff, #00ff88, #ff6600, #00ffff);
-  animation: rotateGlow 4s linear infinite;
-  box-shadow: 0 0 25px #fff;
-}
-
-.ai-divider-left, .ai-divider-right {
-  position: absolute;
-  bottom: 0;
-  width: 60px;
-  height: 4px;
-  background: linear-gradient(90deg, #00ffff, #ff00ff, #00ff88);
-  animation: pulseLine 2s ease-in-out infinite alternate;
-  box-shadow: 0 0 12px #00ffff;
-}
-.ai-divider-left { left: 10px; }
-.ai-divider-right { right: 10px; }
-
-@keyframes rotateGlow {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes pulseLine {
-  0% { transform: scaleX(1); opacity: 0.6; }
-  100% { transform: scaleX(1.4); opacity: 1; }
-}
-
 @media (max-width: 480px) {
   .scroll-box {
     flex: 0 0 280px;
