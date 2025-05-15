@@ -1,20 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const row = document.querySelector(".scroll-row-1");
+  const rows = document.querySelectorAll(".auto-scroll");
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        // Instead of scrolling to Box 2, just shift row a bit then restore
-        row.scrollLeft += 100;
+  rows.forEach(row => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Wait 3 seconds after entering view
+          setTimeout(() => {
+            row.scrollLeft += 150;
 
-        setTimeout(() => {
-          row.scrollLeft -= 100;
-        }, 800); // वापस original position पर 0.8 सेकंड में
-      }
-    });
-  }, { threshold: 0.5 });
+            // Then reverse after 1.5 seconds
+            setTimeout(() => {
+              row.scrollLeft -= 150;
+            }, 1500);
+          }, 3000); // Delay before scroll starts
+        }
+      });
+    }, { threshold: 0.6 });
 
-  if (row) {
     observer.observe(row);
-  }
+  });
 });
