@@ -1456,6 +1456,16 @@ body {
   100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+}
+
 @media (max-width: 480px) {
   .scroll-box {
     flex: 0 0 280px;
