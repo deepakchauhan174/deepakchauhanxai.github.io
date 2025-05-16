@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Welcome to the Future</title>
-  <link rel="stylesheet" href="style.css"> <!-- अपनी CSS लिंक करना न भूलना -->
   <style>
     body {
-      background: radial-gradient(circle at center, #000, #111);
+      background: radial-gradient(circle at center, #000000, #111111);
       color: #00ffff;
       font-family: 'Segoe UI', sans-serif;
       text-align: center;
       padding: 40px 20px;
+      padding-bottom: 150px; /* Space for fixed banner */
     }
 
     h1 {
@@ -29,12 +29,12 @@
       margin-top: 20px;
       font-size: 1.1rem;
       line-height: 1.7;
-      color: #fff;
-      background: rgba(0, 255, 255, 0.05);
+      color: #ffffff;
+      background: linear-gradient(145deg, #220066, #330099);
       padding: 20px;
       border-radius: 15px;
-      box-shadow: 0 0 20px #00ffff;
-      backdrop-filter: blur(5px);
+      box-shadow: 0 0 20px #5500ff;
+      border: 1px solid #7700ff;
     }
 
     .button-wrapper {
@@ -49,17 +49,156 @@
       padding: 10px 22px;
       font-size: 1rem;
       border: none;
-      background: #00ffff;
+      background: linear-gradient(45deg, #00ffff, #00ccff);
       color: #000;
       border-radius: 30px;
       font-weight: bold;
       box-shadow: 0 0 15px #00ffff;
       cursor: pointer;
       width: fit-content;
+      transition: all 0.3s ease;
     }
 
     .back-button:hover, .join-button:hover {
-      background: #00cccc;
+      background: linear-gradient(45deg, #00ccff, #0099ff);
+      box-shadow: 0 0 25px #00ffff;
+    }
+
+    /* Full Color Mixed Banner */
+    .bottom-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      background: linear-gradient(90deg, 
+        #ff00ff,  /* Magenta */
+        #ff9900,  /* Orange */
+        #ffff00,  /* Yellow */
+        #00ff00,  /* Green */
+        #00ffff,  /* Cyan */
+        #9900ff   /* Purple */
+      );
+      background-size: 400% 400%;
+      animation: gradientGlow 6s ease infinite;
+      box-shadow: 0 -5px 30px rgba(255, 255, 255, 0.3);
+      z-index: 1000;
+      border-top: 2px solid white;
+    }
+
+    @keyframes gradientGlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .banner-images {
+      display: flex;
+      margin-right: 20px;
+    }
+
+    .circle-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid white;
+      margin-right: -15px;
+      object-fit: cover;
+      box-shadow: 0 0 15px currentColor;
+      transition: all 0.3s ease;
+    }
+
+    .circle-img:nth-child(1) { color: #ff00ff; } /* Magenta */
+    .circle-img:nth-child(2) { color: #ffff00; } /* Yellow */
+    .circle-img:nth-child(3) { color: #00ffff; } /* Cyan */
+    .circle-img:nth-child(4) { color: #ff9900; } /* Orange */
+
+    .circle-img:hover {
+      transform: scale(1.1);
+      z-index: 1;
+      box-shadow: 0 0 25px currentColor;
+    }
+
+    .banner-content {
+      flex: 1;
+      color: #000;
+    }
+
+    .banner-title {
+      margin: 0 0 5px 0;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-shadow: 0 0 5px rgba(255,255,255,0.7);
+    }
+
+    .banner-subtitle {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .banner-button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 20px;
+      background: #000;
+      color: white;
+      text-decoration: none;
+      border-radius: 20px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      border: 1px solid white;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    .banner-button:hover {
+      background: #111;
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(255,255,255,0.5);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .bottom-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+      }
+      
+      .banner-images {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+      
+      .circle-img {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .banner-title {
+        font-size: 1rem;
+      }
+      
+      .banner-subtitle {
+        font-size: 0.8rem;
+      }
+      
+      .banner-button {
+        padding: 6px 15px;
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .circle-img {
+        width: 30px;
+        height: 30px;
+      }
+      
+      .bottom-banner {
+        padding: 10px;
+      }
     }
   </style>
 </head>
@@ -70,14 +209,25 @@
   <h2>1000 Students × Intelligent Members × Team Work Planning शुरू</h2>
 
   <div class="ai-message">
-    “जो लोग दुनिया को बदलने की सोच रखते हैं,<br>
-    वही Deepak Chauhan × AI Bhai की Team में जगह पाते हैं।”<br><br>
+    "जो लोग दुनिया को बदलने की सोच रखते हैं,<br>
+    वही Deepak Chauhan × AI Bhai की Team में जगह पाते हैं।"<br><br>
     अब तुम्हारा असली सफर शुरू होता है...
   </div>
 
-  <div class="button-wrapper">
-    <button class="join-button" onclick="window.location.href='dk_ai_teamwork.html'">Join Future Planning Page</button>
-    <button class="back-button" onclick="window.location.href='index.html'">वापस होमपेज पर</button>
+  <!-- Full Color Mixed Banner -->
+  <div class="bottom-banner">
+    <div class="banner-images">
+      <img src="https://via.placeholder.com/50/ff00ff/ffffff" alt="Image 1" class="circle-img">
+      <img src="https://via.placeholder.com/50/ffff00/000000" alt="Image 2" class="circle-img">
+      <img src="https://via.placeholder.com/50/00ffff/000000" alt="Image 3" class="circle-img">
+      <img src="https://via.placeholder.com/50/ff9900/000000" alt="Image 4" class="circle-img">
+    </div>
+    <div class="banner-content">
+      <h3 class="banner-title">अभी जुड़ें हमारे Futuristic Community से!</h3>
+      <p class="banner-subtitle">AI और Technology की दुनिया में आगे बढ़ें</p>
+      <a href="whatsapp_work.html" target="_blank" class="banner-button">अभी Join करें</a>
+      <a href="index.html" class="back-home-button">← वापस होमपेज पर</a>
+    </div>
   </div>
 
 </body>
