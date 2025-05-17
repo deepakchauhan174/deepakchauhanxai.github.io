@@ -4,162 +4,216 @@
   <meta charset="UTF-8">
   <title>Welcome to the Future</title>
   <style>
+    /* === FUTURISTIC BASE STYLES === */
+    :root {
+      --ai-blue: #00f0ff;
+      --alien-green: #00ff88;
+      --robot-orange: #ff6600;
+      --cyber-purple: #cc00ff;
+    }
+    
     body {
-      background: radial-gradient(circle at center, #000000, #111111);
-      color: #00ffff;
-      font-family: 'Segoe UI', sans-serif;
+      background: 
+        radial-gradient(circle at 20% 30%, #000000 0%, #111 40%, #220044 100%),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="10" height="10" fill="%2300f0ff" opacity="0.1"/></svg>');
+      color: var(--ai-blue);
+      font-family: 'Orbitron', 'Rajdhani', sans-serif;
       text-align: center;
       padding: 40px 20px;
-      padding-bottom: 160px; /* Banner space */
+      padding-bottom: 160px;
+      overflow-x: hidden;
     }
 
+    /* === ROBOTIC HEADER === */
     h1 {
-      font-size: 2rem;
-      text-shadow: 0 0 10px #00ffff;
+      font-size: 2.5rem;
+      text-shadow: 
+        0 0 10px var(--ai-blue),
+        0 0 20px var(--cyber-purple);
+      position: relative;
+      margin-bottom: 40px;
+      letter-spacing: 2px;
+    }
+    
+    h1::before {
+      content: "🤖";
+      position: absolute;
+      left: -40px;
+      animation: robot-pulse 2s infinite;
+    }
+    
+    h1::after {
+      content: "👽";
+      position: absolute;
+      right: -40px;
+      animation: alien-float 3s infinite;
     }
 
-    h2 {
-      margin-top: 30px;
-      font-size: 1.3rem;
-      color: #ff66ff;
-      text-shadow: 0 0 10px #ff66ff;
-    }
-
+    /* === AI MESSAGE BOX === */
     .ai-message {
-      margin-top: 20px;
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: #ffffff;
-      background: linear-gradient(145deg, #220066, #330099);
-      padding: 20px;
+      margin: 30px auto;
+      padding: 25px;
+      width: 80%;
+      background: 
+        linear-gradient(145deg, rgba(0,80,120,0.3), rgba(80,0,150,0.3)),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><path d="M0 0h30v30H0z" fill="none"/><path d="M15 0v30M0 15h30" stroke="%2300f0ff" opacity="0.2"/></svg>');
       border-radius: 15px;
-      box-shadow: 0 0 20px #5500ff;
-      border: 1px solid #7700ff;
+      border: 1px solid var(--ai-blue);
+      box-shadow: 
+        0 0 20px var(--ai-blue),
+        inset 0 0 30px rgba(0,240,255,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .ai-message::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--ai-blue), var(--alien-green), var(--robot-orange));
+      animation: scanline 4s linear infinite;
     }
 
+    /* === ALIEN-THEMED BANNER === */
     .bottom-banner {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px 25px;
-      background: linear-gradient(90deg, #ff00ff, #ff9900, #ffff00, #00ff00, #00ffff, #9900ff);
-      background-size: 400% 400%;
-      animation: gradientGlow 6s ease infinite;
-      box-shadow: 0 -5px 30px rgba(255, 255, 255, 0.3);
+      padding: 25px;
+      background: 
+        linear-gradient(90deg, 
+          rgba(0,255,136,0.2) 0%, 
+          rgba(0,240,255,0.2) 50%, 
+          rgba(204,0,255,0.2) 100%),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="1" fill="%2300f0ff" opacity="0.5"/></svg>');
+      backdrop-filter: blur(5px);
+      border-top: 1px solid var(--alien-green);
       z-index: 1000;
-      border-top: 2px solid white;
+      box-shadow: 0 -10px 30px rgba(0,255,136,0.3);
     }
-
-    @keyframes gradientGlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .banner-images {
-      display: flex;
-      margin-bottom: 10px;
-    }
-
+    
     .circle-img {
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
-      border: 2px solid white;
-      margin-right: -10px;
+      border: 2px solid var(--cyber-purple);
+      margin: 0 -15px;
       object-fit: cover;
-      box-shadow: 0 0 15px currentColor;
-      transition: 0.3s ease;
+      box-shadow: 
+        0 0 20px var(--robot-orange),
+        0 0 40px var(--alien-green);
+      transition: all 0.3s;
+      filter: hue-rotate(0deg);
     }
-
+    
     .circle-img:hover {
-      transform: scale(1.1);
-      z-index: 1;
+      transform: translateY(-10px) scale(1.1);
+      filter: hue-rotate(90deg);
+      z-index: 2;
     }
 
-    .banner-content {
-      text-align: center;
-    }
-
-    .banner-title {
-      margin: 5px 0;
-      font-size: 1.5rem;
-      font-weight: bold;
-      text-shadow: 0 0 5px rgba(255,255,255,0.7);
-      color: #000;
-    }
-
-    .banner-subtitle {
-      margin: 0 0 10px 0;
-      font-size: 1.1rem;
-      color: #111;
-    }
-
-    .button-row {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .banner-button, .back-home-button {
-      padding: 8px 20px;
-      border-radius: 25px;
-      font-weight: bold;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: 0.3s ease;
-    }
-
+    /* === FUTURISTIC BUTTONS === */
     .banner-button {
-      background: #000;
+      padding: 10px 25px;
+      border-radius: 30px;
+      background: linear-gradient(45deg, var(--robot-orange), var(--cyber-purple));
       color: white;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: none;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
     }
-
+    
+    .banner-button::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right, 
+        transparent 45%, 
+        rgba(255,255,255,0.3) 50%, 
+        transparent 55%
+      );
+      animation: button-scan 3s linear infinite;
+    }
+    
     .back-home-button {
-      background: white;
-      color: #0000ff;
-      border: 2px solid #0000ff;
+      background: black;
+      color: var(--alien-green);
+      border: 2px solid var(--alien-green);
     }
 
-    .banner-button:hover {
-      background: #222;
+    /* === FUTURISTIC ANIMATIONS === */
+    @keyframes robot-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
     }
-
-    .back-home-button:hover {
-      background: #dfe9ff;
+    
+    @keyframes alien-float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(5deg); }
+    }
+    
+    @keyframes scanline {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    @keyframes button-scan {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    /* === RESPONSIVE ADJUSTMENTS === */
+    @media (max-width: 768px) {
+      h1 { font-size: 1.8rem; }
+      .circle-img { width: 50px; height: 50px; }
     }
   </style>
 </head>
 <body>
 
   <h1>Deepak × AI Bhai का Futuristic Universe</h1>
-  <h2>1000 Students × Intelligent Members × Team Work Planning शुरू</h2>
-
+  
   <div class="ai-message">
-    "जो लोग दुनिया को बदलने की सोच रखते हैं,<br>
-    वही Deepak Chauhan × AI Bhai की Team में जगह पाते हैं।"<br><br>
-    अब तुम्हारा असली सफर शुरू होता है...
+    <h2 style="color: var(--alien-green); margin-top: 0;">1000 Students × Intelligent Members × Team Work Planning शुरू</h2>
+    <p style="font-size: 1.2rem; line-height: 1.7;">
+      "जो लोग दुनिया को बदलने की सोच रखते हैं,<br>
+      <span style="color: var(--robot-orange);">वही Deepak Chauhan × AI Bhai की Team में जगह पाते हैं।"</span><br><br>
+      <span style="text-shadow: 0 0 10px var(--cyber-purple);">अब तुम्हारा असली सफर शुरू होता है...</span>
+    </p>
   </div>
 
-  <!-- Bottom Fixed Banner -->
+  <!-- Futuristic Banner -->
   <div class="bottom-banner">
-    <div class="banner-images">
-      <img src="images/deepak.jpg" class="circle-img" alt="Deepak">
-      <img src="images/ai_bhai.jpg" class="circle-img" alt="AI Bhai">
-      <img src="images/dk_logo.jpg" class="circle-img" alt="DK Logo">
-      <img src="images/team.jpg" class="circle-img" alt="Team">
+    <div style="display: flex; justify-content: center; margin-bottom: 15px;">
+      <img src="images/circle1.jpg" class="circle-img" alt="Deepak" style="animation-delay: 0s;">
+      <img src="images/circle4.jpg" class="circle-img" alt="AI Bhai" style="animation-delay: 0.2s;">
+      <img src="images/circle2.jpg" class="circle-img" alt="DK Logo" style="animation-delay: 0.4s;">
+      <img src="images/circle3.jpg" class="circle-img" alt="Team" style="animation-delay: 0.6s;">
     </div>
-    <div class="banner-content">
-      <h3 class="banner-title">अभी जुड़ें हमारे Futuristic Community से!</h3>
-      <p class="banner-subtitle">AI और Technology की दुनिया में आगे बढ़ें</p>
-      <div class="button-row">
-        <a href="whatsapp_work.html" class="banner-button" target="_blank">अभी Join करें</a>
-        <a href="index.html" class="back-home-button">← वापस होमपेज पर</a>
+    
+    <div style="text-align: center;">
+      <h3 style="color: var(--ai-blue); margin: 10px 0; font-size: 1.5rem; text-shadow: 0 0 10px var(--ai-blue);">
+        अभी जुड़ें हमारे Futuristic Community से!
+      </h3>
+      <p style="color: var(--alien-green); margin-bottom: 20px; font-size: 1.1rem;">
+        AI और Technology की दुनिया में आगे बढ़ें
+      </p>
+      
+      <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <button class="banner-button">अभी Join करें</button>
+        <button class="back-home-button">← वापस होमपेज पर</button>
       </div>
     </div>
   </div>
