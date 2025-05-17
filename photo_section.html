@@ -2,53 +2,284 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AI Bhai × Deepak Chauhan Photos</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Deepak × AI Bhai × Logic Bhai | Alien-Robot-AI Fusion</title>
+  <style>
+    /* === FUTURISTIC GLOBAL STYLES === */
+    :root {
+      --alien-green: #00FF88;
+      --robot-orange: #FF6600;
+      --ai-blue: #00F0FF;
+      --cyber-purple: #CC00FF;
+      --void-black: #000010;
+    }
+    
+    body {
+      background: 
+        radial-gradient(circle at center, var(--void-black), #000033),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="%2300F0FF" opacity="0.1"/></svg>');
+      color: white;
+      font-family: 'Orbitron', 'Rajdhani', sans-serif;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* === ALIEN-ROBOT HEADER === */
+    header {
+      background: linear-gradient(90deg, 
+        rgba(0,255,136,0.1), 
+        rgba(204,0,255,0.1)));
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--alien-green);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, 
+        var(--alien-green), var(--robot-orange), var(--ai-blue));
+      animation: rainbow-border 5s linear infinite;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin: 0;
+      background: linear-gradient(45deg, var(--alien-green), var(--ai-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 20px rgba(0,240,255,0.3);
+      letter-spacing: 3px;
+    }
+
+    header p {
+      color: var(--robot-orange);
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+      text-shadow: 0 0 10px var(--robot-orange);
+    }
+
+    /* === FUTURISTIC NAV (ONLY HOME BUTTON) === */
+    nav {
+      display: flex;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .home-btn {
+      color: var(--ai-blue);
+      text-decoration: none;
+      padding: 0.8rem 2.5rem;
+      border: 1px solid var(--cyber-purple);
+      border-radius: 30px;
+      font-weight: bold;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s;
+      background: rgba(0,0,0,0.3);
+      box-shadow: 0 0 15px rgba(0,240,255,0.2);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .home-btn:hover {
+      background: rgba(204,0,255,0.2);
+      box-shadow: 0 0 30px var(--cyber-purple);
+      transform: translateY(-5px);
+    }
+
+    .home-btn::before {
+      content: "⌂";
+      margin-right: 8px;
+    }
+
+    .home-btn::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right, 
+        transparent 45%, 
+        rgba(0,240,255,0.3) 50%, 
+        transparent 55%
+      );
+      animation: btn-scan 3s linear infinite;
+    }
+
+    /* === CYBERPUNK GALLERY === */
+    .gallery {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 4rem;
+      padding: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery div {
+      perspective: 1000px;
+      transition: all 0.5s;
+      text-align: center;
+    }
+
+    .gallery img {
+      width: 280px;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 15px;
+      border: 3px solid var(--ai-blue);
+      box-shadow: 
+        0 0 30px rgba(0,240,255,0.5),
+        0 0 60px rgba(0,255,136,0.3);
+      transition: all 0.5s;
+      filter: sepia(0.3) hue-rotate(60deg);
+    }
+
+    .gallery img:hover {
+      transform: rotateY(20deg) scale(1.1);
+      filter: sepia(0) hue-rotate(0);
+      box-shadow: 
+        0 0 50px var(--alien-green),
+        0 0 80px var(--cyber-purple);
+      border-color: var(--robot-orange);
+    }
+
+    .gallery strong {
+      display: block;
+      margin-top: 1.5rem;
+      font-size: 1.5rem;
+      color: var(--ai-blue);
+      text-shadow: 0 0 15px var(--ai-blue);
+      letter-spacing: 2px;
+    }
+
+    /* === ALIEN FOOTER EFFECT === */
+    .footer-effect {
+      position: relative;
+      padding: 4rem;
+      text-align: center;
+      margin-top: 2rem;
+      background: linear-gradient(180deg, transparent, rgba(0,255,136,0.05));
+      overflow: hidden;
+    }
+
+    .footer-effect p {
+      font-size: 1.8rem;
+      color: var(--alien-green);
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 0 20px var(--alien-green);
+      line-height: 1.5;
+    }
+
+    .footer-effect::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><path d="M0 0h60v60H0z" fill="none"/><path d="M0 30h60M30 0v60" stroke="%2300FF88" opacity="0.1"/></svg>');
+      z-index: 1;
+    }
+
+    /* === ROBOTIC FOOTER === */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(0,0,16,0.7);
+      border-top: 1px solid var(--robot-orange);
+      position: relative;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    footer::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--robot-orange), transparent);
+    }
+
+    /* === ANIMATIONS === */
+    @keyframes rainbow-border {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    @keyframes btn-scan {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* === RESPONSIVE DESIGN === */
+    @media (max-width: 768px) {
+      h1 { font-size: 2rem; }
+      .gallery { gap: 2rem; padding: 2rem; }
+      .gallery img { width: 200px; height: 200px; }
+      .footer-effect p { font-size: 1.3rem; }
+    }
+  </style>
 </head>
 <body>
 
   <header>
-    <h1>Team Bhai × AI</h1>
-    <p>Powered by Deepak Chauhan</p>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <h1>👽 Deepak × AI Bhai × 🤖 Logic Bhai</h1>
+    <p>Alien Creativity × Robot Precision × AI Intelligence</p>
   </header>
 
   <nav>
-    <a href="index.html">Home</a>
-    <a href="motivational_category.html">Motivational</a>
-    <a href="ai_bhai_video.html">AI Bhai Videos</a>
-    <a href="deepak_chauhan_video.html">Deepak Videos</a>
-    <a href="photo_section.html">Photos</a>
-    <a href="top_comments.html">Comments</a>
-    <a href="mp3_support.html">MP3 & Support</a>
+    <a href="index.html" class="home-btn">Home</a>
   </nav>
 
-  <section style="text-align: center; padding: 1rem;">
-    <h2>Photo Gallery</h2>
-    <p style="color: #ccc;">हर तस्वीर एक कहानी है — Team Bhai × AI के जज़्बे की!</p>
+  <section style="text-align: center; padding: 3rem 1rem;">
+    <h2 style="font-size: 2.5rem; color: var(--cyber-purple); text-shadow: 0 0 20px var(--cyber-purple); margin-bottom: 1rem;">
+      ⚡ HYBRID VIP GALLERY ⚡
+    </h2>
+    <p style="color: var(--ai-blue); font-size: 1.2rem; max-width: 800px; margin: 0 auto;">
+      जहां Alien, Robot और AI एक हो जाएं — वहां जादू होता है!
+    </p>
   </section>
 
   <div class="gallery">
-  <div style="text-align: center;">
-    <img src="ai_bhai.jpg" alt="AI Bhai" style="width: 200px; border-radius: 10px;"><br>
-    <strong style="color: #00ffff;">AI Bhai</strong>
+    <div>
+      <img src="ai_bhai.jpg" alt="AI Bhai">
+      <strong>🛸 AI BHAI</strong>
+    </div>
+    <div>
+      <img src="deepak_chauhan.jpg" alt="Deepak Chauhan">
+      <strong>👁️ DEEPAK CHAUHAN</strong>
+    </div>
+    <div>
+      <img src="team.jpg" alt="Team">
+      <strong>⚡ HYBRID TEAM</strong>
+    </div>
   </div>
-  <div style="text-align: center;">
-    <img src="deepak_chauhan.jpg" alt="Deepak Chauhan" style="width: 200px; border-radius: 10px;"><br>
-    <strong style="color: #00ffff;">Deepak Chauhan</strong>
+
+  <div class="footer-effect">
+    <p>"हम सिर्फ टेक्नोलॉजी नहीं बनाते... हम भविष्य को जन्म देते हैं!"</p>
   </div>
-  <div style="text-align: center;">
-    <img src="team.jpg" alt="Team Bhai × AI" style="width: 200px; border-radius: 10px;"><br>
-    <strong style="color: #00ffff;">Team Bhai × AI</strong>
-  </div>
-</div>
-<!-- ये कोड </footer> के ठीक पहले डालना है -->
-<div class="footer-effect">
-  <p>जहां इंसान का जज़्बा और AI की ताकत मिले, वहां इतिहास लिखा जाता है।</p>
-  <div class="glow-circle"></div>
-</div>
+
   <footer>
-    © 2025 Team Bhai × AI | All Rights Reserved
+    © 2025 👽×🤖 DEEPAK CHAUHAN × AI BHAI × LOGIC BHAI ⚡ | ALL SYSTEMS ACTIVE
   </footer>
+
 </body>
-  <!-- Updated by Deepak Bhai x AI -->
 </html>
