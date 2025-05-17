@@ -203,20 +203,29 @@
       <img src="images/circle3.jpg" class="circle-img" alt="Team" style="animation-delay: 0.6s;">
     </div>
     
-    <div style="text-align: center;">
-      <h3 style="color: var(--ai-blue); margin: 10px 0; font-size: 1.5rem; text-shadow: 0 0 10px var(--ai-blue);">
-        अभी जुड़ें हमारे Futuristic Community से!
-      </h3>
-      <p style="color: var(--alien-green); margin-bottom: 20px; font-size: 1.1rem;">
-        AI और Technology की दुनिया में आगे बढ़ें
-      </p>
+    <div class="banner-content">
+    <h3 class="banner-title">अभी जुड़ें हमारे Futuristic Community से!</h3>
+    <p class="banner-subtitle">AI और Technology की दुनिया में आगे बढ़ें</p>
+    
+    <div class="button-row">
+      <!-- Fixed Button (Option 1 - Simple Link) -->
+      <a href="dk_ai_teamwork.html" class="banner-button" target="_blank">
+        अभी Join करें
+      </a>
       
-      <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <button class="banner-button">अभी Join करें</button>
-        <button class="back-home-button">← वापस होमपेज पर</button>
-      </div>
+      <!-- Fixed Button (Option 2 - With JavaScript) -->
+      <button class="back-home-button" onclick="goHome()">
+        ← वापस होमपेज पर
+      </button>
     </div>
   </div>
+</div>
 
+<script>
+  // Agar JavaScript wala option choose kiya ho
+  function goHome() {
+    window.location.href = "index.html"; 
+  }
+</script>
 </body>
 </html>
