@@ -124,6 +124,24 @@ body {
   animation: zoomIn 3s ease;
 }
 
+.privacy-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background: linear-gradient(45deg, #00ffff, #00b8ff);
+  color: #000;
+  font-weight: bold;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 0 10px #00ffff;
+  transition: 0.3s ease;
+}
+
+.privacy-button:hover {
+  background: #00cccc;
+  color: #fff;
+  box-shadow: 0 0 20px #00ffff;
+}
+
 @keyframes zoomIn {
   0% {
     transform: scale(0.8);
