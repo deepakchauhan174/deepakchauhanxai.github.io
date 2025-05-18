@@ -1608,18 +1608,19 @@ body {
   }
 }
 
-  /* === RAZOR EDGE LINING === */
+  /* === UPDATED POWER LINING === */
   .power-lining {
     position: relative;
     margin: 2rem auto;
-    padding: 2rem;
+    padding: 1rem;
     width: 90%;
     max-width: 800px;
-    background: rgba(10, 10, 30, 0.7);
+    background: rgba(10, 10, 30, 0.3);
     border: 1px solid transparent;
+    border-radius: 4px;
   }
 
-  /* LASER BORDER EFFECT */
+  /* LASER BORDER FIX */
   .power-lining::before {
     content: "";
     position: absolute;
@@ -1635,55 +1636,55 @@ body {
     border-image-slice: 1;
     animation: laser-scan 3s linear infinite;
     pointer-events: none;
+    border-radius: 4px;
   }
 
-  /* CORNER PULSES */
-  .power-lining::after {
-    content: "";
+  /* CORNER DOTS FIX */
+  .power-lining > [class^="corner-"] {
     position: absolute;
-    width: 15px;
-    height: 15px;
-    background: conic-gradient(
-      from 45deg,
-      #ff00ff,
-      #00ffff,
-      #ff00ff
-    );
-    filter: blur(1px);
-    animation: corner-pulse 2s infinite;
+    width: 8px;
+    height: 8px;
+    background: conic-gradient(from 45deg, #ff00ff, #00ffff, #ff00ff);
+    filter: blur(0.5px);
+    animation: corner-pulse 1.5s infinite;
+    z-index: 1;
   }
 
-  /* Corner Positions */
-  .power-lining::after {
-    top: -5px;
-    left: -5px;
-  }
-  .power-lining > .corner-tr {
-    top: -5px;
-    right: -5px;
-    left: auto;
-  }
-  .power-lining > .corner-bl {
-    top: auto;
-    bottom: -5px;
-    left: -5px;
-  }
-  .power-lining > .corner-br {
-    top: auto;
-    bottom: -5px;
-    right: -5px;
-    left: auto;
-  }
+  .corner-tr { top: -3px; right: -3px; }
+  .corner-bl { bottom: -3px; left: -3px; }
+  .corner-br { bottom: -3px; right: -3px; }
 
   /* ANIMATIONS */
   @keyframes laser-scan {
     0% { border-image-source: linear-gradient(135deg, #ff00ff 25%, transparent 25% 50%, #00ffff 50% 75%, transparent 75%); }
-    100% { border-image-source: linear-gradient(135deg, transparent 25%, #00ffff 25% 50%, transparent 50% 75%, #ff00ff 75%); }
+    50% { border-image-source: linear-gradient(135deg, transparent 25%, #ff00ff 25% 50%, transparent 50% 75%, #00ffff 75%); }
+    100% { border-image-source: linear-gradient(135deg, #00ffff 25%, transparent 25% 50%, #ff00ff 50% 75%, transparent 75%); }
   }
 
   @keyframes corner-pulse {
     0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.3); opacity: 0.7; }
+    50% { transform: scale(1.3); opacity: 0.8; }
+  }
+
+  /* CONTENT STYLING */
+  .power-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .mission-text {
+    font-size: 11px;
+    color: #aaa;
+    margin: 15px 0;
+    line-height: 1.5;
+  }
+
+  .copyright {
+    font-size: 10px;
+    color: #666;
+    margin-top: 20px;
   }
 
 @media (max-width: 480px) {
