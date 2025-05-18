@@ -1590,13 +1590,6 @@ body {
   }
 }
 
-.section-spacer {
-  height: 80px;
-  width: 100%;
-  border-bottom: 2px solid #00ffff;
-  box-shadow: 0 0 15px #00ffff;
- }
-
   /* === RAZOR EDGE LINING === */
   .power-lining {
     position: relative;
