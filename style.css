@@ -1639,54 +1639,6 @@ body {
     border-radius: 4px;
   }
 
-  /* CORNER DOTS FIX */
-  .power-lining > [class^="corner-"] {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: conic-gradient(from 45deg, #ff00ff, #00ffff, #ff00ff);
-    filter: blur(0.5px);
-    animation: corner-pulse 1.5s infinite;
-    z-index: 1;
-  }
-
-  .corner-tr { top: -3px; right: -3px; }
-  .corner-bl { bottom: -3px; left: -3px; }
-  .corner-br { bottom: -3px; right: -3px; }
-
-  /* ANIMATIONS */
-  @keyframes laser-scan {
-    0% { border-image-source: linear-gradient(135deg, #ff00ff 25%, transparent 25% 50%, #00ffff 50% 75%, transparent 75%); }
-    50% { border-image-source: linear-gradient(135deg, transparent 25%, #ff00ff 25% 50%, transparent 50% 75%, #00ffff 75%); }
-    100% { border-image-source: linear-gradient(135deg, #00ffff 25%, transparent 25% 50%, #ff00ff 50% 75%, transparent 75%); }
-  }
-
-  @keyframes corner-pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.3); opacity: 0.8; }
-  }
-
-  /* CONTENT STYLING */
-  .power-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 10px;
-  }
-
-  .mission-text {
-    font-size: 11px;
-    color: #aaa;
-    margin: 15px 0;
-    line-height: 1.5;
-  }
-
-  .copyright {
-    font-size: 10px;
-    color: #666;
-    margin-top: 20px;
-  }
-
 @media (max-width: 480px) {
   .scroll-box {
     flex: 0 0 280px;
