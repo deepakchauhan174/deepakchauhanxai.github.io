@@ -750,57 +750,84 @@ body {
   color: #999;
 }
 
-.box13-bonus {
+/* === BONUS SECTION STYLES === */
+.bonus-container {
+  max-width: 800px;
+  margin: 30px auto;
   padding: 30px;
-  font-size: 16px;
-  background-color: #000814;
-  color: white;
-  border-radius: 16px;
-  box-shadow: 0 0 20px #ffae42;
-  max-width: 550px;
-  margin: 40px auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-.box13-bonus h3 {
-  font-size: 20px;
-  color: #ffc107;
+.bonus-header {
   text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 20px;
+}
+
+.bonus-title {
+  color: #2c3e50;
+  font-size: 28px;
   margin-bottom: 10px;
 }
 
-.box13-bonus h4 {
-  font-size: 16px;
-  color: #ffae42;
-  text-align: center;
-  margin-top: 10px;
+.bonus-tagline {
+  font-size: 18px;
+  color: #7f8c8d;
+  font-style: italic;
 }
 
-.box13-bonus p {
+.bonus-mission-box {
+  background-color: #f8f9fa;
+  border-left: 4px solid #3498db;
+  padding: 20px;
+  margin: 25px 0;
+  border-radius: 0 5px 5px 0;
+}
+
+.bonus-features {
+  margin: 30px 0;
+}
+
+.bonus-feature-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.bonus-feature-icon {
+  margin-right: 15px;
+  color: #3498db;
+  font-size: 20px;
+}
+
+.bonus-note-box {
+  background-color: #fff8e1;
+  border-left: 4px solid #ffc107;
+  padding: 15px;
   font-size: 14px;
-  line-height: 1.6;
-  margin-top: 15px;
+  margin: 25px 0;
 }
 
-.box13-bonus .highlight {
-  color: #00ffff;
-  font-weight: bold;
-}
-
-.box13-center {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.box13-btn {
+.bonus-explore-btn {
   display: inline-block;
-  font-size: 14px;
-  padding: 10px 20px;
-  background-color: #ffc107;
-  border-radius: 6px;
-  color: black;
+  background-color: #3498db;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 5px;
   text-decoration: none;
   font-weight: bold;
-  box-shadow: 0 0 10px #ffc107;
+  margin-top: 20px;
+  transition: all 0.3s;
+}
+
+.bonus-explore-btn:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
 
 .bonus-popup {
