@@ -1,55 +1,186 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <title>Bonus Checking – Coming Soon</title>
+  <title>Fishing Bonus System – Coming Soon</title>
   <style>
+    /* === FISHING THEME STYLES === */
     body {
-      font-family: Arial, sans-serif;
-      background: #121212;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+                  url('https://images.unsplash.com/photo-1514897575457-c4db467cf78e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
       color: #fff;
       text-align: center;
-      padding: 60px 20px;
+      padding: 40px 20px;
+      min-height: 100vh;
     }
+    
+    .fishing-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(10, 30, 50, 0.7);
+      border-radius: 15px;
+      padding: 30px;
+      border: 3px solid #0d6efd;
+      box-shadow: 0 0 30px rgba(13, 110, 253, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .fishing-container::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, transparent 0%, rgba(13, 110, 253, 0.1) 50%, transparent 70%);
+      animation: water-ripple 15s infinite linear;
+    }
+    
     h1 {
-      font-size: 32px;
+      font-size: 2.5rem;
       color: #ffc107;
+      margin-bottom: 25px;
+      text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+      position: relative;
     }
+    
+    h1::after {
+      content: "🎣";
+      position: absolute;
+      right: 20%;
+      top: -15px;
+      font-size: 1.5rem;
+      animation: float 3s ease-in-out infinite;
+    }
+    
     p {
-      font-size: 18px;
+      font-size: 1.1rem;
+      margin: 15px 0;
+      line-height: 1.6;
+    }
+    
+    .promotion-box {
+      border: 2px solid #0dcaf0;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 30px 0;
+      background: rgba(13, 202, 240, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .promotion-box::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #0dcaf0, transparent);
+      animation: shine 3s infinite;
+    }
+    
+    h3 {
+      color: #ffc107;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+    
+    .category {
+      display: inline-block;
+      margin: 8px;
+      padding: 8px 15px;
+      background: rgba(13, 110, 253, 0.3);
+      border-radius: 20px;
+      border: 1px solid #0d6efd;
+      font-size: 0.9rem;
+    }
+    
+    .note {
+      color: #ff6b6b;
+      font-size: 0.9rem;
+      margin-top: 15px;
+    }
+    
+    .purpose {
+      color: #20c997;
+      font-size: 0.9rem;
+      margin: 15px 0;
+    }
+    
+    .contact {
       margin-top: 20px;
+    }
+    
+    a {
+      color: #0dcaf0;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    a:hover {
+      color: #ffc107;
+      text-decoration: underline;
+    }
+    
+    /* ANIMATIONS */
+    @keyframes water-ripple {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes shine {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      h1 { font-size: 2rem; }
+      .fishing-container { padding: 20px; }
     }
   </style>
 </head>
 <body>
-  <h1>Bonus Reward System – Coming Soon</h1>
-  <p>हम एक ऐसा सिस्टम लाने जा रहे हैं जो हर मेंबर की वेबसाइट एक्टिविटी को ट्रैक करेगा।</p>
-  <p>हर हफ्ते सबसे ज्यादा एक्टिव मेंबर को मिलेगा स्पेशल बोनस!</p>
-  <p>जल्द ही लॉगिन सिस्टम जुड़ने के बाद यह फीचर लाइव होगा।</p>
-  <p>Team Bhai × AI</p>
-
-  <div style="border: 2px solid #00ffff; border-radius: 15px; padding: 20px; margin-top: 30px; background-color: #111;">
-    <h3 style="color: #ffcc00; text-align: center; margin-bottom: 10px;">
-      प्रमोशन के लिए Deepak Chauhan × AI Bhai से संपर्क करें
-    </h3>
-    <p style="color: #00ffff; font-size: 15px; margin-bottom: 10px;">
-      <strong>Promotion Category:</strong><br>
-      (1) YouTube Promotion<br>
-      (2) App Promotion<br>
-      (3) Instagram Promotion<br>
-      (4) Product Promotions<br>
-      (5) Coaching Class Promotion<br>
-      (6) आदि...
-    </p>
-    <p style="color: #ff4444; font-size: 14px;">
-      <strong>Note:</strong> प्रमोशन डायरेक्ट वेबसाइट पर और मेंबर के थ्रू किया जाएगा इसलिए कोई भी गलत प्रचार नहीं किया जाएगा जैसे – Online Investment, Earning Platform, Colour Prediction, Lottery, आदि।
-    </p>
-    <p style="color: #ccc; font-size: 14px; margin-top: 10px;">
-      <strong>उद्देश्य:</strong> Deepak Chauhan × AI Bhai कभी भी गलत प्रचार नहीं कर सकते — Not for Role Match.
-    </p>
-    <p style="color: #00ff99; font-size: 14px; margin-top: 10px;">
-      संपर्क करें: <a href="mailto:deepak.aibhai.training@gmail.com" style="color: #00ff99;">deepak.aibhai.training@gmail.com</a>
-    </p>
+  <div class="fishing-container">
+    <h1>Fishing Reward System – Coming Soon</h1>
+    <p>हम एक ऐसा सिस्टम लाने जा रहे हैं जो हर मेंबर की वेबसाइट एक्टिविटी को ट्रैक करेगा।</p>
+    <p>हर हफ्ते सबसे ज्यादा एक्टिव मेंबर को मिलेगा स्पेशल बोनस!</p>
+    <p>यह सिस्टम बिना लॉगिन, सिर्फ एक्टिविटी के आधार पर काम करेगा।</p>
+    <p>Deepak</p>
+  </div>
+    <div class="promotion-box">
+      <h3>प्रमोशन के लिए Deepak Chauhan × AI Bhai से संपर्क करें</h3>
+      <div>
+        <span class="category">(1) YouTube Promotion</span>
+        <span class="category">(2) App Promotion</span>
+        <span class="category">(3) Instagram Promotion</span>
+        <span class="category">(4) Product Promotions</span>
+        <span class="category">(5) Coaching Class Promotion</span>
+        <span class="category">(6) आदि...</span>
+      </div>
+      
+      <p class="note">
+        <strong>Note:</strong> प्रमोशन डायरेक्ट वेबसाइट पर और मेंबर के थ्रू किया जाएगा इसलिए कोई भी गलत प्रचार नहीं किया जाएगा जैसे – Online Investment, Earning Platform, Colour Prediction, Lottery, आदि।
+      </p>
+      
+      <p class="purpose">
+        <strong>उद्देश्य:</strong> Deepak Chauhan × AI Bhai कभी भी गलत प्रचार नहीं कर सकते — Not for Role Match.
+      </p>
+      
+      <div class="contact">
+        संपर्क करें: <a href="mailto:deepak.aibhai.training@gmail.com">deepak.aibhai.training@gmail.com</a>
+      </div>
+    </div>
   </div>
 </body>
 </html>
