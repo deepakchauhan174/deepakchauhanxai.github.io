@@ -755,41 +755,44 @@ body {
   max-width: 800px;
   margin: 30px auto;
   padding: 30px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(145deg, #0b0f2b, #151a3a);
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
+  font-family: 'Segoe UI', sans-serif;
+  color: #e0f7ff;
+  border: 1px solid #00f0ff;
 }
 
 .bonus-header {
   text-align: center;
-  margin-bottom: 30px;
-  border-bottom: 2px solid #f0f0f0;
-  padding-bottom: 20px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #00c6ff;
+  padding-bottom: 10px;
 }
 
 .bonus-title {
-  color: #2c3e50;
-  font-size: 28px;
-  margin-bottom: 10px;
+  font-size: 26px;
+  color: #00f0ff;
+  text-shadow: 0 0 10px #00ffff;
 }
 
 .bonus-tagline {
-  font-size: 18px;
-  color: #7f8c8d;
+  font-size: 16px;
+  color: #ffb6f9;
   font-style: italic;
 }
 
 .bonus-mission-box {
-  background-color: #f8f9fa;
-  border-left: 4px solid #3498db;
+  background: rgba(0, 255, 255, 0.05);
+  border-left: 4px solid #00e0ff;
   padding: 20px;
-  margin: 25px 0;
-  border-radius: 0 5px 5px 0;
+  margin: 20px 0;
+  border-radius: 8px;
+  color: #ccf3ff;
 }
 
 .bonus-features {
-  margin: 30px 0;
+  margin: 25px 0;
 }
 
 .bonus-feature-item {
@@ -799,35 +802,36 @@ body {
 }
 
 .bonus-feature-icon {
-  margin-right: 15px;
-  color: #3498db;
+  margin-right: 10px;
+  color: #00ffc6;
   font-size: 20px;
 }
 
 .bonus-note-box {
-  background-color: #fff8e1;
-  border-left: 4px solid #ffc107;
+  background: rgba(255, 255, 0, 0.07);
+  border-left: 4px solid #ffd700;
   padding: 15px;
-  font-size: 14px;
-  margin: 25px 0;
+  font-size: 13px;
+  border-radius: 5px;
+  color: #fff7a6;
 }
 
 .bonus-explore-btn {
   display: inline-block;
-  background-color: #3498db;
-  color: white;
+  background-color: #00f0ff;
+  color: #0a0a0a;
   padding: 12px 25px;
-  border-radius: 5px;
+  border-radius: 30px;
   text-decoration: none;
   font-weight: bold;
-  margin-top: 20px;
-  transition: all 0.3s;
+  box-shadow: 0 0 10px #00f0ff;
+  transition: all 0.3s ease;
 }
 
 .bonus-explore-btn:hover {
-  background-color: #2980b9;
+  background-color: #00d1ff;
+  box-shadow: 0 0 20px #00ffff, 0 0 10px #00d1ff inset;
   transform: translateY(-2px);
-  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
 
 .bonus-popup {
