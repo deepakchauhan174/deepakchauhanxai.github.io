@@ -10,7 +10,7 @@
         <p><strong>Bonus:</strong> ${data.bonusMsg}</p>
         <p><strong>Signature:</strong> ${data.signature}</p>
         <p><strong>Today Code:</strong> <span style="color:yellow; font-weight:bold;">${data.todayCode}</span></p>
-        <a href="submit_code_form.html" target="_blank" class="code-button">👉Click Here👈</a>
+        <a href="welcome_notification.html" target="_blank" class="code-button">🌸 welcome 🌸</a>
         <p><strong>Winner:</strong> ${data.winnerName}</p>
         <p><strong>Prize:</strong> ${data.prize}</p>
       `;
