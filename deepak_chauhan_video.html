@@ -1,18 +1,204 @@
-<!DOCTYPE html>  <html lang="en">  
-<head>  
-  <meta charset="UTF-8">  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <title>Deepak Chauhan Video – Team Bhai × AI</title>  
-  <link rel="stylesheet" href="style.css" />  
-</head>  
-<body>  
-  <header>  
-    <h1>Team Bhai × AI</h1>  
-    <p>Powered by Deepak Chauhan</p>  
-  </header>    <nav>  
-    <a href="index.html">Home</a>  
-    <a href="top_comments.html">Comments</a>  
-  </nav>    <section style="text-align: center; padding: 1rem;">  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔥Deepak Chauhan - Team Bhai × AI | Ultimate Motivation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --neon-cyan: #00fff9;
+      --vip-gold: #ffd700;
+      --dark-bg: #0a0a12;
+      --hologram-gradient: linear-gradient(45deg, #00fff9, #9d00ff, #ff00e1);
+    }
+
+    body {
+      background: var(--dark-bg);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: linear-gradient(135deg, #000428, #004e92);
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: var(--hologram-gradient);
+      opacity: 0.1;
+      animation: rotate 20s linear infinite;
+    }
+
+    .vip-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff0066;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      transform: rotate(15deg);
+      box-shadow: 0 0 15px #ff0066;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: var(--neon-cyan);
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    nav a:hover {
+      background: var(--neon-cyan);
+      color: black;
+      transform: translateY(-3px);
+      box-shadow: 0 0 25px var(--neon-cyan);
+    }
+
+    .video-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      border: 2px solid var(--neon-cyan);
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 50px rgba(0, 255, 249, 0.2);
+    }
+
+    .video-container::before {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      background: var(--hologram-gradient);
+      z-index: -1;
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      100% { transform: rotate(360deg); }
+    }
+
+    .comment-card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .comment-card:hover {
+      transform: translateX(10px);
+    }
+
+    .share-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .share-button {
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .whatsapp-btn {
+      background: #25D366;
+      border: 2px solid #25D366;
+    }
+
+    .copy-btn {
+      background: #007bff;
+      border: 2px solid #007bff;
+    }
+
+    .share-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px currentColor;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .stat-box {
+      text-align: center;
+      padding: 1rem 2rem;
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.2),
+        transparent
+      );
+      transition: 0.5s;
+    }
+
+    .stat-box:hover::before {
+      left: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="vip-badge">EXCLUSIVE CONTENT</div>
+    <h1 style="font-size: 2.5em; text-shadow: 0 0 20px var(--neon-cyan);">TEAM BHAI × AI</h1>
+    <p style="color: var(--vip-gold); font-size: 1.2em;">Powered by Deepak Chauhan</p>
+  </header>
+
+  <nav>
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="top_comments.html"><i class="fas fa-comments"></i> Top Comments</a>
+  </nav>
+<section style="text-align: center; padding: 1rem;">  
     <p style="font-size: 1.1rem; color: #ccc;">  
       Yeh Video Nahi, Zindagi Ka Jawab Hai.<br>  
       जब ज़ंदगी चुप हो जाए, तो ये वीडियो बोलेगा।  
@@ -163,5 +349,6 @@ videoBlock.innerHTML = `
   return match ? match[1] : '';  
   }  
  </script>  
-</body>  
+  
+</body>
 </html>
