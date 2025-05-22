@@ -185,6 +185,52 @@
     .stat-box:hover::before {
       left: 100%;
     }
+    
+    /* === FIRE EFFECT CSS START === */
+.fire-glow {
+  position: relative;
+  max-width: 800px;
+  margin: 2rem auto;
+  border-radius: 15px;
+  overflow: visible;
+}
+
+.fire-glow::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(
+    45deg,
+    #ff6b00,
+    #ff3c00,
+    #ff0000,
+    #ff6b00
+  );
+  background-size: 400% 400%;
+  z-index: -1;
+  animation: fire-glow 4s linear infinite;
+  filter: blur(25px);
+  opacity: 0.8;
+  border-radius: 20px;
+}
+
+@keyframes fire-glow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.video-content-box {
+  background: #000;
+  border-radius: 15px;
+  padding: 5px;
+  position: relative;
+  z-index: 2;
+}
+/* === FIRE EFFECT CSS END === */
   </style>
 </head>
 <body>
@@ -203,10 +249,18 @@
       Yeh Video Nahi, Zindagi Ka Jawab Hai.<br>  
       जब ज़ंदगी चुप हो जाए, तो ये वीडियो बोलेगा।  
     </p>  
-  </section>    <section id="deepak-video-display" style="padding: 30px; text-align: center;">  
-    <h2 style="color: #00ffff;">Deepak Chauhan – Motivational Videos</h2>  
-    <div id="video-container" style="margin-top: 20px;"></div>  
-  </section>    <!-- Comment and Share System -->    <section id="deepak-video-comments" style="padding: 30px; background-color: #0a0a0a; color: white; border-top: 2px solid #00ffff;">  
+  </section>   <!-- Replace old video section with this -->
+<section id="deepak-video-display" style="padding: 30px; text-align: center; position: relative;">
+  <h2 style="color: #ff6b00; text-shadow: 0 0 20px #ff4500; font-size: 2.5em; margin-bottom: 30px;">
+    🔥 Deepak Chauhan – Ultimate Motivation 🔥
+  </h2>
+  
+  <div class="fire-glow">
+    <div class="video-content-box">
+      <div id="video-container"></div>
+    </div>
+  </div>
+</section>    <!-- Comment and Share System -->    <section id="deepak-video-comments" style="padding: 30px; background-color: #0a0a0a; color: white; border-top: 2px solid #00ffff;">  
     <h2 style="text-align: center; color: #00ffff; font-size: 26px;">Comment & Share Your Thoughts</h2>  
     <form style="max-width: 600px; margin: 20px auto;" onsubmit="submitComment(event)">  
       <input type="text" id="username" placeholder="Your Name" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: none;">  
@@ -317,12 +371,36 @@ if (item.videoUrl.endsWith(".mp4")) {
 }
 
 videoBlock.innerHTML = `
-  <h3 style="color: #ffd700;">${item.title}</h3>
+  <h3 style="color: #ffd700; margin: 15px 0; font-size: 1.5em; text-shadow: 0 0 10px #ffa500;">
+    ${item.title}
+  </h3>
   ${videoEmbed}
-  <p style="color: #ccc; margin-top: 10px;">${item.description}</p>
-  <p style="color: #00ffcc;">Views: <span id="view-${key}">${(item.views || 0) + 1}</span> | Likes: <span id="like-${key}">${item.likes || 0}</span></p>
-  <button onclick="likeVideo('${key}')" style="margin: 5px 0 30px; padding: 8px 20px; background: #ff4444; color: white; border: none; border-radius: 6px; cursor: pointer;">❤️ Like</button>
-  <hr style="margin: 30px 0; border-color: #00ffff;">
+  <div style="padding: 15px; background: rgba(0,0,0,0.7); border-radius: 10px; margin-top: 20px;">
+    <p style="color: #ffa500; margin: 10px 0; font-size: 1.1em;">
+      ${item.description}
+    </p>
+    <div style="display: flex; justify-content: center; gap: 30px; margin: 20px 0;">
+      <p style="color: #ff6b00; font-weight: bold;">
+        👁️ Views: <span id="view-${key}">${(item.views || 0) + 1}</span>
+      </p>
+      <p style="color: #ff3c00; font-weight: bold;">
+        ❤️ Likes: <span id="like-${key}">${item.likes || 0}</span>
+      </p>
+    </div>
+    <button onclick="likeVideo('${key}')" 
+            style="margin: 15px 0;
+                   padding: 12px 35px;
+                   background: linear-gradient(45deg, #ff6b00, #ff3c00);
+                   color: white;
+                   border: none;
+                   border-radius: 30px;
+                   cursor: pointer;
+                   font-size: 1.1em;
+                   transition: 0.3s all;
+                   box-shadow: 0 0 15px #ff4500;">
+      🔥 Dil Se Like Karo!
+    </button>
+  </div>
 `;
         container.appendChild(videoBlock);  
       });  
