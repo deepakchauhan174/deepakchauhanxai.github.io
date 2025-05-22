@@ -4,16 +4,18 @@
     .then(res => res.json())
     .then(data => {
       document.getElementById("popupContent").innerHTML = `
-        <p><strong>Title:</strong> ${data.title}</p>
-        <p><strong>Message:</strong> ${data.notificationMsg}</p>
-        <p><strong>Alert:</strong> ${data.alertMsg}</p>
-        <p><strong>Bonus:</strong> ${data.bonusMsg}</p>
-        <p><strong>Signature:</strong> ${data.signature}</p>
-        <p><strong>Today Code:</strong> <span style="color:yellow; font-weight:bold;">${data.todayCode}</span></p>
-        <a href="welcome_notification.html" target="_blank" class="code-button">🌸 welcome 🌸</a>
-        <p><strong>Winner:</strong> ${data.winnerName}</p>
-        <p><strong>Prize:</strong> ${data.prize}</p>
-      `;
+  <p><strong>📌 Title</strong><br>${data.title}</p>
+  <p><strong>📩 Message</strong><br>${data.notificationMsg}</p>
+  <p><strong>🚨 Alert</strong><br>${data.alertMsg}</p>
+  <p><strong>🎁 Bonus</strong><br>${data.bonusMsg}</p>
+  <p><strong>🖋️ Signature</strong><br>${data.signature}</p>
+  <p><strong>🔑 Code</strong><br><span class="highlight-code">${data.todayCode}</span></p>
+  <div class="btn-container">
+    <a href="welcome_notification.html" target="_blank" class="code-button">🌸 Get Bonus 🌸</a>
+  </div>
+  <p><strong>🏆 Winner</strong><br>${data.winnerName}</p>
+  <p><strong>💰 Prize</strong><br>${data.prize}</p>
+`;
 
       document.getElementById("notificationPopup").style.display = "block";
 
