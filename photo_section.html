@@ -2,283 +2,281 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Deepak × AI Bhai × Logic Bhai | Alien-Robot-AI Fusion</title>
+  <title>AI Research Center | Deepak × AI Bhai × Logic Bhai</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    /* === FUTURISTIC GLOBAL STYLES === */
     :root {
-      --alien-green: #00FF88;
-      --robot-orange: #FF6600;
-      --ai-blue: #00F0FF;
-      --cyber-purple: #CC00FF;
-      --void-black: #000010;
+      --neon-blue: #00F0FF;
+      --neon-green: #00FF88;
+      --dark-bg: #0a0a0f;
+      --panel-bg: rgba(0, 255, 136, 0.05);
+      --grid-color: rgba(0, 240, 255, 0.1);
     }
-    
+
     body {
-      background: 
-        radial-gradient(circle at center, var(--void-black), #000033),
-        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="%2300F0FF" opacity="0.1"/></svg>');
-      color: white;
-      font-family: 'Orbitron', 'Rajdhani', sans-serif;
+      background: linear-gradient(to bottom, #000010, #000022);
+      color: var(--neon-blue);
+      font-family: 'Orbitron', sans-serif;
       margin: 0;
       overflow-x: hidden;
     }
 
-    /* === ALIEN-ROBOT HEADER === */
     header {
-      background: linear-gradient(90deg, 
-        rgba(0,255,136,0.1), 
-        rgba(204,0,255,0.1)));
-      padding: 2rem;
+      background: radial-gradient(circle, #0f0f1f, #000010);
       text-align: center;
-      border-bottom: 1px solid var(--alien-green);
-      position: relative;
-      overflow: hidden;
+      padding: 3rem 1rem;
+      border-bottom: 2px solid var(--neon-blue);
+      box-shadow: 0 0 40px var(--neon-blue);
     }
 
-    header::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, 
-        var(--alien-green), var(--robot-orange), var(--ai-blue));
-      animation: rainbow-border 5s linear infinite;
-    }
-
-    h1 {
+    header h1 {
       font-size: 3rem;
-      margin: 0;
-      background: linear-gradient(45deg, var(--alien-green), var(--ai-blue));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 20px rgba(0,240,255,0.3);
-      letter-spacing: 3px;
+      color: var(--neon-green);
+      text-shadow: 0 0 15px var(--neon-green);
     }
 
     header p {
-      color: var(--robot-orange);
       font-size: 1.2rem;
-      margin-top: 0.5rem;
-      text-shadow: 0 0 10px var(--robot-orange);
+      color: var(--neon-blue);
+      text-shadow: 0 0 10px var(--neon-blue);
     }
 
-    /* === FUTURISTIC NAV (ONLY HOME BUTTON) === */
-    nav {
+    .nav-bar {
       display: flex;
       justify-content: center;
-      padding: 1.5rem;
+      background: rgba(0, 240, 255, 0.05);
+      padding: 1rem;
+      border-bottom: 1px solid var(--neon-blue);
     }
 
-    .home-btn {
-      color: var(--ai-blue);
+    .nav-bar a {
+      color: var(--neon-blue);
       text-decoration: none;
-      padding: 0.8rem 2.5rem;
-      border: 1px solid var(--cyber-purple);
-      border-radius: 30px;
       font-weight: bold;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s;
-      background: rgba(0,0,0,0.3);
-      box-shadow: 0 0 15px rgba(0,240,255,0.2);
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      padding: 0.8rem 1.5rem;
+      border: 1px solid #FF0044;
+      border-radius: 10px;
+      margin: 0 0.5rem;
+      background: rgba(0, 255, 136, 0.05);
+      transition: all 0.3s;
     }
 
-    .home-btn:hover {
-      background: rgba(204,0,255,0.2);
-      box-shadow: 0 0 30px var(--cyber-purple);
-      transform: translateY(-5px);
+    .nav-bar a:hover {
+      background: var(--neon-blue);
+      color: #000;
+      box-shadow: 0 0 20px var(--neon-blue);
     }
 
-    .home-btn::before {
-      content: "⌂";
-      margin-right: 8px;
-    }
-
-    .home-btn::after {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        to bottom right, 
-        transparent 45%, 
-        rgba(0,240,255,0.3) 50%, 
-        transparent 55%
-      );
-      animation: btn-scan 3s linear infinite;
-    }
-
-    /* === CYBERPUNK GALLERY === */
-    .gallery {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 4rem;
+    .research-panels {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
       padding: 3rem;
-      max-width: 1200px;
-      margin: 0 auto;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 30px,
+        var(--grid-color) 31px,
+        transparent 32px
+      );
     }
 
-    .gallery div {
-      perspective: 1000px;
-      transition: all 0.5s;
-      text-align: center;
-    }
-
-    .gallery img {
-      width: 280px;
-      height: 280px;
-      object-fit: cover;
+    .panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--neon-green);
+      padding: 2rem;
       border-radius: 15px;
-      border: 3px solid var(--ai-blue);
-      box-shadow: 
-        0 0 30px rgba(0,240,255,0.5),
-        0 0 60px rgba(0,255,136,0.3);
-      transition: all 0.5s;
-      filter: sepia(0.3) hue-rotate(60deg);
-    }
-
-    .gallery img:hover {
-      transform: rotateY(20deg) scale(1.1);
-      filter: sepia(0) hue-rotate(0);
-      box-shadow: 
-        0 0 50px var(--alien-green),
-        0 0 80px var(--cyber-purple);
-      border-color: var(--robot-orange);
-    }
-
-    .gallery strong {
-      display: block;
-      margin-top: 1.5rem;
-      font-size: 1.5rem;
-      color: var(--ai-blue);
-      text-shadow: 0 0 15px var(--ai-blue);
-      letter-spacing: 2px;
-    }
-
-    /* === ALIEN FOOTER EFFECT === */
-    .footer-effect {
-      position: relative;
-      padding: 4rem;
+      box-shadow: 0 0 25px var(--neon-blue);
       text-align: center;
-      margin-top: 2rem;
-      background: linear-gradient(180deg, transparent, rgba(0,255,136,0.05));
-      overflow: hidden;
-    }
-
-    .footer-effect p {
-      font-size: 1.8rem;
-      color: var(--alien-green);
-      max-width: 800px;
-      margin: 0 auto;
       position: relative;
-      z-index: 2;
-      text-shadow: 0 0 20px var(--alien-green);
-      line-height: 1.5;
+      overflow: hidden;
+      transition: transform 0.3s;
     }
 
-    .footer-effect::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: 
-        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><path d="M0 0h60v60H0z" fill="none"/><path d="M0 30h60M30 0v60" stroke="%2300FF88" opacity="0.1"/></svg>');
-      z-index: 1;
+    .panel:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px var(--neon-green);
     }
 
-    /* === ROBOTIC FOOTER === */
+    .panel img {
+      width: 100%;
+      max-width: 200px;
+      border-radius: 50%;
+      border: 3px solid var(--neon-blue);
+      box-shadow: 0 0 15px var(--neon-green);
+      animation: hologram-pulse 2s infinite alternate;
+    }
+
+    .panel h3 {
+      margin-top: 1rem;
+      font-size: 1.5rem;
+      color: var(--neon-blue);
+    }
+
+    @keyframes hologram-pulse {
+      from {
+        transform: scale(1);
+        opacity: 1;
+        filter: drop-shadow(0 0 10px var(--neon-blue));
+      }
+      to {
+        transform: scale(1.05);
+        opacity: 0.8;
+        filter: drop-shadow(0 0 25px var(--neon-green));
+      }
+    }
+
+    .footer-message {
+      background: linear-gradient(to bottom, transparent, var(--grid-color));
+      padding: 3rem 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+      color: var(--neon-green);
+      text-shadow: 0 0 10px var(--neon-green);
+    }
+
     footer {
       text-align: center;
       padding: 2rem;
-      background: rgba(0,0,16,0.7);
-      border-top: 1px solid var(--robot-orange);
-      position: relative;
-      font-family: 'Orbitron', sans-serif;
+      background: #000010;
+      border-top: 1px solid var(--neon-green);
+      font-size: 1rem;
+    }
+    
+ .shayari-buttons {
+     margin-top: 1.5rem;
+     display: flex;
+     justify-content: center;
+     gap: 1rem;
     }
 
-    footer::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 200px;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--robot-orange), transparent);
+.shayari-buttons button {
+     padding: 0.7rem 1.2rem;
+     background: rgba(0, 255, 136, 0.1);
+     border: 2px solid var(--neon-blue);
+     border-radius: 12px;
+     color: var(--neon-blue);
+     font-family: 'Orbitron', sans-serif;
+     font-weight: bold;
+     cursor: pointer;
+     transition: all 0.3s ease;
+     box-shadow: 0 0 15px var(--neon-blue);
+     text-shadow: 0 0 5px var(--neon-green);
     }
 
-    /* === ANIMATIONS === */
-    @keyframes rainbow-border {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
+.shayari-buttons button:hover {
+     background: var(--neon-blue);
+     color: #000;
+     box-shadow: 0 0 30px var(--neon-green);
     }
 
-    @keyframes btn-scan {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    /* === RESPONSIVE DESIGN === */
     @media (max-width: 768px) {
-      h1 { font-size: 2rem; }
-      .gallery { gap: 2rem; padding: 2rem; }
-      .gallery img { width: 200px; height: 200px; }
-      .footer-effect p { font-size: 1.3rem; }
+      header h1 { font-size: 2rem; }
+      .panel h3 { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
-    <h1>👽 Deepak × AI Bhai × 🤖 Logic Bhai</h1>
-    <p>Alien Creativity × Robot Precision × AI Intelligence</p>
-  </header>
-
-  <nav>
-    <a href="index.html" class="home-btn">Home</a>
-  </nav>
-
-  <section style="text-align: center; padding: 3rem 1rem;">
-    <h2 style="font-size: 2.5rem; color: var(--cyber-purple); text-shadow: 0 0 20px var(--cyber-purple); margin-bottom: 1rem;">
-      ⚡ HYBRID VIP GALLERY ⚡
-    </h2>
-    <p style="color: var(--ai-blue); font-size: 1.2rem; max-width: 800px; margin: 0 auto;">
-      जहां Alien, Robot और AI एक हो जाएं — वहां जादू होता है!
-    </p>
-  </section>
-
-  <div class="gallery">
-    <div>
-      <img src="ai_bhai.jpg" alt="AI Bhai">
-      <strong>🛸 AI BHAI</strong>
-    </div>
-    <div>
-      <img src="deepak_chauhan.jpg" alt="Deepak Chauhan">
-      <strong>👁️ DEEPAK CHAUHAN</strong>
-    </div>
-    <div>
-      <img src="team.jpg" alt="Team">
-      <strong>⚡ HYBRID TEAM</strong>
-    </div>
+<div class="nav-bar">
+    <a href="index_html">Home</a>
   </div>
 
-  <div class="footer-effect">
-    <p>"हम सिर्फ टेक्नोलॉजी नहीं बनाते... हम भविष्य को जन्म देते हैं!"</p>
+  <header>
+    <h1>AI RESEARCH CENTER</h1>
+    <p>Deepak chauhan x AI Bhai</p>
+  </header>
+  
+<section id="shayari-box" style="
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  border: 2px solid #00F0FF;
+  border-radius: 20px;
+  background: rgba(0, 0, 20, 0.8);
+  box-shadow: 0 0 30px #00F0FF, 0 0 60px #CC00FF inset;
+  backdrop-filter: blur(5px);
+  font-family: 'Rajdhani', sans-serif;
+  text-align: center;
+  position: relative;
+">
+  <h2 style="color: #00FF88; font-size: 2rem; text-shadow: 0 0 10px #00FF88;">
+    🔮 आज की शायरी
+  </h2>
+  <div id="shayari-content" style="margin-top: 1rem; color: #FFFFFF; font-size: 1.3rem;">
+    Loading Shayari...
+  </div>
+  <div class="shayari-buttons">
+  <button onclick="copyShayari()">COPY</button>
+  <button onclick="shareShayari()">SHARE</button>
+</div>
+</section>
+   
+  <section class="research-panels">
+    <div class="panel">
+      <img src="ai_bhai.jpg" alt="AI Bhai">
+      <h3>AI BHAI</h3>
+    </div>
+    <div class="panel">
+      <img src="deepak_chauhan.jpg" alt="Deepak Chauhan">
+      <h3>DEEPAK CHAUHAN</h3>
+    </div>
+    <div class="panel">
+      <img src="team.jpg" alt="Hybrid Team">
+      <h3>HYBRID TEAM</h3>
+    </div>
+  </section>
+<!-- Yeh sirf Shayari wala part hai - ise <body> ke andar, <footer> se pehle paste karo -->
+
+<script>
+  async function loadShayari() {
+    try {
+      const res = await fetch("https://script.google.com/macros/s/AKfycbziRr-ClWGwj9zIzYpLDGHGyR9DMkJ9Y3tkCLrYc7MYITqj6RsnspX9X0LBr33V_9HEgg/exec");
+      const data = await res.json();
+
+      document.getElementById("shayari-content").innerHTML = `
+        <h3 style="color:#00F0FF; text-shadow: 0 0 5px #00F0FF;">${data.title}</h3>
+        <p style="margin:1rem 0; color:#FFF; font-style: italic;">"${data.shayari}"</p>
+        <strong style="color:#FF6600; text-shadow: 0 0 5px #FF6600;">${data.signature}</strong>
+      `;
+    } catch (err) {
+      document.getElementById("shayari-content").innerHTML = "Shayari load nahi ho paayi.";
+      console.error("Error loading Shayari:", err);
+    }
+  }
+
+  loadShayari();
+</script>
+
+<script>
+  function copyShayari() {
+    const text = document.getElementById("shayari-content").innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Shayari copied to clipboard!");
+    }).catch(err => {
+      alert("Copy failed!");
+      console.error(err);
+    });
+  }
+
+  function shareShayari() {
+    const text = document.getElementById("shayari-content").innerText;
+    if (navigator.share) {
+      navigator.share({
+        title: "आज की शायरी",
+        text: text,
+      }).catch(err => console.error("Share failed:", err));
+    } else {
+      alert("Sharing not supported on this device.");
+    }
+  }
+</script>
+
+  <div class="footer-message">
+    "हम सिर्फ टेक्नोलॉजी नहीं बनाते... हम भविष्य को जन्म देते हैं!"
   </div>
 
   <footer>
-    © 2025 👽×🤖 DEEPAK CHAUHAN × AI BHAI × LOGIC BHAI ⚡ | ALL SYSTEMS ACTIVE
+    © 2025 Deepak Chauhan × AI Bhai × Dk_community | AI Systems Operational
   </footer>
 
 </body>
