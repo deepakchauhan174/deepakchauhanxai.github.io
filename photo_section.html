@@ -233,10 +233,11 @@
       const res = await fetch("https://script.google.com/macros/s/AKfycbziRr-ClWGwj9zIzYpLDGHGyR9DMkJ9Y3tkCLrYc7MYITqj6RsnspX9X0LBr33V_9HEgg/exec");
       const data = await res.json();
 
+      const shayari = data[0]; // Correct: pick the first shayari
       document.getElementById("shayari-content").innerHTML = `
-        <h3 style="color:#00F0FF; text-shadow: 0 0 5px #00F0FF;">${data.title}</h3>
-        <p style="margin:1rem 0; color:#FFF; font-style: italic;">"${data.shayari}"</p>
-        <strong style="color:#FF6600; text-shadow: 0 0 5px #FF6600;">${data.signature}</strong>
+        <h3 style="color:#00F0FF; text-shadow: 0 0 5px #00F0FF;">${shayari.title}</h3>
+        <p style="margin:1rem 0; color:#FFF; font-style: italic;">"${shayari.shayari}"</p>
+        <strong style="color:#FF6600; text-shadow: 0 0 5px #FF6600;">${shayari.signature}</strong>
       `;
     } catch (err) {
       document.getElementById("shayari-content").innerHTML = "Shayari load nahi ho paayi.";
