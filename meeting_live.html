@@ -59,65 +59,7 @@
       cursor: pointer;  
     }
     /* ✅ VIP Ad Boxes Styling (Multiple Size Support) */
-.vip-ad-box {
-  border-radius: 20px;
-  margin: 20px auto;
-  padding: 10px;
-  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.2), 0 0 40px rgba(255, 0, 0, 0.2);
-  position: relative;
-  overflow: hidden;
-  border: 2px solid #00ffff;
-  transition: 0.4s ease-in-out;
-}
 
-/* Glowing animated border (alien + fire + pani style) */
-.vip-ad-box::before {
-  content: '';
-  position: absolute;
-  top: -2px; left: -2px; right: -2px; bottom: -2px;
-  background: linear-gradient(45deg, #ff0000, #00ffff, #ff00ff, #00ff00, #0000ff);
-  background-size: 600% 600%;
-  z-index: 1;
-  filter: blur(10px);
-  animation: glowLoop 10s linear infinite;
-  opacity: 0.7;
-}
-
-/* Make sure ad content is visible over glow */
-.vip-ad-box > * {
-  position: relative;
-  z-index: 2;
-}
-
-/* Size variations */
-.vip-ad-small {
-  width: 250px;
-  height: 90px;
-}
-
-.vip-ad-medium {
-  width: 300px;
-  height: 250px;
-}
-
-.vip-ad-large {
-  width: 336px;
-  height: 280px;
-}
-
-.vip-ad-full {
-  width: 100%;
-  max-width: 728px;
-  height: auto;
-}
-
-/* Glow animation */
-@keyframes glowLoop {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
   </style>  
 </head>  
 <body> 
@@ -128,18 +70,15 @@
     <div id="topTextContent"></div>
     <div class="signature">Deepak Chauhan × AI Bhai</div>  
   </div> 
-  <div class="vip-ad-box vip-ad-small">
 <ins class="adsbygoogle"  
 style="display:block"  
 data-ad-format="fluid"  
 data-ad-layout-key="-fb+5w+4e-db+86"  
 data-ad-client="ca-pub-6575643228502924"  
-data-ad-slot="5484922049"></ins>
-
+data-ad-slot="5484922049"></ins> 
 <script>  
      (adsbygoogle = window.adsbygoogle || []).push({});  
 </script>
-  </div>
   <div id="video-section" class="section-box section-video">  
     <div class="signature">Deepak Chauhan × AI Bhai</div>  
     <div id="videoEmbed"></div>  
@@ -149,18 +88,15 @@ data-ad-slot="5484922049"></ins>
     <div id="bottomTextContent"></div>  
     <div class="signature">Deepak Chauhan × AI Bhai</div>  
   </div>
-    <div class="vip-ad-box vip-ad-small">
 <ins class="adsbygoogle"  
 style="display:block"  
 data-ad-format="fluid"  
 data-ad-layout-key="-fb+5w+4e-db+86"  
 data-ad-client="ca-pub-6575643228502924"  
 data-ad-slot="5484922049"></ins>
-
 <script>  
      (adsbygoogle = window.adsbygoogle || []).push({});  
 </script>
-    </div>
     <div class="comment-box">  
     <input type="text" id="userName" placeholder="आपका नाम">  
     <textarea id="userComment" rows="3" placeholder="अपना कमेंट लिखें..."></textarea>  
