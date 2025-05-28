@@ -58,44 +58,6 @@
       border-radius: 6px;  
       cursor: pointer;  
     }
-    /* 🔥 Common Lighting Border for All Ads */
-.vip-ad-box {
-  border: 2px solid #00f0ff;
-  border-radius: 20px;
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.6);
-  box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff inset;
-  margin: 10px auto;
-  text-align: center;
-  transition: all 0.3s ease-in-out;
-}
-
-/* ✅ Size Variants */
-.vip-ad-small {
-  width: 300px;
-  height: 100px;
-}
-
-.vip-ad-medium {
-  width: 336px;
-  height: 280px;
-}
-
-.vip-ad-full {
-  width: 100%;
-  max-width: 728px;
-  height: auto;
-}
-
-/* 📱 Responsive */
-@media screen and (max-width: 500px) {
-  .vip-ad-small,
-  .vip-ad-medium,
-  .vip-ad-full {
-    width: 100% !important;
-    height: auto !important;
-  }
-}
   </style>  
 </head>  
 <body> 
@@ -106,7 +68,6 @@
     <div id="topTextContent"></div>
     <div class="signature">Deepak Chauhan × AI Bhai</div>  
   </div> 
-  <div class="vip-ad-box vip-ad-small">
 <ins class="adsbygoogle"
      style="display:block; text-align:center;"
      data-ad-client="ca-pub-6575643228502924"
@@ -132,21 +93,7 @@
     <div id="bottomTextContent"></div>  
     <div class="signature">Deepak Chauhan × AI Bhai</div>  
   </div>
-  <div class="vip-ad-box vip-ad-small">
-<ins class="adsbygoogle"
-     style="display:block; text-align:center;"
-     data-ad-client="ca-pub-6575643228502924"
-     data-ad-slot="5484922049"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
 
-<!-- Ad Push -->
-<script>
-     window.addEventListener('load', function () {
-         (adsbygoogle = window.adsbygoogle || []).push({});
-     });
-</script>
-  </div>
     <div class="comment-box">  
     <input type="text" id="userName" placeholder="आपका नाम">  
     <textarea id="userComment" rows="3" placeholder="अपना कमेंट लिखें..."></textarea>  
@@ -255,6 +202,19 @@
       commentEl.innerHTML = `<strong>${data.name}:</strong> ${data.comment}`;  
       commentList.prepend(commentEl);  
     });  
-  </script>  
+  </script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-client="ca-pub-6575643228502924"
+     data-ad-slot="5484922049"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+
+<!-- Ad Push -->
+<script>
+     window.addEventListener('load', function () {
+         (adsbygoogle = window.adsbygoogle || []).push({});
+     });
+</script>
   </body>  
 </html>  
