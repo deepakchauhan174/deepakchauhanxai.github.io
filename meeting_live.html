@@ -83,35 +83,70 @@
       cursor: pointer;
     }
 
-    .ads-container {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 10px;
-      background: #0b0f1c;
-      box-shadow: 0 0 20px #00f7ff40;
-      border-radius: 10px;
-    }
+    .vip-ad-box {
+  position: relative;
+  width: 100%;
+  margin: 10px auto;
+  padding: 5px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #111;
+  box-shadow: 0 0 10px #0f0a;
+  min-height: 100px;
+}
+
+/* Fallback style */
+.ad-fallback {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(45deg, #111, #222 10px);
+  color: #ff4444;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  z-index: 2;
+  pointer-events: none;
+  display: none;
+}
+
+/* Show fallback if ad not loaded */
+.vip-ad-box:has(ins.adsbygoogle[style*="display: none"]) .ad-fallback {
+  display: flex;
+}
+
+/* Custom Sizes */
+.ad-sm { max-width: 320px; height: 100px; }
+.ad-md { max-width: 468px; height: 120px; }
+.ad-lg { max-width: 728px; height: 180px; }
   </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924" crossorigin="anonymous"></script>
 </head>
 <body>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
+     crossorigin="anonymous"></script>
 
   <!-- Top Shayari Section -->
   <div class="section-box">
     <div class="copy-button"><button onclick="copyText(topText)">कॉपी</button></div>
     <div class="share-button"><button onclick="shareText(topText)">शेयर</button></div>
-    <div id="topTextContent"></div>
+    <div id="bottom"></div>
     <div class="signature">Deepak Chauhan × AI Bhai</div>
   </div>
 
   <!-- Ad 1 -->
-  <div class="ads-container">
-    <ins class="adsbygoogle"
-      style="display:block; text-align:center;"
-      data-ad-client="ca-pub-6575643228502924"
-      data-ad-slot="5484922049"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
+  <div class="vip-ad-box ad-sm">
+  <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-fb+5w+4e-db+86"
+     data-ad-client="ca-pub-6575643228502924"
+     data-ad-slot="5484922049"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
   </div>
 
   <!-- Video or Countdown -->
@@ -121,13 +156,16 @@
   </div>
 
   <!-- Ad 2 -->
-  <div class="ads-container">
-    <ins class="adsbygoogle"
-      style="display:block; text-align:center;"
-      data-ad-client="ca-pub-6575643228502924"
-      data-ad-slot="5484922049"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
+  <div class="vip-ad-box ad-sm">
+  <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-fb+5w+4e-db+86"
+     data-ad-client="ca-pub-6575643228502924"
+     data-ad-slot="5484922049"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
   </div>
 
   <!-- Bottom Shayari Section -->
