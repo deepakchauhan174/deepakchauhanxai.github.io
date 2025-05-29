@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>VIP Shayari + Ad System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: 'Arial', sans-serif;
+      padding: 20px;
+    }
+    .vip-shayari-box {
+      display: none;
+      background: linear-gradient(135deg, #240b36, #c31432);
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #ff0080;
+      border: 2px solid #ff00cc;
+      animation: glow 2s infinite alternate;
+    }
+    .vip-shayari-box.active {
+      display: block;
+    }
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 10px #ff00cc;
+      }
+      to {
+        box-shadow: 0 0 25px #00ffff;
+      }
+    }
+    .shayari-title {
+      font-size: 22px;
+      color: #ffcc00;
+      margin-bottom: 10px;
+    }
+    .shayari-text {
+      font-size: 18px;
+      color: #ffffff;
+    }
+    .shayari-signature {
+      text-align: right;
+      color: #00ffcc;
+      font-style: italic;
+    }
+    .ad-container {
+      margin: 20px 0;
+      background: #111;
+      padding: 10px;
+      border: 1px dashed #555;
+      border-radius: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      background: limegreen;
+      color: black;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #final-form {
+      display: none;
+      background: #222;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px green;
+      margin-top: 30px;
+    }
+    input {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      border-radius: 8px;
+      border: none;
+    }
+    h7 {
+      color: #ff4444;
+      text-align: center;
+      margin-bottom: 30px;
+      
+    h3 {
+      color: #00ff00;
+      text-align: center;
+      margin-bottom: 30px;
+      
+    h4 {
+      color: #4b5320;
+      text-align: center;
+      margin-bottom: 30px;
+      
+      .vip-inner-message-box {
+  background: linear-gradient(145deg, #290026, #52004f);
+  border: 2px solid #ff00cc;
+  padding: 15px;
+  border-radius: 15px;
+  margin-top: 20px;
+  color: #ffe6ff;
+  font-size: 14.5px;
+  line-height: 1.5;
+  box-shadow: 0 0 15px #ff0099, 0 0 30px #ff3399;
+  animation: innerBoxGlow 2.5s infinite alternate;
+}
+
+@keyframes innerBoxGlow {
+  from {
+    box-shadow: 0 0 10px #ff00cc, 0 0 25px #9900ff;
+  }
+  to {
+    box-shadow: 0 0 25px #ff66ff, 0 0 40px #00ffff;
+  }
+}
+  .vip-inner-message-box p {
+  text-shadow: 0 0 5px #ff00cc;
+  font-weight: bold;
+}    
+  </style>
+  <!-- ✅ AdSense Main Script (once only) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+<h1>🚀 VIP Shayari + Task Page 🔥</h1>
+<div id="shayari-container"></div>
+
+<!-- ✅ Final Form -->
+<div id="final-form">
+  <h2>Apna Naam aur Code Bharo</h2>
+  <input type="text" id="username" placeholder="Name">
+  <input type="text" id="usercode" placeholder="Code">
+  <h2 style="color: #ff4444; text-align: center; margin-top: 30px;">📢 Note (4 Rule Match)</h2>
+<div class="vip-inner-message-box">
+  <p style="color: #ffcc00;">✅ यह फार्म भरवाने का सिर्फ एक ही मकसद है — <b>काम फ्री में मिलेगा</b>। यहां पर चेक किया जा रहा है कि आप कितने एक्टिव रहते हैं और कितने अच्छे से वर्क कर सकते हैं।</p>
+  <p style="color: #00ffff;">🛡️ हमारा मकसद है सिर्फ <b>एक्टिविटी चेक करना</b>, ना कि पर्सनल डाटा लेना या कोई पर्सनल बातों को इकट्ठा करना।</p>
+  <p style="color: #00ff66;">🔥 <b>काम भी मिलेगा, नाम भी मिलेगा</b> — जिसे चुना जाएगा उसका नाम <b>यही वेबसाइट</b> पर मेंशन किया जाएगा।</p>
+</div>
+  <button onclick="submitForm()">✅ Submit</button>
+</div>
+
+<script>
+const shayariApi = "https://script.google.com/macros/s/AKfycbwvj55xgNtLWnPJKD6EHLX_VXgpHKc0q2zROOBNou0Nx0NNTNhM1-BOdzhMY6fpg5Sw/exec";
+const formApi = "https://script.google.com/macros/s/AKfycby9JL25ygRTj-ees937N2T16MIG6DZT722rcKQpyYzkC46UyAdo_7cwcgsIV7QLeiem/exec";
+
+fetch(shayariApi)
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('shayari-container');
+    data.slice(0, 10).forEach((item, index) => {
+      const box = document.createElement('div');
+      box.className = 'vip-shayari-box' + (index === 0 ? ' active' : '');
+      box.innerHTML = `
+        <div class="shayari-title">${item.title}</div>
+        <div class="shayari-text">${item.content}</div>
+        <div class="shayari-signature">~ ${item.signature}</div>
+
+        <div class="ad-container">
+          <!-- ✅ Your Original AdSense Code -->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-format="fluid"
+               data-ad-layout-key="-fb+5w+4e-db+86"
+               data-ad-client="ca-pub-6575643228502924"
+               data-ad-slot="5245610280"></ins>
+        </div>
+
+        <button onclick="unlockNext(${index})">✅ Done</button>
+      `;
+      container.appendChild(box);
+      // ⚠️ Push ad manually for each inserted ad box
+      setTimeout(() => {
+        try {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {}
+      }, 100);
+    });
+  });
+
+function unlockNext(index) {
+  const boxes = document.querySelectorAll('.vip-shayari-box');
+  boxes[index].style.display = 'none';
+  if (index + 1 < boxes.length) {
+    boxes[index + 1].classList.add('active');
+    setTimeout(() => {
+      try {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {}
+    }, 300);
+  } else {
+    document.getElementById('final-form').style.display = 'block';
+  }
+}
+
+function submitForm() {
+  const name = document.getElementById('username').value.trim();
+  const code = document.getElementById('usercode').value.trim();
+  if (!name || !code) {
+    alert("Please enter both name and code.");
+    return;
+  }
+  fetch(formApi, {
+    method: "POST",
+    body: JSON.stringify({ user_name: name, user_code: code }),  // ✅ Correct field names
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(res => res.text())
+  .then(res => {
+    alert("Submitted successfully!");
+    location.reload();
+  });
+}
+</script>
+
+</body>
+</html>
