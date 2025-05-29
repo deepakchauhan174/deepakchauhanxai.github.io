@@ -44,7 +44,7 @@ function showPopup() {
       // Auto-hide after 40 seconds
       setTimeout(() => {
         document.getElementById("notificationPopup").style.display = "none";
-      }, 40000);
+      }, 8000);
     })
     .catch(err => console.error("Error loading notification:", err));
 }
