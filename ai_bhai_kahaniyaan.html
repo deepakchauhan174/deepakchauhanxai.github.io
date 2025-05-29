@@ -1,189 +1,148 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Bhai की कहानियाँ – Deepak × AI Bhai</title>
-  <style>
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #00ffff;
-      text-shadow: 0 0 8px #00ffff;
-      margin-bottom: 30px;
-    }
-    .story-box {
-      background: #111;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 30px;
-      box-shadow: 0 0 12px #00ffff;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .story-box h2 {
-      color: #ffcc00;
-      margin-bottom: 10px;
-    }
-    .story-box p {
-      font-size: 16px;
-      white-space: pre-wrap;
-      color: #ccc;
-    }
-    .story-image {
-      display: block;
-      margin: 20px auto 0;
-      max-width: 300px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #00ffff;
-    }
-    .button-row {
-      text-align: center;
-      margin-top: 15px;
-    }
-    .copy-btn, .share-btn {
-      margin: 5px;
-      padding: 8px 16px;
-      font-size: 14px;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      border: none;
-    }
-    .copy-btn {
-      background-color: #00ffff;
-      color: #000;
-    }
-    .share-btn {
-      background-color: #ffd700;
-      color: #000;
-    }
-  </style>
-  <!-- AdSense Script -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
-     crossorigin="anonymous"></script>
-</head>
-<body>
-
-<!-- Loader Start -->
-<div id="loader" style="
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: black;
-  color: #00ffff;
-  font-size: 22px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  text-align: center;
-  padding: 20px;
-  box-sizing: border-box;
-  text-shadow: 0 0 10px #00ffff;
-">
-  Deepak Chauhan × AI Bhai की कहानी की दुनिया में आपका स्वागत है...
-</div>
-<!-- Loader End -->
-
-<h1>Deepak × AI Bhai की कहानियाँ</h1>
-<div id="stories"></div>
-
-<script>
-  fetch("https://script.google.com/macros/s/AKfycbw9xMUXpTs9PHk4w7hXN7ttMZ4xyTVRwyAuJZ-Ib73xoomCFf7nAgdrncm82W5mdKYIOg/exec")
-    .then(res => res.json())
-    .then(data => {
-      const container = document.getElementById("stories");
-      const keys = ['today_story', 'old_story1', 'old_story2'];
-
-      keys.forEach(key => {
-        const item = data[key];
-        const box = document.createElement("div");
-        box.className = "story-box";
-
-        const storyParts = item.story.split("\n\n");
-        let formattedStory = '';
-
-        storyParts.forEach((para, index) => {
-          formattedStory += `<p>${para}</p>`;
-
-          // Har 3rd paragraph ke baad ek ad
-          if ((index + 1) % 3 === 0 && index < 9) { // Sirf 3 ads max
-            formattedStory += `
-              <div style="margin: 20px 0; text-align: center;">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-6575643228502924" 
-                     data-ad-slot="8900055895"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-              </div>
-            `;
-          }
-        });
-
-        let storyHTML = `
-          <h2>${item.title}</h2>
-          <div id="story-${key}">
-            ${formattedStory}
-          </div>
-        `;
-
-        if (key === "today_story") {
-          storyHTML += `<img src="/images/dk_community_logo.png" alt="AI Bhai Logo" class="story-image" />`;
-        }
-
-        storyHTML += `
-          <div class="button-row">
-            <button class="copy-btn" onclick="copyToClipboard('story-${key}')">Copy</button>
-            <button class="share-btn" onclick="shareText('story-${key}')">Share</button>
-          </div>
-        `;
-
-        box.innerHTML = storyHTML;
-        container.appendChild(box);
-      });
-    });
-
-  function copyToClipboard(id) {
-    const text = document.getElementById(id).innerText;
-    navigator.clipboard.writeText(text).then(() => {
-      alert("कहानी कॉपी हो गई!");
-    });
-  }
-
-  function shareText(id) {
-    const text = document.getElementById(id).innerText;
-    if (navigator.share) {
-      navigator.share({
-        title: "Deepak × AI Bhai की कहानी",
-        text: text
-      });
-    } else {
-      alert("Sharing is not supported on this device.");
-    }
-  }
-</script>
-
-<!-- Loader Script -->
-<script>
-  window.addEventListener("load", function () {
-    const loader = document.getElementById("loader");
-    setTimeout(() => {
-      loader.style.display = "none";
-    }, 5000);
-  });
-</script>
-
-</body>
-</html>
+<!DOCTYPE html>  <html lang="hi">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+  <title>AI Bhai की कहानियाँ – Deepak × AI Bhai</title>  
+  <style>  
+    body {  
+      background-color: #000;  
+      color: #fff;  
+      font-family: 'Segoe UI', sans-serif;  
+      padding: 20px;  
+    }  
+    h1 {  
+      text-align: center;  
+      color: #00ffff;  
+      text-shadow: 0 0 8px #00ffff;  
+      margin-bottom: 30px;  
+    }  
+    .story-box {  
+      background: #111;  
+      border-radius: 15px;  
+      padding: 20px;  
+      margin-bottom: 30px;  
+      box-shadow: 0 0 12px #00ffff;  
+      max-width: 800px;  
+      margin-left: auto;  
+      margin-right: auto;  
+    }  
+    .story-box h2 {  
+      color: #ffcc00;  
+      margin-bottom: 10px;  
+    }  
+    .story-box p {  
+      font-size: 16px;  
+      white-space: pre-wrap;  
+      color: #ccc;  
+    }  
+    .story-image {  
+      display: block;  
+      margin: 20px auto 0;  
+      max-width: 300px;  
+      border-radius: 10px;  
+      box-shadow: 0 0 10px #00ffff;  
+    }  
+    .button-row {  
+      text-align: center;  
+      margin-top: 15px;  
+    }  
+    .copy-btn, .share-btn {  
+      margin: 5px;  
+      padding: 8px 16px;  
+      font-size: 14px;  
+      font-weight: bold;  
+      border-radius: 6px;  
+      cursor: pointer;  
+      border: none;  
+    }  
+    .copy-btn {  
+      background-color: #00ffff;  
+      color: #000;  
+    }  
+    .share-btn {  
+      background-color: #ffd700;  
+      color: #000;  
+    }  
+  </style>  
+</head>  
+<body>  <!-- Loader Start -->  <div id="loader" style="  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 100vh;  
+  background: black;  
+  color: #00ffff;  
+  font-size: 22px;  
+  font-weight: bold;  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+  z-index: 9999;  
+  text-align: center;  
+  padding: 20px;  
+  box-sizing: border-box;  
+  text-shadow: 0 0 10px #00ffff;  
+">  
+  Deepak Chauhan × AI Bhai की कहानी की दुनिया में आपका स्वागत है...  
+</div>  
+<!-- Loader End -->  <h1>Deepak × AI Bhai की कहानियाँ</h1>  
+<div id="stories"></div>  <script>  
+  fetch("https://script.google.com/macros/s/AKfycbw9xMUXpTs9PHk4w7hXN7ttMZ4xyTVRwyAuJZ-Ib73xoomCFf7nAgdrncm82W5mdKYIOg/exec")  
+    .then(res => res.json())  
+    .then(data => {  
+      const container = document.getElementById("stories");  
+      const keys = ['today_story', 'old_story1', 'old_story2'];  
+      keys.forEach(key => {  
+        const item = data[key];  
+        const box = document.createElement("div");  
+        box.className = "story-box";  
+  
+        let storyHTML = `  
+          <h2>${item.title}</h2>  
+          <p id="story-${key}">${item.story}</p>  
+        `;  
+  
+        if (key === "today_story") {  
+          storyHTML += `<img src="/images/dk_community_logo.png" alt="AI Bhai Logo" class="story-image" />`;  
+        }  
+  
+        storyHTML += `  
+          <div class="button-row">  
+            <button class="copy-btn" onclick="copyToClipboard('story-${key}')">Copy</button>  
+            <button class="share-btn" onclick="shareText('story-${key}')">Share</button>  
+          </div>  
+        `;  
+  
+        box.innerHTML = storyHTML;  
+        container.appendChild(box);  
+      });  
+    });  
+  
+  function copyToClipboard(id) {  
+    const text = document.getElementById(id).innerText;  
+    navigator.clipboard.writeText(text).then(() => {  
+      alert("कहानी कॉपी हो गई!");  
+    });  
+  }  
+  
+  function shareText(id) {  
+    const text = document.getElementById(id).innerText;  
+    if (navigator.share) {  
+      navigator.share({  
+        title: "Deepak × AI Bhai की कहानी",  
+        text: text  
+      });  
+    } else {  
+      alert("Sharing is not supported on this device.");  
+    }  
+  }  
+</script>  <!-- Loader Script -->  <script>  
+  window.addEventListener("load", function () {  
+    const loader = document.getElementById("loader");  
+    setTimeout(() => {  
+      loader.style.display = "none";  
+    }, 5000);  
+  });  
+</script>  </body>  
+</html>  
