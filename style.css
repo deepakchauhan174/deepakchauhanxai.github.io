@@ -941,6 +941,7 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  position: relative;
 }
 
 .popup-header h3 {
@@ -952,6 +953,9 @@ body {
 }
 
 .popup-header button {
+  position: absolute; /* Add this line */
+  bottom: -40px;       /* Shift below the popup */
+  right: 0;            /* Align right */
   background: rgba(255, 68, 68, 0.9);
   color: white;
   border: none;
