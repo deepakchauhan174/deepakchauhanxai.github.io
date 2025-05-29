@@ -181,64 +181,87 @@
 <body>
   <h2 style="text-align:center; margin-bottom: 20px;">Deepak Chauhan × AI Bhai — Daily Fire Story</h2>
 
-  <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz06HAT-dqDcSLl8UkuiJTSJ7tco3z3gzPaoSfBft6gMEfTq5ZwJh9KSKAVc_g-IQY0/exec?t=' + Date.now();
+<script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz06HAT-dqDcSLl8UkuiJTSJ7tco3z3gzPaoSfBft6gMEfTq5ZwJh9KSKAVc_g-IQY0/exec?t=' + Date.now();
 
-    async function fetchStoryData() {
-      try {
-        const response = await fetch(SCRIPT_URL);
-        const stories = await response.json();
+  async function fetchStoryData() {
+    try {
+      const response = await fetch(SCRIPT_URL);
+      const stories = await response.json();
 
-        stories.forEach(data => {
-          const card = document.createElement('div');
-          card.className = 'story-card';
-          card.innerHTML = `
-            <img class="story-image" src="${data.imgUrl}" alt="${data.storyTitle}">
-            <div class="card-content">
-              <h1 class="story-title">${data.storyTitle}</h1>
-              <div class="story-text">${data.fullStory}</div>
-              <p class="signature">— ${data.signature}</p>
-              <p class="copyright">${data.copyright ? '' : 'not copyright ©'}</p>
-              <div class="button-group">
-                <button class="btn btn-copy">Copy</button>
-                <button class="btn btn-share">Share</button>
-              </div>
+      stories.forEach(data => {
+        // 🔸 Story Card
+        const card = document.createElement('div');
+        card.className = 'story-card';
+        card.innerHTML = `
+          <img class="story-image" src="${data.imgUrl}" alt="${data.storyTitle}">
+          <div class="card-content">
+            <h1 class="story-title">${data.storyTitle}</h1>
+            <div class="story-text">${data.fullStory}</div>
+            <p class="signature">— ${data.signature}</p>
+            <p class="copyright">${data.copyright ? '' : 'not copyright ©'}</p>
+            <div class="button-group">
+              <button class="btn btn-copy">Copy</button>
+              <button class="btn btn-share">Share</button>
             </div>
-       `;
-          
-          const copyBtn = card.querySelector('.btn-copy');
-          const shareBtn = card.querySelector('.btn-share');
+          </div>
+        `;
 
-          copyBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText(data.fullStory)
-              .then(() => copyBtn.textContent = 'Copied!')
-              .catch(() => alert('Copy failed'));
-          });
+        // 🔸 Buttons: Copy + Share
+        const copyBtn = card.querySelector('.btn-copy');
+        const shareBtn = card.querySelector('.btn-share');
 
-          shareBtn.addEventListener('click', () => {
-            if (navigator.share) {
-              navigator.share({
-                title: data.storyTitle,
-                text: data.fullStory,
-                url: window.location.href
-              });
-            } else {
-              const shareUrl = `mailto:?subject=${encodeURIComponent(data.storyTitle)}&body=${encodeURIComponent(data.fullStory + '\n\n— ' + data.signature)}`;
-              window.open(shareUrl, '_blank');
-            }
-          });
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(data.fullStory)
+            .then(() => copyBtn.textContent = 'Copied!')
+            .catch(() => alert('Copy failed'));
+        });
 
-          document.body.appendChild(card);
-          });
-      } catch (err) {
-        console.error('Fetch error:', err);
-        const msg = document.createElement('p');
-        msg.textContent = 'Story load failed. Try again.';
-        document.body.appendChild(msg);
-      }
+        shareBtn.addEventListener('click', () => {
+          if (navigator.share) {
+            navigator.share({
+              title: data.storyTitle,
+              text: data.fullStory,
+              url: window.location.href
+            });
+          } else {
+            const shareUrl = `mailto:?subject=${encodeURIComponent(data.storyTitle)}&body=${encodeURIComponent(data.fullStory + '\n\n— ' + data.signature)}`;
+            window.open(shareUrl, '_blank');
+          }
+        });
+
+        // 🔸 Append Story Card
+        document.body.appendChild(card);
+
+        // 🔸 Append AdSense Block after story
+        const adContainer = document.createElement('div');
+        adContainer.style.margin = '20px 0';
+        adContainer.style.textAlign = 'center';
+
+        const adIns = document.createElement('ins');
+        adIns.className = 'adsbygoogle';
+        adIns.style.display = 'inline-block';
+        adIns.style.width = '300px';
+        adIns.style.height = '250px';
+        adIns.setAttribute('data-ad-client', '6575643228502924'); // 🔁 Apna AdSense client ID daalo
+        adIns.setAttribute('data-ad-slot', '8900055895'); // 🔁 Apna Ad slot ID daalo
+
+        adContainer.appendChild(adIns);
+        document.body.appendChild(adContainer);
+
+        const adScript = document.createElement('script');
+        adScript.innerHTML = '(adsbygoogle = window.adsbygoogle || []).push({});';
+        document.body.appendChild(adScript);
+      });
+    } catch (err) {
+      console.error('Fetch error:', err);
+      const msg = document.createElement('p');
+      msg.textContent = 'Story load failed. Try again.';
+      document.body.appendChild(msg);
     }
+  }
 
-    document.addEventListener('DOMContentLoaded', fetchStoryData);
-  </script>
+  document.addEventListener('DOMContentLoaded', fetchStoryData);
+</script>
 </body>
 </html>
