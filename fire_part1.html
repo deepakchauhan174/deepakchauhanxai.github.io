@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Motivational Stories</title>
 
-  <!-- Google AdSense Script -->
+  <!-- ✅ Google AdSense Script -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
-     crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
 
   <style>
     :root {
@@ -29,7 +29,7 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     }
 
     .story-card {
@@ -41,7 +41,7 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.1);
       margin: 20px 0;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease;
     }
 
     .story-card:hover {
@@ -65,9 +65,11 @@
       font-size: 1.8rem;
       font-weight: 700;
       margin-bottom: 20px;
+      color: var(--primary-color);
       text-align: center;
       background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
     }
@@ -98,13 +100,6 @@
       font-style: italic;
       text-align: right;
       color: var(--text-faded);
-      font-size: 1rem;
-      margin-bottom: 8px;
-    }
-
-    .ad-placeholder {
-      margin-top: 20px;
-      text-align: center;
     }
 
     .button-group {
@@ -121,11 +116,9 @@
       font-weight: 600;
       font-size: 1rem;
       cursor: pointer;
-      transition: all 0.3s ease;
       display: flex;
-      align-items: center;
       justify-content: center;
-      gap: 8px;
+      align-items: center;
     }
 
     .btn-copy {
@@ -149,6 +142,11 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0, 204, 153, 0.4);
     }
+
+    .ad-placeholder {
+      margin: 20px 0;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -157,70 +155,73 @@
   <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz06HAT-dqDcSLl8UkuiJTSJ7tco3z3gzPaoSfBft6gMEfTq5ZwJh9KSKAVc_g-IQY0/exec?t=' + Date.now();
 
-    async function fetchStoryData() {
-      try {
-        const response = await fetch(SCRIPT_URL);
-        const stories = await response.json();
+async function fetchStoryData() {
+  try {
+    const response = await fetch(SCRIPT_URL);
+    const stories = await response.json();
 
-        stories.forEach(data => {
-          const card = document.createElement('div');
-          card.className = 'story-card';
-          card.innerHTML = `
-            <img class="story-image" src="${data.imgUrl}" alt="${data.storyTitle}">
-            <div class="card-content">
-              <h1 class="story-title">${data.storyTitle}</h1>
-              <div class="story-text">${data.fullStory}</div>
-              <p class="signature">— ${data.signature}</p>
+    for (let data of stories) {
+      const card = document.createElement('div');
+      card.className = 'story-card';
 
-              <!-- ✅ Google AdSense Code Correctly Placed -->
-              <div class="ad-placeholder">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-6575643228502924"
-                     data-ad-slot="8900055895"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-              </div>
+      card.innerHTML = `
+        <img class="story-image" src="${data.imgUrl}" alt="${data.storyTitle}">
+        <div class="card-content">
+          <h1 class="story-title">${data.storyTitle}</h1>
+          <div class="story-text">${data.fullStory}</div>
+          <p class="signature">— ${data.signature}</p>
 
-              <div class="button-group">
-                <button class="btn btn-copy">Copy</button>
-                <button class="btn btn-share">Share</button>
-              </div>
-            </div>
-          `;
+          <div class="ad-placeholder">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-6575643228502924"
+                 data-ad-slot="8900055895"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+          </div>
 
-          // Copy button
-          card.querySelector('.btn-copy').addEventListener('click', () => {
-            navigator.clipboard.writeText(data.fullStory)
-              .then(() => card.querySelector('.btn-copy').textContent = 'Copied!')
-              .catch(() => alert('Copy failed'));
+          <div class="button-group">
+            <button class="btn btn-copy">Copy</button>
+            <button class="btn btn-share">Share</button>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(card);
+
+      // AdSense ads को push करो ताकि वे दिखाई दें
+      (adsbygoogle = window.adsbygoogle || []).push({});
+
+      // Copy बटन functionality
+      const copyBtn = card.querySelector('.btn-copy');
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(data.fullStory)
+          .then(() => copyBtn.textContent = 'Copied!')
+          .catch(() => alert('Copy failed'));
+      });
+
+      // Share बटन functionality
+      const shareBtn = card.querySelector('.btn-share');
+      shareBtn.addEventListener('click', () => {
+        if (navigator.share) {
+          navigator.share({
+            title: data.storyTitle,
+            text: data.fullStory,
+            url: window.location.href
           });
-
-          // Share button
-          card.querySelector('.btn-share').addEventListener('click', () => {
-            if (navigator.share) {
-              navigator.share({
-                title: data.storyTitle,
-                text: data.fullStory,
-                url: window.location.href
-              });
-            } else {
-              const mailUrl = `mailto:?subject=${encodeURIComponent(data.storyTitle)}&body=${encodeURIComponent(data.fullStory + '\n\n— ' + data.signature)}`;
-              window.open(mailUrl, '_blank');
-            }
-          });
-
-          document.body.appendChild(card);
-
-          // Load ad after append
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        });
-
-      } catch (err) {
-        console.error('Error:', err);
-        document.body.innerHTML += '<p>Story load failed. Please refresh.</p>';
-      }
+        } else {
+          const shareUrl = `mailto:?subject=${encodeURIComponent(data.storyTitle)}&body=${encodeURIComponent(data.fullStory + '\n\n— ' + data.signature)}`;
+          window.open(shareUrl, '_blank');
+        }
+      });
     }
+  } catch (err) {
+    console.error('Fetch error:', err);
+    const msg = document.createElement('p');
+    msg.textContent = 'Story load failed. Try again.';
+    document.body.appendChild(msg);
+  }
+}
 
     document.addEventListener('DOMContentLoaded', fetchStoryData);
   </script>
