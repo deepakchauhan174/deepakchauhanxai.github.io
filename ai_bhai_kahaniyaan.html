@@ -63,7 +63,9 @@
       background-color: #ffd700;  
       color: #000;  
     }  
-  </style>  
+  </style> 
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
+     crossorigin="anonymous"></script>
 </head>  
 <body>  <!-- Loader Start -->  <div id="loader" style="  
   position: fixed;  
@@ -88,55 +90,99 @@
 </div>  
 <!-- Loader End -->  <h1>Deepak × AI Bhai की कहानियाँ</h1>  
 <div id="stories"></div>  <script>  
-  fetch("https://script.google.com/macros/s/AKfycbw9xMUXpTs9PHk4w7hXN7ttMZ4xyTVRwyAuJZ-Ib73xoomCFf7nAgdrncm82W5mdKYIOg/exec")  
-    .then(res => res.json())  
-    .then(data => {  
-      const container = document.getElementById("stories");  
-      const keys = ['today_story', 'old_story1', 'old_story2'];  
-      keys.forEach(key => {  
-        const item = data[key];  
-        const box = document.createElement("div");  
-        box.className = "story-box";  
-  
-        let storyHTML = `  
-          <h2>${item.title}</h2>  
-          <p id="story-${key}">${item.story}</p>  
-        `;  
-  
-        if (key === "today_story") {  
-          storyHTML += `<img src="/images/dk_community_logo.png" alt="AI Bhai Logo" class="story-image" />`;  
-        }  
-  
-        storyHTML += `  
-          <div class="button-row">  
-            <button class="copy-btn" onclick="copyToClipboard('story-${key}')">Copy</button>  
-            <button class="share-btn" onclick="shareText('story-${key}')">Share</button>  
-          </div>  
-        `;  
-  
-        box.innerHTML = storyHTML;  
-        container.appendChild(box);  
-      });  
-    });  
-  
-  function copyToClipboard(id) {  
-    const text = document.getElementById(id).innerText;  
-    navigator.clipboard.writeText(text).then(() => {  
-      alert("कहानी कॉपी हो गई!");  
-    });  
-  }  
-  
-  function shareText(id) {  
-    const text = document.getElementById(id).innerText;  
-    if (navigator.share) {  
-      navigator.share({  
-        title: "Deepak × AI Bhai की कहानी",  
-        text: text  
-      });  
-    } else {  
-      alert("Sharing is not supported on this device.");  
-    }  
-  }  
+ function initAds() {
+  try {
+    const ads = document.querySelectorAll('ins.adsbygoogle');
+    ads.forEach(() => {
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    });
+  } catch(e) {
+    console.log("AdSense init error:", e);
+  }
+}
+
+fetch("https://script.google.com/macros/s/AKfycbw9xMUXpTs9PHk4w7hXN7ttMZ4xyTVRwyAuJZ-Ib73xoomCFf7nAgdrncm82W5mdKYIOg/exec")
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById("stories");
+    const keys = ['today_story', 'old_story1', 'old_story2'];
+    keys.forEach(key => {
+      const item = data[key];
+      const box = document.createElement("div");
+      box.className = "story-box";
+
+      const storyText = item.story || "";
+      const partLength = Math.floor(storyText.length / 3);
+      const parts = [
+        storyText.slice(0, partLength),
+        storyText.slice(partLength, partLength * 2),
+        storyText.slice(partLength * 2)
+      ];
+
+      let storyHTML = `<h2>${item.title}</h2>`;
+
+      parts.forEach((part, index) => {
+        storyHTML += `<p id="story-${key}-${index}">${part}</p>`;
+        storyHTML += `
+          <div class="ad-placeholder" style="margin: 15px 0; text-align:center;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-6575643228502924"
+                 data-ad-slot="8900055895"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+          </div>
+        `;
+      });
+
+      if (key === "today_story") {
+        storyHTML += `<img src="/images/dk_community_logo.png" alt="AI Bhai Logo" class="story-image" />`;
+      }
+
+      storyHTML += `
+        <div class="button-row">
+          <button class="copy-btn" onclick="copyToClipboardMultiple('${key}')">Copy पूरी कहानी</button>
+          <button class="share-btn" onclick="shareTextMultiple('${key}')">Share पूरी कहानी</button>
+        </div>
+      `;
+
+      box.innerHTML = storyHTML;
+      container.appendChild(box);
+    });
+
+    // सभी ads initialize करो
+    initAds();
+  });
+
+// Copy full story (sab 3 parts ko ek saath copy karega)
+function copyToClipboardMultiple(key) {
+  let fullText = "";
+  for (let i = 0; i < 3; i++) {
+    const el = document.getElementById(`story-${key}-${i}`);
+    if (el) fullText += el.innerText + "\n\n";
+  }
+  navigator.clipboard.writeText(fullText).then(() => {
+    alert("कहानी कॉपी हो गई!");
+  });
+}
+
+// Share full story (sab 3 parts ko ek saath share karega)
+function shareTextMultiple(key) {
+  let fullText = "";
+  for (let i = 0; i < 3; i++) {
+    const el = document.getElementById(`story-${key}-${i}`);
+    if (el) fullText += el.innerText + "\n\n";
+  }
+
+  if (navigator.share) {
+    navigator.share({
+      title: "Deepak × AI Bhai की कहानी",
+      text: fullText,
+    });
+  } else {
+    alert("Sharing is not supported on this device.");
+  }
+}
 </script>  <!-- Loader Script -->  <script>  
   window.addEventListener("load", function () {  
     const loader = document.getElementById("loader");  
