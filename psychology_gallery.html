@@ -127,6 +127,14 @@
      crossorigin="anonymous"></script>
 </head>
 <body>
+    <div style="text-align: center; margin: 20px;">
+  <input 
+    type="text" 
+    id="searchInput" 
+    placeholder="Search by Serial Number or URL..." 
+    style="padding: 10px; width: 80%; max-width: 500px; font-size: 16px; border: 2px solid #f4a460; border-radius: 6px;"
+  >
+    </div>
     <div class="gallery" id="gallery"></div>
 
     <div class="modal" id="modal">
@@ -219,11 +227,11 @@ window.onbeforeunload = () => {
     window.scrollTo(0, 0);
 };
 
-// Auto-refresh gallery every 15 seconds
+// Auto-refresh gallery every 1.30 seconds
 setInterval(() => {
     currentData = currentData.sort(() => Math.random() - 0.5);
     renderGallery();
-}, 15000);
+}, 90000);
 </script>
 </body>
 </html>
