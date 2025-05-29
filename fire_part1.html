@@ -179,11 +179,8 @@
   </style>
 </head>
 <body>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
-     crossorigin="anonymous"></script>
   <h2 style="text-align:center; margin-bottom: 20px;">Deepak Chauhan × AI Bhai — Daily Fire Story</h2>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz06HAT-dqDcSLl8UkuiJTSJ7tco3z3gzPaoSfBft6gMEfTq5ZwJh9KSKAVc_g-IQY0/exec?t=' + Date.now();
 
@@ -193,6 +190,7 @@
       const stories = await response.json();
 
       stories.forEach(data => {
+        // 🔸 Create story card
         const card = document.createElement('div');
         card.className = 'story-card';
         card.innerHTML = `
@@ -208,15 +206,16 @@
           </div>
         `;
 
+        // 🔸 Copy functionality
         const copyBtn = card.querySelector('.btn-copy');
-        const shareBtn = card.querySelector('.btn-share');
-
         copyBtn.addEventListener('click', () => {
           navigator.clipboard.writeText(data.fullStory)
             .then(() => copyBtn.textContent = 'Copied!')
             .catch(() => alert('Copy failed'));
         });
 
+        // 🔸 Share functionality
+        const shareBtn = card.querySelector('.btn-share');
         shareBtn.addEventListener('click', () => {
           if (navigator.share) {
             navigator.share({
@@ -230,24 +229,8 @@
           }
         });
 
+        // 🔸 Show card on page
         document.body.appendChild(card);
-
-        const adContainer = document.createElement('div');
-        adContainer.style.margin = '20px 0';
-        adContainer.style.textAlign = 'center';
-
-        const adIns = document.createElement('ins');
-        adIns.className = 'adsbygoogle';
-        adIns.style.display = 'inline-block';
-        adIns.style.width = '300px';
-        adIns.style.height = '250px';
-        adIns.setAttribute('data-ad-client', '6575643228502924'); // <- Replace this
-        adIns.setAttribute('data-ad-slot', '5484922049'); // <- Replace this
-
-        adContainer.appendChild(adIns);
-        document.body.appendChild(adContainer);
-
-        (adsbygoogle = window.adsbygoogle || []).push({});
       });
 
     } catch (err) {
