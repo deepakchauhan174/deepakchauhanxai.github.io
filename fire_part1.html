@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Motivational Stories</title>
+
+  <!-- Google AdSense Script -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
+     crossorigin="anonymous"></script>
+
   <style>
     :root {
       --neon-glow: 0 0 10px rgba(0, 255, 255, 0.8);
@@ -16,13 +21,6 @@
       --highlight: rgba(0, 255, 255, 0.1);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    }
-
     body {
       background-color: var(--bg-darker);
       color: var(--text-light);
@@ -31,6 +29,7 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
+      font-family: 'Segoe UI', system-ui, sans-serif;
     }
 
     .story-card {
@@ -41,7 +40,6 @@
       overflow: hidden;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      position: relative;
       margin: 20px 0;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
@@ -53,7 +51,6 @@
 
     .story-image {
       width: 100%;
-      height: auto;
       max-height: 300px;
       object-fit: cover;
       border-bottom: 2px solid var(--primary-color);
@@ -68,11 +65,9 @@
       font-size: 1.8rem;
       font-weight: 700;
       margin-bottom: 20px;
-      color: var(--primary-color);
       text-align: center;
       background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
       -webkit-background-clip: text;
-      background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
     }
@@ -107,11 +102,9 @@
       margin-bottom: 8px;
     }
 
-    .copyright {
-      font-size: 0.75rem;
-      text-align: right;
-      color: var(--text-faded);
-      opacity: 0.7;
+    .ad-placeholder {
+      margin-top: 20px;
+      text-align: center;
     }
 
     .button-group {
@@ -156,94 +149,80 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0, 204, 153, 0.4);
     }
-
-    @media (max-width: 600px) {
-      .card-content {
-        padding: 16px;
-      }
-
-      .story-title {
-        font-size: 1.5rem;
-      }
-
-      .story-text {
-        padding: 16px 16px 16px 40px;
-        font-size: 1rem;
-      }
-
-      .button-group {
-        flex-direction: column;
-        gap: 12px;
-      }
-    }
   </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
-     crossorigin="anonymous"></script>
 </head>
 <body>
   <h2 style="text-align:center; margin-bottom: 20px;">Deepak Chauhan × AI Bhai — Daily Fire Story</h2>
 
-<script>
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz06HAT-dqDcSLl8UkuiJTSJ7tco3z3gzPaoSfBft6gMEfTq5ZwJh9KSKAVc_g-IQY0/exec?t=' + Date.now();
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz06HAT-dqDcSLl8UkuiJTSJ7tco3z3gzPaoSfBft6gMEfTq5ZwJh9KSKAVc_g-IQY0/exec?t=' + Date.now();
 
-  async function fetchStoryData() {
-    try {
-      const response = await fetch(SCRIPT_URL);
-      const stories = await response.json();
+    async function fetchStoryData() {
+      try {
+        const response = await fetch(SCRIPT_URL);
+        const stories = await response.json();
 
-      stories.forEach(data => {
-        // 🔸 Create story card
-        const card = document.createElement('div');
-        card.className = 'story-card';
-        card.innerHTML = `
-          <img class="story-image" src="${data.imgUrl}" alt="${data.storyTitle}">
-          <div class="card-content">
-            <h1 class="story-title">${data.storyTitle}</h1>
-            <div class="story-text">${data.fullStory}</div>
-            <p class="signature">— ${data.signature}</p>
-            <div class="button-group">
-              <button class="btn btn-copy">Copy</button>
-              <button class="btn btn-share">Share</button>
+        stories.forEach(data => {
+          const card = document.createElement('div');
+          card.className = 'story-card';
+          card.innerHTML = `
+            <img class="story-image" src="${data.imgUrl}" alt="${data.storyTitle}">
+            <div class="card-content">
+              <h1 class="story-title">${data.storyTitle}</h1>
+              <div class="story-text">${data.fullStory}</div>
+              <p class="signature">— ${data.signature}</p>
+
+              <!-- ✅ Google AdSense Code Correctly Placed -->
+              <div class="ad-placeholder">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-6575643228502924"
+                     data-ad-slot="8900055895"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+              </div>
+
+              <div class="button-group">
+                <button class="btn btn-copy">Copy</button>
+                <button class="btn btn-share">Share</button>
+              </div>
             </div>
-          </div>
-        `;
+          `;
 
-        // 🔸 Copy functionality
-        const copyBtn = card.querySelector('.btn-copy');
-        copyBtn.addEventListener('click', () => {
-          navigator.clipboard.writeText(data.fullStory)
-            .then(() => copyBtn.textContent = 'Copied!')
-            .catch(() => alert('Copy failed'));
+          // Copy button
+          card.querySelector('.btn-copy').addEventListener('click', () => {
+            navigator.clipboard.writeText(data.fullStory)
+              .then(() => card.querySelector('.btn-copy').textContent = 'Copied!')
+              .catch(() => alert('Copy failed'));
+          });
+
+          // Share button
+          card.querySelector('.btn-share').addEventListener('click', () => {
+            if (navigator.share) {
+              navigator.share({
+                title: data.storyTitle,
+                text: data.fullStory,
+                url: window.location.href
+              });
+            } else {
+              const mailUrl = `mailto:?subject=${encodeURIComponent(data.storyTitle)}&body=${encodeURIComponent(data.fullStory + '\n\n— ' + data.signature)}`;
+              window.open(mailUrl, '_blank');
+            }
+          });
+
+          document.body.appendChild(card);
+
+          // Load ad after append
+          (adsbygoogle = window.adsbygoogle || []).push({});
         });
 
-        // 🔸 Share functionality
-        const shareBtn = card.querySelector('.btn-share');
-        shareBtn.addEventListener('click', () => {
-          if (navigator.share) {
-            navigator.share({
-              title: data.storyTitle,
-              text: data.fullStory,
-              url: window.location.href
-            });
-          } else {
-            const shareUrl = `mailto:?subject=${encodeURIComponent(data.storyTitle)}&body=${encodeURIComponent(data.fullStory + '\n\n— ' + data.signature)}`;
-            window.open(shareUrl, '_blank');
-          }
-        });
-
-        // 🔸 Show card on page
-        document.body.appendChild(card);
-      });
-
-    } catch (err) {
-      console.error('Fetch error:', err);
-      const msg = document.createElement('p');
-      msg.textContent = 'Story load failed. Try again.';
-      document.body.appendChild(msg);
+      } catch (err) {
+        console.error('Error:', err);
+        document.body.innerHTML += '<p>Story load failed. Please refresh.</p>';
+      }
     }
-  }
 
-  document.addEventListener('DOMContentLoaded', fetchStoryData);
-</script>
+    document.addEventListener('DOMContentLoaded', fetchStoryData);
+  </script>
 </body>
 </html>
