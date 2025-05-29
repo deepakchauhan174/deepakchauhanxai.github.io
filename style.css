@@ -953,22 +953,19 @@ body {
 }
 
 .popup-header button {
-  position: absolute; /* Add this line */
-  bottom: -40px;       /* Shift below the popup */
-  right: 0;            /* Align right */
-  background: rgba(255, 68, 68, 0.9);
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 6px;
-  font-size: 11px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+background: rgba(255, 68, 68, 0.9);
+color: white;
+border: none;
+padding: 5px 10px;
+border-radius: 6px;
+font-size: 11px;
+cursor: pointer;
+transition: all 0.2s ease;
 }
 
 .popup-header button:hover {
-  background: #ff4444;
-  transform: scale(1.05);
+background: #ff4444;
+transform: scale(1.05);
 }
 
 .code-button {
