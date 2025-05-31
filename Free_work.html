@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Shayari Display</title>
+    <title>Premium Shayari Display with Ads</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -52,12 +52,13 @@
             }
         }
         
-        /* Main container */
+        /* Main container - Modified to be scrollable */
         .container {
             position: relative;
             z-index: 10;
             width: 90%;
             max-width: 700px;
+            max-height: 80vh; /* Set maximum height */
             min-height: 400px;
             display: flex;
             flex-direction: column;
@@ -67,7 +68,8 @@
             background: rgba(10, 5, 24, 0.7);
             backdrop-filter: blur(10px);
             box-shadow: 0 0 30px rgba(106, 0, 255, 0.2);
-            overflow: hidden;
+            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-x: hidden; /* Hide horizontal overflow */
         }
         
         /* Glowing border effect */
@@ -335,10 +337,64 @@
             transform: translateX(100%);
         }
         
+        /* Fire effect */
+        .fire {
+            position: absolute;
+            bottom: -10px;
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(transparent, #ff0055);
+            filter: blur(5px);
+            opacity: 0.6;
+            border-radius: 50%;
+            animation: fire-flicker 2s infinite alternate;
+        }
+        
+        @keyframes fire-flicker {
+            0% {
+                opacity: 0.4;
+                height: 30px;
+            }
+            100% {
+                opacity: 0.7;
+                height: 50px;
+            }
+        }
+
+        /* Ad container styling */
+        .ad-container {
+            width: 100%;
+            margin: 20px 0;
+            text-align: center;
+            min-height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Scrollbar styling */
+        .container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        .container::-webkit-scrollbar-thumb {
+            background: linear-gradient(#ff0055, #00ccff);
+            border-radius: 10px;
+        }
+        
         /* Responsive design */
         @media (max-width: 768px) {
             .container {
                 padding: 30px 20px;
+                max-height: 85vh;
             }
             
             .shayari-title {
@@ -352,11 +408,16 @@
             .signature {
                 font-size: 1.1rem;
             }
+
+            .ad-container {
+                min-height: 200px;
+            }
         }
         
         @media (max-width: 480px) {
             .container {
                 padding: 25px 15px;
+                max-height: 90vh;
             }
             
             .shayari-title {
@@ -381,32 +442,11 @@
                 padding: 10px 20px;
                 font-size: 1rem;
             }
-        }
-        
-        /* Fire effect */
-        .fire {
-            position: absolute;
-            bottom: -10px;
-            width: 100%;
-            height: 40px;
-            background: linear-gradient(transparent, #ff0055);
-            filter: blur(5px);
-            opacity: 0.6;
-            border-radius: 50%;
-            animation: fire-flicker 2s infinite alternate;
-        }
-        
-        @keyframes fire-flicker {
-            0% {
-                opacity: 0.4;
-                height: 30px;
-            }
-            100% {
-                opacity: 0.7;
-                height: 50px;
+
+            .ad-container {
+                min-height: 150px;
             }
         }
-     
     </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
      crossorigin="anonymous"></script>
@@ -438,16 +478,19 @@
         <!-- Content will be populated by JavaScript -->
         <h1 class="shayari-title" id="shayariTitle"></h1>
         <div class="shayari-content" id="shayariContent"></div>
-        <ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-6575643228502924"
-     data-ad-slot="3112440962"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
         
+        <!-- Dedicated ad container with proper styling -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                style="display:block;"
+                data-ad-client="ca-pub-6575643228502924"
+                data-ad-slot="3112440962"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
         
         <!-- Signature -->
         <div class="signature" id="signature"></div>
@@ -570,38 +613,4 @@
             });
         }
         
-        // Share Shayari
-        function shareShayari() {
-            const title = document.getElementById("shayariTitle").innerText;
-            const content = document.getElementById("shayariContent").innerText;
-            const sign = document.getElementById("signature").innerText;
-            const fullText = `${title}\n\n${content}\n\n${sign}`;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: "शायरी",
-                    text: fullText,
-                    url: window.location.href
-                }).catch((error) => {
-                    // Fallback if share fails
-                    copyShayari();
-                    alert("शेयर विफल रहा, शायरी कॉपी हो गई है");
-                });
-            } else {
-                // Fallback for browsers that don't support share API
-                copyShayari();
-                alert("शेयरिंग इस डिवाइस पर समर्थित नहीं है। शायरी कॉपी हो गई है");
-            }
-        }
-        
-        // Initialize the page
-        function init() {
-            createFlowerRain();
-            fetchShayari();
-        }
-        
-        // Start everything when the page loads
-        window.addEventListener('DOMContentLoaded', init);
-    </script>
-</body>
-</html>
+        // Shar
