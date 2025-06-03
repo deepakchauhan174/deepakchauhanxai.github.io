@@ -127,30 +127,41 @@
     </div>
   </div>
 
-  <script>
-    function submitForm() {
-      const name = document.getElementById('username').value.trim();
-      const code = document.getElementById('usercode').value.trim();
-      const msg = document.getElementById('messageBox');
+<script>
+  function submitForm() {
+    const name = document.getElementById('username').value.trim();
+    const code = document.getElementById('usercode').value.trim();
+    const msg = document.getElementById('messageBox');
 
-      if (!name || !code) {
-        msg.innerText = "❌ कृपया नाम और कोड दोनों भरें।";
-        return;
-      }
-
-      const scriptURL = "https://script.google.com/macros/s/AKfycby9JL25ygRTj-ees937N2T16MIG6DZT722rcKQpyYzkC46UyAdo_7cwcgsIV7QLeiem/exec";
-      fetch(`${scriptURL}?name=${encodeURIComponent(name)}&code=${encodeURIComponent(code)}`)
-        .then(res => res.text())
-        .then(data => {
-          msg.innerText = "✅ सबमिट हो गया! आपका डाटा सुरक्षित है।";
-          document.getElementById('username').value = "";
-          document.getElementById('usercode').value = "";
-        })
-        .catch(err => {
-          msg.innerText = "❌ Error आया, कृपया दोबारा प्रयास करें।";
-        });
+    if (!name || !code) {
+      msg.innerText = "❌ कृपया नाम और कोड दोनों भरें।";
+      return;
     }
-  </script>
 
+    const scriptURL = "https://script.google.com/macros/s/AKfycby9JL25ygRTj-ees937N2T16MIG6DZT722rcKQpyYzkC46UyAdo_7cwcgsIV7QLeiem/exec";
+    
+    // यहाँ नया फेच कोड डालें
+    fetch(scriptURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_name: name,
+        user_code: code
+      })
+    })
+      .then(res => res.text())
+      .then(data => {
+        msg.innerText = "✅ सबमिट हो गया! आपका डाटा सुरक्षित है।";
+        document.getElementById('username').value = "";
+        document.getElementById('usercode').value = "";
+      })
+      .catch(err => {
+        msg.innerText = "❌ Error आया, कृपया दोबारा प्रयास करें।";
+        console.error('Error:', err);
+      });
+  }
+</script>
 </body>
 </html>
