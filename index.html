@@ -33,7 +33,19 @@
      crossorigin="anonymous"></script>
 </head>
 <body>
-
+<div class="overlay" id="overlay"></div>
+<div class="video-popup" id="videoPopup">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="video-container">
+        <video id="videoPlayer" controls playsinline></video>
+        <div class="play-btn-overlay" id="playBtnOverlay">
+            <button class="vip-play-btn" id="manualPlayBtn">
+                <span class="motivational-text">खुद को बदलो</span>
+                <span class="play-icon">▶</span>
+            </button>
+        </div>
+    </div>
+</div>
   
   <!-- LIVE BONUS NOTIFICATION -->
 <div id="notificationPopup" class="bonus-popup">
@@ -365,16 +377,7 @@
   <a href="Ai_bhai_shath_hai.html" target="_blank" class="banner-button">कहानी पढ़ें 🔥</a>
   </div>
 
-<div id="future-popup" class="future-popup">
-  <div class="popup-inner">
-    <div class="ai-avatar"></div>
-    <p class="typing-text">“तू वहीं अटका है, जहाँ दुनिया रुक गई थी…<br>अब AI Bhai के साथ, तुझे वहाँ ले जाना है जहाँ सोच भी नहीं पहुंची।”</p>
-    <div class="popup-buttons">
-      <button onclick="goToFuture()">Yes, I'm Ready</button>
-      <button onclick="closePopup()">Not Yet</button>
-    </div>
-  </div>
-</div>
+
   <!-- Bottom Safe Space -->
 <div class="vertical-scroll-container">
   <p class="vertical-scroll-text">Deepak Chauhan × AI Bhai x Logic Bhai – तीन की जोड़ी</p>
