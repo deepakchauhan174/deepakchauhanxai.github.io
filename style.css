@@ -1916,7 +1916,7 @@ transform: scale(1.05);
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     z-index: 999;
     display: none;
 }
@@ -1927,7 +1927,7 @@ transform: scale(1.05);
     left: 50%;
     transform: translate(-50%, -50%);
     width: 90%;
-    max-width: 900px;
+    max-width: 800px;
     z-index: 1000;
     display: none;
 }
@@ -1935,11 +1935,12 @@ transform: scale(1.05);
 .video-container {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    padding-bottom: 56.25%;
     background: #000;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+    border: 1px solid gold;
 }
 
 .video-container video {
@@ -1953,27 +1954,21 @@ transform: scale(1.05);
 
 .close-btn {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 0, 0, 0.7);
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 0, 0, 0.8);
     color: white;
     border-radius: 50%;
     border: none;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     z-index: 1001;
-    transition: all 0.3s;
 }
 
-.close-btn:hover {
-    background: rgba(255, 0, 0, 1);
-    transform: scale(1.1);
-}
-
-/* VIP Play Button Styling */
+/* VIP Play Button - Compact Design */
 .play-btn-overlay {
     position: absolute;
     top: 0;
@@ -1989,95 +1984,72 @@ transform: scale(1.05);
 
 .vip-play-btn {
     position: relative;
-    width: 300px;
-    height: 300px;
-    background: linear-gradient(135deg, 
-        #ff00cc, #ff0066, #ff0000, 
-        #ff6600, #ffcc00, #33cc33,
-        #0099ff, #6633ff, #cc00ff);
-    background-size: 400% 400%;
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #ff00cc, #3333ff);
     color: white;
     border: none;
     border-radius: 50%;
-    font-size: 30px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 50px rgba(255, 215, 0, 0.7),
-                0 0 100px rgba(255, 0, 255, 0.5),
-                inset 0 0 20px rgba(255, 255, 255, 0.3);
-    animation: gradientBG 8s ease infinite, pulse 2s ease infinite;
-    transition: all 0.5s;
-    overflow: hidden;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    transition: all 0.3s;
+    padding: 15px;
 }
 
 .vip-play-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 70px rgba(255, 215, 0, 0.9),
-                0 0 120px rgba(255, 0, 255, 0.7),
-                inset 0 0 30px rgba(255, 255, 255, 0.5);
-}
-
-.play-icon {
-    font-size: 60px;
-    margin-bottom: 10px;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.9);
 }
 
 .motivational-text {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 5px;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    margin-bottom: 8px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
 }
 
-.play-now {
-    font-size: 16px;
-    letter-spacing: 2px;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+.play-icon {
+    font-size: 30px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
-/* Animations */
-@keyframes gradientBG {
+/* Glow Effect */
+.video-popup::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(45deg, 
+        gold, #ff00cc, #3333ff, gold);
+    background-size: 400% 400%;
+    z-index: -1;
+    border-radius: 15px;
+    opacity: 0.7;
+    animation: glowBorder 6s linear infinite;
+}
+
+@keyframes glowBorder {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.03); }
-    100% { transform: scale(1); }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Responsive Adjustments */
+@media (max-width: 600px) {
     .vip-play-btn {
-        width: 220px;
-        height: 220px;
-    }
-    .play-icon {
-        font-size: 50px;
+        width: 100px;
+        height: 100px;
     }
     .motivational-text {
-        font-size: 20px;
-    }
-    .play-now {
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .vip-play-btn {
-        width: 180px;
-        height: 180px;
+        font-size: 16px;
     }
     .play-icon {
-        font-size: 40px;
-    }
-    .motivational-text {
-        font-size: 18px;
+        font-size: 25px;
     }
 }
