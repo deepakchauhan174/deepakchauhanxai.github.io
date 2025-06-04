@@ -1,61 +1,60 @@
 // Google Apps Script URL (Replace with yours)
-const API_URL = "https://script.google.com/macros/s/AKfycbzc0Bt04pqlYgZRSkJTj8PsEHiSXPTjlNBSAVN7f4VX2vRUdYn6iQ0foG36FKVi4b0P/exec";
+const API_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
 
 // DOM Elements
-const videoPopup = document.getElementById('videoPopup');
-const overlay = document.getElementById('overlay');
-const closeBtn = document.getElementById('closeBtn');
-const videoPlayer = document.getElementById('videoPlayer');
-const playBtnOverlay = document.getElementById('playBtnOverlay');
-const manualPlayBtn = document.getElementById('manualPlayBtn');
+const elements = {
+    videoPopup: document.getElementById('videoPopup'),
+    overlay: document.getElementById('overlay'),
+    closeBtn: document.getElementById('closeBtn'),
+    videoPlayer: document.getElementById('videoPlayer'),
+    playBtnOverlay: document.getElementById('playBtnOverlay'),
+    manualPlayBtn: document.getElementById('manualPlayBtn')
+};
 
-// Show popup immediately
-videoPopup.style.display = 'block';
-overlay.style.display = 'block';
-playBtnOverlay.style.display = 'flex'; // Always show play button
+// Show popup with 1-hour interval
+function showPopup() {
+    const lastShown = localStorage.getItem('popupLastShown');
+    const oneHour = 1,44,00,000; // 4 hour in milliseconds
+    
+    if (!lastShown || (Date.now() - lastShown) > oneHour) {
+        elements.videoPopup.style.display = 'block';
+        elements.overlay.style.display = 'block';
+        elements.playBtnOverlay.style.display = 'flex';
+        localStorage.setItem('popupLastShown', Date.now());
+    }
+}
 
-// Fetch video from Google Sheet
+// Load video from Google Sheet
 async function loadVideo() {
     try {
         const response = await fetch(API_URL);
         const videos = await response.json();
-        
         if (videos.length > 0) {
-            videoPlayer.src = videos[0].VideoURL;
+            elements.videoPlayer.src = videos[0].VideoURL;
         }
     } catch (error) {
         console.error("Error loading video:", error);
     }
 }
 
-// Play video function
-function playVideo() {
-    videoPlayer.play()
-        .then(() => {
-            playBtnOverlay.style.display = 'none';
-        })
-        .catch(error => {
-            console.log("Playback failed:", error);
-        });
-}
-
-// Manual play with VIP button
-manualPlayBtn.addEventListener('click', playVideo);
-
-// Close popup function
-function closePopup() {
-    videoPlayer.pause();
-    videoPopup.style.display = 'none';
-    overlay.style.display = 'none';
-}
-
-// Event listeners
-closeBtn.addEventListener('click', closePopup);
-overlay.addEventListener('click', closePopup);
-videoPlayer.addEventListener('ended', closePopup);
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closePopup();
+// Event Listeners
+elements.manualPlayBtn.addEventListener('click', () => {
+    elements.videoPlayer.play()
+        .then(() => elements.playBtnOverlay.style.display = 'none')
+        .catch(err => console.log("Playback failed:", err));
 });
+
+elements.closeBtn.addEventListener('click', closePopup);
+elements.overlay.addEventListener('click', closePopup);
+
+function closePopup() {
+    elements.videoPlayer.pause();
+    elements.videoPopup.style.display = 'none';
+    elements.overlay.style.display = 'none';
+}
 
 // Initialize
 loadVideo();
+showPopup();
+// Check every hour if popup should show
+setInterval(showPopup, 1,44,00,000);
