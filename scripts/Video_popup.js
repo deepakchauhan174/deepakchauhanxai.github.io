@@ -1,5 +1,5 @@
 // Google Apps Script URL (Replace with yours)
-const API_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzc0Bt04pqlYgZRSkJTj8PsEHiSXPTjlNBSAVN7f4VX2vRUdYn6iQ0foG36FKVi4b0P/exec";
 
 // DOM Elements
 const elements = {
