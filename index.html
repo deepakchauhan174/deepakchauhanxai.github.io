@@ -33,6 +33,17 @@
      crossorigin="anonymous"></script>
 </head>
 <body>
+  <div id="eidPopupBox" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%);
+background:#111; color:white; padding:20px; border-radius:15px; border:2px solid #fff;
+box-shadow:0 0 20px #00f5ff; z-index:9999; max-width:90%; width:350px; text-align:center;">
+
+  <img id="popupPhoto" src="" style="width:100%; border-radius:10px; margin-bottom:15px;" />
+  <div id="popupTitle" style="font-size:20px; color:#00f5ff; margin-bottom:10px;">Loading...</div>
+  <div id="popupShayari" style="font-size:18px; color:#ffc107; margin-bottom:10px;">Shayari Loading...</div>
+  <div id="popupSignature" style="font-size:16px; color:#aaa; margin-bottom:10px;">- Signature</div>
+  <button onclick="document.getElementById('eidPopupBox').style.display='none'"
+    style="background:red; color:white; padding:8px 16px; border:none; border-radius:8px;">Close</button>
+</div>
 <div class="overlay" id="overlay"></div>
 <div class="video-popup" id="videoPopup">
     <button class="close-btn" id="closeBtn">✕</button>
