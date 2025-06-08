@@ -11,12 +11,13 @@ const elements = {
     manualPlayBtn: document.getElementById('manualPlayBtn')
 };
 
-// Show popup with 1-hour interval
+const POPUP_DELAY = 180000; // 3 minutes
+const COOLDOWN_INTERVAL = 14400000; // 4 hours in ms
+
+// Show popup with cooldown check
 function showPopup() {
     const lastShown = localStorage.getItem('popupLastShown');
-    const oneHour = 1,44,00,000; // 4 hour in milliseconds
-    
-    if (!lastShown || (Date.now() - lastShown) > oneHour) {
+    if (!lastShown || (Date.now() - lastShown) > COOLDOWN_INTERVAL) {
         elements.videoPopup.style.display = 'block';
         elements.overlay.style.display = 'block';
         elements.playBtnOverlay.style.display = 'flex';
@@ -53,8 +54,6 @@ function closePopup() {
     elements.overlay.style.display = 'none';
 }
 
-// Initialize
+// Initialize after 3-minute delay
 loadVideo();
-showPopup();
-// Check every hour if popup should show
-setInterval(showPopup, 1,44,00,000);
+setTimeout(showPopup, POPUP_DELAY);
