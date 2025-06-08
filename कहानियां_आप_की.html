@@ -1,0 +1,323 @@
+<!DOCTYPE html>  <html lang="hi">  
+<head>  
+  <meta charset="UTF-8">  
+  <title>VIP Kahani System</title>  
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
+     crossorigin="anonymous"></script>
+  <style>  
+    * { margin: 0; padding: 0; box-sizing: border-box; }  
+    body {  
+      display: flex;  
+      font-family: 'Poppins', sans-serif;  
+      background: #000;  
+      color: white;  
+      height: 100vh;  
+      overflow: auto;  
+    }  
+    .sidebar {  
+      width: 30%;  
+      background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);  
+      color: white;  
+      overflow-y: auto;  
+      padding: 15px;  
+      height: 100vh;  
+      flex-shrink: 0;  
+    }  
+    .sidebar h2 {  
+      text-align: center;  
+      margin-bottom: 10px;  
+    }  #search-input {  
+  width: 100%;  
+  padding: 10px;  
+  border-radius: 8px;  
+  border: none;  
+  font-size: 1rem;  
+  background: #111;  
+  color: #fff;  
+  border: 1px solid #444;  
+  margin-bottom: 10px;  
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);  
+  transition: 0.3s ease;  
+}  
+#search-input::placeholder {  
+  color: #888;  
+}  
+#search-input:focus {  
+  outline: none;  
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.6);  
+}  
+
+.story-title {  
+  padding: 10px;  
+  margin: 10px 0;  
+  background: rgba(255,255,255,0.1);  
+  border-left: 5px solid #ff00cc;  
+  cursor: pointer;  
+  transition: background 0.3s;  
+}  
+.story-title:hover {  
+  background: rgba(255,255,255,0.2);  
+}  
+
+.main-box {  
+  flex-grow: 1;  
+  background: linear-gradient(to right, #000428, #004e92);  
+  color: white;  
+  padding: 20px;  
+  overflow-y: auto;  
+  position: relative;  
+}  
+
+.story-content {  
+  padding: 20px;  
+  background: rgba(255,255,255,0.05);  
+  border-radius: 10px;  
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);  
+  height: 90%;  
+  overflow-y: auto;  
+}  
+
+.signature {  
+  text-align: right;  
+  font-style: italic;  
+  color: #ffb3ec;  
+  margin-top: 20px;  
+}  
+
+.share-buttons {  
+  margin-top: 20px;  
+  display: flex;  
+  gap: 10px;  
+}  
+
+.share-buttons button {  
+  background: #222;  
+  border: 1px solid #fff;  
+  color: #fff;  
+  padding: 8px 12px;  
+  border-radius: 8px;  
+  cursor: pointer;  
+  transition: 0.3s;  
+}  
+
+.share-buttons button:hover {  
+  background: #fff;  
+  color: #000;  
+}  
+
+.scanner {  
+  position: absolute;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 4px;  
+  background: linear-gradient(to bottom, rgba(255,255,255,0.7), transparent);  
+  animation: scanMove 2s linear forwards;  
+  z-index: 10;  
+}  
+
+@keyframes scanMove {  
+  0% { top: 0; opacity: 1; }  
+  100% { top: 100%; opacity: 0; }  
+}  
+
+.flower {  
+  position: absolute;  
+  width: 20px;  
+  height: 20px;  
+  background: url('https://cdn-icons-png.flaticon.com/128/4206/4206275.png') no-repeat center/contain;  
+  animation: fall 3s linear forwards;  
+  pointer-events: none;  
+  z-index: 9;  
+}  
+
+@keyframes fall {  
+  0% {  
+    transform: translateY(0) rotate(0deg);  
+    opacity: 1;  
+  }  
+  100% {  
+    transform: translateY(100vh) rotate(360deg);  
+    opacity: 0;  
+  }  
+}   
+  
+.flower {  
+   position: fixed;  
+   animation: floatRotate 6s linear infinite;  
+   pointer-events: none;  
+   z-index: 1000;  
+   opacity: 0.9;  
+   user-select: none;  
+   transition: transform 1s;  
+}  
+
+@keyframes floatRotate {  
+0% {  
+transform: translateY(0) rotate(0deg);  
+}  
+50% {  
+transform: translateY(-20px) rotate(180deg);  
+}  
+100% {  
+transform: translateY(0) rotate(360deg);  
+  }  
+}
+
+  </style>
+ <!-- ✅ Meta Description -->
+  <meta name="description" content="Deepak Chauhan X AI द्वारा प्रस्तुत VIP कहानियां - पढ़िए दिल को छू जाने वाली प्रेरणादायक, रोमांटिक और मजेदार हिंदी कहानियाँ। हर दिन एक नई कहानी।" />
+
+  <!-- ✅ Meta Keywords -->
+  <meta name="keywords" content="हिंदी कहानियाँ, प्रेरणादायक कहानियाँ, VIP Kahani, रोचक कहानियाँ, Deepak Chauhan, hindi stories, AI stories" />
+
+  <!-- ✅ Author -->
+  <meta name="author" content="Deepak Chauhan X AI" />
+
+  <!-- ✅ Favicon -->
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/4206/4206275.png" type="image/png" />
+
+  <!-- ✅ Open Graph for Social Sharing -->
+  <meta property="og:title" content="VIP कहानियां - Deepak Chauhan X AI" />
+  <meta property="og:description" content="प्रेरणादायक, रोमांटिक और मजेदार हिंदी कहानियाँ, Deepak Chauhan X AI द्वारा।" />
+  <meta property="og:image" content="https://cdn-icons-png.flaticon.com/128/4206/4206275.png" />
+  <meta property="og:url" content="https://deepakchauhanxai.com/" />
+  <meta property="og:type" content="website" />
+
+  <!-- ✅ Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="VIP कहानियां - Deepak Chauhan X AI" />
+  <meta name="twitter:description" content="प्रेरणादायक और रोचक हिंदी कहानियाँ पढ़ें - VIP Kahani।" />
+  <meta name="twitter:image" content="https://cdn-icons-png.flaticon.com/128/4206/4206275.png" />
+
+  <!-- ✅ Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Deepak Chauhan X AI - VIP Kahani",
+    "url": "https://deepakchauhanxai.com/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://deepakchauhanxai.com/?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+</head>  
+<body>    <div class="sidebar">  
+    <h2>Titles</h2>  
+    <input type="text" id="search-input" placeholder="🔍 कहानी खोजें..." />  
+    <div id="story-list"></div>  
+  </div>    <div class="main-box">  
+    <div class="story-content" id="story-box">  
+      <h2>🌸 कहानियां 🌸</h2>  
+    </div>  
+  </div>    <script>  
+    const scriptURL = "https://script.google.com/macros/s/AKfycbz_M5RSsc4J6FKvBiNagmjsEdSZTPRvP2e4U9sWkNyaaXA3sSHlJS-4UymUc0AVsHexSQ/exec";  
+    let allData = [];  
+  
+    function fetchTitles() {  
+      fetch(scriptURL)  
+        .then(res => res.json())  
+        .then(data => {  
+          allData = shuffleArray(data.data);  
+          showTitles(allData);  
+        });  
+    }  
+  
+    function showTitles(data) {  
+      const titleList = document.getElementById('story-list');  
+      titleList.innerHTML = '';  
+      data.forEach((item) => {  
+        const div = document.createElement('div');  
+        div.className = 'story-title';  
+        div.innerText = item.Title;  
+        div.onclick = () => showStory(item);  
+        titleList.appendChild(div);  
+      });  
+    }  
+  
+    function showStory(item) {  
+      const storyHTML = `  
+        <h2>${item.Title}</h2>  
+        <p>${item.Content}</p>  
+        <div class="signature">~ ${item.Signature ?? item.signature ?? "Anonymous"}</div>  
+        <div class="share-buttons">  
+          <button onclick="copyStory()">कॉपी करें</button>  
+          <button onclick="shareStory()">शेयर करें</button>  
+        </div>  
+      `;  
+      // 🌸 Add random floating flowers permanently  
+const flowers = ["🌸", "🌼", "🌺", "🌹", "🌻"];  
+for (let i = 0; i < 30; i++) {  
+  const flower = document.createElement('div');  
+  flower.className = 'flower';  
+  flower.innerText = flowers[Math.floor(Math.random() * flowers.length)];  
+  flower.style.left = Math.random() * 100 + 'vw';  
+  flower.style.top = Math.random() * 100 + 'vh';  
+  flower.style.fontSize = `${Math.random() * 20 + 16}px`;  
+  document.body.appendChild(flower);  
+}  
+      const box = document.getElementById('story-box');  
+      box.innerHTML = storyHTML;  
+  
+      const scanner = document.createElement('div');  
+      scanner.className = 'scanner';  
+      document.querySelector('.main-box').appendChild(scanner);  
+      setTimeout(() => scanner.remove(), 2000);  
+  
+      for (let i = 0; i < 5; i++) {  
+        const flower = document.createElement('div');  
+        flower.className = 'flower';  
+        flower.style.left = Math.random() * 90 + '%';  
+        flower.style.top = '-30px';  
+        flower.style.animationDelay = `${Math.random()}s`;  
+        document.querySelector('.main-box').appendChild(flower);  
+        setTimeout(() => flower.remove(), 3000);  
+      }  
+  
+      document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' });  
+    }  
+  
+    function copyStory() {  
+      const text = document.getElementById('story-box').innerText;  
+      navigator.clipboard.writeText(text).then(() => {  
+        alert("कहानी कॉपी हो गई!");  
+      });  
+    }  
+       
+    function shareStory() {  
+      const text = document.getElementById('story-box').innerText;  
+      const shareData = {  
+        title: "VIP Kahani",  
+        text: text,  
+        url: window.location.href  
+      };  
+      if (navigator.share) {  
+        navigator.share(shareData).catch(err => {  
+          alert("शेयर नहीं हो पाया: " + err);  
+        });  
+      } else {  
+        alert("आपका ब्राउज़र शेयर सपोर्ट नहीं करता।");  
+      }  
+    }  
+  
+    function shuffleArray(arr) {  
+      return arr.sort(() => Math.random() - 0.5);  
+    }  
+  
+    document.getElementById('search-input').addEventListener('input', (e) => {  
+      const keyword = e.target.value.toLowerCase();  
+      const filtered = allData.filter(item =>  
+        (item.Title && item.Title.toLowerCase().includes(keyword)) ||  
+        (item.Content && item.Content.toLowerCase().includes(keyword))  
+      );  
+      showTitles(filtered);  
+    });  
+  
+    fetchTitles();  
+    setInterval(fetchTitles, 30 * 60 * 1000);  
+    window.addEventListener('pageshow', fetchTitles);  
+  </script>  </body>  
+  </html>
