@@ -82,9 +82,81 @@ h1 {
   border-left: 5px solid #00ffff;
   margin-bottom: 20px;
 }
+
+.vip-glass {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.vip-box {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 30px 25px;
+  text-align: center;
+  max-width: 420px;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  animation: popupFade 0.8s ease-out;
+}
+
+.vip-video video,
+.vip-video img {
+  width: 100%;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  max-height: 240px;
+  object-fit: cover;
+}
+
+.vip-message {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.vip-title {
+  font-size: 16px;
+  margin: 10px 0;
+  color: #f0f0f0;
+  font-style: italic;
+}
+
+.vip-signature {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #ccc;
+  font-weight: 600;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes popupFade {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
   </style>  
 </head>  
-<body> 
+<body>
+<div id="vipPopup" class="vip-glass hidden">
+  <div class="vip-box">
+    <div class="vip-video" id="vipVideoContainer">
+      <!-- Video/GIF will load here -->
+    </div>
+    <h2 class="vip-message">Congratulations, <span id="winnerName">Winner Name</span> ❤️</h2>
+    <p id="vipTitle" class="vip-title">Your success inspires us all.</p>
+    <div class="vip-signature">— Deepak Chauhan × AI Bhai</div>
+  </div>
+</div>
 <div class="form-container">  
 <h1><strong>ऑनलाइन जागरूकता अभियान</strong></h1>
 <P> किस्मत के भरोसे नहीं खुद के भरोसे लड़े किस्मत धोखा दे सकती है भरोसा नहीं जो खुद पर भरोसा करता है वही इतिहास रचता है ऑनलाइन इन्वेस्ट करने से पहले एक बार नहीं हजार बार सोचों<p>100% में से कुछ ही अवसर वास्तव में भरोसेमंद होते हैं — सही निर्णय ही आपको आगे बढ़ाता है।    </p>
@@ -129,6 +201,41 @@ h1 {
         msgBox.innerHTML = `<p style="color: #ff4444;">❌ त्रुटि! कृपया दोबारा प्रयास करें।</p>`;  
       });  
     }  
-  </script>  
-</body>  
+    
+function showVIPPopup(data) {
+  document.getElementById("winnerName").textContent = data.name || "Friend";
+  document.getElementById("vipTitle").textContent = data.title || "You're a true inspiration!";
+
+  const videoContainer = document.getElementById("vipVideoContainer");
+
+const isVideo = data.videoURL.includes(".mp4");
+const isGif = data.videoURL.includes(".gif");
+
+if (isVideo) {
+  videoContainer.innerHTML = `
+    <video autoplay muted loop playsinline>
+      <source src="${data.videoURL}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>`;
+} else if (isGif) {
+  videoContainer.innerHTML = `
+    <img src="${data.videoURL}" alt="GIF" style="max-width:100%; border-radius:15px;" />`;
+} else {
+  videoContainer.innerHTML = `<p style="color: #ff8080;">❌ Invalid media URL</p>`;
+}
+  document.getElementById("vipPopup").classList.remove("hidden");
+}
+
+// Auto-load popup
+fetch('https://script.google.com/macros/s/AKfycby0TaeJH7KH0TvrvHzNqwB3XeSh26FGRaE1VTkAPJqF-rNBsJfJDg-B55hEVkWE-AUH/exec')
+  .then(res => res.json())
+  .then(data => {
+    if (data && data.name && data.videoURL) {
+      showVIPPopup(data);
+    }
+  })
+  .catch(err => console.error("Popup load error:", err));
+  </script> 
+ </body>  
 </html>
+
