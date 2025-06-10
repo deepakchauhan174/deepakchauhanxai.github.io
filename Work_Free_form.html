@@ -1,199 +1,134 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-  <meta charset="UTF-8">
-  <title>🔥 Final Task Form</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+<!DOCTYPE html>  <html lang="hi">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1">  
+  <title>कार्य पुष्टि फॉर्म | Deepak Chauhan × AI</title>  
+  <style>  
+    body {  
+      margin: 0;  
+      padding: 0;  
+      font-family: 'Poppins', sans-serif;  
+      background: linear-gradient(145deg, #1a1a40, #000000);  
+      color: white;  
+      display: flex;  
+      justify-content: center;  
+      align-items: center;  
+      min-height: 100vh;  
+    }  .form-container {  
+  background: rgba(255, 255, 255, 0.06);  
+  backdrop-filter: blur(12px);  
+  border-radius: 20px;  
+  padding: 30px;  
+  width: 90%;  
+  max-width: 500px;  
+  box-shadow: 0 0 25px rgba(255, 0, 128, 0.4);  
+}  
 
-    .form-box {
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 20px;
-      padding: 30px;
-      width: 90%;
-      max-width: 600px;
-      box-shadow: 0 0 25px #ff00cc, 0 0 50px #00ccff;
-      animation: pulseGlow 2s infinite alternate;
-    }
+.form-container h2 {  
+  text-align: center;  
+  color: #00ffff;  
+  margin-bottom: 20px;  
+}  
 
-    @keyframes pulseGlow {
-      from {
-        box-shadow: 0 0 20px #ff0040, 0 0 40px #00f0ff;
-      }
-      to {
-        box-shadow: 0 0 40px #ff0040, 0 0 80px #00f0ff;
-      }
-    }
+input {  
+  width: 100%;  
+  padding: 12px;  
+  margin: 10px 0;  
+  border: none;  
+  border-radius: 10px;  
+  background: #ffffff11;  
+  color: white;  
+  font-size: 16px;  
+}  
 
-    input {
-      width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      border-radius: 10px;
-      border: none;
-      font-size: 16px;
-      outline: none;
-    }
+button {  
+  width: 100%;  
+  padding: 14px;  
+  background: linear-gradient(to right, #ff0040, #ff8a00);  
+  border: none;  
+  border-radius: 10px;  
+  font-size: 18px;  
+  color: white;  
+  cursor: pointer;  
+  transition: all 0.3s ease;  
+}  
 
-    button {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(to right, #ff0040, #ff8a00);
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      color: white;
-      cursor: pointer;
-      margin-top: 20px;
-      transition: all 0.3s ease;
-    }
+.msg {  
+  margin-top: 15px;  
+  text-align: center;  
+  min-height: 50px;  
+}  
 
-    button:disabled {
-      background: #cccccc;
-      cursor: not-allowed;
-    }
+.note-box {  
+  background: rgba(255, 255, 255, 0.05);  
+  padding: 15px;  
+  margin-top: 20px;  
+  border-left: 5px solid #00ffcc;  
+  border-radius: 10px;  
+  font-size: 14px;  
+  color: #e0ffff;  
+}
 
-    .vip-inner-message-box {
-      background: rgba(255, 255, 255, 0.05);
-      border-left: 5px solid #ff0040;
-      padding: 15px;
-      margin: 20px 0;
-      border-radius: 10px;
-    }
-
-    .msg {
-      text-align: center;
-      margin-top: 15px;
-      color: #00ffcc;
-      font-size: 14px;
-      min-height: 50px;
-    }
-
-    h2 {
-      text-align: center;
-    }
-    
-    .vip-next-btn {
-      display: inline-block;
-      padding: 16px 30px;
-      background: linear-gradient(to right, #ff0040, #ff8a00);
-      color: white;
-      font-size: 20px;
-      font-weight: bold;
-      border-radius: 50px;
-      text-decoration: none;
-      box-shadow: 0 0 20px #ff0040, 0 0 40px #ff8a00;
-      transition: all 0.3s ease-in-out;
-    }
-
-    .vip-next-btn:hover {
-      background: linear-gradient(to right, #00f0ff, #00ff99);
-      box-shadow: 0 0 30px #00f0ff, 0 0 60px #00ff99;
-      transform: scale(1.05);
-    }
-
-    .success-img {
-      width: 80px;
-      margin: 0 auto 10px;
-      display: block;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="form-box">
-    <div style="text-align: center; margin-top: 40px;">
-      <a href="index.html" class="vip-next-btn">🏠 Back home</a>
-    </div>
-    <h2>👉 Apna Naam aur Code Bharo</h2>
-    <input type="text" id="username" placeholder="Name">
-    <input type="text" id="usercode" placeholder="Code">
-
-    <h2 style="color: #ff4444; text-align: center; margin-top: 30px;">📢 Note (Rule Match)</h2>
-    <div class="vip-inner-message-box">
-      <p style="color: #ffcc00;">✅ यह फार्म भरवाने का सिर्फ एक ही मकसद है — <b>काम फ्री में मिलेगा</b>। यहां पर चेक किया जा रहा है कि आप कितने एक्टिव रहते हैं और कितने अच्छे से वर्क कर सकते हैं।</p>
-      <p style="color: #00ffff;">🛡️ हमारा मकसद है सिर्फ <b>एक्टिविटी चेक करना</b>, ना कि पर्सनल डाटा लेना या कोई पर्सनल बातों को इकट्ठा करना।</p>
-      <p style="color: #00ff66;">🔥 <b>काम भी मिलेगा, नाम भी मिलेगा</b> — जिसे चुना जाएगा उसका नाम <b>यही वेबसाइट</b> पर मेंशन किया जाएगा।</p>
-    </div>
-
-    <button id="submitBtn" onclick="submitForm()">✅ Submit</button>
-    <div class="msg" id="messageBox"></div>
-
-    <h2 style="color:#00ffff; text-align:center; margin-top: 30px;">🔐 Code Important Notice</h2>
-    <div class="vip-inner-message-box">
-      <p>👉 जो भी Code आप यहाँ भर रहे हैं, वही रोजाना भरना है।</p>
-      <p>📊 इससे आपकी एक्टिविटी चेक की जाएगी और इसी कोड से आपको वर्क दिया जाएगा।</p>
-      <p>🧠 कृपया अपने Code को याद रखें या कहीं सेव करके रख लें ताकि आप उसे दोबारा इस्तेमाल कर सकें।</p>
-      <p>🔒 हम किसी भी प्रकार की पर्सनल जानकारी नहीं लेते — बस आपकी मेहनत और consistency चेक करते हैं।</p>
-    </div>
-  </div>
-
-<script>
-  let isSubmitting = false;
-
-  function submitForm() {
-    if (isSubmitting) return;
-    
-    const name = document.getElementById('username').value.trim();
-    const code = document.getElementById('usercode').value.trim();
-    const msg = document.getElementById('messageBox');
-    const submitBtn = document.getElementById('submitBtn');
-
-    if (!name || !code) {
-      msg.innerHTML = '<p style="color:#ff4444;">❌ कृपया नाम और कोड दोनों भरें।</p>';
-      return;
-    }
-
-    isSubmitting = true;
-    submitBtn.disabled = true;
-    submitBtn.textContent = "प्रोसेसिंग...";
-    msg.innerHTML = '<img src="https://i.gifer.com/origin/b4/b4d657e7ef262b88eb5f7ac021edda87.gif" width="50" style="margin:0 auto;"><p>आपका डेटा सेव किया जा रहा है...</p>';
-
-    const scriptURL = "https://script.google.com/macros/s/AKfycby9JL25ygRTj-ees937N2T16MIG6DZT722rcKQpyYzkC46UyAdo_7cwcgsIV7QLeiem/exec";
-
-    fetch(scriptURL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_name: name, user_code: code })
-    })
-    .then(res => {
-      if (!res.ok) throw new Error('Network response was not ok');
-      return res.text();
-    })
-    .then(data => {
-      msg.innerHTML = `
-        <img class="success-img" src="https://cdn-icons-png.flaticon.com/512/7518/7518748.png">
-        <p style="color:#00ff99;">✅ सफलतापूर्वक सबमिट हो गया!</p>
-        <p>धन्यवाद, ${name}!</p>
-      `;
-      document.getElementById('username').value = "";
-      document.getElementById('usercode').value = "";
-    })
-    .catch(err => {
-      console.error('Error:', err);
-      msg.innerHTML = `
-        <img class="success-img" src="https://cdn-icons-png.flaticon.com/512/753/753345.png">
-        <p style="color:#ff4444;">❌ त्रुटि: ${err.message || 'कृपया बाद में पुनः प्रयास करें'}</p>
-      `;
-    })
-    .finally(() => {
-      isSubmitting = false;
-      submitBtn.disabled = false;
-      submitBtn.textContent = "✅ Submit";
-    });
-  }
-</script>
-</body>
+h1 {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  color: #00ffff;
+  font-size: 24px;
+  font-weight: bold;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+  border-left: 5px solid #00ffff;
+  margin-bottom: 20px;
+}
+  </style>  
+</head>  
+<body> 
+<div class="form-container">  
+<h1><strong>ऑनलाइन जागरूकता अभियान</strong></h1>
+<P> किस्मत के भरोसे नहीं खुद के भरोसे लड़े किस्मत धोखा दे सकती है भरोसा नहीं जो खुद पर भरोसा करता है वही इतिहास रचता है ऑनलाइन इन्वेस्ट करने से पहले एक बार नहीं हजार बार सोचों<p>100% में से कुछ ही अवसर वास्तव में भरोसेमंद होते हैं — सही निर्णय ही आपको आगे बढ़ाता है।    </p>
+    <h2>📝 कार्य पुष्टि फॉर्म</h2>  
+    <input type="text" id="username" placeholder="अपना नाम लिखें">  
+    <input type="text" id="usercode" placeholder="अपना कार्य कोड लिखें">  
+    <button onclick="submitForm()">✅ सबमिट करें</button>  
+    <div class="msg" id="messageBox"></div>  <div class="note-box">  
+  <p>🛡️ यह एक <strong>गोपनीय व सुरक्षित फॉर्म</strong> है। इसका उद्देश्य केवल आपकी <strong>सक्रियता (Activity)</strong> और <strong>भागीदारी (Participation)</strong> को रिकॉर्ड करना है।</p>    <p>💡 फॉर्म में दर्ज जानकारी का उपयोग केवल <strong>वर्क एलॉटमेंट</strong> और <strong>सम्मान सूची (Top Contributor Panel)</strong> हेतु किया जाएगा।</p>    <p>⏳ जो सदस्य नियमित रूप से एक्टिव रहते हैं, उन्हें <strong>अतिरिक्त फ्री वर्क</strong> और <strong>स्पेशल मेंशन</strong> भी दिया जाएगा — यह पूरी तरह <strong>आपकी consistency पर आधारित</strong> होगा।</p>    <p>💰 <strong>टिपिंग (Tipping) सिस्टम:</strong> अगर कोई यूजर किसी अन्य को मोटिवेट करता है या योगदान करता है, तो उसे 'टिप' के रूप में बोनस वर्क या सम्मान मिल सकता है। यह एक <strong>नॉन-कैश, शैक्षिक आभार</strong प्रणाली है।</p>    <p>⚠️ इस फॉर्म में किसी भी प्रकार की <strong>पर्सनल जानकारी</strong> नहीं ली जाती, और न ही इसका उपयोग किसी <strong>विज्ञापन या व्यावसायिक</strong> उद्देश्य के लिए होता है।</p>    <p>📘 यह एक <strong>शैक्षिक, प्रेरणात्मक और गैर-लाभकारी</strong> प्रयास है — जिसका मकसद युवाओं को डिजिटल रूप से सशक्त बनाना है।</p>  
+</div>    
+<script>  
+    const scriptURL = "https://script.google.com/macros/s/AKfycby9JL25ygRTj-ees937N2T16MIG6DZT722rcKQpyYzkC46UyAdo_7cwcgsIV7QLeiem/exec";  
+  
+    function submitForm() {  
+      const name = document.getElementById("username").value.trim();  
+      const code = document.getElementById("usercode").value.trim();  
+      const msgBox = document.getElementById("messageBox");  
+  
+      if (!name || !code) {  
+        msgBox.innerHTML = `<p style="color: #ff4444;">❌ कृपया सभी फ़ील्ड भरें।</p>`;  
+        return;  
+      }  
+  
+      const formData = new FormData();  
+      formData.append("user_name", name);  
+      formData.append("user_code", code);  
+  
+      msgBox.innerHTML = `<p style="color: yellow;">⏳ सबमिट किया जा रहा है...</p>`;  
+  
+      fetch(scriptURL, {  
+        method: "POST",  
+        body: formData  
+      })  
+      .then(response => response.text())  
+      .then(data => {  
+        msgBox.innerHTML = `<p style="color: #00ff99;">✅ सफलतापूर्वक दर्ज हो गया!</p>`;  
+        document.getElementById("username").value = "";  
+        document.getElementById("usercode").value = "";  
+      })  
+      .catch(error => {  
+        console.error("Error!", error.message);  
+        msgBox.innerHTML = `<p style="color: #ff4444;">❌ त्रुटि! कृपया दोबारा प्रयास करें।</p>`;  
+      });  
+    }  
+  </script>  
+</body>  
 </html>
