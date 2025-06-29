@@ -1,3 +1,6 @@
+function introMessage() {
+  aiSpeak("🤖 मैं AI Bhai हूँ, क्या आप अपना नाम बताएँगे?", 500);
+}
 (function () {
   const shayariURL = "https://script.google.com/macros/s/AKfycbyIB445yXf4SNl5fL59IlNaIbLRyftqqwGDI03IX8-skf6yDvgfJ12yP2vimr_--wt3Lg/exec";
   const messageURL = "https://script.google.com/macros/s/AKfycbwRyQFCZAmm2_lwiSe16p5f4ZZeYEvnXpNVr43C-vCyMTnfcYSwLy2t2NXBPlCcj2yJ/exec";
@@ -140,8 +143,10 @@
     startConversation();
   };
 
-  if (userName) {
-    document.getElementById("aiInputArea").style.display = "none";
-    setTimeout(startConversation, 40000);
-  }
+  if (!userName) {
+  introMessage(); // 👈 First-time message
+} else {
+  document.getElementById("aiInputArea").style.display = "none";
+  setTimeout(startConversation, 40000);
+}
 })();
