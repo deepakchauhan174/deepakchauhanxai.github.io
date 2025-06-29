@@ -1,12 +1,12 @@
 (function () {
   const shayariURL = "https://script.google.com/macros/s/AKfycbyIB445yXf4SNl5fL59IlNaIbLRyftqqwGDI03IX8-skf6yDvgfJ12yP2vimr_--wt3Lg/exec";
   const messageURL = "https://script.google.com/macros/s/AKfycbwRyQFCZAmm2_lwiSe16p5f4ZZeYEvnXpNVr43C-vCyMTnfcYSwLy2t2NXBPlCcj2yJ/exec";
-
   const greetings = [
     "🙏 नमस्ते", "👋 फिर से स्वागत है", "🔥 क्या बात है!", "💬 चलिए शुरू करें!", "🚀 Rockstar वापसी!",
     "🎯 नया टारगेट Ready!", "🧠 सीखने का टाइम!", "💖 एक्टिव लोग Welcome!", "🌈 चमकते रहो!", "📚 शायरी का dose!"
   ];
 
+  // Inject Styles
   const style = document.createElement('style');
   style.innerHTML = `
   #aiWidgetBox {
@@ -38,7 +38,7 @@
     border-radius: 8px;
     border: none;
   }
-  #aiUserButton, #aiThanksBtn, #aiSendBtn {
+  #aiUserButton, #aiSendBtn, #aiCloseBtn {
     padding: 8px 12px;
     background: #00c853;
     color: white;
@@ -47,6 +47,10 @@
     margin-left: 8px;
     cursor: pointer;
   }
+  #aiCloseBtn {
+    margin-top: 10px;
+    background: #f44336;
+  }
   @keyframes fadeIn {
     from {opacity:0; transform:translateY(10px);}
     to {opacity:1; transform:translateY(0);}
@@ -54,6 +58,7 @@
   `;
   document.head.appendChild(style);
 
+  // Add Widget Box
   const box = document.createElement('div');
   box.id = 'aiWidgetBox';
   box.innerHTML = `
@@ -64,10 +69,10 @@
       <button id="aiUserButton">Start</button>
     </div>
     <div id="aiMessageBox" style="display:none; flex-direction:column; gap:10px; margin-top:10px;">
-      <textarea id="aiUserMessage" rows="3" placeholder="अपना संदेश लिखें..." style="width:100%;padding:10px;border-radius:8px;"></textarea>
+      <textarea id="aiUserMessage" rows="3" placeholder="Deepak Sir को संदेश..." style="width:100%;padding:10px;border-radius:8px;"></textarea>
       <button id="aiSendBtn">OK</button>
     </div>
-    <button id="aiThanksBtn" style="display:none; margin-top:10px; background:#ff4081;">Thanks</button>
+    <button id="aiCloseBtn" style="display:none;">Thanks</button>
   `;
   document.body.appendChild(box);
 
@@ -110,7 +115,9 @@
     aiSpeak(`${greet}`, 1000);
     aiSpeak("💬 आज की मोटिवेशनल शायरी:", 1500);
     fetchShayari();
-    document.getElementById("aiThanksBtn").style.display = "block";
+
+    document.getElementById("aiCloseBtn").style.display = "block";
+
     setInterval(() => {
       aiSpeak("🔥 आप अभी भी एक्टिव हैं? ये लीजिए शायरी मेरी तरफ से!", 1000);
       fetchShayari();
@@ -118,12 +125,14 @@
     }, 5 * 60 * 1000);
   }
 
+  // Handle Name Input
   document.getElementById("aiUserButton").onclick = function () {
     const val = document.getElementById("aiUserInput").value.trim();
     if (!val) return;
     userName = val;
     localStorage.setItem("username", userName);
     document.getElementById("aiInputArea").style.display = "none";
+
     if (localStorage.getItem("messageSentOnce") === "yes") {
       setTimeout(startConversation, 40000);
     } else {
@@ -133,6 +142,7 @@
     }
   };
 
+  // Handle Message Send
   document.getElementById("aiSendBtn").onclick = function () {
     const msg = document.getElementById("aiUserMessage").value.trim();
     if (!msg) return;
@@ -140,14 +150,16 @@
     sendToSheet(msg);
     localStorage.setItem("messageSentOnce", "yes");
     document.getElementById("aiMessageBox").style.display = "none";
-    setTimeout(startConversation, 40000);
+    setTimeout(startConversation, 2000);
   };
 
-  document.getElementById("aiThanksBtn").onclick = function () {
-    document.getElementById("aiWidgetBox").style.display = "none";
+  // Close AI Widget
+  document.getElementById("aiCloseBtn").onclick = () => {
+    document.getElementById("aiWidgetBox").remove();
   };
 
-  if (userName && localStorage.getItem("messageSentOnce") === "yes") {
+  // Auto Load
+  if (userName) {
     document.getElementById("aiInputArea").style.display = "none";
     setTimeout(startConversation, 40000);
   }
