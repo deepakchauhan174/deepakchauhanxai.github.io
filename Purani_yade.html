@@ -138,12 +138,44 @@
   background-position: center;
   pointer-events: none;
 }
+    
+  #outputText {
+  background: rgba(255, 255, 255, 0.3); /* halka background */
+  padding: 15px 20px;
+  border-radius: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 20px;
+  font-weight: 500;
+  color: #000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+  max-width: 90%;
+  margin-top: 10px;
+  transition: all 0.2s ease-in-out;
+}
+input[type="text"] {
+  font-size: 18px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  width: 80%;
+  max-width: 500px;
+  margin-bottom: 10px;
+}
   </style>
 </head>
 <body>
 
   <h1>🚩 AI Bhai × मोटिवेशन का खजाना</h1>
-   <p>मोटिवेशनल शायरी का भंडार(no copyright©️)</p>
+    <div id="outputText"> 
+<div id="outputBox">
+  <p class="box-title">
+    📚 शायरी का खजाना<br>
+    🔥 Motivational Shayari
+  </p>
+  <p id="outputText"> no copyright ©️  गलत us करने पे action लिया जा सकता हैं!!</p>
+</div>
+</div> 
   <div class="button-grid">
     <a href="शायरी_खजाना.html" class="flower-button">
        🧠 मोटिवेशन
