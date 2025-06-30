@@ -9,79 +9,75 @@
 
   const style = document.createElement('style');
   style.innerHTML = `
-    #aiWidgetBox {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 9999;
-      font-family: 'Poppins', sans-serif;
-    }
-    #aiMainBox {
-      background: linear-gradient(135deg, #1f1f3d, #2b2b6a, #242456);
-      color: #fff;
-      padding: 16px;
-      border-radius: 16px;
-      max-width: 360px;
-      width: 90%;
-      box-shadow: 0 0 25px rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
-      display: none;
-    }
-    .ai-line {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 10px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      font-size: 15px;
-      color: #ffefc3;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-    #aiUserInput {
-      width: 70%;
-      padding: 8px;
-      border-radius: 8px;
-      border: none;
-    }
-    #aiUserButton, #aiSendBtn, #aiThanksBtn {
-      padding: 8px 12px;
-      background: #00c853;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      margin-left: 8px;
-      cursor: pointer;
-    }
-    #aiMessageBox textarea {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-    }
-    @keyframes fadeIn {
-      from {opacity:0; transform:translateY(10px);}
-      to {opacity:1; transform:translateY(0);}
-    }
+  #aiWidgetBox {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #1e1e2f, #2b2b45);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    padding: 16px;
+    border-radius: 12px;
+    max-width: 350px;
+    width: 90%;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    z-index: 9999;
+  }
+  #aiMessages .ai-line {
+    background: #353553;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: #ffefc3;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  #aiUserInput {
+    width: 70%;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+  }
+  #aiUserButton {
+    padding: 8px 12px;
+    background: #00c853;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-left: 8px;
+    cursor: pointer;
+  }
+  #aiCloseBtn {
+    background: #ff1744;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    margin-top: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  @keyframes fadeIn {
+    from {opacity:0; transform:translateY(10px);}
+    to {opacity:1; transform:translateY(0);}
+  }
   `;
   document.head.appendChild(style);
 
   const box = document.createElement('div');
   box.id = 'aiWidgetBox';
   box.innerHTML = `
-    <div id="aiMainBox">
-      <div id="aiMessages"></div>
-      <div id="aiInputArea" style="margin-top:10px;">
-        <p style="margin-bottom:6px;">🙋 मैं AI हूँ, क्या आप अपना नाम बताएंगे?</p>
-        <input type="text" id="aiUserInput" placeholder="अपना नाम..." />
-        <button id="aiUserButton">Start</button>
-      </div>
-      <div id="aiMessageBox" style="display:none; flex-direction:column; gap:10px; margin-top:10px;">
-        <textarea id="aiUserMessage" rows="3" placeholder="Deepak Sir को एक संदेश लिखें..."></textarea>
-        <button id="aiSendBtn">OK</button>
-      </div>
-      <div id="aiThanksArea" style="display:none; margin-top:10px; text-align:right;">
-        <button id="aiThanksBtn">🙏 Thanks</button>
-      </div>
+    <div id="aiMessages"></div>
+    <div id="aiInputArea" style="margin-top:10px;">
+      <p style="margin: 0 0 6px 0;">मैं AI Bhai हूँ, क्या आप अपना नाम बताएँगे?</p>
+      <input type="text" id="aiUserInput" placeholder="अपना नाम..." />
+      <button id="aiUserButton">Start</button>
     </div>
+    <div id="aiMessageBox" style="display:none; flex-direction:column; gap:10px; margin-top:10px;">
+      <textarea id="aiUserMessage" rows="3" placeholder="अपना संदेश लिखें..." style="width:100%;padding:10px;border-radius:8px;"></textarea>
+      <button id="aiSendBtn">OK</button>
+    </div>
+    <button id="aiCloseBtn" style="display:none;">Thanks</button>
   `;
   document.body.appendChild(box);
 
@@ -95,6 +91,7 @@
       line.innerText = text;
       aiDiv.appendChild(line);
       aiDiv.scrollTop = aiDiv.scrollHeight;
+      document.getElementById("aiCloseBtn").style.display = "block";
     }, delay);
   }
 
@@ -124,7 +121,6 @@
     aiSpeak(`${greet}`, 1000);
     aiSpeak("💬 आज की मोटिवेशनल शायरी:", 1500);
     fetchShayari();
-    document.getElementById("aiThanksArea").style.display = "block";
 
     setInterval(() => {
       aiSpeak("🔥 आप अभी भी एक्टिव हैं? ये लीजिए शायरी मेरी तरफ से!", 1000);
@@ -139,7 +135,7 @@
     userName = val;
     localStorage.setItem("username", userName);
     document.getElementById("aiInputArea").style.display = "none";
-
+    document.getElementById("aiWidgetBox").style.display = "block";
     if (localStorage.getItem("messageSentOnce") === "yes") {
       startConversation();
     } else {
@@ -160,16 +156,19 @@
     startConversation();
   };
 
-  document.getElementById("aiThanksBtn").onclick = function () {
-    document.getElementById("aiMainBox").style.display = "none";
+  document.getElementById("aiCloseBtn").onclick = function () {
+    document.getElementById("aiWidgetBox").style.display = "none";
   };
 
-  // Auto launch after 40 sec only if username is saved
-  if (userName) {
-    document.getElementById("aiInputArea").style.display = "none";
-    setTimeout(() => {
-      document.getElementById("aiMainBox").style.display = "block";
-      startConversation();
-    }, 40000);
-  }
+  window.addEventListener("DOMContentLoaded", () => {
+    if (userName) {
+      document.getElementById("aiInputArea").style.display = "none";
+      setTimeout(() => {
+        document.getElementById("aiWidgetBox").style.display = "block";
+        startConversation();
+      }, 40000); // 40 sec baad box show ho
+    } else {
+      document.getElementById("aiWidgetBox").style.display = "block";
+    }
+  });
 })();
