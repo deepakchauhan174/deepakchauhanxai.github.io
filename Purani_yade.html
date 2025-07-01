@@ -162,6 +162,41 @@ input[type="text"] {
   max-width: 500px;
   margin-bottom: 10px;
 }
+
+.flower-button2 {
+  display: inline-block;
+  position: relative;
+  background: linear-gradient(to bottom right, #ffaaaa, #ffffff);
+  color: #000;
+  padding: 14px 30px;
+  padding-left: 100px; /* space for image */
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  transition: 0.3s ease-in-out;
+  overflow: visible; /* ensures image can overflow */
+}
+
+.flower-button2:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.flower-button2::before {
+  content: "";
+  position: absolute;
+  top: -30px;    /* overlap from top */
+  left: -30px;   /* overlap from left */
+  width: 100px;  /* nicely balanced size */
+  height: 100px;
+  background-image: url('https://deepakchauhanxai.xyz/images/1751357776611.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+}
   </style>
 </head>
 <body>
@@ -181,9 +216,11 @@ input[type="text"] {
        🧠 मोटिवेशन
     </a>
     <a href="शायरी_खजाना2.html" class="flower-button1">
-       🧠 मोटिवेशन खजाना
+       🚀 मोटिवेशन खजाना
     </a>
-    <a href="#"><div class="moti-btn">🏆 संघर्ष की आग</div></a>
+    <a href="शायरी_खजाना3.html" class="flower-button2">
+       🏆 संघर्ष की आग
+    </a>
     <a href="#"><div class="moti-btn">🎯 लक्ष्य और Focus</div></a>
     <a href="#"><div class="moti-btn">🛑 हार मत मान</div></a>
     <a href="#"><div class="moti-btn">💼 नौकरी और करियर</div></a>
