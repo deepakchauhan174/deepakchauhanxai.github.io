@@ -1,606 +1,345 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>प्रेरणादायक शायरी - स्वचालित अद्यतन</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Hind+Siliguri:wght@500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #6a11cb;
-      --secondary: #2575fc;
-      --accent: #ff4d4d;
-      --text: #f8f9fa;
-      --bg: #121212;
-      --card-bg: rgba(30, 30, 30, 0.8);
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 2rem;
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(106, 17, 203, 0.1) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(37, 117, 252, 0.1) 0%, transparent 20%);
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    header {
-      text-align: center;
-      margin-bottom: 3rem;
-      position: relative;
-    }
-    
-    .title {
-      font-size: 3.5rem;
-      background: linear-gradient(45deg, #FFD700, #FFA500);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
-    
-    .subtitle {
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.7);
-      font-family: 'Hind Siliguri', sans-serif;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    .search-container {
-      margin: 2rem auto;
-      max-width: 600px;
-      position: relative;
-    }
-    
-    #searchInput {
-      width: 100%;
-      padding: 1rem 1.5rem;
-      border-radius: 50px;
-      border: none;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      color: white;
-      font-size: 1rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-    }
-    
-    #searchInput:focus {
-      outline: none;
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    }
-    
-    #searchInput::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-    }
-    
-    .shayari-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-    
-    .shayari-card {
-      background: var(--card-bg);
-      border-radius: 15px;
-      padding: 2rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-    }
-    
-    .shayari-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-    
-    .shayari-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-    }
-    
-    .shayari-content {
-      font-size: 1.2rem;
-      line-height: 1.8;
-      margin-bottom: 1.5rem;
-      font-family: 'Hind Siliguri', sans-serif;
-    }
-    
-    .shayari-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 1.5rem;
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.7);
-    }
-    
-    .shayari-actions {
-      display: flex;
-      gap: 0.5rem;
-    }
-    
-    .action-btn {
-      padding: 0.5rem 1rem;
-      border-radius: 50px;
-      border: none;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-    }
-    
-    .action-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    
-    .action-btn.copy {
-      background: rgba(37, 117, 252, 0.2);
-    }
-    
-    .action-btn.copy:hover {
-      background: rgba(37, 117, 252, 0.3);
-    }
-    
-    .action-btn.share {
-      background: rgba(106, 17, 203, 0.2);
-    }
-    
-    .action-btn.share:hover {
-      background: rgba(106, 17, 203, 0.3);
-    }
-    
-    .loading {
-      text-align: center;
-      padding: 3rem;
-      grid-column: 1 / -1;
-    }
-    
-    .spinner {
-      width: 50px;
-      height: 50px;
-      border: 5px solid rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      border-top-color: var(--secondary);
-      animation: spin 1s ease-in-out infinite;
-      margin: 0 auto 1rem;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    .refresh-info {
-      margin-top: 2rem;
-      text-align: center;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 0.9rem;
-    }
-    
-    .tag {
-      display: inline-block;
-      padding: 0.3rem 0.8rem;
-      background: rgba(255, 77, 77, 0.2);
-      border-radius: 50px;
-      font-size: 0.8rem;
-      color: var(--accent);
-      margin-right: 0.5rem;
-    }
-    
-    footer {
-      text-align: center;
-      margin-top: 3rem;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 0.9rem;
-    }
-    
-    @media (max-width: 768px) {
-      .title {
-        font-size: 2.5rem;
-      }
-      
-      .shayari-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    
-    /* Animation for new shayari */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .new-shayari {
-      animation: fadeIn 0.5s ease-out;
-    }
-    
-    /* Floating particles */
-    .particle {
-      position: fixed;
-      background: rgba(255, 255, 255, 0.5);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: -1;
-    }
-    
-/* Add this in your CSS */
-.shayari-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.shayari-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-rgba(255, 0, 0, 0.3),     /* Red */
-    rgba(255, 165, 0, 0.3),  /* Orange */
-    rgba(255, 255, 0, 0.3),  /* Yellow */
-    rgba(0, 255, 0, 0.3),    /* Green */
-    rgba(0, 0, 255, 0.3),    /* Blue */
-    rgba(128, 0, 128, 0.3),  /* Purple */
-    transparent
-  );
-  animation: shine 3s infinite;
-  z-index: 1;
-}
-
-@keyframes shine {
-  0% {
-    left: -100%;
-  }
-  20% {
-    left: 100%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP शायरी संग्रह</title>
+    <style>
+        :root {
+            --vip-gold: #FFD700;
+            --vip-purple: #8A2BE2;
+            --vip-bg: #1A1A2E;
+            --text-light: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--vip-bg);
+            color: var(--text-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .vip-container {
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .vip-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .vip-title {
+            font-size: 3rem;
+            background: linear-gradient(to right, var(--vip-gold), var(--vip-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .vip-subtitle {
+            color: var(--vip-gold);
+            font-size: 1.2rem;
+        }
+        
+        .shayari-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--vip-gold);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .shayari-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 215, 0, 0.1),
+                transparent
+            );
+            transition: 0.5s;
+        }
+        
+        .shayari-box:hover::before {
+            left: 100%;
+        }
+        
+        .shayari-title {
+            font-size: 1.8rem;
+            color: var(--vip-gold);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--vip-purple);
+            padding-bottom: 10px;
+        }
+        
+        .shayari-content {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            white-space: pre-line;
+        }
+        
+        .shayari-signature {
+            font-style: italic;
+            text-align: right;
+            color: var(--vip-purple);
+            font-size: 1.2rem;
+        }
+        
+        .vip-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(45deg, var(--vip-gold), var(--vip-purple));
+            color: #000;
+            font-weight: bold;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: none;
+            background: linear-gradient(45deg, var(--vip-purple), var(--vip-gold));
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 30px;
+            font-size: 1.2rem;
+            color: var(--vip-gold);
+        }
+        
+        @media (max-width: 768px) {
+            .vip-title {
+                font-size: 2rem;
+            }
+            
+            .shayari-box {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1 class="title">प्रेरणादायक शायरी</h1>
-      <p class="subtitle">जीवन के हर पल को खूबसूरत बनाती हुई शायरी का संग्रह</p>
-      
-      <div class="search-container">
-        <input type="text" id="searchInput" placeholder="शायरी खोजें..." autocomplete="off">
-      </div>
-    </header>
-    
-    <div class="shayari-grid" id="shayariContainer">
-      <div class="loading">
-        <div class="spinner"></div>
-        <p>शायरियाँ लोड हो रही हैं...</p>
-      </div>
+    <div class="vip-container">
+        <div class="vip-header">
+            <h1 class="vip-title">VIP शायरी संग्रह</h1>
+            <p class="vip-subtitle">खास आपके लिए</p>
+        </div>
+        
+        <div id="shayariContainer">
+            <div class="loading">शायरियाँ लोड हो रही हैं...</div>
+        </div>
     </div>
-    
-    <div class="refresh-info">
-      <p>शायरियाँ स्वचालित रूप से हर 10 मिनट में अपडेट होती हैं</p>
-    </div>
-  </div>
-  
-  <footer>
-    <p>© 2023 शायरी संग्रह | सर्वाधिकार सुरक्षित</p>
-  </footer>
-  
-  <script>
-    // Google Apps Script URL
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw73YzY5Fo9lHXI_5edgGr9ymyG09rPDTamTqbUlcqvXTbuYUrFcK037n6KJHxViGWqJA/exec";
-    // Global variables
-    let shayaris = [];
-    let filteredShayaris = [];
-    let refreshInterval;
-    
-    // DOM elements
-    const shayariContainer = document.getElementById('shayariContainer');
-    const searchInput = document.getElementById('searchInput');
-    
-    // Initialize the app
-    async function init() {
-      createParticles();
-      await loadShayaris();
-      setupSearch();
-      setupAutoRefresh();
-    }
-    
-    // Fetch shayaris from Google Sheet
-    async function loadShayaris() {
-      try {
-        shayariContainer.innerHTML = `
-          <div class="loading">
-            <div class="spinner"></div>
-            <p>शायरियाँ लोड हो रही हैं...</p>
-          </div>
-        `;
+
+    <script>
+        // Google Apps Script URL
+        const SHEET_URL = "https://script.google.com/macros/s/AKfycbw73YzY5Fo9lHXI_5edgGr9ymyG09rPDTamTqbUlcqvXTbuYUrFcK037n6KJHxViGWqJA/exec";
         
-        const response = await fetch(SCRIPT_URL);
-        
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
-        if (!Array.isArray(data)) {
-          throw new Error('Invalid data format: Expected an array');
-        }
-        
-        shayaris = data;
-        filteredShayaris = [...shayaris];
-        displayShayaris();
-        
-      } catch (error) {
-        console.error('Error loading shayaris:', error);
-        shayariContainer.innerHTML = `
-          <div style="text-align: center; padding: 3rem; grid-column: 1 / -1; color: #ff4d4d;">
-            <h3>त्रुटि: डेटा लोड नहीं हो पाया</h3>
-            <p>${error.message}</p>
-            <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.5rem 1.5rem; background: #6a11cb; color: white; border: none; border-radius: 5px; cursor: pointer;">पुनः प्रयास करें</button>
-          </div>
-        `;
-      }
-    }
+
+// Track shown shayaris
+let shownShayaris = JSON.parse(localStorage.getItem('shownShayaris') || "[]");
+let allShayaris = [];
+
+// Fetch data with auto-refresh
+async function fetchShayaris() {
+  try {
+    const response = await fetch(`${SHEET_URL}?t=${new Date().getTime()}`);
+    if (!response.ok) throw new Error('Network error');
     
-    // Display shayaris in the grid
-    function displayShayaris() {
-      if (filteredShayaris.length === 0) {
-        shayariContainer.innerHTML = `
-          <div style="text-align: center; padding: 3rem; grid-column: 1 / -1;">
-            <p>कोई शायरी नहीं मिली</p>
-          </div>
-        `;
-        return;
-      }
-      
-      shayariContainer.innerHTML = '';
-      
-      filteredShayaris.forEach((shayari, index) => {
-        const card = document.createElement('div');
-        card.className = 'shayari-card new-shayari';
-        card.style.animationDelay = `${index * 0.1}s`;
-        
-        // Format content with line breaks
-        const formattedContent = (shayari.Content || '').replace(/\n/g, '<br>');
-        
-        card.innerHTML = `
-          <div class="shayari-content">${formattedContent}</div>
-          <div class="shayari-meta">
-            <div>
-              <span class="tag">${shayari.Category || 'सामान्य'}</span>
-              <span>${shayari.Author || 'अज्ञात'}</span>
-            </div>
-            <div class="shayari-actions">
-              <button class="action-btn copy" onclick="copyShayari('${escapeSingleQuotes(shayari.Content)}')">
-                <span>कॉपी</span>
-              </button>
-              <button class="action-btn share" onclick="shareShayari('${escapeSingleQuotes(shayari.Content)}', '${escapeSingleQuotes(shayari.Author || 'अज्ञात')}')">
-                <span>शेयर</span>
-              </button>
-            </div>
-          </div>
-        `;
-        
-        shayariContainer.appendChild(card);
-      });
-    }
+    const data = await response.json();
+    if (!Array.isArray(data)) throw new Error('Invalid data');
     
-    // Setup search functionality
-    function setupSearch() {
-      searchInput.addEventListener('input', () => {
-        const searchTerm = searchInput.value.toLowerCase();
-        
-        if (searchTerm.trim() === '') {
-          filteredShayaris = [...shayaris];
-        } else {
-          filteredShayaris = shayaris.filter(shayari => {
-            return (
-              (shayari.Content && shayari.Content.toLowerCase().includes(searchTerm)) ||
-              (shayari.Author && shayari.Author.toLowerCase().includes(searchTerm)) ||
-              (shayari.Category && shayari.Category.toLowerCase().includes(searchTerm))
-            );
-          });
-        }
-        
-        displayShayaris();
-      });
-    }
+    allShayaris = data;
+    showNewShayari();
+    startAutoRefresh();
     
-    // Setup auto-refresh
-    function setupAutoRefresh() {
-      // Refresh every 10 minutes (600000 ms)
-      refreshInterval = setInterval(() => {
-        loadShayaris();
-        showNotification('नई शायरियाँ लोड हो गई हैं!');
-      }, 600000);
-    }
-    
-    // Copy shayari to clipboard
-    function copyShayari(content) {
-      navigator.clipboard.writeText(content).then(() => {
-        showNotification('शायरी कॉपी हो गई!');
-      }).catch(err => {
-        console.error('Failed to copy:', err);
-        fallbackCopy(content);
-      });
-    }
-    
-    // Share shayari
-    function shareShayari(content, author) {
-      const shareText = `${content}\n\n- ${author}\n\nप्रेरणादायक शायरी संग्रह से`;
-      
-      if (navigator.share) {
-        navigator.share({
-          title: 'प्रेरणादायक शायरी',
-          text: shareText,
-        }).catch(err => {
-          console.log('Error sharing:', err);
-          fallbackCopy(shareText);
-        });
-      } else {
-        fallbackCopy(shareText);
-      }
-    }
-    
-    // Fallback copy method
-    function fallbackCopy(text) {
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-      showNotification('शायरी कॉपी हो गई!');
-    }
-    
-    // Show notification
-    function showNotification(message) {
-      const notification = document.createElement('div');
-      notification.textContent = message;
-      notification.style.position = 'fixed';
-      notification.style.bottom = '20px';
-      notification.style.left = '50%';
-      notification.style.transform = 'translateX(-50%)';
-      notification.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-      notification.style.color = 'white';
-      notification.style.padding = '12px 24px';
-      notification.style.borderRadius = '5px';
-      notification.style.zIndex = '1000';
-      notification.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
-      notification.style.animation = 'fadeIn 0.3s ease-out';
-      
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-        notification.style.animation = 'fadeOut 0.3s ease-out';
-        setTimeout(() => {
-          notification.remove();
-        }, 300);
-      }, 3000);
-      
-      // Add keyframes dynamically
-      const style = document.createElement('style');
-      style.textContent = `
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-          to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        @keyframes fadeOut {
-          from { opacity: 1; transform: translateX(-50%) translateY(0); }
-          to { opacity: 0; transform: translateX(-50%) translateY(20px); }
-        }
-      `;
-      document.head.appendChild(style);
-    }
-    
-    // Create floating particles
-    function createParticles() {
-      const colors = ['rgba(106, 17, 203, 0.3)', 'rgba(37, 117, 252, 0.3)', 'rgba(255, 77, 77, 0.3)'];
-      
-      for (let i = 0; i < 30; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        
-        const size = Math.random() * 10 + 5;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-        particle.style.left = `${Math.random() * 100}vw`;
-        particle.style.top = `${Math.random() * 100}vh`;
-        
-        document.body.appendChild(particle);
-        
-        // Animate particle
-        animateParticle(particle);
-      }
-    }
-    
-    // Animate single particle
-    function animateParticle(particle) {
-      const duration = Math.random() * 20 + 10;
-      const delay = Math.random() * 5;
-      const xMovement = Math.random() * 100 - 50;
-      const yMovement = Math.random() * 100 - 50;
-      
-      particle.style.transition = `all ${duration}s linear ${delay}s`;
-      particle.style.transform = `translate(${xMovement}px, ${yMovement}px)`;
-      
-      // Reset position after animation
-      setTimeout(() => {
-        particle.style.transition = 'none';
-        particle.style.transform = 'translate(0, 0)';
-        setTimeout(() => {
-          animateParticle(particle);
-        }, 50);
-      }, duration * 1000);
-    }
-    
-    // Helper function to escape single quotes
-    function escapeSingleQuotes(str) {
-      return str ? str.replace(/'/g, "\\'") : '';
-    }
-    
-    // Initialize the app when DOM is loaded
-    document.addEventListener('DOMContentLoaded', init);
-    
-// Add this in your script
-function optimizeShineEffect() {
-  const cards = document.querySelectorAll('.shayari-card');
-  
-  cards.forEach(card => {
-    // Restart animation on hover for better effect
-    card.addEventListener('mouseenter', () => {
-      card.style.animation = 'none';
-      void card.offsetWidth; // Trigger reflow
-      card.style.animation = '';
-    });
-  });
+  } catch (error) {
+    console.error('Error:', error);
+    showError();
+  }
 }
 
-// Call this function after loading shayaris
-optimizeShineEffect();
-  </script>
-  <script src="https://deepakchauhanxai.com/scripts/ai-bhai-widget.js"></script>
+// Show only unseen shayaris
+function showNewShayari() {
+  const freshShayaris = allShayaris.filter(s => !shownShayaris.includes(s.id));
+  const shayari = freshShayaris.length > 0 
+    ? freshShayaris[0]
+    : allShayaris[Math.floor(Math.random() * allShayaris.length)]; // Fallback
+
+  // Mark as shown
+  if (shayari.id && !shownShayaris.includes(shayari.id)) {
+    shownShayaris.push(shayari.id);
+    localStorage.setItem('shownShayaris', JSON.stringify(shownShayaris));
+  }
+
+  displayShayari(shayari);
+}
+
+// Display single shayari
+function displayShayari(shayari) {
+  const box = document.createElement('div');
+  box.className = 'shayari-box';
+  box.innerHTML = `
+    ${Math.random() > 0.3 ? `<div class="vip-badge">VIP</div>` : ''}
+    <div class="shayari-title">${shayari.title || 'प्रेरणादायक शायरी'}</div>
+    <div class="shayari-content">${shayari.content || ''}</div>
+    <div class="shayari-signature">${shayari.signature || '~ अज्ञात'}</div>
+    <div class="action-buttons">
+      <button class="action-btn" onclick="copyShayari('${escapeHtml(shayari.content)}')">कॉपी</button>
+      <button class="action-btn" onclick="shareShayari('${escapeHtml(shayari.content)}')">शेयर</button>
+    </div>
+  `;
+  document.getElementById('shayariContainer').innerHTML = '';
+  document.getElementById('shayariContainer').appendChild(box);
+}
+
+// Auto-refresh every 10 minutes
+function startAutoRefresh() {
+  setInterval(() => {
+    fetchShayaris();
+    console.log('Auto-refreshing...');
+  }, 10 * 60 * 1000); // 10 minutes
+}
+
+// Clear history when page loads fresh
+window.addEventListener('load', () => {
+  if (performance.navigation.type === 1) { // Page reloaded
+    localStorage.removeItem('shownShayaris');
+  }
+  fetchShayaris();
+});
+        // Fetch data from Google Sheet
+        async function fetchShayaris() {
+            try {
+                const response = await fetch(SHEET_URL);
+                
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
+                const data = await response.json();
+                
+                if (!Array.isArray(data)) {
+                    throw new Error('Invalid data format');
+                }
+                
+                displayShayaris(data);
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('shayariContainer').innerHTML = `
+                    <div class="shayari-box">
+                        <div class="shayari-content">त्रुटि: डेटा लोड नहीं हो पाया। कृपया बाद में पुनः प्रयास करें।</div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Display shayaris
+        function displayShayaris(shayaris) {
+            const container = document.getElementById('shayariContainer');
+            container.innerHTML = '';
+            
+            if (shayaris.length === 0) {
+                container.innerHTML = `
+                    <div class="shayari-box">
+                        <div class="shayari-content">कोई शायरी उपलब्ध नहीं है</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            shayaris.forEach(shayari => {
+                const box = document.createElement('div');
+                box.className = 'shayari-box';
+                
+                // Add VIP badge randomly
+                if (Math.random() > 0.3) {
+                    const badge = document.createElement('div');
+                    badge.className = 'vip-badge';
+                    badge.textContent = 'VIP';
+                    box.appendChild(badge);
+                }
+                
+                box.innerHTML = `
+                    <div class="shayari-title">${shayari.Title || 'प्रेरणादायक शायरी'}</div>
+                    <div class="shayari-content">${shayari.Content || ''}</div>
+                    <div class="shayari-signature">${shayari.Signature || '~ अज्ञात'}</div>
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="copyShayari('${escapeHtml(shayari.content)}')">कॉपी करें</button>
+                        <button class="action-btn" onclick="shareShayari('${escapeHtml(shayari.content)}', '${escapeHtml(shayari.title || 'शायरी')}')">शेयर करें</button>
+                    </div>
+                `;
+                
+                container.appendChild(box);
+            });
+        }
+        
+        // Copy shayari to clipboard
+        function copyShayari(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => alert('शायरी कॉपी हो गई!'))
+                .catch(err => console.error('Copy failed:', err));
+        }
+        
+        // Share shayari
+        function shareShayari(content, title) {
+            const shareData = {
+                title: title,
+                text: content,
+            };
+            
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .catch(err => console.log('Share failed:', err));
+            } else {
+                copyShayari(content);
+            }
+        }
+        
+        // Helper function to escape HTML
+        function escapeHtml(text) {
+            return text ? text.replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/\n/g, '\\n') : '';
+        }
+        
+        // Load shayaris when page loads
+        document.addEventListener('DOMContentLoaded', fetchShayaris);
+    </script>
 </body>
 </html>
