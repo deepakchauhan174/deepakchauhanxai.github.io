@@ -271,7 +271,11 @@ background: rgba(255, 75, 43, 0.3); /* 0.3 = more transparent */
   position: relative;
   z-index: 2;
 }
-
+.magic-content::before {
+  content: '';
+  display: block;
+  height: 12px;
+}
 .magic-title {
   font-size: 1.5rem;
   margin: 0 0 8px;
@@ -284,7 +288,6 @@ background: rgba(255, 75, 43, 0.3); /* 0.3 = more transparent */
   color: #ddd;
   margin-bottom: 15px;
 }
-
 .ai-bhai-dil-se {
   padding: 10px 16px;
   border: none;
