@@ -2,286 +2,557 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Instagram Trending Dialogues</title>
+  <title>🔥 Viral Dialogues | Instagram Trending Now 🔥</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Daily updated viral Instagram dialogues with share feature">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    * { box-sizing: border-box; }
-    body {
-      background-color: #111;
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
+    :root {
+      --neon-pink: #ff00ff;
+      --neon-blue: #00f7ff;
+      --neon-yellow: #ffee00;
+      --neon-purple: #9d00ff;
+      --dark-bg: #0a0a0a;
+    }
+    
+    * { 
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
     }
-
-    #custom-welcome-box {
+    
+    body {
+      background-color: var(--dark-bg);
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 0, 255, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(0, 247, 255, 0.05) 0%, transparent 20%);
+    }
+    
+    /* ========== BAWAL OPENING EFFECT ========== */
+    #bawal-opening {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       background: #000;
+      z-index: 99999;
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
+      flex-direction: column;
     }
-
-    .typing-text {
-      color: #ffd700;
-      font-size: 1.3rem;
-      padding: 25px 30px;
-      border-radius: 15px;
-      border: 2px solid #ff66cc;
-      text-align: center;
-      animation: blink 1s step-end infinite;
-      box-shadow: 0 0 20px #ff66cc;
-    }
-
-    @keyframes blink {
-      50% { border-color: transparent; }
-    }
-
-    .animated-title {
-      text-align: center;
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin: 80px 20px 20px;
-      background: linear-gradient(90deg, #ff00ff, #ffd700, #00ffff);
-      background-size: 200% auto;
-      color: #fff;
-      background-clip: text;
+    
+    .bawal-text {
+      font-size: 8vw;
+      font-weight: 800;
+      font-family: 'Poppins', sans-serif;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue), var(--neon-yellow));
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientGlow 5s linear infinite;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      animation: textGlow 2s infinite alternate;
+      transform: scale(5);
+      opacity: 0;
     }
-
-    @keyframes gradientGlow {
-      0% { background-position: 0% center; }
-      50% { background-position: 100% center; }
-      100% { background-position: 0% center; }
+    
+    .sub-text {
+      font-size: 2vw;
+      margin-top: 20px;
+      color: white;
+      opacity: 0;
     }
-
-    .dialogue-box {
-      background: linear-gradient(135deg, #00ffff, #ff00ff, #ff6600);
+    
+    @keyframes textGlow {
+      0% { text-shadow: 0 0 10px var(--neon-pink); }
+      50% { text-shadow: 0 0 20px var(--neon-blue), 0 0 30px var(--neon-blue); }
+      100% { text-shadow: 0 0 15px var(--neon-yellow), 0 0 25px var(--neon-purple); }
+    }
+    
+    /* ========== MAIN CONTENT ========== */
+    .header {
+      text-align: center;
+      padding: 30px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .title {
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 800;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue), var(--neon-yellow));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      animation: gradientShift 8s infinite alternate;
+    }
+    
+    .subtitle {
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    
+    /* ========== DIALOGUE CARDS ========== */
+    #content {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
       padding: 20px;
-      margin: 25px auto;
-      border-radius: 16px;
-      max-width: 90%;
-      border: 2px solid #ffffff22;
-      box-shadow: 0 0 30px #00ffff, 0 0 30px #ff00ff, 0 0 30px #ff6600;
+      max-width: 1400px;
+      margin: 0 auto;
     }
-
+    
+    .dialogue-box {
+      background: rgba(20, 20, 20, 0.8);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+    
+    .dialogue-box:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4),
+                  0 0 0 2px var(--neon-pink),
+                  0 0 20px var(--neon-pink);
+    }
+    
+    .dialogue-box::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue), var(--neon-yellow), var(--neon-purple));
+      background-size: 400%;
+      z-index: -1;
+      border-radius: 16px;
+      opacity: 0;
+      transition: 0.5s;
+      animation: gradientBorder 4s linear infinite;
+    }
+    
+    .dialogue-box:hover::before {
+      opacity: 1;
+    }
+    
+    @keyframes gradientBorder {
+      0% { background-position: 0 0; }
+      50% { background-position: 100% 100%; }
+      100% { background-position: 0 0; }
+    }
+    
     .dialogue-box img {
       width: 100%;
-      border-radius: 12px;
-      margin-bottom: 10px;
-      box-shadow: 0 0 12px rgba(255,255,255,0.2);
+      height: 250px;
+      object-fit: cover;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
     }
-
+    
+    .dialogue-content {
+      padding: 20px;
+    }
+    
     .dialogue-title {
-      font-size: 1.6rem;
-      text-align: center;
-      color: #000;
-      font-weight: bold;
-      padding: 8px;
-      border-radius: 10px;
-      background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600);
-      margin-bottom: 12px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: white;
+      position: relative;
+      display: inline-block;
     }
-
+    
+    .dialogue-title::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+      border-radius: 3px;
+    }
+    
     .story {
-      font-size: 1.1rem;
-      color: #fff;
-      line-height: 1.7;
-      text-shadow: 0 0 5px #000;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 20px;
     }
-
+    
     .signature {
-      text-align: right;
       font-style: italic;
-      color: #ccc;
-      margin-top: 10px;
+      text-align: right;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
     }
-
+    
     .btn-group {
       display: flex;
-      justify-content: center;
       gap: 10px;
-      margin-top: 15px;
+      margin-top: 20px;
     }
-
+    
     .btn {
-      padding: 8px 18px;
-      border-radius: 30px;
-      font-weight: bold;
-      background: #000;
-      color: #00ffff;
-      cursor: pointer;
+      flex: 1;
+      padding: 12px;
       border: none;
-      box-shadow: 0 0 12px #00ffff;
-      transition: 0.3s;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s;
     }
-
-    .btn:hover {
-      background: #00ffff;
-      color: #000;
+    
+    .btn-copy {
+      background: rgba(0, 247, 255, 0.2);
+      color: var(--neon-blue);
+      border: 1px solid var(--neon-blue);
     }
-
-    /* Flower rain */
-    .flower {
+    
+    .btn-copy:hover {
+      background: var(--neon-blue);
+      color: black;
+      box-shadow: 0 0 15px var(--neon-blue);
+    }
+    
+    .btn-share {
+      background: rgba(255, 0, 255, 0.2);
+      color: var(--neon-pink);
+      border: 1px solid var(--neon-pink);
+    }
+    
+    .btn-share:hover {
+      background: var(--neon-pink);
+      color: black;
+      box-shadow: 0 0 15px var(--neon-pink);
+    }
+    
+    /* ========== SPECIAL EFFECTS ========== */
+    /* Particle Background */
+    .particles {
       position: fixed;
-      top: -50px;
-      color: pink;
-      font-size: 24px;
-      animation: fall linear infinite;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
     }
-
-    @keyframes fall {
-      0% { transform: translateY(-50px); opacity: 1; }
-      100% { transform: translateY(100vh); opacity: 0; }
+    
+    /* Floating Emojis */
+    .floating-emoji {
+      position: fixed;
+      font-size: 24px;
+      z-index: -1;
+      pointer-events: none;
+      animation: float linear infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+    
+    /* Glow Effects */
+    .glow {
+      animation: glowPulse 3s infinite alternate;
+    }
+    
+    @keyframes glowPulse {
+      0% { filter: drop-shadow(0 0 5px var(--neon-pink)); }
+      50% { filter: drop-shadow(0 0 15px var(--neon-blue)); }
+      100% { filter: drop-shadow(0 0 10px var(--neon-yellow)); }
+    }
+    
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      #content {
+        grid-template-columns: 1fr;
+      }
+      
+      .title {
+        font-size: 2.5rem;
+      }
+      
+      .bawal-text {
+        font-size: 15vw;
+      }
+      
+      .sub-text {
+        font-size: 5vw;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="custom-welcome-box">
-    <div class="typing-text" id="typing-message">🌸 Welcome to Instagram Trending Dialogues 🌸</div>
+  <!-- BAWAL Opening Effect -->
+  <div id="bawal-opening">
+    <div class="bawal-text">VIRAL</div>
+    <div class="sub-text">Loading Trending Dialogues...</div>
   </div>
-
-  <h1 class="animated-title">INSTAGRAM TRENDING DIALOGUES</h1>
+  
+  <!-- Main Content -->
+  <div class="header">
+    <h1 class="title glow">INSTAGRAM TRENDING DIALOGUES</h1>
+    <p class="subtitle">Daily updated viral content ready to share with one click</p>
+  </div>
+  
   <div id="content"></div>
+  
+  <!-- Particle Background -->
+  <div class="particles" id="particles"></div>
 
   <script>
-    // Flower rain
-// =====================
-// 1. Emoji Rain (Bottom to Top)
-// =====================
-function flowerRain() {
-  const emojis = ['🌸', '🚀', '🌡️', '🧪'];
-
-  setInterval(() => {
-    const flower = document.createElement('div');
-    flower.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-
-    flower.style.position = 'fixed';
-    flower.style.left = Math.random() * 100 + 'vw';
-    flower.style.bottom = '-30px'; // नीचे से शुरू
-    flower.style.fontSize = (20 + Math.random() * 15) + 'px';
-    flower.style.animation = `rise ${4 + Math.random() * 3}s linear forwards`;
-    flower.style.zIndex = '9999';
-    flower.style.pointerEvents = 'none';
-
-    document.body.appendChild(flower);
-
-    setTimeout(() => flower.remove(), 7000);
-  }, 300);
-}
-
-// =====================
-// 2. Color Flash every 30 seconds
-// =====================
-function flashColor() {
-  const colors = ['rgba(255,0,0,0.5)', 'rgba(0,255,0,0.5)', 'rgba(0,0,255,0.5)', 'rgba(255,255,0,0.5)'];
-
-  setInterval(() => {
-    const splash = document.createElement('div');
-    splash.style.position = 'fixed';
-    splash.style.top = '50%';
-    splash.style.left = '50%';
-    splash.style.transform = 'translate(-50%, -50%)';
-    splash.style.width = '0';
-    splash.style.height = '0';
-    splash.style.borderRadius = '50%';
-    splash.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    splash.style.zIndex = '9998';
-    splash.style.pointerEvents = 'none';
-    splash.style.transition = 'width 1s ease-out, height 1s ease-out, opacity 1s ease-out';
-
-    document.body.appendChild(splash);
-
-    // Animate to full screen
-    setTimeout(() => {
-      splash.style.width = '300vw';
-      splash.style.height = '300vw';
-      splash.style.opacity = '0';
-    }, 100); // slight delay before animation
-
-    // Remove after 5 seconds
-    setTimeout(() => splash.remove(), 5000);
-  }, 30000); // हर 30 सेकंड में
-}
-
-flashColor();
-
-// =====================
-// 3. CSS Animation Add
-// =====================
-const style = document.createElement('style');
-style.innerHTML = `
-  @keyframes rise {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-120vh); opacity: 0; }
-  }
-`;
-document.head.appendChild(style);
-
-// =====================
-// 4. Start Effects
-// =====================
-flowerRain();
-flashColor();
-    fetch("https://script.google.com/macros/s/AKfycbwrQtnQcTSBY1fwJpeFd9p4HhahZVaWSBe4NIQEaYuBM6S-t9M8-RB8f0bVUiu4HX31pw/exec")
-      .then(res => res.json())
-      .then(data => {
-        const container = document.getElementById("content");
-        data.forEach((item, index) => {
-          const box = document.createElement("div");
-          box.className = "dialogue-box";
-          const textToCopy = `${item.dialogue_title}\n\n${item.story}\n\n${item.signature}`;
-          box.innerHTML = `
-            <img src="${item.image_url}" alt="Dialogue Image">
-            <div class="dialogue-title">${item.dialogue_title}</div>
-            <div class="story">${item.story}</div>
-            <div class="signature">${item.signature}</div>
-            <div class="btn-group">
-              <button class="btn" onclick="copyText(\`${textToCopy.replace(/`/g, '\\`')}\`)">Copy</button>
-              <button class="btn" onclick="shareText(\`${textToCopy.replace(/`/g, '\\`')}\`)">Share</button>
-            </div>
-          `;
-          container.appendChild(box);
-
-          // Insert AdSense ad after every 2 items
-          if ((index + 1) % 2 === 0) {
-            const ad = document.createElement('ins');
-            ad.className = 'adsbygoogle';
-            ad.style.display = 'block';
-            ad.setAttribute('data-ad-client', 'ca-pub-6575643228502924');
-            ad.setAttribute('data-ad-slot', '3112440962');
-            ad.setAttribute('data-ad-format', 'auto');
-            ad.setAttribute('data-full-width-responsive', 'true');
-            container.appendChild(ad);
-            (adsbygoogle = window.adsbygoogle || []).push({});
-          }
-        });
-
-        // Remove welcome screen
-        document.getElementById("custom-welcome-box").style.display = "none";
-      });
-
-    function copyText(text) {
-      navigator.clipboard.writeText(text).then(() => alert("Copied!"));
+    // =====================
+    // BAWAL OPENING ANIMATION
+    // =====================
+    function playBawalOpening() {
+      const opening = document.getElementById('bawal-opening');
+      const bawalText = document.querySelector('.bawal-text');
+      const subText = document.querySelector('.sub-text');
+      
+      // Sound effect
+      const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3');
+      audio.volume = 0.3;
+      audio.play();
+      
+      // Earthquake effect
+      let shakeInterval;
+      setTimeout(() => {
+        let intensity = 10;
+        shakeInterval = setInterval(() => {
+          document.body.style.transform = `translate(
+            ${Math.random() * intensity - intensity/2}px,
+            ${Math.random() * intensity - intensity/2}px
+          )`;
+          intensity *= 0.9;
+        }, 50);
+      }, 500);
+      
+      // Text animation
+      setTimeout(() => {
+        bawalText.style.transform = 'scale(1)';
+        bawalText.style.opacity = '1';
+      }, 300);
+      
+      setTimeout(() => {
+        subText.style.opacity = '1';
+      }, 800);
+      
+      // Cleanup and show content
+      setTimeout(() => {
+        clearInterval(shakeInterval);
+        document.body.style.transform = 'none';
+        opening.style.opacity = '0';
+        setTimeout(() => {
+          opening.style.display = 'none';
+          loadContent();
+        }, 500);
+      }, 2500);
     }
-
-    function shareText(text) {
-      if (navigator.share) {
-        navigator.share({ title: "Trending Dialogue", text: text });
-      } else {
-        alert("Share not supported.");
+    
+    // =====================
+    // PARTICLE BACKGROUND
+    // =====================
+    function createParticles() {
+      const particles = document.getElementById('particles');
+      const emojis = ['🔥', '💫', '✨', '⭐', '🌟', '💥', '⚡', '❤️', '🖤'];
+      
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'floating-emoji';
+        particle.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.top = Math.random() * 100 + 'vh';
+        particle.style.fontSize = (10 + Math.random() * 20) + 'px';
+        particle.style.animationDuration = (10 + Math.random() * 20) + 's';
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        
+        particles.appendChild(particle);
       }
     }
+    
+    // =====================
+    // FLOATING EMOJI EFFECT
+    // =====================
+    function floatingEmojis() {
+      const emojis = ['🔥', '💯', '✨', '⭐', '💫', '⚡', '❤️', '👑'];
+      
+      setInterval(() => {
+        const emoji = document.createElement('div');
+        emoji.className = 'floating-emoji';
+        emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        
+        emoji.style.left = Math.random() * 100 + 'vw';
+        emoji.style.bottom = '-50px';
+        emoji.style.fontSize = (20 + Math.random() * 30) + 'px';
+        emoji.style.animationDuration = (5 + Math.random() * 10) + 's';
+        
+        document.body.appendChild(emoji);
+        
+        setTimeout(() => {
+          emoji.remove();
+        }, 15000);
+      }, 800);
+    }
+    
+    // =====================
+    // LOAD CONTENT
+    // =====================
+    function loadContent() {
+      fetch("https://script.google.com/macros/s/AKfycbwrQtnQcTSBY1fwJpeFd9p4HhahZVaWSBe4NIQEaYuBM6S-t9M8-RB8f0bVUiu4HX31pw/exec")
+        .then(res => res.json())
+        .then(data => {
+          const container = document.getElementById("content");
+          
+          data.forEach((item, index) => {
+            const box = document.createElement("div");
+            box.className = "dialogue-box";
+            
+            const textToCopy = `${item.dialogue_title}\n\n${item.story}\n\n${item.signature}`;
+            
+            box.innerHTML = `
+              <img src="${item.image_url}" alt="Dialogue Image">
+              <div class="dialogue-content">
+                <h3 class="dialogue-title">${item.dialogue_title}</h3>
+                <p class="story">${item.story}</p>
+                <p class="signature">${item.signature}</p>
+                <div class="btn-group">
+                  <button class="btn btn-copy" onclick="copyText('${textToCopy.replace(/'/g, "\\'")}')">
+                    <i class="fas fa-copy"></i> Copy
+                  </button>
+                  <button class="btn btn-share" onclick="shareText('${textToCopy.replace(/'/g, "\\'")}')">
+                    <i class="fas fa-share-alt"></i> Share
+                  </button>
+                </div>
+              </div>
+            `;
+            
+            container.appendChild(box);
+            
+            // Insert ad after every 2 items
+            if ((index + 1) % 2 === 0) {
+              const ad = document.createElement('ins');
+              ad.className = 'adsbygoogle';
+              ad.style.display = 'block';
+              ad.setAttribute('data-ad-client', 'ca-pub-6575643228502924');
+              ad.setAttribute('data-ad-slot', '3112440962');
+              ad.setAttribute('data-ad-format', 'auto');
+              ad.setAttribute('data-full-width-responsive', 'true');
+              container.appendChild(ad);
+              (adsbygoogle = window.adsbygoogle || []).push({});
+            }
+          });
+        })
+        .catch(error => {
+          console.error('Error loading content:', error);
+          document.getElementById('content').innerHTML = `
+            <div style="text-align: center; width: 100%; padding: 50px; color: white;">
+              <h2>Unable to load content</h2>
+              <p>Please check your internet connection and try again</p>
+            </div>
+          `;
+        });
+    }
+    
+    // =====================
+    // UTILITY FUNCTIONS
+    // =====================
+    function copyText(text) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          // Show copied notification
+          const notification = document.createElement('div');
+          notification.textContent = 'Copied to clipboard!';
+          notification.style.position = 'fixed';
+          notification.style.bottom = '20px';
+          notification.style.left = '50%';
+          notification.style.transform = 'translateX(-50%)';
+          notification.style.backgroundColor = 'rgba(0, 247, 255, 0.9)';
+          notification.style.color = 'black';
+          notification.style.padding = '10px 20px';
+          notification.style.borderRadius = '5px';
+          notification.style.zIndex = '1000';
+          notification.style.fontWeight = 'bold';
+          notification.style.boxShadow = '0 0 20px var(--neon-blue)';
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => notification.remove(), 500);
+          }, 2000);
+        })
+        .catch(err => {
+          console.error('Failed to copy:', err);
+        });
+    }
+    
+    function shareText(text) {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Viral Instagram Dialogue',
+          text: text,
+          url: window.location.href
+        })
+        .catch(err => {
+          console.error('Error sharing:', err);
+        });
+      } else {
+        // Fallback for browsers that don't support Web Share API
+        copyText(text);
+        alert('Content copied! You can now paste it to share.');
+      }
+    }
+    
+    // =====================
+    // INITIALIZE EVERYTHING
+    // =====================
+    window.onload = function() {
+      playBawalOpening();
+      createParticles();
+      floatingEmojis();
+      
+      // Add gradient animation to all elements with .glow class
+      document.querySelectorAll('.glow').forEach(el => {
+        el.style.animation = 'gradientShift 8s infinite alternate';
+      });
+    };
   </script>
   <script src="https://deepakchauhanxai.com/scripts/ai-bhai-widget.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924" crossorigin="anonymous"></script>
 </body>
 </html>
