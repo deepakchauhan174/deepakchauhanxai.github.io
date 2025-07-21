@@ -1,174 +1,221 @@
 (function () {
-  const shayariURL = "https://script.google.com/macros/s/AKfycbyIB445yXf4SNl5fL59IlNaIbLRyftqqwGDI03IX8-skf6yDvgfJ12yP2vimr_--wt3Lg/exec";
-  const messageURL = "https://script.google.com/macros/s/AKfycbwRyQFCZAmm2_lwiSe16p5f4ZZeYEvnXpNVr43C-vCyMTnfcYSwLy2t2NXBPlCcj2yJ/exec";
+  // Ultimate Configuration
+  const config = {
+    shayariURL: "https://script.google.com/macros/s/AKfycbyIB445yXf4SNl5fL59IlNaIbLRyftqqwGDI03IX8-skf6yDvgfJ12yP2vimr_--wt3Lg/exec",
+    autoCloseTime: 60, // 60 seconds auto close
+    refreshInterval: 5 // 5 minutes for new message
+  };
 
-  const greetings = [
-    "🙏 नमस्ते", "👋 फिर से स्वागत है", "🔥 क्या बात है!", "💬 चलिए शुरू करें!", "🚀 Rockstar वापसी!",
-    "🎯 नया टारगेट Ready!", "🧠 सीखने का टाइम!", "💖 एक्टिव लोग Welcome!", "🌈 चमकते रहो!", "📚 शायरी का dose!"
-  ];
+  // AI Bhai Avatar
+  const avatarUrl = "https://deepakchauhanxai.xyz/images/AI-bhai.png"; // Your AI Bhai image URL
 
+  // Stylish Design with Typing Effect
   const style = document.createElement('style');
   style.innerHTML = `
-  #aiWidgetBox {
-    display: none;
+  #ultimateAiWidget {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: linear-gradient(135deg, #1e1e2f, #2b2b45);
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    padding: 16px;
-    border-radius: 12px;
-    max-width: 350px;
-    width: 90%;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    z-index: 9999;
-  }
-  #aiMessages .ai-line {
-    background: #353553;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    font-size: 15px;
-    color: #ffefc3;
-    animation: fadeIn 0.3s ease-in-out;
-  }
-  #aiUserInput {
-    width: 70%;
-    padding: 8px;
-    border-radius: 8px;
-    border: none;
-  }
-  #aiUserButton {
-    padding: 8px 12px;
-    background: #00c853;
+    background: linear-gradient(145deg, #1a1a2e, #16213e);
     color: white;
-    border: none;
-    border-radius: 8px;
-    margin-left: 8px;
-    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    padding: 15px;
+    border-radius: 15px;
+    width: 320px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    z-index: 99999;
+    border: 1px solid rgba(255,255,255,0.1);
+    animation: fadeIn 0.5s ease-out;
   }
-  #aiCloseBtn {
-    background: #ff1744;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    margin-top: 8px;
-    border-radius: 8px;
-    cursor: pointer;
-  }
+  
   @keyframes fadeIn {
-    from {opacity:0; transform:translateY(10px);}
-    to {opacity:1; transform:translateY(0);}
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  #aiAvatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    border: 2px solid #00ffcc;
+  }
+  
+  #aiHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  #aiName {
+    font-weight: bold;
+    font-size: 18px;
+    background: linear-gradient(90deg, #00ffcc, #0099ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  #ultimateMessages {
+    height: 200px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding: 5px;
+  }
+  
+  .ai-message {
+    background: rgba(0,255,204,0.1);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    border-left: 3px solid #00ffcc;
+    animation: messageIn 0.3s ease-out;
+  }
+  
+  @keyframes messageIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  
+  .typing {
+    display: inline-block;
+  }
+  
+  .typing span {
+    height: 8px;
+    width: 8px;
+    background: #00ffcc;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 2px;
+    animation: bounce 1s infinite ease-in-out;
+  }
+  
+  .typing span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .typing span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-5px); }
+  }
+  
+  #ultimateCloseBtn {
+    background: linear-gradient(135deg, #ff0066, #ff00cc);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    transition: all 0.3s;
+  }
+  
+  #ultimateCloseBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255,0,102,0.4);
   }
   `;
   document.head.appendChild(style);
 
-  const box = document.createElement('div');
-  box.id = 'aiWidgetBox';
-  box.innerHTML = `
-    <div id="aiMessages"></div>
-    <div id="aiInputArea" style="margin-top:10px;">
-      <p style="margin: 0 0 6px 0;">मैं AI Bhai हूँ, क्या आप अपना नाम बताएँगे?</p>
-      <input type="text" id="aiUserInput" placeholder="अपना नाम..." />
-      <button id="aiUserButton">Start</button>
+  // Create Ultimate Widget
+  const widget = document.createElement('div');
+  widget.id = 'ultimateAiWidget';
+  widget.innerHTML = `
+    <div id="aiHeader">
+      <img id="aiAvatar" src="${avatarUrl}" alt="AI Bhai">
+      <div id="aiName">AI भाई</div>
     </div>
-    <div id="aiMessageBox" style="display:none; flex-direction:column; gap:10px; margin-top:10px;">
-      <textarea id="aiUserMessage" rows="3" placeholder="अपना संदेश लिखें..." style="width:100%;padding:10px;border-radius:8px;"></textarea>
-      <button id="aiSendBtn">OK</button>
-    </div>
-    <button id="aiCloseBtn" style="display:none;">Thanks</button>
+    <div id="ultimateMessages"></div>
+    <button id="ultimateCloseBtn">Thanks (Close)</button>
   `;
-  document.body.appendChild(box);
+  document.body.appendChild(widget);
 
-  let userName = localStorage.getItem("username");
-  const aiDiv = document.getElementById("aiMessages");
+  // Auto-close timer
+  let closeTimer = setTimeout(() => {
+    widget.style.animation = 'fadeIn 0.5s reverse';
+    setTimeout(() => widget.remove(), 500);
+  }, config.autoCloseTime * 1000);
 
-  function aiSpeak(text, delay = 500) {
-    setTimeout(() => {
-      const line = document.createElement("div");
-      line.className = "ai-line";
-      line.innerText = text;
-      aiDiv.appendChild(line);
-      aiDiv.scrollTop = aiDiv.scrollHeight;
-      document.getElementById("aiCloseBtn").style.display = "block";
-    }, delay);
+  // Close button functionality
+  document.getElementById('ultimateCloseBtn').addEventListener('click', () => {
+    clearTimeout(closeTimer);
+    widget.style.animation = 'fadeIn 0.5s reverse';
+    setTimeout(() => widget.remove(), 500);
+  });
+
+  // Show typing indicator
+  function showTyping() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'ai-message typing';
+    typingDiv.innerHTML = '<span></span><span></span><span></span>';
+    document.getElementById('ultimateMessages').appendChild(typingDiv);
+    document.getElementById('ultimateMessages').scrollTop = 
+      document.getElementById('ultimateMessages').scrollHeight;
+    return typingDiv;
   }
 
-  function fetchShayari() {
-    fetch(shayariURL).then(res => res.json()).then(data => {
-      const r = data[Math.floor(Math.random() * data.length)];
-      aiSpeak("📝 " + (r.shayari || "Shayari नहीं मिली"), 1500);
-    }).catch(() => {
-      const fallback = [
-        "🔥 जो जलता है वही चमकता है", "💪 हार मानने वाले हारते हैं", "🚀 उड़ने का वक्त है"
-      ];
-      aiSpeak("📝 " + fallback[Math.floor(Math.random() * fallback.length)], 1500);
+  // Show message with typing effect
+  function showMessage(text) {
+    return new Promise((resolve) => {
+      const typing = showTyping();
+      
+      setTimeout(() => {
+        typing.remove();
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'ai-message';
+        msgDiv.textContent = text;
+        document.getElementById('ultimateMessages').appendChild(msgDiv);
+        document.getElementById('ultimateMessages').scrollTop = 
+          document.getElementById('ultimateMessages').scrollHeight;
+        resolve();
+      }, 1500); // Typing duration
     });
   }
 
-  function sendToSheet(msg) {
-    const formData = new FormData();
-    formData.append("name", userName);
-    formData.append("message", msg);
-    formData.append("time", new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }));
-    fetch(messageURL, { method: "POST", body: formData });
+  // Initial messages with typing effect
+  async function initMessages() {
+    await showMessage("👋 नमस्ते! मैं हूँ AI भाई...");
+    await showMessage("💡 आपके लिए लाया हूँ मोटिवेशनल शायरी:");
+    
+    fetch(config.shayariURL)
+      .then(res => res.json())
+      .then(async (data) => {
+        const shayari = data[Math.floor(Math.random() * data.length)];
+        await showMessage("📜 " + (shayari.shayari || "जिंदगी में कभी हार मत मानो!"));
+      })
+      .catch(async () => {
+        await showMessage("🔥 हार वही मानते हैं जो लड़ना नहीं जानते!");
+      });
   }
 
-  function startConversation() {
-    const greet = greetings[Math.floor(Math.random() * greetings.length)];
-    aiSpeak(`👋 Hello ${userName} जी!`, 500);
-    aiSpeak(`${greet}`, 1000);
-    aiSpeak("💬 आज की मोटिवेशनल शायरी:", 1500);
-    fetchShayari();
-
-    setInterval(() => {
-      aiSpeak("🔥 आप अभी भी एक्टिव हैं? ये लीजिए शायरी मेरी तरफ से!", 1000);
-      fetchShayari();
-      sendToSheet("🔥 आप अभी भी एक्टिव हैं");
-    }, 5 * 60 * 1000);
-  }
-
-  document.getElementById("aiUserButton").onclick = function () {
-    const val = document.getElementById("aiUserInput").value.trim();
-    if (!val) return;
-    userName = val;
-    localStorage.setItem("username", userName);
-    document.getElementById("aiInputArea").style.display = "none";
-    document.getElementById("aiWidgetBox").style.display = "block";
-    if (localStorage.getItem("messageSentOnce") === "yes") {
-      startConversation();
-    } else {
-      aiSpeak("🧠 AI की दुनिया में आपका स्वागत है!");
-      aiSpeak("🎤 Deepak Sir को कोई मैसेज देना है तो नीचे लिखें:");
-      document.getElementById("aiMessageBox").style.display = "flex";
+  // Auto-refresh every 5 minutes
+  setInterval(() => {
+    if (document.getElementById('ultimateAiWidget')) {
+      fetch(config.shayariURL)
+        .then(res => res.json())
+        .then(async (data) => {
+          const shayari = data[Math.floor(Math.random() * data.length)];
+          await showMessage("💎 नई शायरी आपके लिए:");
+          await showMessage("📜 " + (shayari.shayari || "मेहनत करो, कामयाबी मिलेगी!"));
+        })
+        .catch(async () => {
+          await showMessage("⚡ आगे बढ़ते रहो, रुको मत!");
+        });
     }
-  };
+  }, config.refreshInterval * 60 * 1000);
 
-  document.getElementById("aiSendBtn").onclick = function () {
-    const msg = document.getElementById("aiUserMessage").value.trim();
-    if (!msg) return;
-    aiSpeak("📨 आपका संदेश भेज दिया गया है Deepak Sir तक ✅", 1000);
-    sendToSheet(msg);
-    localStorage.setItem("messageSentOnce", "yes");
-    document.getElementById("aiMessageBox").style.display = "none";
-    fetchShayari();
-    startConversation();
-  };
-
-  document.getElementById("aiCloseBtn").onclick = function () {
-    document.getElementById("aiWidgetBox").style.display = "none";
-  };
-
-  window.addEventListener("DOMContentLoaded", () => {
-    if (userName) {
-      document.getElementById("aiInputArea").style.display = "none";
-      setTimeout(() => {
-        document.getElementById("aiWidgetBox").style.display = "block";
-        startConversation();
-      }, 40000); // 40 sec baad box show ho
-    } else {
-      document.getElementById("aiWidgetBox").style.display = "block";
-    }
+  // Start the conversation
+  window.addEventListener('DOMContentLoaded', () => {
+    widget.style.display = 'block';
+    initMessages();
   });
 })();
