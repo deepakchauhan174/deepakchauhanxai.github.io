@@ -1,4 +1,4 @@
-fetch("https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLhot5ONbatxJJ9v2w2pfc5V5xKdScdkqIF3kLkephdR5gc7McIK5-DESfrX770MNesANIAXfiE2ju9EhGjLQ9Sl4BbTZdGSqfwdjMoW_2xu5OcYefPoo3N8ZEqmeY7fE8MbOPsEncwHNlXT7EHKP2w4qjpCTGZzcneqDx4MltJyH20MGXaX_ZHj7rZT-4RLE0udYqO3RY8kAH8Z_rAaAUD2et35P7zw6pt74g5BGZNH5CoFvABO4y-4kYY4vcat1QplAiUP1RjzSKFF3YUk4mds5nLxg3Y-wUe81BeF&lib=MDyLLKrfEDnbMzE4P6YLgd1MXFqqUoLhN")
+fetch("https://script.google.com/macros/s/AKfycbz-Oa2lG9-rp6xQ-FoIx-rHnUZO2bxxaKytHjN8x2dzB1G51Ktfk8sk9O1hlBGqvvrj-g/exec")
   .then((res) => res.json())
   .then((data) => {
     // 👇 Column A = title, Column B = image
