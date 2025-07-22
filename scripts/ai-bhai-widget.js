@@ -123,6 +123,26 @@
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(255,0,102,0.4);
   }
+  
+.ai-member-box {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      z-index: 9999;
+      display: none;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
   `;
   document.head.appendChild(style);
 
@@ -152,6 +172,29 @@
     setTimeout(() => widget.remove(), 500);
   });
 
+document.head.appendChild(style);
+
+  // Create box element
+  const box = document.createElement("div");
+  box.className = "ai-member-box";
+  box.innerHTML = `👤 <span id="aiMemberName">AI Bhai</span>`;
+  document.body.appendChild(box);
+
+  // Get or Ask for name
+  let name = localStorage.getItem("aiMemberName");
+
+  if (!name) {
+    name = prompt("🙏 कृपया अपना नाम दर्ज करें:");
+    if (name && name.trim() !== "") {
+      localStorage.setItem("aiMemberName", name);
+    }
+  }
+
+  // Show the name if available
+  if (name) {
+    document.getElementById("aiMemberName").textContent = name;
+    box.style.display = "block";
+  }
   // Show typing indicator
   function showTyping() {
     const typingDiv = document.createElement('div');
@@ -182,10 +225,29 @@
   }
 
   // Initial messages with typing effect
+// Initial messages with typing effect
   async function initMessages() {
-    await showMessage("👋 नमस्ते! मैं हूँ AI भाई...");
-    await showMessage("💡 आपके लिए लाया हूँ मोटिवेशनल शायरी:");
-    
+    let username = localStorage.getItem("username") || "Guest";
+
+    try {
+      // JSON se welcome + intro line fetch karo
+      const response = await fetch("https://deepakchauhanxai.xyz/ai_bhai_intro.json");
+      const data = await response.json();
+      const messages = data.messages;
+      const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+
+      const welcomeText = randomMsg.welcome.replace("${username}", username);
+      const introText = randomMsg.intro;
+
+      await showMessage(welcomeText);
+      await showMessage(introText);
+    } catch (error) {
+      console.error("❌ Intro JSON error:", error);
+      await showMessage(`👋 नमस्ते ${username}! मैं हूँ AI भाई...`);
+      await showMessage("💡 आपके लिए लाया हूँ मोटिवेशनल शायरी:");
+    }
+
+    // Shayari load karo Google Sheet se
     fetch(config.shayariURL)
       .then(res => res.json())
       .then(async (data) => {
