@@ -190,40 +190,60 @@
       commentList.prepend(commentEl);  
     });  
   </script>
-<!-- Legal Popup Start -->
-<div id="legalPopup" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.95); color: white; z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 30px; box-sizing: border-box; overflow: auto; font-family: 'Arial', sans-serif;">
-  <div style="max-width: 700px; background: #1c1c1c; padding: 30px; border-radius: 16px; box-shadow: 0 0 30px red; border: 2px solid red;">
-    <h2 style="color: #ff4444; text-align: center; font-size: 24px;">⚠️ कानूनी चेतावनी (Legal Warning)</h2>
-    <p style="margin-top: 20px; line-height: 1.6; font-size: 16px; text-align: justify;">
-      Deepak Chauhan (AI Bhai) द्वारा संचालित इस प्लेटफॉर्म पर आपके द्वारा दर्ज किया गया आपत्तिजनक या गाली-गलौज वाला कमेंट (जैसे: "<strong style="color:yellow;">Betichod Fraud Hai Saala Gandu</strong>") गंभीर रूप से दर्ज कर लिया गया है।
-    </p>
+<!-- LEGAL WARNING POPUP -->
+<div id="legalPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9999; font-family:'Segoe UI', sans-serif; overflow-y: auto; padding: 30px 15px; box-sizing: border-box;">
+  <div style="max-width:600px; margin:50px auto; background:#111; color:#fff; padding:30px; border-radius:15px; box-shadow:0 0 20px red; border:2px solid crimson; position:relative;">
     
-    <p style="margin-top: 10px;">
-      ☠️ यह एक सार्वजनिक मंच है, और <strong>IPC की धारा 295A, 500, 504, 66A IT Act</strong> के अंतर्गत यह एक अपराध माना जाता है।
+    <h2 style="color:#ff0033; font-size:26px; text-align:center; border-bottom:1px solid #444; padding-bottom:10px;">
+      ⚠️ Legal Notice | 24 घंटे का अल्टीमेटम
+    </h2>
+    
+    <p style="font-size:18px; line-height:1.6; color:#eee; margin-top:20px;">
+      हमें यह सूचित करना है कि हमारे सिस्टम ने नीचे दिए गए व्यक्ति द्वारा की गई आपत्तिजनक टिप्पणी को ट्रैक किया है:
     </p>
 
-    <p style="margin-top: 10px;">
-      🔎 आपकी ID: <span style="color: #0ff;">OTFe10ZQPgc818Mirrb</span> <br>
-      IP Address, Device Fingerprint, Comment Timestamp सहित सभी ट्रैकिंग डिटेल्स सुरक्षित कर ली गई हैं।
-    </p>
-
-    <p style="margin-top: 10px;">
-      📌 साथ ही यह रिकॉर्ड हमारे सर्वर और लॉग सिस्टम में सुरक्षित किया गया है, और ज़रूरत पड़ने पर इसे साइबर सेल को सौंपा जाएगा।
-    </p>
-
-    <p style="margin-top: 10px;">
-      🚫 24 घंटे के अंदर आप अपने कमेंट के लिए माफ़ी मांगें या स्पष्टीकरण दें, अन्यथा <strong style="color: red;">FIR</strong> दर्ज की जाएगी और कानूनी कार्रवाई शुरू कर दी जाएगी।
-    </p>
-
-    <p style="margin-top: 20px; font-weight: bold; color: #00f;">यह चेतावनी सभी यूज़र्स के लिए है – कृपया संयमित भाषा का प्रयोग करें।</p>
-
-    <div style="text-align: center; margin-top: 30px;">
-      <button onclick="document.getElementById('legalPopup').remove();" style="background: red; color: white; padding: 10px 20px; border: none; border-radius: 10px; font-size: 16px; cursor: pointer;">
-        समझ गया, popup बंद करें
-      </button>
+    <div style="background:#222; padding:15px; margin:15px 0; border-left:5px solid red;">
+      <strong>👤 User ID:</strong> <span style="color:#ff5;">OTFe10ZQPgc818Mirrb</span><br>
+      <strong>💬 Comment:</strong> <span style="color:tomato;">"Betichod Fraud Hai Saala Gandu"</span><br>
+      <strong>🕒 Timestamp:</strong> <span style="color:#aaa;">1750478806952</span>
     </div>
+
+    <p style="color:#f8d7da; background:#661212; padding:10px 15px; border-radius:5px;">
+      यह आचरण <b>आईटी एक्ट की धारा 66A, IPC धारा 500 और साइबर क्राइम कानूनों</b> के अंतर्गत गंभीर अपराध है। यह बात साफ कर दी जाती है कि हमारे सिस्टम में सभी गतिविधियों का रिकॉर्ड सुरक्षित है – जिसमें:
+      <br><br>
+      ✅ User ID <br>
+      ✅ IP Address <br>
+      ✅ Device Fingerprint <br>
+      ✅ Activity Timestamp & Browser Info
+    </p>
+
+    <p style="margin-top:20px; color:#ffcc00; font-weight:bold;">
+      ⚠️ यदि 24 घंटे के भीतर माफी नहीं मांगी गई या सुधारात्मक कार्यवाही नहीं की गई, तो इस पर <u>Google Cyber Legal Cell</u>, <u>AdSense Security Team</u> और <u>Local Legal Authority</u> को रिपोर्ट दर्ज कराई जाएगी।
+    </p>
+
+    <p style="margin-top:20px; color:#66ff99;">
+      कृपया Note करें: यह Website किसी भी प्रकार की अपमानजनक भाषा, राजनीतिक द्वेष या साइबर गाली को बर्दाश्त नहीं करती। यह एक <b>शिक्षात्मक और मोटिवेशनल मंच</b> है जहाँ लाखों users positivity के लिए आते हैं।
+    </p>
+
+    <p style="margin-top:30px; font-size:15px; color:#999; text-align:center;">
+      ✍🏻 Deepak Chauhan × AI Bhai<br>
+      शिक्षा + रोजगार + साइबर सुरक्षा का मिशन
+    </p>
+
+    <button onclick="document.getElementById('legalPopup').style.display='none'" 
+      style="margin:20px auto 0; display:block; background:#ff0000; color:#fff; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-size:16px;">
+      बंद करें / Close
+    </button>
   </div>
 </div>
-<!-- Legal Popup End -->
+
+<script>
+  // Show popup automatically on load
+  window.onload = function() {
+    setTimeout(() => {
+      document.getElementById('legalPopup').style.display = "block";
+    }, 500);
+  }
+</script>
   </body>  
 </html>  
