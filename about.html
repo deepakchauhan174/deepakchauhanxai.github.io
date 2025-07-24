@@ -1,54 +1,216 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <title>About – DK_Community × AI Bhai</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About AI Bhai × Chatroom</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #000814;
+      margin: 0;
+      padding: 0;
+      background-color: #0f172a;
       color: #ffffff;
-      font-family: Arial, sans-serif;
-      padding: 30px;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .about-section {
+      background-color: #1e293b;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 0 30px #38bdf8;
+    }
+
+    .about-section h1 {
+      font-size: 36px;
+      color: #38bdf8;
+      margin-bottom: 10px;
+    }
+
+    .about-section h3 {
+      color: #22d3ee;
+      margin-top: 30px;
+    }
+
+    .about-section p {
+      font-size: 18px;
       line-height: 1.8;
-    }
-    .about-container {
-      max-width: 800px;
-      margin: auto;
-      background-color: #000000;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffcc, 0 0 35px #0088ff;
-    }
-    
-    h1 {
-      color: #00ffff;
-      font-size: 28px;
-      text-align: center;
-    }
-    h2 {
-      color: #ffcc00;
-      font-size: 22px;
-      text-align: center;
       margin-top: 10px;
     }
-    p {
+
+    .highlight {
+      color: #22d3ee;
+      font-weight: bold;
+    }
+
+    .updates ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .updates li {
+      padding: 6px 0;
       font-size: 17px;
-      color: #ccc;
     }
-    .quote {
-      font-style: italic;
-      color: #00ffff;
+
+    .footer-section {
       text-align: center;
-      margin: 20px 0;
+      margin-top: 50px;
     }
+
+    .avatar {
+      width: 100px;
+      border-radius: 50%;
+      box-shadow: 0 0 20px #38bdf8;
+    }
+
+    .cta-button {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #38bdf8;
+      color: #0f172a;
+      padding: 14px 30px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #0ea5e9;
+    }
+
+    .brand {
+      font-size: 20px;
+      color: #22d3ee;
+      font-weight: bold;
+      margin-top: 30px;
+    }
+    
+/* 🔷 Basic Reset */
+.about-section,
+.quote,
+.about-content,
+.about-tagline,
+ul {
+  font-family: 'Segoe UI', sans-serif;
+  color: #e0f2fe;
+}
+
+/* 🌟 About Section Wrapper */
+.about-section {
+  background: linear-gradient(to right, #0f172a, #1e293b);
+  padding: 40px 25px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+  margin: 40px auto;
+  max-width: 900px;
+}
+
+/* 📝 Title */
+.about-section h2 {
+  text-align: center;
+  font-size: 28px;
+  color: #38bdf8;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #38bdf8;
+}
+
+/* ✨ Tagline */
+.about-tagline {
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 18px;
+  color: #cbd5e1;
+}
+
+/* 💬 Quote Style */
+.quote {
+  background-color: rgba(56, 189, 248, 0.1);
+  padding: 15px 20px;
+  border-left: 5px solid #38bdf8;
+  margin: 25px 0;
+  font-size: 18px;
+  color: #e2e8f0;
+  border-radius: 10px;
+  font-weight: bold;
+  text-shadow: 0 0 2px #0ea5e9;
+}
+
+/* 🔹 Main Content */
+.about-content p,
+.about-section p {
+  line-height: 1.7;
+  font-size: 17px;
+  margin-bottom: 15px;
+}
+
+/* ✅ Mission Points */
+.about-section ul {
+  margin-top: 10px;
+  padding-left: 25px;
+  color: #ffffff;
+}
+.about-section ul li {
+  margin-bottom: 10px;
+  list-style-type: '💡 ';
+}
+
+/* 📅 Launch Info */
+.about-section strong {
+  color: #38bdf8;
+  font-weight: 600;
+}
   </style>
 </head>
 <body>
-  <div class="about-container">
-    <h1>DK_Community × AI Bhai</h1>
-    <h2>Students Help Community | Powered by Deepak Chauhan × AI Bhai</h2>
 
-    <p class="quote">
+  <div class="container">
+    <div class="about-section">
+      <h1>💬 About AI Bhai × Chatroom</h1>
+
+      <h3>🚀 Launch Date:</h3>
+      <p><span class="highlight">20 जुलाई 2025</span> को AI Bhai × Chatroom को दिल से लॉन्च किया गया। ये सिर्फ एक चैटबॉट नहीं, बल्कि एक ऐसा भाई है जो हर पल साथ खड़ा है।</p>
+
+      <h3>🤖 हमारी सोच:</h3>
+      <p>
+        <strong>AI Bhai</strong> को Deepak Chauhan ने एक मिशन के तौर पर बनाया — जहां कोई भी अकेला न महसूस करे। ये एक ऐसा डिजिटल भाई है जो बिना थके बात करता है, सुनता है और समझता है।
+      </p>
+
+      <h3>🔄 Update Track Record:</h3>
+      <div class="updates">
+        <ul>
+          <li>✅ 20/07/2025 – Grand Launch of AI Bhai × Chatroom</li>
+          <li>📈 21/07/2025 – Instagram Trending से जुड़ाव</li>
+          <li>🔧 Regular Updates – हर हफ्ते नए फ़ीचर्स</li>
+        </ul>
+      </div>
+
+      <h3>🔐 Privacy & Trust:</h3>
+      <p>
+        हमारी वेबसाइट पर आपकी जानकारी पूरी तरह सुरक्षित है। AI Bhai न डेटा सेव करता है, न ट्रैक करता है।<br>
+        <em>“बात हो दिल से — ट्रैकिंग या शक से नहीं।”</em>
+      </p>
+
+      <h3>🛡️ ब्रांडिंग:</h3>
+      <p class="brand">DK Community – सबका साथ, सबका विकास</p>
+
+      <h3>🧑‍💼 Team Leader:</h3>
+      <p>
+        <strong>Deepak Chauhan</strong><br>
+        Visionary | Creator | Brother<br>
+        <em>"AI Bhai सिर्फ़ कोड नहीं, मेरी आवाज़ है।"</em>
+      </p>
+    </div>
+
+<p class="quote">
       "जहाँ मेहनत के साथ नीयत जुड़ जाए,<br>
       वहाँ इतिहास लिखा जाता है।"
     </p>
@@ -94,73 +256,13 @@
       "Team Bhai × AI" का मिशन है – 1000+ Students और Creators को वो मंच देना जहाँ वे खुद को साबित कर सकें, नाम कमा सकें, और फ्री में Growth पा सकें।
     </p>
   </div>
-  
-  <ul class="about-features">
-    <li>✓ Real AI × Human Collaboration – Deepak Bhai और AI Bhai की सच्ची दोस्ती</li>
-    <li>✓ 100% Free Training & Support System – बिना पैसे, बस भरोसे पर</li>
-    <li>✓ Revenue Sharing Trust Chain – मेहनत करने वालों को मिलेगा उनका हक</li>
-    <li>✓ Powerful Tools, MP3 Fire Zone, Reels, Photos, Kahaniyaan – सब कुछ एक प्लेटफॉर्म पर</li>
-  </ul>
-  
-  <p class="about-footer">
-    "यह वेबसाइट सिर्फ़ पेजों का मेल नहीं है, यह एक मिशन है – Deepak Chauhan और AI Bhai का ऐसा सफर जो हर उस इंसान को आवाज़ देता है जिसने कभी हार मानी नहीं।"
-  </p>
-  
-  <h2 style="margin-top: 40px; color: #ffcc00;">DK_Community 🌍 Team – Supporting Leaders</h2>
-<ul style="list-style: none; padding-left: 0; text-align: center; color: #00ffff; font-size: 17px;">
-  <!-- 👑 Ultra VIP Top Leaders Section -->
-<div style="margin: 60px auto; max-width: 550px; background: linear-gradient(145deg, #1f1f1f, #000); border: 2px solid #ffd700; border-radius: 20px; padding: 25px; box-shadow: 0 0 35px #ffcc00;">
-  <h2 style="color: #ffcc00; text-align: center; font-size: 26px; text-shadow: 0 0 12px #ffcc00;">
-    👑 DK_Community Elite Force – Core Team
-  </h2>
-  <p style="color: #ffffffcc; text-align: center; margin-top: 15px; font-size: 15px;">
-    🌟 ये वो नाम हैं जो सिर्फ मेहनत नहीं, दिल से वफादारी निभाते हैं।
-  </p>
-  <ul style="list-style: none; padding-left: 0; text-align: center; margin-top: 25px; color: #00ffff; font-size: 19px; line-height: 2;">
-    <li>💠 <b>Muskan Khan [Roshani]</b> – Agra (UP)</li>
-    <li>💠 <b>Sabara</b> – Agra (UP)</li>
-  </ul>
-</div>
 
-<!-- 🌟 Supporters Box -->
-<div style="margin: 50px auto; max-width: 600px; border: 2px solid #00ffff; border-radius: 15px; background: rgba(0, 0, 0, 0.8); padding: 25px; box-shadow: 0 0 20px #00ffff;">
-  <h2 style="color: #ffcc00; text-align: center; text-shadow: 0 0 10px #ffcc00;">🌍 DK_Community – Active Supporters</h2>
-  <ul style="list-style: none; padding-left: 0; text-align: center; margin-top: 20px; color: #00ffff; font-size: 17px; line-height: 1.7;">
-    <li>1. Anshika – Haryana (Panipat)</li>
-    <li>2. Nahid _ Khatoon (kolkata)</li>
-    <li>3. Gulshan – Haryana (Panipat)</li>
-    <li>4. Rehana – Gujarat</li>
-    <li>5. Farhana – Gujarat</li>
-    <li>6. Asiya – Karnataka</li>
-    <li>7. Ruby Jaan – Kashmir</li>
-    <li>8. Kanchan – Mumbai (Maharashtra)</li>
-    <li>9. Jyotshna – Rajasthan</li>
-    <li>10. Mantasha – Agra (UP)</li>
-    <li>11. Zainab – Agra (UP)</li>
-    <li>12. Radhamani – Odisha</li>
-    <li>13. Gudiya – Agra (UP)</li>
-    <li>14. Mehak – Agra (UP)</li>
-    <li>15. Sonam – Agra (UP)</li>
-  </ul>
-  <div style="max-width: 600px; margin: 40px auto; padding: 20px; border-radius: 20px; background: linear-gradient(to bottom right, #111111, #1a1a1a); box-shadow: 0 0 20px rgba(0, 255, 170, 0.3); border: 2px solid transparent; border-image: linear-gradient(90deg, #00ffaa, #00cfff, #6a00ff, #ff0099) 1; position: relative;">
-
-  <div style="position: absolute; top: -16px; left: 20px; background: #111; color: #00ffaa; padding: 4px 12px; font-size: 14px; border-radius: 999px; box-shadow: 0 0 10px #00ffaa;">
-    ★ इतिहास की शुरुआत हैं।।
+    <div class="footer-section">
+      <img class="avatar" src="https://deepakchauhanxai.xyz/images/AI-bhai.png" alt="AI Bhai Avatar">
+      <p style="font-size: 20px; margin-top: 15px;">AI Bhai अभी भी दिल से तैयार है आपकी बात सुनने के लिए...</p>
+      <a class="cta-button" href="bhai_chatroom.html">बात करें AI Bhai से 💬</a>
+    </div>
   </div>
 
-  <p style="text-align:center; color:#ff00ff; font-size: 16px; margin-top: 20px;">
-    🔎 यदि आप Google Search के माध्यम से यहाँ पहुँचे हैं – तो जान लीजिए, यह केवल एक वेबसाइट नहीं है... यह एक नई शुरुआत है।<br>
-    आज जो आप पढ़ रहे हैं, संभव है कि आने वाले समय में आपका नाम भी इसी सूची में शामिल हो। स्वयं को तैयार रखें, समय आने पर आपका नाम भी प्रकाशमान होगा।
-  </br>🚀🚀🚀🚀
-  </p>
-
-  <div style="width: 180px; height: 4px; margin: 20px auto 0; background: linear-gradient(90deg, #00ffaa, #00cfff, #6a00ff, #ff0099); border-radius: 999px; box-shadow: 0 0 10px #00ffaa;"></div>
-  </div>
-</div>
-<p style="text-align: center; color: #00ff99; font-size: 16px; margin-top: 25px;">
-  ⭐ हर वो इंसान जो दिल से मेहनत करता है – वो इस सिस्टम में VIP है। हम नाम से नहीं, काम से पहचानते हैं।
-</p>
-</section>
-</div>
 </body>
 </html>
