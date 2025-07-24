@@ -2332,3 +2332,30 @@ transform: scale(1.05);
     border-radius: 8px;
     cursor: pointer;
   }
+
+ .team-btn {
+    background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 0 20px #38bdf8, 0 0 40px #0ea5e9 inset;
+    transition: all 0.3s ease;
+    display: inline-block;
+    animation: glow 2s infinite ease-in-out;
+  }
+
+  .team-btn:hover {
+    background: #22d3ee;
+    box-shadow: 0 0 25px #0ea5e9, 0 0 50px #38bdf8 inset;
+    transform: scale(1.05);
+  }
+
+  @keyframes glow {
+    0% { box-shadow: 0 0 10px #38bdf8; }
+    50% { box-shadow: 0 0 20px #0ea5e9; }
+    100% { box-shadow: 0 0 10px #38bdf8; }
+  }
