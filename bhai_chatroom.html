@@ -956,6 +956,77 @@ window.addEventListener("load", () => {
 document.getElementById("addTaskBtn").addEventListener("click", () => {
   showTaskPrompt(); // तूने जो task add करने वाला function लिखा है
 });
+
+
+
+let cityMap = {};
+
+// 🔹 Load JSON once
+fetch("https://deepakchauhanxai.xyz/city_map.json")
+  .then((res) => res.json())
+  .then((data) => {
+    cityMap = data;
+  })
+  .catch(() => {
+    console.warn("City map load failed, fallback to default mapping");
+  });
+
+// 🔹 Transliterate (uses JSON map or fallback)
+function transliterateCity(city) {
+  return cityMap[city.trim()] || city;
+}
+
+// 🔹 Weather Reply System
+async function getWeatherReply(userMessage) {
+  const apiKey = "1ce9b2986252ac410c88c202f012b906";
+  let city = "Delhi";
+
+  const words = userMessage.match(/[\u0900-\u097F\w]+/g); // Hindi + English words
+  if (words && words.length > 0) {
+    for (let word of words) {
+      const cityGuess = transliterateCity(word);
+      if (cityGuess && cityGuess.length > 2) {
+        city = cityGuess;
+        break;
+      }
+    }
+  }
+
+  try {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric&lang=hi`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Weather fetch failed");
+
+    const data = await res.json();
+    const temp = data.main.temp.toFixed(1);
+    const desc = data.weather[0].description;
+    const cityName = data.name;
+
+    return `⛅️ <b>${cityName}</b> का तापमान <b>${temp}°C</b> है और मौसम है: <b>${desc}</b><br>💡 <i>AI Bhai कह रहे हैं – मौसम जो भी हो, मेहनत से बड़ा कोई मौसम नहीं होता भाई 🔥</i>`;
+  } catch (e) {
+    return "❌ मौसम की जानकारी लाने में दिक्कत हुई — शायद शहर का नाम गलत हो या नेटवर्क में दिक्कत है।";
+  }
+}
+
+// 🔹 Main Chat Send Function
+async function sendMsg() {
+  const txt = input.value.trim();
+  if (!txt) return;
+
+  input.value = "";
+  showMsg("user", txt);
+  saveChat("user", txt);
+
+  // 🔹 Weather detection
+  if (/mausam|weather|tapman|तापमान|बारिश/i.test(txt)) {
+    const reply = await getWeatherReply(txt);
+    typing(reply);
+    return;
+  }
+
+  const rep = findReply(txt) || "🤖 AI Bhai सोच में हैं…";
+  typing(rep);
+}
   </script>
   <script src="https://deepakchauhanxai.com/scripts/ai_bhai_popup4.js"></script>
 </body>
