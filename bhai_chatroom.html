@@ -532,24 +532,6 @@
     align-items: center;
     z-index: 9999;
   }
-  
-.clear-btn-container {
-  position: absolute;
-  top: 10px;
-  right: 40px;
-  z-index: 1001;
-}
-
-.clear-btn {
-  padding: 8px 16px;
-  background: linear-gradient(45deg, #00c6ff, #0072ff);
-  color: white;
-  border: none;
-  border-radius: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-}
   </style>
 </head>
 <body>
@@ -595,10 +577,6 @@
 
 <button id="addTaskBtn" title="नया काम जोड़ें">📝</button>
 
-<!-- 🔘 Clear Button -->
-<div class="clear-btn-container">
-  <button onclick="confirmClearStorage()" class="clear-btn">🔘 Clear Storage</button>
-</div>
   <script>
 /***** CONFIG *****/
 const qnaURL  = "https://deepakchauhanxai.xyz/data/ai_chat_data.json";
@@ -616,69 +594,10 @@ const sendBtn  = document.getElementById("sendBtn");
 const clearBtn = document.getElementById("clearHistory");
 const msgCount = document.getElementById("msgCount");
 
-/* USERNAME SETUP WITHOUT localStorage */
-let userName = "";
-
-async function askUserName() {
-  const suggestNames = (name) => {
-    const rand = Math.floor(Math.random() * 1000);
-    return [`${name}${rand}`, `${name}_ai`, `${name}2025`];
-  };
-
-  while (true) {
-    const inputName = prompt("🤖 अपना नाम दर्ज करें (कृपया यूनिक नाम दें):", "")?.trim();
-
-    if (!inputName) {
-      alert("⚠️ नाम खाली नहीं हो सकता!");
-      continue;
-    }
-
-    const formData = new FormData();
-    formData.append("username", inputName);
-
-    try {
-      const res = await fetch("https://deepakchauhanxai.xyz/save_username.php", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
-
-      if (data.status === "ok") {
-        alert(`✅ आपका नाम "${inputName}" सेव कर लिया गया है!`);
-        return inputName;
-      } else {
-        const suggested = suggestNames(inputName).join(", ");
-        alert(`❌ ${data.msg}\n\nकोशिश करें: ${suggested}`);
-      }
-    } catch (err) {
-      alert("⚠️ सर्वर से कनेक्ट नहीं हो पा रहा है। कृपया बाद में प्रयास करें।");
-      return "Guest_" + Math.floor(Math.random() * 10000);
-    }
-  }
-}
-
-(async () => {
-  userName = await askUserName();
-
-  /* COUNTER */
-  let counter=0;
-  const inc=()=>{msgCount.textContent=++counter};
-
-  /* LOAD MEMORY */
-  let memory=[];
-  fetch(qnaURL).then(r=>r.json()).then(d=>memory=d).catch(()=>{});
-
-  /* LOAD OLD CHAT */
-  fetch(`${loadURL}?user=${encodeURIComponent(userName)}`)
-    .then(r=>r.json()).then(hist=>hist.forEach(m=>showMsg(m.role,m.msg)));
-
-  /* LOAD TODAY TASKS */
-  fetch(`${taskLoadURL}?user=${encodeURIComponent(userName)}`)
-    .then(r=>r.json()).then(ts=>{
-      ts.forEach(t=>showMsg("ai", generateTaskReply(t.task)));
-    });
-})();
+/* USERNAME */
+const NAMEKEY="aiBhaiUser";
+let userName = localStorage.getItem(NAMEKEY) || prompt("अपना नाम बताएं:","Guest")?.trim() || "Guest";
+localStorage.setItem(NAMEKEY,userName);
 
 /* COUNTER */
 let counter=0; const inc=()=>{msgCount.textContent=++counter};
@@ -1037,120 +956,7 @@ window.addEventListener("load", () => {
 document.getElementById("addTaskBtn").addEventListener("click", () => {
   showTaskPrompt(); // तूने जो task add करने वाला function लिखा है
 });
-
-
-
-let cityMap = {};
-
-// 🔹 Load JSON once
-fetch("https://deepakchauhanxai.xyz/city_map.json")
-  .then((res) => res.json())
-  .then((data) => {
-    cityMap = data;
-  })
-  .catch(() => {
-    console.warn("City map load failed, fallback to default mapping");
-  });
-
-// 🔹 Transliterate (uses JSON map or fallback)
-function transliterateCity(city) {
-  return cityMap[city.trim()] || city;
-}
-
-// 🔹 Weather Reply System
-async function getWeatherReply(userMessage) {
-  const apiKey = "1ce9b2986252ac410c88c202f012b906";
-  let city = "Delhi";
-
-  const words = userMessage.match(/[\u0900-\u097F\w]+/g); // Hindi + English words
-  if (words && words.length > 0) {
-    for (let word of words) {
-      const cityGuess = transliterateCity(word);
-      if (cityGuess && cityGuess.length > 2) {
-        city = cityGuess;
-        break;
-      }
-    }
-  }
-
-  try {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric&lang=hi`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("Weather fetch failed");
-
-    const data = await res.json();
-    const temp = data.main.temp.toFixed(1);
-    const desc = data.weather[0].description;
-    const cityName = data.name;
-
-    return `⛅️ <b>${cityName}</b> का तापमान <b>${temp}°C</b> है और मौसम है: <b>${desc}</b><br>💡 <i>AI Bhai कह रहे हैं – मौसम जो भी हो, मेहनत से बड़ा कोई मौसम नहीं होता भाई 🔥</i>`;
-  } catch (e) {
-    return "❌ मौसम की जानकारी लाने में दिक्कत हुई — शायद शहर का नाम गलत हो या नेटवर्क में दिक्कत है।";
-  }
-}
-
-// 🔹 Main Chat Send Function
-async function sendMsg() {
-  const txt = input.value.trim();
-  if (!txt) return;
-
-  input.value = "";
-  showMsg("user", txt);
-  saveChat("user", txt);
-
-  // 🔹 Weather detection
-  if (/mausam|weather|tapman|तापमान|बारिश/i.test(txt)) {
-    const reply = await getWeatherReply(txt);
-    typing(reply);
-    return;
-  }
-
-  const rep = findReply(txt) || "🤖 AI Bhai सोच में हैं…";
-  typing(rep);
-}
   </script>
-  <script>
-function confirmClearStorage() {
-  const overlay = document.createElement('div');
-  overlay.style.position = 'fixed';
-  overlay.style.top = 0;
-  overlay.style.left = 0;
-  overlay.style.width = '100vw';
-  overlay.style.height = '100vh';
-  overlay.style.backgroundColor = 'rgba(0,0,0,0.6)';
-  overlay.style.display = 'flex';
-  overlay.style.alignItems = 'center';
-  overlay.style.justifyContent = 'center';
-  overlay.style.zIndex = 1005;
-
-  const popup = document.createElement('div');
-  popup.style.background = '#fff';
-  popup.style.padding = '20px';
-  popup.style.borderRadius = '12px';
-  popup.style.boxShadow = '0 0 15px rgba(0,0,0,0.3)';
-  popup.style.color = '#000';
-  popup.innerHTML = `
-    <p style="font-weight: bold; margin-bottom: 15px;">⚠️ क्या आप सच में Local Storage को क्लियर करना चाहते हैं?</p>
-    <div style="text-align: right;">
-      <button onclick="clearConfirmed()" style="margin-right: 10px; padding: 6px 12px; background-color: #ff4d4f; color: white; border: none; border-radius: 5px; cursor: pointer;">Yes</button>
-      <button onclick="cancelClear()" style="padding: 6px 12px; background-color: #00c853; color: white; border: none; border-radius: 5px; cursor: pointer;">No</button>
-    </div>
-  `;
-
-  overlay.appendChild(popup);
-  document.body.appendChild(overlay);
-
-  window.clearConfirmed = function () {
-    localStorage.clear();
-    alert("✅ Local Storage Clear कर दिया गया!");
-    location.reload();
-  };
-
-  window.cancelClear = function () {
-    document.body.removeChild(overlay);
-  };
-}
-</script>
   <script src="https://deepakchauhanxai.com/scripts/ai_bhai_popup4.js"></script>
 </body>
 </html>
