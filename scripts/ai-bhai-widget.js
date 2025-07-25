@@ -248,7 +248,7 @@ document.getElementById("aiName").insertAdjacentHTML("afterend", `
 
 // Initial messages with typing effect
 async function initMessages() {
-  let username = localStorage.getItem("username") || "Guest";
+let username = localStorage.getItem("username_value") || localStorage.getItem("username") || "Guest";
 
   // Dynamic greeting based on time
   let hour = new Date().getHours();
