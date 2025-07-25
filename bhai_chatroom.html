@@ -616,6 +616,7 @@ const sendBtn  = document.getElementById("sendBtn");
 const clearBtn = document.getElementById("clearHistory");
 const msgCount = document.getElementById("msgCount");
 
+/* USERNAME SETUP WITHOUT localStorage */
 let userName = "";
 
 async function askUserName() {
@@ -624,13 +625,6 @@ async function askUserName() {
     return [`${name}${rand}`, `${name}_ai`, `${name}2025`];
   };
 
-  // 🔸 Step 1: Check if already saved in localStorage
-  if (localStorage.getItem("username_saved") === "true") {
-    const storedName = localStorage.getItem("username_value");
-    if (storedName) return storedName;
-  }
-
-  // 🔸 Step 2: Otherwise ask and save
   while (true) {
     const inputName = prompt("🤖 अपना नाम दर्ज करें (कृपया यूनिक नाम दें):", "")?.trim();
 
@@ -652,11 +646,6 @@ async function askUserName() {
 
       if (data.status === "ok") {
         alert(`✅ आपका नाम "${inputName}" सेव कर लिया गया है!`);
-
-        // 🔸 Step 3: Save locally for future skip
-        localStorage.setItem("username_saved", "true");
-        localStorage.setItem("username_value", inputName);
-
         return inputName;
       } else {
         const suggested = suggestNames(inputName).join(", ");
@@ -668,6 +657,28 @@ async function askUserName() {
     }
   }
 }
+
+(async () => {
+  userName = await askUserName();
+
+  /* COUNTER */
+  let counter=0;
+  const inc=()=>{msgCount.textContent=++counter};
+
+  /* LOAD MEMORY */
+  let memory=[];
+  fetch(qnaURL).then(r=>r.json()).then(d=>memory=d).catch(()=>{});
+
+  /* LOAD OLD CHAT */
+  fetch(`${loadURL}?user=${encodeURIComponent(userName)}`)
+    .then(r=>r.json()).then(hist=>hist.forEach(m=>showMsg(m.role,m.msg)));
+
+  /* LOAD TODAY TASKS */
+  fetch(`${taskLoadURL}?user=${encodeURIComponent(userName)}`)
+    .then(r=>r.json()).then(ts=>{
+      ts.forEach(t=>showMsg("ai", generateTaskReply(t.task)));
+    });
+})();
 
 /* COUNTER */
 let counter=0; const inc=()=>{msgCount.textContent=++counter};
