@@ -1,9 +1,9 @@
 let adClickCount = 0;
-const maxAdClicks = 3;
+const maxAdClicks = 1; // सिर्फ एक बार allow
 
-// ✅ Load Google Ads script only once
+// ✅ Google Ad Script Loader
 (function loadGoogleAdScript() {
-  if (!document.querySelector('script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]')) {
+  if (!document.querySelector('script[src*="googlesyndication.com/pagead/js/adsbygoogle.js"]')) {
     const script = document.createElement("script");
     script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924";
     script.async = true;
@@ -12,47 +12,56 @@ const maxAdClicks = 3;
   }
 })();
 
-// ✅ Create 4 auto ad boxes (No empty space if ad not shown)
-function createAutoAds() {
-  for (let i = 0; i < 4; i++) {
-    const adContainer = document.createElement("div");
-    adContainer.className = "auto-ad-wrapper";
-    adContainer.style.display = "none"; // 🔒 Hide until ad is rendered
+// ✅ Create Ad Container (no visible box until Google loads ad)
+function createAutoAd() {
+  const adContainer = document.createElement("div");
+  adContainer.className = "ads-box auto-ad";
+  adContainer.style = "margin: 10px 0;";
 
-    const adIns = document.createElement("ins");
-    adIns.className = "adsbygoogle";
-    adIns.style.display = "block";
-    adIns.style.textAlign = "center";
-    adIns.setAttribute("data-ad-client", "ca-pub-6575643228502924");
-    adIns.setAttribute("data-ad-format", "auto");
-    adIns.setAttribute("data-full-width-responsive", "true");
+  adContainer.innerHTML = `
+    <ins class="adsbygoogle"
+      style="display:block; text-align:center;"
+      data-ad-client="ca-pub-6575643228502924"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  `;
 
-    adContainer.appendChild(adIns);
-    document.body.appendChild(adContainer);
+  document.body.appendChild(adContainer);
 
-    // Render ad
-    try {
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {
-      console.warn("Ad push failed:", e);
-    }
-
-    // When user clicks ad (limit clicks)
-    adContainer.addEventListener("click", () => {
-      adClickCount++;
-      if (adClickCount > maxAdClicks) {
-        adContainer.style.pointerEvents = "none";
-        alert("⚠️ बार-बार Ad पर क्लिक करना ग़लत हो सकता है।");
-      }
-    });
-
-    // ✅ Reveal only if ad actually loads (no blank box)
-    setTimeout(() => {
-      if (adIns.offsetHeight > 0) {
-        adContainer.style.display = "block";
-      }
-    }, 3000); // Wait a bit to see if ad appears
+  // Show ad when Google loads it
+  try {
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  } catch (e) {
+    console.error("Ad load failed:", e);
   }
+
+  // ✅ Click Control
+  adContainer.addEventListener("click", () => {
+    adClickCount++;
+    if (adClickCount > maxAdClicks) {
+      adContainer.style.pointerEvents = "none";
+
+      // Block layer on top of ad
+      const layer = document.createElement("div");
+      layer.style.cssText = `
+        position:absolute;
+        top:0; left:0; right:0; bottom:0;
+        background:rgba(0,0,0,0.4);
+        z-index:999;
+        pointer-events:auto;
+      `;
+      adContainer.style.position = "relative";
+      adContainer.appendChild(layer);
+
+      alert("⚠️ Bar-bar ad click karna policy violation ho sakta hai!");
+    }
+  });
 }
 
-document.addEventListener("DOMContentLoaded", createAutoAds);
+// ✅ Load ad when page is ready
+document.addEventListener("DOMContentLoaded", () => {
+  // You can call this multiple times if you want 2 or 3 ads spaced apart
+  createAutoAd();
+  setTimeout(createAutoAd, 3000); // दूसरा ad कुछ देर बाद
+  setTimeout(createAutoAd, 6000); // तीसरा ad और देर से
+});
