@@ -12,34 +12,47 @@ const maxAdClicks = 3;
   }
 })();
 
-// ✅ Function to create 4 ad boxes (Google will decide where to show)
-function createAdBoxes() {
-  for (let i = 1; i <= 4; i++) {
-    const adDiv = document.createElement("div");
-    adDiv.className = "ads-box auto-ad-box";
-    adDiv.innerHTML = `
-      <ins class="adsbygoogle"
-           style="display:block; text-align:center;"
-           data-ad-client="ca-pub-6575643228502924"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    `;
-    document.body.appendChild(adDiv);
+// ✅ Create 4 auto ad boxes (No empty space if ad not shown)
+function createAutoAds() {
+  for (let i = 0; i < 4; i++) {
+    const adContainer = document.createElement("div");
+    adContainer.className = "auto-ad-wrapper";
+    adContainer.style.display = "none"; // 🔒 Hide until ad is rendered
 
-    // Initialize ad
-    window.adsbygoogle = window.adsbygoogle || [];
-    window.adsbygoogle.push({});
+    const adIns = document.createElement("ins");
+    adIns.className = "adsbygoogle";
+    adIns.style.display = "block";
+    adIns.style.textAlign = "center";
+    adIns.setAttribute("data-ad-client", "ca-pub-6575643228502924");
+    adIns.setAttribute("data-ad-format", "auto");
+    adIns.setAttribute("data-full-width-responsive", "true");
 
-    // 👇 Click alert system
-    adDiv.addEventListener("click", () => {
+    adContainer.appendChild(adIns);
+    document.body.appendChild(adContainer);
+
+    // Render ad
+    try {
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+      console.warn("Ad push failed:", e);
+    }
+
+    // When user clicks ad (limit clicks)
+    adContainer.addEventListener("click", () => {
       adClickCount++;
       if (adClickCount > maxAdClicks) {
-        adDiv.style.pointerEvents = "none";
-        alert("⚠️ Ad par bar-bar click karna policy violation ho sakta hai!");
+        adContainer.style.pointerEvents = "none";
+        alert("⚠️ बार-बार Ad पर क्लिक करना ग़लत हो सकता है।");
       }
     });
+
+    // ✅ Reveal only if ad actually loads (no blank box)
+    setTimeout(() => {
+      if (adIns.offsetHeight > 0) {
+        adContainer.style.display = "block";
+      }
+    }, 3000); // Wait a bit to see if ad appears
   }
 }
 
-// ✅ Wait until DOM is ready
-document.addEventListener("DOMContentLoaded", createAdBoxes);
+document.addEventListener("DOMContentLoaded", createAutoAds);
