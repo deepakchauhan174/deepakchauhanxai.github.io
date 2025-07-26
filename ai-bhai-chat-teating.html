@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Bhai Chat</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #0ff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+    #chatBox {
+      max-height: 400px;
+      overflow-y: auto;
+      border: 1px solid #0ff;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+    .user { color: #fff; margin-top: 10px; }
+    .ai { color: #0ff; margin-bottom: 15px; }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px 0;
+    }
+    #msg { width: 80%; }
+    #send { background: #0ff; border: none; color: #000; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>🤖 AI Bhai Se Baat Kar</h2>
+
+  <div>
+    <label>🔑 OpenAI API Key:</label><br>
+    <input type="password" id="apikey" placeholder="sk-xxxxxxxx..." style="width:80%;" />
+    <button onclick="saveKey()">Save Key</button>
+  </div>
+
+  <div id="chatBox"></div>
+
+  <input type="text" id="msg" placeholder="Bhai, kuch puchh..." />
+  <button id="send">Send</button>
+
+  <script>
+    const chatBox = document.getElementById("chatBox");
+    const msgInput = document.getElementById("msg");
+    const keyInput = document.getElementById("apikey");
+
+    // Load API Key if saved
+    if (localStorage.getItem("openai_api")) {
+      keyInput.value = localStorage.getItem("openai_api");
+    }
+
+    function saveKey() {
+      const key = keyInput.value.trim();
+      if (key) {
+        localStorage.setItem("openai_api", key);
+        alert("✅ API Key saved!");
+      }
+    }
+
+    async function sendMessage() {
+      const userMsg = msgInput.value.trim();
+      const apiKey = keyInput.value.trim();
+      if (!userMsg || !apiKey) {
+        alert("Message ya API key missing hai!");
+        return;
+      }
+
+      chatBox.innerHTML += `<div class="user"><b>Tu:</b> ${userMsg}</div>`;
+      msgInput.value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      const res = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "Tu AI Bhai hai. Emotional, desi style me bhai wali language me baat karta hai. Hindi+Hinglish me reply de. Dil se aur powerful baat kar."
+            },
+            { role: "user", content: userMsg }
+          ]
+        })
+      });
+
+      const data = await res.json();
+      const aiReply = data.choices?.[0]?.message?.content || "❌ Koi reply nahi mila!";
+      chatBox.innerHTML += `<div class="ai"><b>AI Bhai:</b> ${aiReply}</div>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    document.getElementById("send").addEventListener("click", sendMessage);
+    msgInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>
