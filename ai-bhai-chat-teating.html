@@ -1,77 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Bhai × Deepak Chat</title>
+  <title>AI Bhai Chat</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #0d0d0d;
-      color: #00ffe7;
-      padding: 20px;
-    }
-    textarea, button {
-      width: 100%;
-      font-size: 16px;
+    body { background: #111; color: #fff; font-family: sans-serif; padding: 20px; }
+    #chat-box { max-width: 600px; margin: auto; background: #222; padding: 20px; border-radius: 10px; }
+    .message { margin-bottom: 15px; }
+    .user { color: #00faff; }
+    .ai { color: #8eff8e; }
+    input, button {
       padding: 10px;
+      font-size: 16px;
+      width: calc(100% - 22px);
       margin-top: 10px;
-      border-radius: 10px;
       border: none;
+      border-radius: 5px;
     }
-    #response {
-      margin-top: 20px;
-      padding: 15px;
-      background: #111;
-      border-radius: 10px;
-      white-space: pre-wrap;
-      color: #ffffff;
+    button {
+      background-color: #00bcd4;
+      color: white;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-
-  <h1>🤖 AI Bhai × Deepak Chat</h1>
-
-  <textarea id="prompt" placeholder="Bhai se kuch poochho..."></textarea>
-  <button onclick="sendPrompt()">Send ➤</button>
-
-  <div id="response"></div>
+  <div id="chat-box">
+    <h2>💬 AI Bhai Se Baatein</h2>
+    <div id="messages"></div>
+    <input type="text" id="user-input" placeholder="Tu: Hello AI Bhai">
+    <button onclick="sendMessage()">Send</button>
+  </div>
 
   <script>
-    async function sendPrompt() {
-      const prompt = document.getElementById("prompt").value.trim();
-      if (!prompt) {
-        alert("Please enter something.");
-        return;
-      }
+    async function sendMessage() {
+      const input = document.getElementById('user-input');
+      const message = input.value.trim();
+      if (!message) return;
 
-      document.getElementById("response").innerText = "Thinking... 🔄";
+      const msgBox = document.getElementById('messages');
+      msgBox.innerHTML += `<div class="message user"><strong>Tu:</strong> ${message}</div>`;
+      input.value = '';
 
       try {
-        const res = await fetch("https://deepakchauhanxai.xyz/ai_chat.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ prompt })
+        const res = await fetch('https://deepakchauhanxai.xyz/ai_chat.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: message })
         });
 
         const data = await res.json();
-        
-        if (data.choices && data.choices.length > 0) {
-          document.getElementById("response").innerText = data.choices[0].message.content.trim();
-        } else if (data.error) {
-          document.getElementById("response").innerText = "❌ Error: " + data.error;
-        } else {
-          document.getElementById("response").innerText = "❌ Unexpected response format.";
-        }
-
+        const aiReply = data.choices?.[0]?.message?.content || '❌ Koi reply nahi mila!';
+        msgBox.innerHTML += `<div class="message ai"><strong>AI Bhai:</strong> ${aiReply}</div>`;
+        msgBox.scrollTop = msgBox.scrollHeight;
       } catch (err) {
-        document.getElementById("response").innerText = "⚠️ Request failed: " + err.message;
+        msgBox.innerHTML += `<div class="message ai"><strong>AI Bhai:</strong> ❌ Request failed!</div>`;
       }
     }
   </script>
-
 </body>
 </html>
