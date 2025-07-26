@@ -58,4 +58,3 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(createAutoAd, 8000);
   setTimeout(createAutoAd, 12000);
 });
-</script>
