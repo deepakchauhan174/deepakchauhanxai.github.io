@@ -1,57 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>AI Bhai Chat</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #111; color: #fff; padding: 20px; }
-    textarea, button { width: 100%; padding: 10px; font-size: 16px; margin-top: 10px; }
-    #response { margin-top: 20px; white-space: pre-wrap; background: #222; padding: 15px; border-radius: 8px; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Chat</title>
 </head>
 <body>
-
-  <h1>🧠 AI Bhai Chat</h1>
-  <textarea id="prompt" rows="4" placeholder="AI Bhai se kuch poocho..."></textarea>
-  <button onclick="askAI()">Send</button>
-  <div id="response"></div>
+  <h1>AI Bhai × Deepak Chat</h1>
+  <textarea id="userInput" placeholder="Type your message..."></textarea>
+  <button onclick="sendPrompt()">Send</button>
+  <pre id="responseArea"></pre>
 
   <script>
-    async function askAI() {
-      const prompt = document.getElementById("prompt").value.trim();
-      const responseDiv = document.getElementById("response");
-      
+    async function sendPrompt() {
+      const prompt = document.getElementById("userInput").value;
+      const responseArea = document.getElementById("responseArea");
+
       if (!prompt) {
-        responseDiv.innerText = "❌ Please enter a prompt.";
+        responseArea.textContent = "❌ Please enter a message.";
         return;
       }
-
-      responseDiv.innerText = "⏳ Thinking...";
 
       try {
         const res = await fetch("https://deepakchauhanxai.xyz/ai-bhai.php", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt })
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ prompt: prompt })
         });
 
         if (!res.ok) {
-          throw new Error("❌ API call failed: " + res.status);
+          throw new Error(`❌ Server error: ${res.status}`);
         }
 
         const data = await res.json();
-        
-        if (data.error) {
-          responseDiv.innerText = "⚠️ Error: " + data.error.message || data.error;
+
+        if (data.choices && data.choices.length > 0) {
+          responseArea.textContent = data.choices[0].message.content;
         } else {
-          const aiReply = data.choices?.[0]?.message?.content || "🤖 No reply received.";
-          responseDiv.innerText = aiReply;
+          responseArea.textContent = "❌ No response from AI.";
         }
-      } catch (err) {
-        responseDiv.innerText = "🚫 " + err.message;
+
+      } catch (error) {
+        responseArea.textContent = "❌ Failed to fetch: " + error.message;
       }
     }
   </script>
-
 </body>
 </html>
