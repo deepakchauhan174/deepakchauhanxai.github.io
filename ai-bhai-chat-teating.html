@@ -4,52 +4,29 @@
   <meta charset="UTF-8">
   <title>AI Bhai Chat</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f111a;
-      color: white;
-      padding: 20px;
-    }
-    #response {
-      margin-top: 20px;
-      background: #1e1f2b;
-      padding: 15px;
-      border-radius: 8px;
-      white-space: pre-wrap;
-    }
-    input, button {
-      padding: 10px;
-      margin-top: 10px;
-      width: 100%;
-      font-size: 16px;
-      border-radius: 6px;
-      border: none;
-    }
-    input {
-      background: #222;
-      color: #fff;
-    }
-    button {
-      background: #007bff;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0056b3;
-    }
+    body { font-family: Arial, sans-serif; background: #111; color: #fff; padding: 20px; }
+    textarea, button { width: 100%; padding: 10px; font-size: 16px; margin-top: 10px; }
+    #response { margin-top: 20px; white-space: pre-wrap; background: #222; padding: 15px; border-radius: 8px; }
   </style>
 </head>
 <body>
-  <h1>🤖 AI Bhai Se Pucho Kuchh Bhi</h1>
-  <input type="text" id="prompt" placeholder="Apna sawal likho..." />
+
+  <h1>🧠 AI Bhai Chat</h1>
+  <textarea id="prompt" rows="4" placeholder="AI Bhai se kuch poocho..."></textarea>
   <button onclick="askAI()">Send</button>
   <div id="response"></div>
 
   <script>
     async function askAI() {
-      const prompt = document.getElementById("prompt").value;
+      const prompt = document.getElementById("prompt").value.trim();
       const responseDiv = document.getElementById("response");
-      responseDiv.textContent = "Thinking... 🤔";
+      
+      if (!prompt) {
+        responseDiv.innerText = "❌ Please enter a prompt.";
+        return;
+      }
+
+      responseDiv.innerText = "⏳ Thinking...";
 
       try {
         const res = await fetch("https://deepakchauhanxai.xyz/ai-bhai.php", {
@@ -58,16 +35,23 @@
           body: JSON.stringify({ prompt })
         });
 
+        if (!res.ok) {
+          throw new Error("❌ API call failed: " + res.status);
+        }
+
         const data = await res.json();
+        
         if (data.error) {
-          responseDiv.textContent = "❌ Error: " + data.error.message || data.error;
+          responseDiv.innerText = "⚠️ Error: " + data.error.message || data.error;
         } else {
-          responseDiv.textContent = data.choices[0].message.content;
+          const aiReply = data.choices?.[0]?.message?.content || "🤖 No reply received.";
+          responseDiv.innerText = aiReply;
         }
       } catch (err) {
-        responseDiv.textContent = "❌ Error: " + err.message;
+        responseDiv.innerText = "🚫 " + err.message;
       }
     }
   </script>
+
 </body>
 </html>
