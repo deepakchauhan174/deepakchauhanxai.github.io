@@ -1,25 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Chat</title>
+  <meta charset="UTF-8">
+  <title>AI Bhai Chat</title>
 </head>
 <body>
-  <h1>AI Bhai × Deepak Chat</h1>
-  <textarea id="userInput" placeholder="Type your message..."></textarea>
-  <button onclick="sendPrompt()">Send</button>
-  <pre id="responseArea"></pre>
+  <h2>Ask AI Bhai</h2>
+  <textarea id="prompt" rows="4" cols="50" placeholder="Type your question..."></textarea><br>
+  <button onclick="askAI()">Send</button>
+  <pre id="response"></pre>
 
   <script>
-    async function sendPrompt() {
-      const prompt = document.getElementById("userInput").value;
-      const responseArea = document.getElementById("responseArea");
-
-      if (!prompt) {
-        responseArea.textContent = "❌ Please enter a message.";
-        return;
-      }
+    async function askAI() {
+      const prompt = document.getElementById("prompt").value;
+      const resBox = document.getElementById("response");
+      resBox.textContent = "⏳ Thinking...";
 
       try {
         const res = await fetch("https://deepakchauhanxai.xyz/ai-bhai.php", {
@@ -30,20 +25,15 @@
           body: JSON.stringify({ prompt: prompt })
         });
 
-        if (!res.ok) {
-          throw new Error(`❌ Server error: ${res.status}`);
-        }
-
         const data = await res.json();
 
-        if (data.choices && data.choices.length > 0) {
-          responseArea.textContent = data.choices[0].message.content;
+        if (data.error) {
+          resBox.textContent = "❌ Error: " + data.error.message || data.error;
         } else {
-          responseArea.textContent = "❌ No response from AI.";
+          resBox.textContent = "✅ AI: " + data.choices[0].message.content;
         }
-
-      } catch (error) {
-        responseArea.textContent = "❌ Failed to fetch: " + error.message;
+      } catch (err) {
+        resBox.textContent = "🚫 Failed to fetch: " + err.message;
       }
     }
   </script>
