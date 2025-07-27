@@ -1,122 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI Bhai Chat</title>
-  <style>
-    body {
-      background: #0d0d0d;
-      font-family: 'Segoe UI', sans-serif;
-      color: #fff;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .chat-box {
-      width: 90%;
-      max-width: 500px;
-      background: #1e1e1e;
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 0 20px rgba(0,255,255,0.2);
-    }
-
-    .chat-box h2 {
-      text-align: center;
-      color: #00f7ff;
-      margin-bottom: 20px;
-    }
-
-    #chat-output {
-      height: 300px;
-      overflow-y: auto;
-      background: #2a2a2a;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
-
-    .user, .ai, .error {
-      margin-bottom: 10px;
-      line-height: 1.4;
-    }
-
-    .user {
-      color: #ffd700;
-    }
-
-    .ai {
-      color: #00ffcc;
-    }
-
-    .error {
-      color: #ff4c4c;
-    }
-
-    input[type="text"] {
-      width: 70%;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      margin-right: 5px;
-    }
-
-    button {
-      padding: 10px 15px;
-      background: #00f7ff;
-      border: none;
-      border-radius: 5px;
-      color: #000;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      background: #00c4cc;
-    }
-  </style>
 </head>
 <body>
-  <div class="chat-box">
-    <h2>🤖 AI Bhai</h2>
-    <div id="chat-output"></div>
-    <input type="text" id="userInput" placeholder="Apna message likho..." />
-    <button onclick="sendMessage()">Send</button>
-  </div>
+  <textarea id="prompt" placeholder="Apna sawal likho..."></textarea>
+  <button onclick="sendToAI()">Send</button>
+  <pre id="response"></pre>
 
   <script>
-    async function sendMessage() {
-      const input = document.getElementById("userInput");
-      const chatOutput = document.getElementById("chat-output");
-      const prompt = input.value.trim();
-      if (!prompt) return;
+    function sendToAI() {
+      const prompt = document.getElementById("prompt").value;
 
-      chatOutput.innerHTML += `<div class="user">🧍‍♂️: ${prompt}</div>`;
-      input.value = "Thinking...";
-
-      try {
-        const res = await fetch("https://deepakchauhanxai.xyz/ai-bhai.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt })
-        });
-
-        const data = await res.json();
-        console.log(data); // for debugging
-        const reply = data?.choices?.[0]?.message?.content || "❌ AI Bhai ne kuch nahi bola.";
-        chatOutput.innerHTML += `<div class="ai">🤖: ${reply}</div>`;
-        input.value = "";
-      } catch (err) {
-        chatOutput.innerHTML += `<div class="error">❌ Error: ${err.message}</div>`;
-        input.value = "";
-      }
-
-      chatOutput.scrollTop = chatOutput.scrollHeight;
+      fetch("https://deepakchauhanxai.xyz/ai-bhai.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ prompt: prompt })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("response").textContent =
+          data.choices?.[0]?.message?.content || "❌ AI Bhai kuch nahi bol paya.";
+      })
+      .catch(err => {
+        document.getElementById("response").textContent = "❌ Error: " + err.message;
+      });
     }
   </script>
 </body>
