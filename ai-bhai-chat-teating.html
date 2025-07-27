@@ -1,32 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>AI Bhai Chat</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f111a;
+      color: white;
+      padding: 20px;
+    }
+    #response {
+      margin-top: 20px;
+      background: #1e1f2b;
+      padding: 15px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+    }
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+    }
+    input {
+      background: #222;
+      color: #fff;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <textarea id="prompt" placeholder="Apna sawal likho..."></textarea>
-  <button onclick="sendToAI()">Send</button>
-  <pre id="response"></pre>
+  <h1>🤖 AI Bhai Se Pucho Kuchh Bhi</h1>
+  <input type="text" id="prompt" placeholder="Apna sawal likho..." />
+  <button onclick="askAI()">Send</button>
+  <div id="response"></div>
 
   <script>
-    function sendToAI() {
+    async function askAI() {
       const prompt = document.getElementById("prompt").value;
+      const responseDiv = document.getElementById("response");
+      responseDiv.textContent = "Thinking... 🤔";
 
-      fetch("https://deepakchauhanxai.xyz/ai-bhai.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ prompt: prompt })
-      })
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById("response").textContent =
-          data.choices?.[0]?.message?.content || "❌ AI Bhai kuch nahi bol paya.";
-      })
-      .catch(err => {
-        document.getElementById("response").textContent = "❌ Error: " + err.message;
-      });
+      try {
+        const res = await fetch("https://deepakchauhanxai.xyz/ai-bhai.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt })
+        });
+
+        const data = await res.json();
+        if (data.error) {
+          responseDiv.textContent = "❌ Error: " + data.error.message || data.error;
+        } else {
+          responseDiv.textContent = data.choices[0].message.content;
+        }
+      } catch (err) {
+        responseDiv.textContent = "❌ Error: " + err.message;
+      }
     }
   </script>
 </body>
