@@ -107,7 +107,8 @@
         });
 
         const data = await res.json();
-        const reply = data.choices?.[0]?.message?.content || "❌ AI Bhai ne kuch nahi bola.";
+        console.log(data); // for debugging
+        const reply = data?.choices?.[0]?.message?.content || "❌ AI Bhai ne kuch nahi bola.";
         chatOutput.innerHTML += `<div class="ai">🤖: ${reply}</div>`;
         input.value = "";
       } catch (err) {
@@ -115,7 +116,6 @@
         input.value = "";
       }
 
-      // Scroll to latest message
       chatOutput.scrollTop = chatOutput.scrollHeight;
     }
   </script>
