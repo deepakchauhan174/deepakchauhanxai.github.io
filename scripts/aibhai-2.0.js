@@ -17,12 +17,29 @@ async function loadJSONData() {
 
 window.addEventListener('DOMContentLoaded', loadJSONData);
 
-// ✅ Normalize a word from roman to Hindi
+// ✅ Normalize a single word
 function normalizeWord(word) {
   const w = word.toLowerCase().trim();
   return romanMap[w] || word;
 }
 
+// ✅ Normalize full message
+function normalizeMessage(txt) {
+  let modified = txt.toLowerCase();
+
+  // First pass: full phrase replace (longest keys first)
+  const phraseKeys = Object.keys(romanMap).sort((a, b) => b.length - a.length);
+
+  phraseKeys.forEach(key => {
+    const hindi = romanMap[key];
+    const regex = new RegExp(`\\b${key}\\b`, 'gi'); // word boundary
+    modified = modified.replace(regex, hindi);
+  });
+
+  return modified;
+}
+
+// ✅ Find matching akshar words
 function findMatchingWords(message) {
   const words = message.split(/\s+/);
   const matches = [];
@@ -60,6 +77,19 @@ function findSmartReply(message) {
     return "🤖 System loading...";
   }
 
+  const words = message.split(/\s+/);
+
+  // ✅ First Priority: Exact word match from normalized message
+  for (let word of words) {
+    if (replyMap[word]) {
+      usedWords.push(word);
+      const reply = getReplyForWord(word);
+      const emoji = getEmojisForWord(word);
+      return reply ? `${reply} ${emoji}` : null;
+    }
+  }
+
+  // 🔁 Fallback: Use akshar logic if no exact match
   const matches = findMatchingWords(message);
   if (matches.length === 0) return null;
 
@@ -76,7 +106,7 @@ function findSmartReply(message) {
   return reply ? `${reply} ${emoji}` : null;
 }
 
-/* Final SEND Message Handler */
+/* ✅ Final SEND Message Handler */
 function sendMsg() {
   const txt = input.value.trim(); 
   if (!txt) return;
@@ -91,7 +121,8 @@ function sendMsg() {
 
   typing(oldReply, () => {
     setTimeout(() => {
-      const smartReply = findSmartReply(txt);
+      const normalized = normalizeMessage(txt);
+      const smartReply = findSmartReply(normalized);
       if (smartReply) {
         typing(smartReply);
       }
