@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>🧠 AI Bhai JSON Editor</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h2 {
+      margin-top: 60px;
+      font-size: 26px;
+      background: -webkit-linear-gradient(45deg, #00f0ff, #ff00c8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    #editor {
+      width: 90%;
+      max-width: 1000px;
+      height: 500px;
+      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 20px;
+      color: #00ffcc;
+      font-family: 'Courier New', monospace;
+      font-size: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      resize: none;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 12px 30px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(45deg, #ff00c8, #00f0ff);
+      color: white;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    #folderName {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>📂 Editing: <span id="folderName"></span> (JSON Memory)</h2>
+  <textarea id="editor" placeholder="Start writing your AI memory here..."></textarea>
+  <button onclick="save()">💾 Save JSON</button>
+
+  <script>
+    const folder = new URLSearchParams(location.search).get("folder");
+    document.getElementById("folderName").textContent = folder;
+
+    const apiURL = "https://deepakchauhanxai.xyz";
+    const password = "aibhai8726";
+
+    async function loadData() {
+      try {
+        const res = await fetch(`${apiURL}/folders/${folder}/message.json`);
+        const data = await res.json();
+        document.getElementById("editor").value = JSON.stringify(data, null, 2);
+      } catch (e) {
+        alert("⚠️ Cannot load memory file.");
+      }
+    }
+
+    async function save() {
+      const text = document.getElementById("editor").value;
+      try {
+        const res = await fetch(`${apiURL}/save_message.php`, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `pass=${password}&user=${folder}&data=${encodeURIComponent(text)}`
+        });
+        const result = await res.text();
+        alert("✅ " + result);
+      } catch (e) {
+        alert("❌ Failed to save. Try again.");
+      }
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
