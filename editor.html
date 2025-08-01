@@ -2,107 +2,115 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>🧠 AI Bhai JSON Editor</title>
+  <title>🧠 Team Folder Editor</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #1a1a1a, #2c3e50);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
+      background: linear-gradient(120deg, #dfe9f3 0%, #ffffff 100%);
+      color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 60px auto;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+      padding: 40px;
     }
 
     h2 {
-      margin-top: 60px;
-      font-size: 26px;
-      background: -webkit-linear-gradient(45deg, #00f0ff, #ff00c8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      margin-top: 0;
+      text-align: center;
+      color: #2b2e4a;
+      font-size: 28px;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 10px;
     }
 
-    #editor {
-      width: 90%;
-      max-width: 1000px;
-      height: 500px;
-      margin-top: 30px;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 16px;
+    textarea {
+      width: 100%;
+      height: 300px;
       padding: 20px;
-      color: #00ffcc;
-      font-family: 'Courier New', monospace;
-      font-size: 15px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-      resize: none;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #f9f9f9;
+      outline: none;
+      resize: vertical;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+      margin-top: 20px;
     }
 
     button {
-      margin-top: 25px;
-      padding: 12px 30px;
+      margin-top: 20px;
+      padding: 12px 24px;
       font-size: 16px;
-      font-weight: bold;
-      border: none;
-      border-radius: 30px;
-      background: linear-gradient(45deg, #ff00c8, #00f0ff);
+      background: #2b2e4a;
       color: white;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s ease;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: 0.3s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      background: #1f2039;
     }
 
-    #folderName {
-      font-weight: bold;
+    .readonly-note {
+      text-align: center;
+      margin-top: 20px;
+      color: #888;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <h2>📂 Editing: <span id="folderName"></span> (JSON Memory)</h2>
-  <textarea id="editor" placeholder="Start writing your AI memory here..."></textarea>
-  <button onclick="save()">💾 Save JSON</button>
+
+  <div class="container">
+    <h2>📂 Edit Team Notes</h2>
+    <textarea id="msgBox" placeholder="✍️ Write something important for the team..."></textarea>
+    <button id="saveBtn" onclick="saveMessage()">💾 Save Message</button>
+    <div class="readonly-note" id="noteBox" style="display:none;">🔒 You can view only. Editing disabled.</div>
+  </div>
 
   <script>
-    const folder = new URLSearchParams(location.search).get("folder");
-    document.getElementById("folderName").textContent = folder;
+    const params = new URLSearchParams(window.location.search);
+    const folderName = params.get("folder");
+    const dataUrl = `https://deepakchauhanxai.xyz/folders/${folderName}/message.json`;
 
-    const apiURL = "https://deepakchauhanxai.xyz";
-    const password = "aibhai8726";
+    // Load old messages
+    fetch(dataUrl)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("msgBox").value = data.join("\n");
+      });
 
-    async function loadData() {
-      try {
-        const res = await fetch(`${apiURL}/folders/${folder}/message.json`);
-        const data = await res.json();
-        document.getElementById("editor").value = JSON.stringify(data, null, 2);
-      } catch (e) {
-        alert("⚠️ Cannot load memory file.");
-      }
+    // Save new messages
+    function saveMessage() {
+      const msg = document.getElementById("msgBox").value.trim();
+      fetch("https://deepakchauhanxai.xyz/save_message.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `pass=aibhai8726&user=${encodeURIComponent(folderName)}&message=${encodeURIComponent(msg)}`
+      })
+      .then(res => res.text())
+      .then(msg => alert(msg));
     }
 
-    async function save() {
-      const text = document.getElementById("editor").value;
-      try {
-        const res = await fetch(`${apiURL}/save_message.php`, {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: `pass=${password}&user=${folder}&data=${encodeURIComponent(text)}`
-        });
-        const result = await res.text();
-        alert("✅ " + result);
-      } catch (e) {
-        alert("❌ Failed to save. Try again.");
-      }
+    // Edit Locking
+    const myName = localStorage.getItem("myFolder");
+    if (folderName !== myName && myName !== "admin") {
+      document.getElementById("msgBox").disabled = true;
+      document.getElementById("saveBtn").style.display = "none";
+      document.getElementById("noteBox").style.display = "block";
     }
-
-    loadData();
   </script>
+
 </body>
 </html>
