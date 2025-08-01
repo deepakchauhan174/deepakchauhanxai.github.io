@@ -32,59 +32,69 @@
   </div>
 
   <script>
-    const correctPassword = "aibhai8726"; // तुम जो चाहो password रख सकते हो
-    const apiBase = "https://deepakchauhanxai.xyz"; // ✅ तुम्हारा data-store site
+  const correctPassword = "aibhai8726"; // 🔑 Set your access password
+  const apiBase = "https://deepakchauhanxai.xyz"; // 🌐 Your data-store site
 
-    function checkPassword() {
-      const pwd = document.getElementById("pwd").value;
-      if (pwd === correctPassword) {
-        document.getElementById("loginBox").style.display = "none";
-        document.getElementById("folderBox").style.display = "block";
-        loadFolders();
-      } else {
-        alert("❌ Incorrect password");
-      }
+  function checkPassword() {
+    const pwd = document.getElementById("pwd").value;
+    if (pwd === correctPassword) {
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("folderBox").style.display = "block";
+      loadFolders();
+    } else {
+      alert("❌ Incorrect password");
     }
+  }
 
-    async function loadFolders() {
-      const box = document.getElementById("folderList");
-      box.innerHTML = "📦 Loading...";
-      try {
-        const res = await fetch(`${apiBase}/get_folders.php`);
-        const folders = await res.json();
-        box.innerHTML = "";
-        folders.forEach(name => {
-          const div = document.createElement("div");
-          div.className = "folder-item";
-          div.innerText = name;
-          div.onclick = () => window.location.href = `editor.html?folder=${encodeURIComponent(name)}`;
-          box.appendChild(div);
-        });
-      } catch (err) {
-        box.innerHTML = "⚠️ Error loading folders";
-      }
+  async function loadFolders() {
+    const box = document.getElementById("folderList");
+    box.innerHTML = "📦 Loading...";
+    try {
+      const res = await fetch(`${apiBase}/get_folders.php`);
+      const folders = await res.json();
+      box.innerHTML = "";
+      folders.forEach(name => {
+        const div = document.createElement("div");
+        div.className = "folder-item";
+        div.innerText = name;
+
+        // ✅ When user clicks on any folder — Save selected folder name
+        div.onclick = () => {
+          localStorage.setItem("myFolder", name); // 🔐 Save selected folder
+          window.location.href = `editor.html?folder=${encodeURIComponent(name)}`;
+        };
+
+        box.appendChild(div);
+      });
+    } catch (err) {
+      box.innerHTML = "⚠️ Error loading folders";
     }
+  }
 
-    async function createFolder() {
-      const name = document.getElementById("newFolder").value.trim();
-      if (!name) return alert("✍️ Please enter a name");
+  async function createFolder() {
+    const name = document.getElementById("newFolder").value.trim();
+    if (!name) return alert("✍️ Please enter a name");
 
-      const formData = new FormData();
-      formData.append("user", name);
-      formData.append("pass", correctPassword);
+    const formData = new FormData();
+    formData.append("user", name);
+    formData.append("pass", correctPassword);
 
-      try {
-        const res = await fetch(`${apiBase}/create_folder.php`, {
-          method: "POST",
-          body: formData
-        });
-        const text = await res.text();
-        alert(text);
-        loadFolders(); // Refresh list
-      } catch (err) {
-        alert("⚠️ Error creating folder");
-      }
+    // ✅ Save owner folder name
+    localStorage.setItem("myFolder", name);
+
+    try {
+      const res = await fetch(`${apiBase}/create_folder.php`, {
+        method: "POST",
+        body: formData
+      });
+      const text = await res.text();
+      alert(text);
+      loadFolders(); // Refresh folder list
+    } catch (err) {
+      alert("⚠️ Error creating folder");
     }
+  }
   </script>
+
 </body>
 </html>
