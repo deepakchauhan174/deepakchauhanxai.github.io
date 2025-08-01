@@ -32,8 +32,8 @@
   </div>
 
   <script>
-    const correctPassword = "aibhai8726"; // ✅ Change this password securely
-    const folderList = ["Anjali", "Ravi", "Neha"];
+    const correctPassword = "aibhai1122@"; // 🔑 Change as needed
+    let folderList = [];
 
     function checkPassword() {
       const pwd = document.getElementById("pwd").value;
@@ -47,23 +47,42 @@
     }
 
     function loadFolders() {
-      const box = document.getElementById("folderList");
-      box.innerHTML = "";
-      folderList.forEach(name => {
-        const div = document.createElement("div");
-        div.className = "folder-item";
-        div.innerText = name;
-        div.onclick = () => window.location.href = `editor.html?folder=${encodeURIComponent(name)}`;
-        box.appendChild(div);
-      });
+      fetch("https://xyz.deepakchauhanxai.xyz/folders/")
+        .then(res => res.text())
+        .then(html => {
+          const match = html.match(/href="([^"]+)\/"/g);
+          folderList = match ? match.map(m => m.split('"')[1].replace("/", "")) : [];
+          const box = document.getElementById("folderList");
+          box.innerHTML = "";
+          folderList.forEach(name => {
+            const div = document.createElement("div");
+            div.className = "folder-item";
+            div.innerText = name;
+            div.onclick = () => window.location.href = `editor.html?folder=${encodeURIComponent(name)}`;
+            box.appendChild(div);
+          });
+        });
     }
 
     function createFolder() {
       const name = document.getElementById("newFolder").value.trim();
-      if (name && !folderList.includes(name)) {
-        folderList.push(name);
+      if (!name) return alert("⚠️ Please enter a name");
+      if (folderList.includes(name)) return alert("⚠️ Folder already exists");
+
+      const formData = new FormData();
+      formData.append("pass", correctPassword);
+      formData.append("user", name);
+
+      fetch("https://xyz.deepakchauhanxai.xyz/create-folder.php", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.text())
+      .then(resp => {
+        alert("✅ " + resp);
         loadFolders();
-      }
+      })
+      .catch(err => alert("❌ Error: " + err));
     }
   </script>
 </body>
