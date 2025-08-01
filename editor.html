@@ -79,38 +79,44 @@
     <div class="readonly-note" id="noteBox" style="display:none;">🔒 You can view only. Editing disabled.</div>
   </div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const folderName = params.get("folder");
-    const dataUrl = `https://deepakchauhanxai.xyz/folders/${folderName}/message.json`;
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const folderName = params.get("folder");
+  const dataUrl = `https://deepakchauhanxai.xyz/folders/${folderName}/message.json`;
 
-    // Load old messages
-    fetch(dataUrl)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById("msgBox").value = data.join("\n");
-      });
+  // Load old messages
+  fetch(dataUrl)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("msgBox").value = data.join("\n");
+    })
+    .catch(() => {
+      document.getElementById("msgBox").value = "❌ Data not found.";
+    });
 
-    // Save new messages
-    function saveMessage() {
-      const msg = document.getElementById("msgBox").value.trim();
-      fetch("https://deepakchauhanxai.xyz/save_message.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `pass=aibhai8726&user=${encodeURIComponent(folderName)}&message=${encodeURIComponent(msg)}`
-      })
-      .then(res => res.text())
-      .then(msg => alert(msg));
-    }
+  // Save new messages
+  function saveMessage() {
+    const msg = document.getElementById("msgBox").value.trim();
+    fetch("https://deepakchauhanxai.xyz/save_message.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `pass=aibhai8726&user=${encodeURIComponent(folderName)}&message=${encodeURIComponent(msg)}`
+    })
+    .then(res => res.text())
+    .then(reply => alert("✅ " + reply))
+    .catch(() => alert("❌ Error saving message."));
+  }
 
-    // Edit Locking
-    const myName = localStorage.getItem("myFolder");
-    if (folderName !== myName && myName !== "admin") {
-      document.getElementById("msgBox").disabled = true;
-      document.getElementById("saveBtn").style.display = "none";
-      document.getElementById("noteBox").style.display = "block";
-    }
-  </script>
+  // Access Logic
+  const myName = localStorage.getItem("myFolder");
+
+  // ⛔️ If not owner & not admin → Lock editing
+  if (folderName !== myName && myName !== "admin") {
+    document.getElementById("msgBox").disabled = true;
+    document.getElementById("saveBtn").style.display = "none";
+    document.getElementById("noteBox").style.display = "block";
+  }
+</script>
 
 </body>
 </html>
