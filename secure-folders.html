@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>🔐 Team Folder Access</title>
+  <style>
+    body { font-family: sans-serif; padding: 40px; background: #f3f3f3; }
+    #loginBox, #folderBox { max-width: 500px; margin: auto; text-align: center; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+    input[type="password"], input[type="text"] {
+      padding: 10px; width: 80%; margin: 10px auto; display: block; border: 1px solid #ccc; border-radius: 6px;
+    }
+    button {
+      padding: 10px 20px; margin-top: 10px; background: #222; color: white; border: none; border-radius: 6px; cursor: pointer;
+    }
+    .folder-list { margin-top: 20px; text-align: left; }
+    .folder-item { padding: 12px; margin: 8px 0; background: #eee; border-radius: 8px; cursor: pointer; }
+    .folder-item:hover { background: #ddd; }
+  </style>
+</head>
+<body>
+  <div id="loginBox">
+    <h2>🔐 Enter Access Password</h2>
+    <input type="password" id="pwd" placeholder="Enter Password">
+    <button onclick="checkPassword()">Unlock</button>
+  </div>
+
+  <div id="folderBox" style="display:none;">
+    <h2>📁 Select or Create Folder</h2>
+    <input type="text" id="newFolder" placeholder="Enter Your Name (to create folder)">
+    <button onclick="createFolder()">➕ Create Folder</button>
+    <div class="folder-list" id="folderList"></div>
+  </div>
+
+  <script>
+    const correctPassword = "aibhai8726"; // ✅ Change this password securely
+    const folderList = ["Anjali", "Ravi", "Neha"];
+
+    function checkPassword() {
+      const pwd = document.getElementById("pwd").value;
+      if (pwd === correctPassword) {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("folderBox").style.display = "block";
+        loadFolders();
+      } else {
+        alert("❌ Incorrect password");
+      }
+    }
+
+    function loadFolders() {
+      const box = document.getElementById("folderList");
+      box.innerHTML = "";
+      folderList.forEach(name => {
+        const div = document.createElement("div");
+        div.className = "folder-item";
+        div.innerText = name;
+        div.onclick = () => window.location.href = `editor.html?folder=${encodeURIComponent(name)}`;
+        box.appendChild(div);
+      });
+    }
+
+    function createFolder() {
+      const name = document.getElementById("newFolder").value.trim();
+      if (name && !folderList.includes(name)) {
+        folderList.push(name);
+        loadFolders();
+      }
+    }
+  </script>
+</body>
+</html>
