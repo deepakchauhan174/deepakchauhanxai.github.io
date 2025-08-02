@@ -85,19 +85,16 @@
   const dataUrl = `https://deepakchauhanxai.xyz/folders/${folderName}/message.json`;
 
   // ✅ Load messages
-  fetch(dataUrl)
-    .then(res => res.ok ? res.json() : [])
-    .then(data => {
-      if (Array.isArray(data)) {
-        document.getElementById("msgBox").value = data.join("\n");
-      } else {
-        document.getElementById("msgBox").value = ""; // fallback
-      }
-    })
-    .catch(err => {
-      console.error("Fetch error:", err);
-      document.getElementById("msgBox").value = "⚠️ Could not load messages.";
-    });
+  // ✅ Load messages (raw JSON as string)
+fetch(dataUrl)
+  .then(res => res.ok ? res.text() : "")
+  .then(jsonText => {
+    document.getElementById("msgBox").value = jsonText;
+  })
+  .catch(err => {
+    console.error("Fetch error:", err);
+    document.getElementById("msgBox").value = "⚠️ Could not load messages.";
+  });
 
   // ✅ Save message
   function saveMessage() {
