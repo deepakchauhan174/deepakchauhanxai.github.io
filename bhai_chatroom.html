@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -721,28 +722,6 @@ fetch(`${taskLoadURL}?user=${encodeURIComponent(userName)}`)
 sendBtn.onclick=sendMsg;
 input.addEventListener("keyup",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMsg();}});
 
-function sendMsg() {
-  const txt = input.value.trim(); 
-  if (!txt) return;
-
-  input.value = "";
-  showMsg("user", txt);
-  saveChat("user", txt);
-
-  usedWords = [];
-
-  const oldReply = findReply(txt) || "🤖 AI Bhai सोच में हैं…";
-
-  // पहला reply आने के बाद ही दूसरा trigger होगा
-  typing(oldReply, () => {
-    setTimeout(() => {
-      const smartReply = findSmartReply(txt);
-      if (smartReply) {
-        typing(smartReply); // दूसरा typing
-      }
-    }, 1000); // 1 second delay (adjustable)
-  });
-}
 
 /* TYPING EFFECT */
 function typing(t, callback) {
@@ -813,14 +792,9 @@ fetch("https://deepakchauhanxai.xyz/data/translit_dict.json")
 /* 2️⃣ नया findReply() — Fix applied */
 function findReply(q) {
   const qn = norm(q);
-
-  // A) dictionary mapping
   const mapped = dictionary[qn] ? norm(dictionary[qn]) : qn;
-
-  // 🔁 Build all possible aliases from reverseMap for mapped value
   const aliases = reverseMap[mapped] || [mapped];
 
-  // B) exact match from aliases
   for (const p of memory) {
     const memNorm = norm(p.user || "");
     if (aliases.includes(memNorm)) {
@@ -828,7 +802,6 @@ function findReply(q) {
     }
   }
 
-  // C) fuzzy match if no direct alias match
   let best = null, score = 0;
   for (const p of memory) {
     const pq = norm(p.user || "");
@@ -839,7 +812,8 @@ function findReply(q) {
     }
   }
 
-  return best ? randomReply(best) : null;
+  // ✅ FINAL RETURN RULE
+  return (score >= 2 && mapped.split(" ").length > 1) ? randomReply(best) : null;
 }
 
 
