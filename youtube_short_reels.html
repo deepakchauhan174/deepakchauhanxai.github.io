@@ -96,6 +96,8 @@
   100% { background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600); }
 }
   </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
+     crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="container" id="stories-container">
@@ -103,80 +105,97 @@
   </div>
 
   <script>
-    function typeWriter(element, text, speed = 20) {
-      let i = 0;
-      element.innerHTML = '';
-      function typing() {
-        if (i < text.length) {
-          element.innerHTML += text.charAt(i);
-          i++;
-          setTimeout(typing, speed);
-        }
-      }
-      typing();
-    }
-
-    async function fetchStories() {
-      const container = document.getElementById('stories-container');
-
-      try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbx69hp8cyISa5cp9eGvmwN8ocjj_N9Nxe3eC1PE8nHe85E5wDcBtWFsiCe5bG-T5eH6/exec');
-        const stories = await response.json();
-        container.innerHTML = '';
-
-        stories.forEach(story => {
-          const storyBox = document.createElement('div');
-          storyBox.className = 'story-box';
-
-          storyBox.innerHTML = `
-            ${story.imgUrl ? `<img src="${story.imgUrl}" class="story-img" alt="${story.storyTitle}">` : ''}
-            ${story.storyTitle || ''}
-            <p class="story-text"></p>
-            ${story.signature ? `<div class="signature">${story.signature}</div>` : ''}
-            <div class="copyright">not copyright ©</div>
-            <div style="text-align: center; margin-top: 15px;">
-              <button onclick="copyText(this)" style="background: #ffff66; color: #000;">Copy</button>
-              <button onclick="shareText(this)" style="background: #66ffcc; color: #000;">Share</button>
-            </div>
-          `;
-
-          container.appendChild(storyBox);
-          const textElement = storyBox.querySelector('.story-text');
-          typeWriter(textElement, story.fullStory || 'No story content available');
-        });
-
-        if (container.innerHTML === '') {
-          container.innerHTML = '<div class="loading">No stories found</div>';
-        }
-      } catch (error) {
-        console.error('Error fetching stories:', error);
-        container.innerHTML = '<div class="loading">Error loading stories. Please check URL or Sheet!</div>';
+  function typeWriter(element, text, speed = 20) {
+    let i = 0;
+    element.innerHTML = '';
+    function typing() {
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, speed);
       }
     }
+    typing();
+  }
 
-    function copyText(button) {
-      const text = button.closest('.story-box').querySelector('.story-text').innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Copied!');
+  async function fetchStories() {
+    const container = document.getElementById('stories-container');
+    try {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbx69hp8cyISa5cp9eGvmwN8ocjj_N9Nxe3eC1PE8nHe85E5wDcBtWFsiCe5bG-T5eH6/exec', {
+        cache: 'no-cache'
       });
-    }
 
-    function shareText(button) {
-      const text = button.closest('.story-box').querySelector('.story-text').innerText;
-      const url = window.location.href;
-      if (navigator.share) {
-        navigator.share({
-          title: 'Motivational Story',
-          text: text,
-          url: url
-        }).catch(() => alert('Share cancelled or failed.'));
-      } else {
-        alert('Sharing not supported on this device');
+      const stories = await response.json();
+      console.log("Fetched stories:", stories); // ✅ Debug output
+
+      if (!Array.isArray(stories)) {
+        throw new Error("Invalid response format");
       }
-    }
 
-    document.addEventListener('DOMContentLoaded', fetchStories);
-  </script>
+      container.innerHTML = ''; // Clear previous content
+
+      stories.forEach(story => {
+        const storyBox = document.createElement('div');
+        storyBox.className = 'story-box';
+
+        // Extract clean title (remove HTML tags if any accidentally in data)
+        const cleanTitle = story.storyTitle
+          ? story.storyTitle.replace(/<[^>]+>/g, '').trim()
+          : '';
+
+        storyBox.innerHTML = `
+          ${story.imgUrl ? `<img src="${story.imgUrl}" class="story-img" alt="story">` : ''}
+          ${cleanTitle ? `<div class="story-title">${cleanTitle}</div>` : ''}
+          <p class="story-text"></p>
+          ${story.signature ? `<div class="signature">${story.signature}</div>` : ''}
+          <div class="copyright">not copyright ©</div>
+          <div style="text-align: center; margin-top: 15px;">
+            <button onclick="copyText(this)" style="background: #ffff66; color: #000;">Copy</button>
+            <button onclick="shareText(this)" style="background: #66ffcc; color: #000;">Share</button>
+          </div>
+        `;
+
+        container.appendChild(storyBox);
+
+        const textElement = storyBox.querySelector('.story-text');
+        const fullText = story.fullStory || 'कोई कहानी उपलब्ध नहीं है';
+        typeWriter(textElement, fullText);
+      });
+
+      if (container.innerHTML.trim() === '') {
+        container.innerHTML = '<div class="loading">कोई कहानी नहीं मिली</div>';
+      }
+
+    } catch (error) {
+      console.error('Error fetching stories:', error);
+      container.innerHTML = '<div class="loading">❌ Error loading stories. Please check URL or Sheet!</div>';
+    }
+  }
+
+  function copyText(button) {
+    const text = button.closest('.story-box').querySelector('.story-text').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      alert('📋 Copied!');
+    });
+  }
+
+  function shareText(button) {
+    const text = button.closest('.story-box').querySelector('.story-text').innerText;
+    const url = window.location.href;
+    if (navigator.share) {
+      navigator.share({
+        title: 'Motivational Story',
+        text: text,
+        url: url
+      }).catch(() => alert('❌ Share cancelled or failed.'));
+    } else {
+      alert('❌ Sharing not supported on this device');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', fetchStories);
+</script>
+    <script src="ads.js"></script>
   <script src="https://deepakchauhanxai.xyz/widgets/ai_bhai_popup.js"></script>
 </body>
 </html>
