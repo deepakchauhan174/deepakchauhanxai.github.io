@@ -107,6 +107,7 @@ function findSmartReply(message) {
 }
 
 /* ✅ Final SEND Message Handler */
+/* ✅ Final SEND Message Handler */
 function sendMsg() {
   const txt = input.value.trim(); 
   if (!txt) return;
@@ -117,8 +118,16 @@ function sendMsg() {
 
   usedWords = [];
 
-  const oldReply = findReply(txt) || "🤖 AI Bhai सोच में हैं…";
+  // 🔍 Step 1: Media JSON check
+  const media = findMediaReply(txt);
+  if (media) {
+    showMediaBox(media.title, media.url);
+    typing(media.text);
+    return;
+  }
 
+  // 🔍 Step 2: Old reply
+  const oldReply = findReply(txt) || "🤖 AI Bhai सोच में हैं…";
   typing(oldReply, () => {
     setTimeout(() => {
       const normalized = normalizeMessage(txt);
