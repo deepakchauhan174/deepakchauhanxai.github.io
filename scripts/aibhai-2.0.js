@@ -107,7 +107,6 @@ function findSmartReply(message) {
 }
 
 /* ✅ Final SEND Message Handler */
-/* ✅ Final SEND Message Handler */
 function sendMsg() {
   const txt = input.value.trim(); 
   if (!txt) return;
