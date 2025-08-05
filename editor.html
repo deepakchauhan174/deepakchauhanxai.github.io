@@ -67,45 +67,41 @@
     <div class="readonly-note" id="noteBox" style="display:none;">🔒 View Only: Editing disabled for this folder</div>
   </div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const folderName = params.get("folder");
-    const dataUrl = `https://deepakchauhanxai.xyz/folders/${folderName}/message.json`;
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const folderName = params.get("folder");
+  const dataUrl = `https://deepakchauhanxai.xyz/folders/${folderName}/message.json`;
 
-    // ✅ Load messages as raw JSON
-    fetch(dataUrl)
-      .then(res => res.ok ? res.text() : "")
-      .then(jsonText => {
-        document.getElementById("msgBox").value = jsonText;
-      })
-      .catch(err => {
-        console.error("Fetch error:", err);
-        document.getElementById("msgBox").value = "⚠️ Could not load messages.";
-      });
+  // ✅ Load messages as raw JSON
+  fetch(dataUrl)
+    .then(res => res.ok ? res.text() : "")
+    .then(jsonText => {
+      document.getElementById("msgBox").value = jsonText;
+    })
+    .catch(err => {
+      console.error("Fetch error:", err);
+      document.getElementById("msgBox").value = "⚠️ Could not load messages.";
+    });
 
-    // ✅ Save message
-    function saveMessage() {
-      const msg = document.getElementById("msgBox").value.trim();
-      fetch("https://deepakchauhanxai.xyz/save_message.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `pass=aibhai8726&user=${encodeURIComponent(folderName)}&message=${encodeURIComponent(msg)}`
-      })
-      .then(res => res.text())
-      .then(msg => alert(msg))
-      .catch(err => alert("❌ Failed to save message"));
-    }
+  // ✅ Save message
+  function saveMessage() {
+    const msg = document.getElementById("msgBox").value.trim();
+    fetch("https://deepakchauhanxai.xyz/save_message.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `pass=aibhai8726&user=${encodeURIComponent(folderName)}&message=${encodeURIComponent(msg)}`
+    })
+    .then(res => res.text())
+    .then(msg => alert(msg))
+    .catch(err => alert("❌ Failed to save message"));
+  }
 
-    // ✅ Edit Lock System
-    const myName = localStorage.getItem("myFolder");
-    const isAdmin = myName === "admin";
-
-    if (folderName !== myName && !isAdmin) {
-      document.getElementById("msgBox").disabled = true;
-      document.getElementById("saveBtn").style.display = "none";
-      document.getElementById("noteBox").style.display = "block";
-    }
-  </script>
+  // ✅ Removed Edit Lock (allow all)
+  // So hide the noteBox and ensure input is editable
+  document.getElementById("msgBox").disabled = false;
+  document.getElementById("saveBtn").style.display = "inline-block";
+  document.getElementById("noteBox").style.display = "none";
+</script>
   <script src="ads.js"></script>
 </body>
 </html>
