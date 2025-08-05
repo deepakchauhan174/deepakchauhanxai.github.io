@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>😆 AI Bhai Comedy Quotes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Hind:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 107, 107, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(78, 205, 196, 0.1) 0%, transparent 40%),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="10" cy="10" r="0.8" fill="white" opacity="0.8"/><circle cx="30" cy="40" r="0.6" fill="white" opacity="0.6"/><circle cx="70" cy="20" r="0.7" fill="white" opacity="0.7"/><circle cx="85" cy="60" r="0.9" fill="white" opacity="0.9"/><circle cx="40" cy="80" r="0.5" fill="white" opacity="0.5"/></svg>');
+      background-size: 200px;
+      z-index: -1;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      text-align: center;
+      padding: 30px 0;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    .header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #FF6B6B, #4ECDC4, #FFE66D);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+      letter-spacing: 1px;
+      font-weight: 800;
+    }
+    
+    .header p {
+      font-size: 1.4rem;
+      color: #a5d8ff;
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+    
+    .comedy-stats {
+      display: flex;
+      justify-content: space-around;
+      background: rgba(26, 26, 46, 0.7);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 25px 0;
+      border: 1px solid rgba(78, 205, 196, 0.3);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #FFE66D;
+      margin-bottom: 5px;
+      text-shadow: 0 0 10px rgba(255, 230, 109, 0.5);
+    }
+    
+    .stat-label {
+      font-size: 1.1rem;
+      color: #a5d8ff;
+    }
+    
+    .chat-container {
+      background: rgba(26, 26, 46, 0.8);
+      border-radius: 20px;
+      border: 1px solid rgba(78, 205, 196, 0.3);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      padding: 25px;
+      margin-bottom: 30px;
+      height: 500px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+    
+    .message {
+      display: flex;
+      max-width: 90%;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .ai-message {
+      align-self: flex-start;
+    }
+    
+    .user-message {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+    
+    
+    .user-avatar {
+      background: linear-gradient(135deg, #4ECDC4, #1A936F);
+      border: 2px solid #4ECDC4;
+      box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+    }
+    
+    .message-content {
+      padding: 20px;
+      border-radius: 20px;
+      position: relative;
+      max-width: 75%;
+      line-height: 1.7;
+      font-size: 1.2rem;
+      font-family: 'Hind', sans-serif;
+    }
+    
+    .ai-message .message-content {
+      background: rgba(255, 107, 107, 0.15);
+      border: 1px solid rgba(255, 107, 107, 0.4);
+      border-bottom-left-radius: 5px;
+      color: #FFE66D;
+    }
+    
+    .user-message .message-content {
+      background: rgba(78, 205, 196, 0.15);
+      border: 1px solid rgba(78, 205, 196, 0.4);
+      border-bottom-right-radius: 5px;
+      color: #a5d8ff;
+    }
+    
+    .sender {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    
+    .input-section {
+      background: rgba(26, 26, 46, 0.7);
+      border-radius: 20px;
+      padding: 25px;
+      border: 1px solid rgba(78, 205, 196, 0.3);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .input-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #a5d8ff;
+      font-size: 1.1rem;
+    }
+    
+    textarea, input {
+      width: 100%;
+      padding: 16px 20px;
+      border: none;
+      border-radius: 15px;
+      background: rgba(15, 25, 55, 0.8);
+      color: white;
+      font-size: 1.1rem;
+      border: 1px solid rgba(78, 205, 196, 0.4);
+      outline: none;
+      transition: all 0.3s;
+      font-family: 'Hind', sans-serif;
+    }
+    
+    textarea:focus, input:focus {
+      border-color: #FF6B6B;
+      box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+    }
+    
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .button-container {
+      display: flex;
+      gap: 15px;
+      margin-top: 25px;
+    }
+    
+    button {
+      flex: 1;
+      padding: 18px;
+      border: none;
+      border-radius: 15px;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    #sendBtn {
+      background: linear-gradient(90deg, #FF6B6B, #FF8E53);
+      box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
+    }
+    
+    #sendBtn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(255, 107, 107, 0.7);
+    }
+    
+    #saveBtn {
+      background: linear-gradient(90deg, #4ECDC4, #1A936F);
+      box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+    }
+    
+    #saveBtn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(78, 205, 196, 0.7);
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(78, 205, 196, 0.2);
+      color: #a5d8ff;
+      font-size: 1.1rem;
+    }
+    
+    .comedy-characters {
+      display: flex;
+      justify-content: space-around;
+      margin: 25px 0;
+      gap: 20px;
+    }
+    
+    .character {
+      text-align: center;
+      background: rgba(26, 26, 46, 0.5);
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid rgba(78, 205, 196, 0.2);
+      transition: all 0.3s;
+    }
+    
+    .character:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      border-color: #FF6B6B;
+    }
+    
+    .character i {
+      font-size: 3rem;
+      color: #FFE66D;
+      margin-bottom: 15px;
+    }
+    
+    .character h3 {
+      color: #4ECDC4;
+      margin-bottom: 10px;
+    }
+    
+    @media (max-width: 768px) {
+      .header h1 { font-size: 2.5rem; }
+      .header p { font-size: 1.1rem; }
+      .comedy-stats { flex-direction: column; gap: 20px; }
+      .comedy-characters { flex-direction: column; }
+      .button-container { flex-direction: column; }
+      .message-content { max-width: 85%; font-size: 1.1rem; }
+    }
+    
+    /* Animation for comedy effect */
+    @keyframes laugh {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .laughing {
+      animation: laugh 0.5s infinite;
+      display: inline-block;
+    }
+    
+    /* Loading animation */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .loading {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 4px solid #FF6B6B;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 10px;
+      background: rgba(78, 205, 196, 0.9);
+      color: #16213e;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transform: translateX(200%);
+      transition: transform 0.5s ease;
+      z-index: 1000;
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #eee;
+  display: inline-block;
+  background-size: cover;
+  background-position: center;
+  margin: 5px;
+}
+
+.ai-avatar {
+  background-image: url('https://deepakchauhanxai.xyz/images/AI-bhai.png');
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+  <div class="header">
+  <div class="avatar ai-avatar" style="display: inline-block; vertical-align: middle;"></div>
+      <h1 style="display: inline-block; margin-left: 10px;">AI भाई कॉमेडी क्वोट्स</h1>
+      <p>हर रोज नए मजेदार जोक्स का खजाना - जहां हर बात हंसी बन जाए!</p>
+    </div>
+    
+      <div class="character">
+        <i class="fas fa-rocket laughing"></i>
+        <h3>रोज का स्टार</h3>
+        <p id="dailyStar">आज का सबसे फनी जोक</p>
+      </div>
+    </div>
+    
+    <div class="chat-container" id="chatBox">
+      <div class="message ai-message">
+        <div class="avatar ai-avatar"></div>
+        <div class="message-content">
+          <div class="sender">AI भाई</div>
+          नमस्ते दोस्तों! तैयार हो जाओ हंसने के लिए? 😆
+          <br>नीचे बटन दबाकर AI भाई से नया जोक पाओ!
+        </div>
+      </div>
+    </div>
+    
+    <div class="input-section">
+      <div class="input-group">
+        <label for="quoteInput"><i class="fas fa-comment-dots"></i> अपना मजेदार जोक लिखें:</label>
+        <textarea id="quoteInput" placeholder="AI भाई को अपना मजेदार जोक बताओ..."></textarea>
+      </div>
+      
+      <div class="input-group">
+        <label for="userInput"><i class="fas fa-user"></i> अपना नाम (वैकल्पिक):</label>
+        <input type="text" id="userInput" placeholder="अपना नाम लिखें...">
+      </div>
+      
+      <div class="button-container">
+        <button id="sendBtn">
+          <i class="fas fa-laugh-beam"></i> AI भाई से हँसी लो!
+        </button>
+        <button id="saveBtn">
+          <i class="fas fa-paper-plane"></i> जोक भेजें
+        </button>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p>© 2025 Deepak Chauhan × AI भाई | कॉमेडी संस्करण v2.0</p>
+      <p>याद रखो: एक दिन बिना हंसी के बिताना, एक दिन बर्बाद करने के बराबर है!</p>
+    </div>
+  </div>
+
+  <div id="notification" class="notification">जोक सफलतापूर्वक सेव हो गया! 😂</div>
+
+  <script>
+    // मूल JavaScript कोड को संरक्षित रखते हुए
+    const dataUrl = 'https://deepakchauhanxai.xyz/ai-bhai-comedy.json';
+    let allQuotes = [];
+    let quoteIndex = 0;
+    
+    const chatBox = document.getElementById("chatBox");
+    
+    // डेटा लोड करना
+    function loadData() {
+      // लोडिंग इंडिकेटर दिखाएं
+      const loadingDiv = document.createElement('div');
+      loadingDiv.classList.add('message', 'ai-message');
+      loadingDiv.innerHTML = `
+        <div class="avatar ai-avatar"></div>
+        <div class="message-content">
+          <div class="sender">AI भाई</div>
+          जोक्स लोड हो रहे हैं... 
+          <div class="loading"></div>
+        </div>
+      `;
+      chatBox.appendChild(loadingDiv);
+      
+      fetch(dataUrl)
+        .then(res => res.json())
+        .then(data => {
+          allQuotes = data;
+          // लोडिंग संदेश हटाएं
+          chatBox.removeChild(loadingDiv);
+          
+          // सफलता संदेश दिखाएं
+          const successDiv = document.createElement('div');
+          successDiv.classList.add('message', 'ai-message');
+          successDiv.innerHTML = `
+            <div class="avatar ai-avatar"></div>
+            <div class="message-content">
+              <div class="sender">AI भाई</div>
+              ${allQuotes.length} जोक्स सफलतापूर्वक लोड हो गए!<br>
+              अब हंसने के लिए तैयार हो जाओ! 😂
+            </div>
+          `;
+          chatBox.appendChild(successDiv);
+          chatBox.scrollTop = chatBox.scrollHeight;
+          
+          // स्टैट्स अपडेट करें
+          document.getElementById('jokesCount').textContent = allQuotes.length.toLocaleString();
+          
+          // डेली स्टार जोक
+          const dailyJoke = allQuotes[Math.floor(Math.random() * allQuotes.length)];
+          document.getElementById('dailyStar').textContent = dailyJoke.substring(0, 40) + "...";
+        })
+        .catch(err => {
+          console.error("Loading error:", err);
+          // लोडिंग संदेश हटाएं
+          chatBox.removeChild(loadingDiv);
+          
+          // त्रुटि संदेश दिखाएं
+          const errorDiv = document.createElement('div');
+          errorDiv.classList.add('message', 'ai-message');
+          errorDiv.innerHTML = `
+            <div class="avatar ai-avatar"></div>
+            <div class="message-content">
+              <div class="sender">AI भाई</div>
+              जोक्स लोड करने में समस्या आई: ${err.message}<br>
+              कृपया बाद में पुनः प्रयास करें!
+            </div>
+          `;
+          chatBox.appendChild(errorDiv);
+          chatBox.scrollTop = chatBox.scrollHeight;
+        });
+    }
+    
+    // जोक भेजने का बटन
+    document.getElementById("sendBtn").addEventListener("click", () => {
+      if (allQuotes.length === 0) {
+        showNotification("पहले जोक्स लोड होने दें!", "error");
+        return;
+      }
+      
+      if (quoteIndex >= allQuotes.length) quoteIndex = 0;
+      const text = allQuotes[quoteIndex++];
+      
+      const div = document.createElement("div");
+      div.classList.add('message', 'ai-message');
+      div.innerHTML = `
+        <div class="avatar ai-avatar"></div>
+        <div class="message-content">
+          <div class="sender">AI भाई</div>
+          ${text}
+        </div>
+      `;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      
+      // हंसी काउंट बढ़ाएं
+      laughsCount += 3;
+      document.getElementById('laughsCount').textContent = laughsCount.toLocaleString();
+    });
+    
+    // जोक सेव करने का बटन
+    document.getElementById("saveBtn").addEventListener("click", () => {
+      const newQuote = document.getElementById("quoteInput").value.trim();
+      const userName = document.getElementById("userInput").value.trim();
+      
+      if (!newQuote) {
+        showNotification("कृपया एक मजेदार जोक लिखें!", "error");
+        return;
+      }
+      
+      if (!userName) {
+        showNotification("कृपया अपना नाम लिखें!", "error");
+        return;
+      }
+      
+      const fullText = `${newQuote} \n— 🤓 भेजा: ${userName}`;
+      
+      // चैट में जोक दिखाएं
+      const div = document.createElement("div");
+      div.classList.add('message', 'user-message');
+      div.innerHTML = `
+        <div class="message-content">
+          <div class="sender">${userName}</div>
+          ${newQuote}
+        </div>
+        <div class="avatar user-avatar">👤</div>
+      `;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      
+      // स्टैट्स अपडेट करें
+      jokesCount++;
+      usersCount++;
+      laughsCount += 5;
+      
+      document.getElementById('jokesCount').textContent = jokesCount.toLocaleString();
+      document.getElementById('usersCount').textContent = usersCount.toLocaleString();
+      document.getElementById('laughsCount').textContent = laughsCount.toLocaleString();
+      
+      // टॉप यूजर अपडेट करें
+      if (jokesCount % 50 === 0) {
+        document.getElementById('topUser').textContent = `${userName}: ${Math.floor(jokesCount/10)} जोक्स`;
+      }
+      
+      // सर्वर पर सेव करें
+      fetch("https://deepakchauhanxai.xyz/save-comedy.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `pass=aibhai8726&quote=${encodeURIComponent(fullText)}`
+      })
+      .then(res => res.text())
+      .then(msg => {
+        showNotification(msg);
+        document.getElementById("quoteInput").value = "";
+        document.getElementById("userInput").value = "";
+      })
+      .catch(err => {
+        showNotification("❌ सेव करने में समस्या: " + err, "error");
+      });
+    });
+    
+    // नोटिफिकेशन दिखाने की फंक्शन
+    function showNotification(message, type = "success") {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      
+      // टाइप के अनुसार रंग बदलें
+      if (type === "error") {
+        notification.style.background = "rgba(255, 107, 107, 0.9)";
+      } else {
+        notification.style.background = "rgba(78, 205, 196, 0.9)";
+      }
+      
+      notification.classList.add('show');
+      
+      // 3 सेकंड बाद नोटिफिकेशन हटाएं
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+    
+    // पेज लोड होने पर डेटा लोड करें
+    window.onload = function() {
+      loadData();
+      
+      // 5 सेकंड बाद एक जोक ऑटोमेटिक भेजें
+      setTimeout(() => {
+        if (allQuotes.length > 0) {
+          document.getElementById("sendBtn").click();
+        }
+      }, 5000);
+    };
+  </script>
+</body>
+</html>
