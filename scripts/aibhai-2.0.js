@@ -106,7 +106,7 @@ function findSmartReply(message) {
   return reply ? `${reply} ${emoji}` : null;
 }
 
-// ✅ Final SEND Message Handler
+/* ✅ Final SEND Message Handler */
 function sendMsg() {
   const txt = input.value.trim(); 
   if (!txt) return;
@@ -136,13 +136,13 @@ function sendMsg() {
       }
     }, 1000);
   });
-
-  // 🔍 Step 3: Smart reply (always try)
+// 🔍 Step 3: Smart reply (always try)
   setTimeout(() => {
     const normalized = normalizeMessage(txt);
     const smartReply = findSmartReply(normalized);
     if (smartReply) typing(smartReply);
   }, 1200);
+}
 }
 
 function typing(t, callback) {
