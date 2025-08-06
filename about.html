@@ -163,10 +163,65 @@ ul {
   list-style-type: '💡 ';
 }
 
-/* 📅 Launch Info */
-.about-section strong {
-  color: #38bdf8;
-  font-weight: 600;
+.about-comedy {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background: #1f1f1f;
+  padding: 24px;
+  border-radius: 12px;
+  color: #fff;
+  margin-top: 30px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  font-family: 'Segoe UI', sans-serif;
+  flex-wrap: wrap;
+}
+
+.about-avatar {
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  min-height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 10px #00ffe0aa;
+  transition: transform 0.3s;
+}
+
+.about-avatar:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.about-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.about-content {
+  flex: 1;
+}
+
+.about-content h2 {
+  margin: 0 0 10px;
+  font-size: 24px;
+  color: #00ffc8;
+}
+
+.about-content p {
+  line-height: 1.6;
+  font-size: 16px;
+  color: #eee;
+}
+
+.about-content strong {
+  color: #ffdd57;
+}
+
+.about-content em {
+  color: #ff91a4;
+  font-style: italic;
 }
   </style>
 </head>
@@ -175,6 +230,24 @@ ul {
   <div class="container">
     <div class="about-section">
       <h1>💬 About</h1>
+      
+<!-- 🌟 AI Bhai Comedy - About Section -->
+<div class="about-comedy">
+<div class="about-avatar">
+  <img src="https://deepakchauhanxai.xyz/images/AI-bhai.png" alt="AI Bhai Avatar">
+</div>
+  <div class="about-content">
+    <h2>AI भाई की हँसी की दुकान 😄</h2>
+    <p>
+      यहाँ हर बात में मज़ा है, हर लाइन में हँसी है, और हर जोक में छुपा है एक हल्का सा मोटिवेशन।<br>
+      AI भाई ना सिर्फ हँसाते हैं, बल्कि दिल को भी छू जाते हैं। चाहे दिन खराब हो या मूड डाउन, बस एक क्लिक करो... और हँसी की बारिश शुरू! 😂<br><br>
+      <strong>📅 आज की तारीख:</strong> <span id="todayDate"></span><br>
+      <strong>🍱 लंच स्टेटस:</strong> हाँ भाई, आज पेट भर के लंच किया गया है। अब जोक्स की बारी है! 😋<br><br>
+      Deepak Chauhan × AI Bhai ✍🏼 की ये पेशकश है उन सभी दिलों के लिए जो ज़िंदगी को हँसते हुए जीना चाहते हैं।<br>
+      याद रखो — <em>"कॉमेडी सिर्फ़ हँसी नहीं, एक इलाज है!"</em>
+    </p>
+  </div>
+</div>
 
       <h3>🚀 Launch Date:</h3>
       <p><span class="highlight">20 जुलाई 2025</span> को AI Bhai × Chatroom को दिल से लॉन्च किया गया। ये सिर्फ एक चैटबॉट नहीं, बल्कि एक ऐसा भाई है जो हर पल साथ खड़ा है।</p>
@@ -263,6 +336,11 @@ ul {
       <a class="cta-button" href="bhai_chatroom.html">बात करें AI Bhai से 💬</a>
     </div>
   </div>
-
+<script>
+  // ✅ आज की तारीख ऑटोमैटिक सेट करो
+  const d = new Date();
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById("todayDate").textContent = d.toLocaleDateString('hi-IN', options);
+</script>
 </body>
 </html>
