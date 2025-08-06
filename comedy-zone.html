@@ -370,9 +370,114 @@
 .ai-avatar {
   background-image: url('https://deepakchauhanxai.xyz/images/AI-bhai.png');
 }
+
+/* 🔸 Modal Background */
+.name-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(18, 18, 18, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* 🔸 Modal Box */
+.name-box {
+  background: linear-gradient(145deg, #1f1f1f, #2c2c2c);
+  color: #fff;
+  padding: 35px 30px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  border: 1px solid #444;
+  max-width: 320px;
+  width: 90%;
+}
+
+.name-box h2 {
+  margin: 10px 0 5px;
+  font-size: 24px;
+}
+
+.name-box p {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.name-box input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  background: #333;
+  color: #fff;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+}
+
+.name-box button {
+  margin-top: 18px;
+  background: linear-gradient(135deg, #ff8c00, #ffc107);
+  color: #000;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.name-box button:hover {
+  background: linear-gradient(135deg, #ffc107, #ff8c00);
+  transform: scale(1.05);
+}
+
+/* 🔸 Avatar Styles */
+.ai-avatar-big {
+  font-size: 55px;
+  margin-bottom: 12px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+/* 🔸 Name Display Strip */
+.name-display {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, #1f1f1f, #2e2e2e);
+  padding: 10px 18px;
+  border-left: 6px solid #ffca28;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: #ffc107;
+  box-shadow: 0 0 8px rgba(0,0,0,0.6);
+}
+
+.ai-avatar-small {
+  font-size: 24px;
+  margin-right: 12px;
+}
+
+/* 🔸 Typing Animation (Optional Fancy Feel) */
+@keyframes typingFade {
+  0% { opacity: 0 }
+  50% { opacity: 1 }
+  100% { opacity: 0 }
+}
   </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
-     crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="container">
@@ -430,6 +535,22 @@
 
   <div id="notification" class="notification">जोक सफलतापूर्वक सेव हो गया! 😂</div>
 
+<!-- 🔹 Name Input Modal (Only Once) -->
+<div id="nameModal" class="name-modal">
+  <div class="name-box">
+ <div class="avatar ai-avatar" style="display: inline-block; vertical-align: middle;"></div>
+    <h2>AI Bhai बोल रहा है...</h2>
+    <p>पहले बता दे तेरा नाम क्या है दोस्त? 😄</p>
+    <input type="text" id="usernameInput" placeholder="Apna naam likh bhai..." />
+    <button onclick="saveName()">शुरू करें 🚀</button>
+  </div>
+</div>
+
+<!-- 🔹 Display User Name -->
+<div class="name-display" id="nameDisplay">
+  
+  <span id="usernameShow">तू कौन है भाई?</span>
+</div>
   <script>
     // मूल JavaScript कोड को संरक्षित रखते हुए
     const dataUrl = 'https://deepakchauhanxai.xyz/ai-bhai-comedy.json';
@@ -536,7 +657,7 @@
       const div = document.createElement("div");
       div.classList.add('message', 'ai-message');
       div.innerHTML = `
-        <div class="avatar ai-avatar"></div>
+        <div class="avatar ai-avatar">🤖</div>
         <div class="message-content">
           <div class="sender">AI भाई</div>
           ${joke}
@@ -589,7 +710,8 @@
       document.getElementById('usersCount').textContent = usersCount.toLocaleString();
       document.getElementById('laughsCount').textContent = laughsCount.toLocaleString();
       
-      fetch("https://deepakchauhanxai.xyz/save_comedy_pending.php", {
+      // सर्वर पर सेव करें
+fetch("https://deepakchauhanxai.xyz/save_comedy_pending.php", {
   method: "POST",
   headers: { "Content-Type": "application/x-www-form-urlencoded" },
   body: `pass=aibhai8726&quote=${encodeURIComponent(fullText)}`
@@ -636,8 +758,24 @@
         }
       }, 5000);
     };
+    
+function saveName() {
+  const name = document.getElementById("usernameInput").value.trim();
+  if (name) {
+    localStorage.setItem("userNameComedy", name);
+    document.getElementById("usernameShow").textContent = name + " 😎";
+    document.getElementById("nameModal").style.display = "none";
+  }
+}
+
+// Load name if already saved
+window.addEventListener("DOMContentLoaded", () => {
+  const savedName = localStorage.getItem("userNameComedy");
+  if (savedName) {
+    document.getElementById("nameModal").style.display = "none";
+    document.getElementById("usernameShow").textContent = savedName + " 😎";
+  }
+});
   </script>
-  <script src="ads.js"></script>
-    <script src="https://deepakchauhanxai.com/scripts/ai_bhai_popup.js"></script>
 </body>
 </html>
