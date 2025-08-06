@@ -133,7 +133,6 @@
       flex-direction: row-reverse;
     }
     
-    
     .user-avatar {
       background: linear-gradient(135deg, #4ECDC4, #1A936F);
       border: 2px solid #4ECDC4;
@@ -353,6 +352,10 @@
       transform: translateX(0);
     }
     
+    .notification.error {
+      background: rgba(255, 107, 107, 0.9);
+    }
+    
 .avatar {
   width: 40px;
   height: 40px;
@@ -368,12 +371,15 @@
   background-image: url('https://deepakchauhanxai.xyz/images/AI-bhai.png');
 }
   </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
+     crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="container">
-  <div class="header">
+    <div class="header">
+<div class="header">
   <div class="avatar ai-avatar" style="display: inline-block; vertical-align: middle;"></div>
-      <h1 style="display: inline-block; margin-left: 10px;">AI भाई कॉमेडी क्वोट्स</h1>
+      <h1>🤣 AI भाई कॉमेडी क्वोट्स</h1>
       <p>हर रोज नए मजेदार जोक्स का खजाना - जहां हर बात हंसी बन जाए!</p>
     </div>
     
@@ -428,9 +434,8 @@
     // मूल JavaScript कोड को संरक्षित रखते हुए
     const dataUrl = 'https://deepakchauhanxai.xyz/ai-bhai-comedy.json';
     let allQuotes = [];
-    let quoteIndex = 0;
-    
-    const chatBox = document.getElementById("chatBox");
+    let usedIndices = new Set(); // पहले से दिखाए गए जोक्स का ट्रैक रखने के लिए
+    let lastRandomIndex = -1; // पिछले इंडेक्स को ट्रैक करने के लिए
     
     // डेटा लोड करना
     function loadData() {
@@ -496,6 +501,25 @@
         });
     }
     
+    // रैंडम जोक चुनने की फंक्शन (बिना दोहराव के)
+    function getRandomJoke() {
+      if (allQuotes.length === 0) return null;
+      
+      // अगर सभी जोक्स दिखाए जा चुके हैं तो रिसेट करें
+      if (usedIndices.size >= allQuotes.length) {
+        usedIndices.clear();
+      }
+      
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * allQuotes.length);
+      } while (usedIndices.has(randomIndex) || randomIndex === lastRandomIndex);
+      
+      usedIndices.add(randomIndex);
+      lastRandomIndex = randomIndex;
+      return allQuotes[randomIndex];
+    }
+    
     // जोक भेजने का बटन
     document.getElementById("sendBtn").addEventListener("click", () => {
       if (allQuotes.length === 0) {
@@ -503,8 +527,11 @@
         return;
       }
       
-      if (quoteIndex >= allQuotes.length) quoteIndex = 0;
-      const text = allQuotes[quoteIndex++];
+      const joke = getRandomJoke();
+      if (!joke) {
+        showNotification("कोई जोक उपलब्ध नहीं है!", "error");
+        return;
+      }
       
       const div = document.createElement("div");
       div.classList.add('message', 'ai-message');
@@ -512,7 +539,7 @@
         <div class="avatar ai-avatar"></div>
         <div class="message-content">
           <div class="sender">AI भाई</div>
-          ${text}
+          ${joke}
         </div>
       `;
       chatBox.appendChild(div);
@@ -562,11 +589,6 @@
       document.getElementById('usersCount').textContent = usersCount.toLocaleString();
       document.getElementById('laughsCount').textContent = laughsCount.toLocaleString();
       
-      // टॉप यूजर अपडेट करें
-      if (jokesCount % 50 === 0) {
-        document.getElementById('topUser').textContent = `${userName}: ${Math.floor(jokesCount/10)} जोक्स`;
-      }
-      
       // सर्वर पर सेव करें
       fetch("https://deepakchauhanxai.xyz/save-comedy.php", {
         method: "POST",
@@ -591,9 +613,9 @@
       
       // टाइप के अनुसार रंग बदलें
       if (type === "error") {
-        notification.style.background = "rgba(255, 107, 107, 0.9)";
+        notification.classList.add('error');
       } else {
-        notification.style.background = "rgba(78, 205, 196, 0.9)";
+        notification.classList.remove('error');
       }
       
       notification.classList.add('show');
@@ -616,5 +638,7 @@
       }, 5000);
     };
   </script>
+  <script src="ads.js"></script>
+    <script src="https://deepakchauhanxai.com/scripts/ai_bhai_popup.js"></script>
 </body>
 </html>
