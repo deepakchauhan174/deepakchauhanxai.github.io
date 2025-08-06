@@ -589,12 +589,11 @@
       document.getElementById('usersCount').textContent = usersCount.toLocaleString();
       document.getElementById('laughsCount').textContent = laughsCount.toLocaleString();
       
-      // सर्वर पर सेव करें
-      fetch("https://deepakchauhanxai.xyz/save-comedy.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `pass=aibhai8726&quote=${encodeURIComponent(fullText)}`
-      })
+      fetch("https://deepakchauhanxai.xyz/save_comedy_pending.php", {
+  method: "POST",
+  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  body: `pass=aibhai8726&quote=${encodeURIComponent(fullText)}`
+})
       .then(res => res.text())
       .then(msg => {
         showNotification(msg);
