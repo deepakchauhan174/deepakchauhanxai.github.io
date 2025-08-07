@@ -66,7 +66,11 @@
     <button id="saveBtn" onclick="saveMessage()">💾 Save Message</button>
     <div class="readonly-note" id="noteBox" style="display:none;">🔒 View Only: Editing disabled for this folder</div>
   </div>
-
+<div style="background: #ffcc00; color: #000; padding: 15px; text-align: center; font-weight: bold; font-family: sans-serif;">
+  🚫 Editing Box अभी अस्थायी रूप से बंद है। कृपया इंतज़ार करें...<br>
+  🔧 आपकी समस्याओं को ध्यान में रखते हुए, Editing सुविधा जल्द ही फिर से शुरू की जाएगी।<br>
+  🙏 धन्यवाद आपके धैर्य और सहयोग के लिए — AI Bhai टीम
+</div>
 <script>
   const params = new URLSearchParams(window.location.search);
   const folderName = params.get("folder");
