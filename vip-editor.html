@@ -47,13 +47,37 @@
       border: 1px solid #ccc;
       margin-top: 20px;
       box-sizing: border-box;
+      resize: vertical;
+    }
+
+    #sendBtn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: linear-gradient(to right, #00b09b, #96c93d);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    #sendBtn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }
   </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
+     crossorigin="anonymous"></script>
 </head>
 <body>
   <div id="chatTitle">📄 Messages</div>
   <div id="messageList">⏳ Loading messages...</div>
+
   <textarea id="msgInput" placeholder="✍️ नया message लिखें..."></textarea>
+  <button id="sendBtn" onclick="saveMessage()">📤 Send</button>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
@@ -71,7 +95,6 @@
       const data = await res.json();
 
       currentFolderOwner = data.ownerId;
-
       document.getElementById("chatTitle").innerText = "📁 " + data.title;
 
       const messageList = document.getElementById("messageList");
@@ -99,8 +122,12 @@
         messageList.appendChild(div);
       });
 
-      // Enable/Disable input based on owner
-      document.getElementById("msgInput").disabled = (userId !== data.ownerId);
+      const msgInput = document.getElementById("msgInput");
+      const sendBtn = document.getElementById("sendBtn");
+      const isOwner = (userId === data.ownerId);
+
+      msgInput.disabled = !isOwner;
+      sendBtn.disabled = !isOwner;
     }
 
     async function saveMessage() {
@@ -115,12 +142,6 @@
 
       document.getElementById("msgInput").value = "";
       loadFolder();
-    }
-
-    function autoSaveTrigger() {
-      if (userId !== currentFolderOwner) return;
-      clearTimeout(window.autoSaveTimer);
-      window.autoSaveTimer = setTimeout(saveMessage, 1000);
     }
 
     async function editMessage(index, oldText) {
@@ -149,8 +170,9 @@
       loadFolder();
     }
 
-    document.getElementById("msgInput").addEventListener("input", autoSaveTrigger);
     loadFolder();
   </script>
+    <script src="https://deepakchauhanxai.com/scripts/ai_bhai_popup1.js"></script>
+<script src="ads.js"></script>
 </body>
 </html>
