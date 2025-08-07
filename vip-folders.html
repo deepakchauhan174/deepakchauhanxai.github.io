@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <title>📁 VIP Folders</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f3f3f3;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    #folderList {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .folderBox {
+      background: white;
+      padding: 15px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .folderBox button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #topBar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    #createBtn {
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 25px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+
+    #createBtn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div id="topBar">
+    <h1>📁 VIP Folders</h1>
+    <button id="createBtn" onclick="createFolder()">➕ नया Folder</button>
+  </div>
+
+  <div id="folderList">⏳ Loading folders...</div>
+
+  <script>
+    const PASSWORD = "aibhai8726"; // Must match part 1
+    const userIdKey = "user_id";
+
+    // Step 1: Ask password if not already passed
+    if (!sessionStorage.getItem("vip_ok")) {
+      const input = prompt("🔐 Code डालिए:");
+      if (input === PASSWORD) {
+        sessionStorage.setItem("vip_ok", "true");
+      } else {
+        alert("❌ गलत कोड!");
+        window.location.href = "/";
+      }
+    }
+
+    // Step 2: User ID generator
+    if (!localStorage.getItem(userIdKey)) {
+      localStorage.setItem(userIdKey, "user_" + Date.now() + "_" + Math.floor(Math.random() * 999));
+    }
+    const userId = localStorage.getItem(userIdKey);
+
+    // Step 3: Load folders
+    async function loadFolders() {
+      const res = await fetch("https://deepakchauhanxai.xyz/get_folders.php");
+      const folders = await res.json();
+      const list = document.getElementById("folderList");
+      list.innerHTML = "";
+
+      folders.forEach(folder => {
+        const div = document.createElement("div");
+        div.className = "folderBox";
+
+        const titleBtn = document.createElement("button");
+        titleBtn.textContent = "📁 " + folder.title;
+        titleBtn.onclick = () => {
+          // Pass folder ID via URL param
+          window.location.href = `vip-editor.html?id=${folder.id}`;
+        };
+        div.appendChild(titleBtn);
+
+        // Show delete only if user is owner
+        if (folder.ownerId === userId) {
+          const delBtn = document.createElement("button");
+          delBtn.textContent = "❌";
+          delBtn.title = "Delete this folder";
+          delBtn.onclick = () => deleteFolder(folder.id);
+          div.appendChild(delBtn);
+        }
+
+        list.appendChild(div);
+      });
+    }
+
+    async function createFolder() {
+      const title = prompt("Folder का नाम लिखें:");
+      if (!title) return;
+
+      await fetch("https://deepakchauhanxai.xyz/create_folder.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, ownerId: userId })
+      });
+
+      loadFolders();
+    }
+
+    async function deleteFolder(id) {
+      const sure = confirm("क्या आप वाकई में इस folder को delete करना चाहते हैं?");
+      if (!sure) return;
+
+      await fetch("https://deepakchauhanxai.xyz/delete_folder_full.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, ownerId: userId })
+      });
+
+      loadFolders();
+    }
+
+    // Init
+    loadFolders();
+  </script>
+</body>
+</html>
