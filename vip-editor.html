@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <title>📄 Message Editor</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+
+    #chatTitle {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    #messageList div {
+      background: white;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #messageList div span {
+      flex: 1;
+    }
+
+    #messageList button {
+      margin-left: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    #msgInput {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-top: 20px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div id="chatTitle">📄 Messages</div>
+  <div id="messageList">⏳ Loading messages...</div>
+  <textarea id="msgInput" placeholder="✍️ नया message लिखें..."></textarea>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const folderId = urlParams.get("id");
+    const userId = localStorage.getItem("user_id");
+    let currentFolderOwner = null;
+
+    if (!folderId) {
+      alert("❌ Invalid folder ID");
+      window.location.href = "vip-folders.html";
+    }
+
+    async function loadFolder() {
+      const res = await fetch(`https://deepakchauhanxai.xyz/get_messages.php?id=${folderId}`);
+      const data = await res.json();
+
+      currentFolderOwner = data.ownerId;
+
+      document.getElementById("chatTitle").innerText = "📁 " + data.title;
+
+      const messageList = document.getElementById("messageList");
+      messageList.innerHTML = "";
+
+      data.messages.forEach((msg, i) => {
+        const div = document.createElement("div");
+
+        const textSpan = document.createElement("span");
+        textSpan.innerText = msg.text;
+        div.appendChild(textSpan);
+
+        if (userId === data.ownerId) {
+          const editBtn = document.createElement("button");
+          editBtn.innerText = "✏️";
+          editBtn.onclick = () => editMessage(i, msg.text);
+          div.appendChild(editBtn);
+
+          const delBtn = document.createElement("button");
+          delBtn.innerText = "❌";
+          delBtn.onclick = () => deleteMessage(i);
+          div.appendChild(delBtn);
+        }
+
+        messageList.appendChild(div);
+      });
+
+      // Enable/Disable input based on owner
+      document.getElementById("msgInput").disabled = (userId !== data.ownerId);
+    }
+
+    async function saveMessage() {
+      const text = document.getElementById("msgInput").value.trim();
+      if (!text || !folderId || userId !== currentFolderOwner) return;
+
+      await fetch("https://deepakchauhanxai.xyz/save_message.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: folderId, text })
+      });
+
+      document.getElementById("msgInput").value = "";
+      loadFolder();
+    }
+
+    function autoSaveTrigger() {
+      if (userId !== currentFolderOwner) return;
+      clearTimeout(window.autoSaveTimer);
+      window.autoSaveTimer = setTimeout(saveMessage, 1000);
+    }
+
+    async function editMessage(index, oldText) {
+      const newText = prompt("✏️ नया message लिखें:", oldText);
+      if (!newText) return;
+
+      await fetch("https://deepakchauhanxai.xyz/edit_message.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: folderId, index, text: newText })
+      });
+
+      loadFolder();
+    }
+
+    async function deleteMessage(index) {
+      const confirmDel = confirm("❌ इस message को delete करें?");
+      if (!confirmDel) return;
+
+      await fetch("https://deepakchauhanxai.xyz/delete_folder.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: folderId, deleteIndex: index })
+      });
+
+      loadFolder();
+    }
+
+    document.getElementById("msgInput").addEventListener("input", autoSaveTrigger);
+    loadFolder();
+  </script>
+</body>
+</html>
