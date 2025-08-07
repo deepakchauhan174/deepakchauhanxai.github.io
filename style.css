@@ -2380,3 +2380,20 @@ transform: scale(1.05);
 .secured-btn:hover {
   background-color: #444;
 }
+
+#vipBtn {
+  background: linear-gradient(to right, #7b2ff7, #f107a3);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+#vipBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
