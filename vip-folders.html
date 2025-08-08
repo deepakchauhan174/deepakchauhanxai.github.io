@@ -2,42 +2,114 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8" />
-  <title>📁 VIP Folders</title>
+  <title>📁 VIP Folders – AI Bhai</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f3f3f3;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
       padding: 20px;
+      min-height: 100vh;
+      margin: 0;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
     h1 {
       text-align: center;
-      color: #333;
+      color: #1a2a6c;
+      font-size: 32px;
+      margin-bottom: 5px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #555;
+      margin-top: 0;
+      margin-bottom: 25px;
+      font-size: 18px;
     }
 
     #folderList {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
       margin-top: 30px;
     }
 
     .folderBox {
-      background: white;
-      padding: 15px 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: linear-gradient(145deg, #ffffff, #f0f0f0);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      border-left: 5px solid #1a2a6c;
+      position: relative;
+    }
+
+    .folderBox:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .folderBox .title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #1a2a6c;
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .folderBox button {
-      background: transparent;
+    .folderBox .title i {
+      font-size: 24px;
+    }
+
+    .folderBox .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn {
+      padding: 8px 15px;
       border: none;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
-      font-size: 16px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-open {
+      background: linear-gradient(to right, #1a2a6c, #4a7bd9);
+      color: white;
+      box-shadow: 0 3px 8px rgba(26, 42, 108, 0.3);
+    }
+
+    .btn-delete {
+      background: linear-gradient(to right, #b21f1f, #e74c3c);
+      color: white;
+      box-shadow: 0 3px 8px rgba(178, 31, 31, 0.3);
     }
 
     #topBar {
@@ -45,50 +117,150 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
     }
 
     #createBtn {
-      background: linear-gradient(to right, #00c6ff, #0072ff);
+      background: linear-gradient(to right, #00b09b, #96c93d);
       color: white;
-      padding: 8px 16px;
+      padding: 10px 20px;
       border: none;
-      border-radius: 25px;
-      font-size: 14px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s;
     }
 
     #createBtn:hover {
-      opacity: 0.9;
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    }
+
+    #vipLock {
+      text-align: center;
+      font-size: 18px;
+      margin: 25px 0;
+      padding: 15px;
+      background: linear-gradient(135deg, #141e30, #243b55);
+      color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    #vipLock span {
+      background: linear-gradient(to right, #f6d365, #fda085);
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      color: #000;
+      text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+    }
+
+    .folder-count {
+      text-align: center;
+      font-size: 18px;
+      color: #555;
+      margin-top: 20px;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 10px;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      z-index: 1000;
+      transform: translateX(200%);
+      transition: transform 0.4s ease;
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+    .success {
+      background: linear-gradient(135deg, #00b09b, #96c93d);
+    }
+    
+    .error {
+      background: linear-gradient(135deg, #b21f1f, #e74c3c);
+    }
+
+    @media (max-width: 768px) {
+      #topBar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      h1 {
+        font-size: 28px;
+      }
+      
+      .container {
+        padding: 20px;
+      }
     }
   </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
-     crossorigin="anonymous"></script>
 </head>
 <body>
-  <div id="topBar">
-    <h1>📁 VIP Folders</h1>
-    <button id="createBtn" onclick="createFolder()">➕ नया Folder</button>
-  </div>
+  <div class="container">
+    <div id="topBar">
+      <div>
+        <h1>📁 VIP Folders – <span style="color: #1a2a6c;">AI Bhai</span></h1>
+        <p class="subtitle">अपने प्राइवेट फोल्डर्स को मैनेज करें</p>
+      </div>
+      <button id="createBtn" onclick="createFolder()">➕ नया फोल्डर बनाएं</button>
+    </div>
 
-  <div id="folderList">⏳ Loading folders...</div>
+    <div id="vipLock">🔐 <span>VIP ACCESS</span> – विशेष रूप से AI Bhai कम्युनिटी के लिए</div>
+
+    <div id="folderList">⏳ फोल्डर्स लोड हो रहे हैं...</div>
+    
+    <div class="folder-count" id="folderCount">कुल फोल्डर्स: 0</div>
+  </div>
+  
+  <div class="notification" id="notification"></div>
 
   <script>
-    const PASSWORD = "aibhai8726"; // Must match part 1
+    const PASSWORD = "aibhai8726";
     const userIdKey = "user_id";
+    let folders = [];
 
-    // Step 1: Ask password if not already passed
+    // Notification system
+    function showNotification(message, isSuccess) {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.className = `notification ${isSuccess ? 'success' : 'error'} show`;
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+
+    // Step 1: Ask password if not already entered
     if (!sessionStorage.getItem("vip_ok")) {
-      const input = prompt("🔐 Code डालिए:");
+      const input = prompt("🔐 VIP कोड डालिए (AI Bhai Access):");
       if (input === PASSWORD) {
         sessionStorage.setItem("vip_ok", "true");
       } else {
-        alert("❌ गलत कोड!");
+        alert("❌ गलत कोड! पहुंच निषेध");
         window.location.href = "/";
       }
     }
 
-    // Step 2: User ID generator
+    // Step 2: User ID (store only once)
     if (!localStorage.getItem(userIdKey)) {
       localStorage.setItem(userIdKey, "user_" + Date.now() + "_" + Math.floor(Math.random() * 999));
     }
@@ -96,66 +268,116 @@
 
     // Step 3: Load folders
     async function loadFolders() {
-      const res = await fetch("https://deepakchauhanxai.xyz/get_folders.php");
-      const folders = await res.json();
-      const list = document.getElementById("folderList");
-      list.innerHTML = "";
-
-      folders.forEach(folder => {
-        const div = document.createElement("div");
-        div.className = "folderBox";
-
-        const titleBtn = document.createElement("button");
-        titleBtn.textContent = "📁 " + folder.title;
-        titleBtn.onclick = () => {
-          // Pass folder ID via URL param
-          window.location.href = `vip-editor.html?id=${folder.id}`;
-        };
-        div.appendChild(titleBtn);
-
-        // Show delete only if user is owner
-        if (folder.ownerId === userId) {
-          const delBtn = document.createElement("button");
-          delBtn.textContent = "❌";
-          delBtn.title = "Delete this folder";
-          delBtn.onclick = () => deleteFolder(folder.id);
-          div.appendChild(delBtn);
+      try {
+        const res = await fetch("https://deepakchauhanxai.xyz/get_folders.php");
+        folders = await res.json();
+        const list = document.getElementById("folderList");
+        
+        if (!folders || folders.length === 0) {
+          list.innerHTML = '<div style="text-align:center; padding:40px; font-size:18px; color:#666;">📂 कोई फोल्डर नहीं मिला। नया फोल्डर बनाने के लिए ऊपर बटन दबाएं!</div>';
+          document.getElementById('folderCount').textContent = "कुल फोल्डर्स: 0";
+          return;
         }
+        
+        list.innerHTML = "";
+        document.getElementById('folderCount').textContent = `कुल फोल्डर्स: ${folders.length}`;
 
-        list.appendChild(div);
-      });
+        folders.forEach(folder => {
+          const div = document.createElement("div");
+          div.className = "folderBox";
+
+          const titleDiv = document.createElement("div");
+          titleDiv.className = "title";
+          titleDiv.innerHTML = `<i>📁</i> ${folder.title}`;
+          div.appendChild(titleDiv);
+
+          const actionsDiv = document.createElement("div");
+          actionsDiv.className = "actions";
+
+          const openBtn = document.createElement("button");
+          openBtn.className = "btn btn-open";
+          openBtn.innerHTML = "खोलें <i>→</i>";
+          openBtn.onclick = () => {
+            window.location.href = `vip-editor.html?id=${folder.id}`;
+          };
+          actionsDiv.appendChild(openBtn);
+
+          if (folder.ownerId === userId) {
+            const delBtn = document.createElement("button");
+            delBtn.className = "btn btn-delete";
+            delBtn.innerHTML = "डिलीट <i>🗑️</i>";
+            delBtn.onclick = () => deleteFolder(folder.id);
+            actionsDiv.appendChild(delBtn);
+          }
+
+          div.appendChild(actionsDiv);
+          list.appendChild(div);
+        });
+      } catch (error) {
+        console.error("Error loading folders:", error);
+        document.getElementById("folderList").innerHTML = `<div style="color:red; text-align:center; padding:30px;">⚠️ फोल्डर्स लोड करने में त्रुटि: ${error.message}</div>`;
+      }
     }
 
     async function createFolder() {
-      const title = prompt("Folder का नाम लिखें:");
+      const title = prompt("फोल्डर का नाम लिखें:");
       if (!title) return;
 
-      await fetch("https://deepakchauhanxai.xyz/create_folder.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, ownerId: userId })
-      });
+      if (title.length < 3) {
+        showNotification("❌ फोल्डर का नाम कम से कम 3 अक्षर का होना चाहिए", false);
+        return;
+      }
 
-      loadFolders();
+      try {
+        const response = await fetch("https://deepakchauhanxai.xyz/create_folder.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title, ownerId: userId })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          showNotification(`✅ '${title}' फोल्डर सफलतापूर्वक बनाया गया!`, true);
+          loadFolders();
+        } else {
+          showNotification(`❌ त्रुटि: ${data.error || "अज्ञात त्रुटि"}`, false);
+        }
+      } catch (error) {
+        console.error("Error creating folder:", error);
+        showNotification(`❌ नेटवर्क त्रुटि: ${error.message}`, false);
+      }
     }
 
     async function deleteFolder(id) {
-      const sure = confirm("क्या आप वाकई में इस folder को delete करना चाहते हैं?");
+      const folder = folders.find(f => f.id === id);
+      if (!folder) return;
+
+      const sure = confirm(`क्या आप वाकई में "${folder.title}" फोल्डर को डिलीट करना चाहते हैं?\n\nडिलीट होने के बाद इसे पुनः प्राप्त नहीं किया जा सकता।`);
       if (!sure) return;
 
-      await fetch("https://deepakchauhanxai.xyz/delete_folder_full.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, ownerId: userId })
-      });
+      try {
+        const response = await fetch("https://deepakchauhanxai.xyz/delete_folder_full.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, ownerId: userId })
+        });
 
-      loadFolders();
+        const data = await response.json();
+        if (data.success) {
+          showNotification(`🗑️ '${folder.title}' फोल्डर सफलतापूर्वक डिलीट किया गया!`, true);
+          // Wait for the operation to complete before reloading
+          setTimeout(loadFolders, 800);
+        } else {
+          showNotification(`❌ त्रुटि: ${data.error || "डिलीट करने में विफल"}`, false);
+        }
+      } catch (error) {
+        console.error("Error deleting folder:", error);
+        showNotification(`❌ नेटवर्क त्रुटि: ${error.message}`, false);
+      }
     }
 
-    // Init
+    // Initialize the app
     loadFolders();
   </script>
-    <script src="https://deepakchauhanxai.com/scripts/ai_bhai_popup3.js"></script>
-  <script src="ads.js"></script>
 </body>
 </html>
