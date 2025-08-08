@@ -1196,24 +1196,7 @@ async function getWeatherReply(userMessage) {
 }
 
 // 🔹 Main Chat Send Function
-async function sendMsg() {
-  const txt = input.value.trim();
-  if (!txt) return;
 
-  input.value = "";
-  showMsg("user", txt);
-  saveChat("user", txt);
-
-  // 🔹 Weather detection
-  if (/mausam|weather|tapman|तापमान|बारिश/i.test(txt)) {
-    const reply = await getWeatherReply(txt);
-    typing(reply);
-    return;
-  }
-
-  const rep = findReply(txt) || "🤖 AI Bhai सोच में हैं…";
-  typing(rep);
-}
   </script>
   <script>
 function confirmClearStorage() {
@@ -1257,6 +1240,60 @@ function confirmClearStorage() {
   };
 }
 
+    async function sendMsg() {
+  const txt = input.value.trim();
+  if (!txt) return;
+
+  input.value = "";
+  showMsg("user", txt);
+  saveChat("user", txt);
+  usedWords = [];
+
+  const normalized = normalizeMessage(txt);
+
+  // 🔍 Step 1: News check first (specific)
+  if (
+    normalized.includes("ताज़ा खबर") ||
+    normalized.includes("लेटेस्ट न्यूज़") ||
+    normalized.includes("news") ||
+    normalized.includes("खबर") ||
+    normalized.includes("ताज़ा")
+  ) {
+    getNewsFromPHP();
+    return;
+  }
+
+  // 🔍 Step 2: Weather check
+  if (/mausam|weather|tapman|तापमान|बारिश/i.test(txt)) {
+    const reply = await getWeatherReply(txt);
+    typing(reply);
+    return;
+  }
+
+  // 🔍 Step 3: Media JSON check (weather, maps, etc)
+  const media = findMediaReply(txt);
+  if (media) {
+    showMediaBox(media.title, media.url);
+    typing(media.text);
+    return;
+  }
+
+  // 🔍 Step 4: Old reply
+  const oldReply = findReply(txt) || "🤖 AI Bhai सोच में हैं…";
+  typing(oldReply, () => {
+    // 🔄 Step 5a: Smart reply second-layer
+    setTimeout(() => {
+      const smartReply = findSmartReply(normalized);
+      if (smartReply) typing(smartReply);
+    }, 1000);
+  });
+
+  // 🔍 Step 5b: Smart reply fallback (if not triggered above)
+  setTimeout(() => {
+    const smartReply = findSmartReply(normalized);
+    if (smartReply) typing(smartReply);
+  }, 1200);
+    }
 </script>
 <script src="scripts/media-handler.js"></script>
 <script src="scripts/aibhai-2.0.js"></script>
