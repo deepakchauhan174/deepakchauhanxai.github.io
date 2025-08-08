@@ -1194,53 +1194,7 @@ async function getWeatherReply(userMessage) {
     return "❌ मौसम की जानकारी लाने में दिक्कत हुई — शायद शहर का नाम गलत हो या नेटवर्क में दिक्कत है।";
   }
 }
-
-// 🔹 Main Chat Send Function
-
-  </script>
-  <script>
-function confirmClearStorage() {
-  const overlay = document.createElement('div');
-  overlay.style.position = 'fixed';
-  overlay.style.top = 0;
-  overlay.style.left = 0;
-  overlay.style.width = '100vw';
-  overlay.style.height = '100vh';
-  overlay.style.backgroundColor = 'rgba(0,0,0,0.6)';
-  overlay.style.display = 'flex';
-  overlay.style.alignItems = 'center';
-  overlay.style.justifyContent = 'center';
-  overlay.style.zIndex = 1005;
-
-  const popup = document.createElement('div');
-  popup.style.background = '#fff';
-  popup.style.padding = '20px';
-  popup.style.borderRadius = '12px';
-  popup.style.boxShadow = '0 0 15px rgba(0,0,0,0.3)';
-  popup.style.color = '#000';
-  popup.innerHTML = `
-    <p style="font-weight: bold; margin-bottom: 15px;">⚠️ क्या आप सच में Local Storage को क्लियर करना चाहते हैं?</p>
-    <div style="text-align: right;">
-      <button onclick="clearConfirmed()" style="margin-right: 10px; padding: 6px 12px; background-color: #ff4d4f; color: white; border: none; border-radius: 5px; cursor: pointer;">Yes</button>
-      <button onclick="cancelClear()" style="padding: 6px 12px; background-color: #00c853; color: white; border: none; border-radius: 5px; cursor: pointer;">No</button>
-    </div>
-  `;
-
-  overlay.appendChild(popup);
-  document.body.appendChild(overlay);
-
-  window.clearConfirmed = function () {
-    localStorage.clear();
-    alert("✅ Local Storage Clear कर दिया गया!");
-    location.reload();
-  };
-
-  window.cancelClear = function () {
-    document.body.removeChild(overlay);
-  };
-}
-
-    async function sendMsg() {
+async function sendMsg() {
   const txt = input.value.trim();
   if (!txt) return;
 
@@ -1293,7 +1247,50 @@ function confirmClearStorage() {
     const smartReply = findSmartReply(normalized);
     if (smartReply) typing(smartReply);
   }, 1200);
-    }
+}
+  </script>
+  <script>
+function confirmClearStorage() {
+  const overlay = document.createElement('div');
+  overlay.style.position = 'fixed';
+  overlay.style.top = 0;
+  overlay.style.left = 0;
+  overlay.style.width = '100vw';
+  overlay.style.height = '100vh';
+  overlay.style.backgroundColor = 'rgba(0,0,0,0.6)';
+  overlay.style.display = 'flex';
+  overlay.style.alignItems = 'center';
+  overlay.style.justifyContent = 'center';
+  overlay.style.zIndex = 1005;
+
+  const popup = document.createElement('div');
+  popup.style.background = '#fff';
+  popup.style.padding = '20px';
+  popup.style.borderRadius = '12px';
+  popup.style.boxShadow = '0 0 15px rgba(0,0,0,0.3)';
+  popup.style.color = '#000';
+  popup.innerHTML = `
+    <p style="font-weight: bold; margin-bottom: 15px;">⚠️ क्या आप सच में Local Storage को क्लियर करना चाहते हैं?</p>
+    <div style="text-align: right;">
+      <button onclick="clearConfirmed()" style="margin-right: 10px; padding: 6px 12px; background-color: #ff4d4f; color: white; border: none; border-radius: 5px; cursor: pointer;">Yes</button>
+      <button onclick="cancelClear()" style="padding: 6px 12px; background-color: #00c853; color: white; border: none; border-radius: 5px; cursor: pointer;">No</button>
+    </div>
+  `;
+
+  overlay.appendChild(popup);
+  document.body.appendChild(overlay);
+
+  window.clearConfirmed = function () {
+    localStorage.clear();
+    alert("✅ Local Storage Clear कर दिया गया!");
+    location.reload();
+  };
+
+  window.cancelClear = function () {
+    document.body.removeChild(overlay);
+  };
+}
+
 </script>
 <script src="scripts/media-handler.js"></script>
 <script src="scripts/aibhai-2.0.js"></script>
