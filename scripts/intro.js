@@ -1,4 +1,4 @@
-(function(){
+  (function(){
   // ========== CONFIG ==========
   const CHECK_URL = "https://deepakchauhanxai.xyz/check_user.php";
   const SAVE_URL  = "https://deepakchauhanxai.xyz/save_user.php";
@@ -26,15 +26,11 @@
     });
   }
 
-  // Inject CSS including hide-layer styles
+  // Inject CSS
   const style = el('style');
   style.textContent = `
   /* AI Bhai embed single-file styles */
-  #aibhai-root {
-  right: auto !important;
-  left: 18px !important;
-  bottom: 18px !important;
-}
+  #aibhai-root{ position:fixed; bottom:18px; right:18px; z-index:2147483647; font-family: "Noto Sans", Roboto, sans-serif; }
   #aibhai-avatar{ width:78px; height:78px; border-radius:50%; border:3px solid rgba(255,215,0,0.95); box-shadow:0 10px 36px rgba(0,0,0,0.45), 0 0 18px rgba(255,215,0,0.08); cursor:pointer; background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; overflow:hidden; }
   #aibhai-chat{ width:360px; max-width:calc(100vw - 40px); height:480px; background:linear-gradient(180deg, rgba(10,10,10,0.98), rgba(20,20,20,0.96)); border-radius:14px; border:1.5px solid rgba(255,215,0,0.85); box-shadow:0 20px 50px rgba(0,0,0,0.55); overflow:hidden; display:flex; flex-direction:column; transform:translateY(28px) scale(0.995); opacity:0; transition:all .42s cubic-bezier(.2,.9,.2,1); }
   #aibhai-chat.open{ transform:none; opacity:1; }
@@ -54,17 +50,7 @@
   .aibhai-form .submit{ margin-top:10px; width:100%; padding:10px; border-radius:8px; cursor:pointer; border:none; font-weight:800; background:linear-gradient(90deg, rgba(255,215,0,0.98), rgba(255,190,40,0.98)); }
   .aibhai-close{ background:transparent;border:none;font-size:20px;cursor:pointer; color:#111; }
   @media (max-width:420px){ #aibhai-chat{ right:10px; left:10px; width:auto; } #aibhai-avatar{ right:14px; bottom:14px; } }
-
-  /* Hide Layer */
-  #aibhai-hide-layer {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.15);
-    z-index: 2147483645;
-    display: none;
-  }
   `;
-
   document.head.appendChild(style);
 
   // Root
@@ -88,10 +74,6 @@
     <div id="aibhai-messages" aria-live="polite"></div>
   `;
   root.appendChild(chat);
-
-  // Hide layer div
-  const hideLayer = el('div', { id: 'aibhai-hide-layer' });
-  document.body.appendChild(hideLayer);
 
   const messages = qs('#aibhai-messages');
   const closeBtn = chat.querySelector('.aibhai-close');
@@ -119,6 +101,7 @@
   let deviceId = localStorage.getItem(LOCAL_DEVICE_KEY);
   if(!deviceId){ deviceId = generateDeviceId(); localStorage.setItem(LOCAL_DEVICE_KEY, deviceId); }
 
+  // If already registered on local or server, don't show avatar at all (silent)
   async function isRegisteredOnServer(){
     try{
       const r = await fetch(CHECK_URL + '?device_id=' + encodeURIComponent(deviceId), { method:'GET', cache:'no-store' });
@@ -128,24 +111,19 @@
     return { ok:false };
   }
 
-  // Hide/show hideLayer functions
-  function showHideLayer() {
-    hideLayer.style.display = 'block';
-  }
-  function hideHideLayer() {
-    hideLayer.style.display = 'none';
-  }
-
   // On load check server quickly and hide avatar if registered
   (async function precheck(){
+    // if local flag found, remove avatar immediately
     if(localStorage.getItem(LOCAL_REGISTER_KEY) === '1'){
       if(HIDE_AVATAR_AFTER_REGISTER){
         try{ avatarBtn.remove(); }catch(e){}
       }
       return;
     }
+    // else check server
     const server = await isRegisteredOnServer();
     if(server.ok){
+      // mark local and remove avatar
       localStorage.setItem(LOCAL_REGISTER_KEY, '1');
       if(HIDE_AVATAR_AFTER_REGISTER){
         try{ avatarBtn.remove(); }catch(e){}
@@ -156,53 +134,42 @@
   // Avatar click -> toggle chat (but do nothing if already registered)
   avatarBtn.addEventListener('click', async function(){
     if(localStorage.getItem(LOCAL_REGISTER_KEY) === '1') {
+      // already registered — hide avatar and do nothing
       if(HIDE_AVATAR_AFTER_REGISTER) try{ avatarBtn.remove(); } catch(e){}
       return;
     }
     chat.classList.toggle('open');
-    if(chat.classList.contains('open')){
-      showHideLayer();
-    } else {
-      hideHideLayer();
-    }
+    // if opening and not initialized -> start sequence
     if(chat.classList.contains('open') && !chat.dataset.inited){
       chat.dataset.inited = '1';
       startSequence();
     }
   });
 
-  // Close button hides chat box and hide layer
+  // Close button hides chat box but keeps avatar
   closeBtn.addEventListener('click', function(){
     chat.classList.remove('open');
-    hideHideLayer();
   });
 
-  // Hide layer click closes chat too (optional)
-  hideLayer.addEventListener('click', () => {
-    chat.classList.remove('open');
-    hideHideLayer();
-  });
-
-  // Sequence: server check -> intro or welcome if registered
+  // Sequence: server check -> intro or directly welcome if server says registered
   async function startSequence(){
+    // server check
     let serverUser = null;
     try{
       const res = await fetch(CHECK_URL + '?device_id=' + encodeURIComponent(deviceId), { method:'GET', cache:'no-store' });
       const j = await res.json().catch(()=>null);
       if(j && j.exists) serverUser = j;
-    } catch(e){ /* ignore */ }
+    } catch(e){ /* ignore network */ }
 
     if(serverUser || localStorage.getItem(LOCAL_REGISTER_KEY) === '1'){
       const name = (serverUser && serverUser.name) ? serverUser.name : 'मित्र';
       await typeText(`स्वागत वापस ${name}! 👋`);
-      setTimeout(()=>{
-        chat.classList.remove('open'); 
-        hideHideLayer();
-        if(HIDE_AVATAR_AFTER_REGISTER) try{ avatarBtn.remove(); }catch(e){}
-      }, 1500);
+      // optionally close after a short delay
+      setTimeout(()=>{ chat.classList.remove('open'); if(HIDE_AVATAR_AFTER_REGISTER) try{ avatarBtn.remove(); }catch(e){} }, 1500);
       return;
     }
 
+    // show intro with typing
     await showTypingDelay(600);
     await typeText("नमस्ते मैं AI Bhai हूँ!!");
     await showTypingDelay(450);
@@ -216,8 +183,10 @@
     await showTypingDelay(350);
     await typeText("Deepak Chauhan x AI Bhai ✍🏼");
 
+    // mark local intro shown
     localStorage.setItem('aibhai_intro_shown_v1','1');
 
+    // show Continue button
     const wrap = el('div', { class: 'aibhai-msg' });
     const btn = el('button', { class: 'aibhai-btn', type:'button' }, 'Continue — अगले चरण');
     wrap.appendChild(btn);
@@ -237,7 +206,7 @@
     });
   }
 
-  // Form step and submit
+  // Form step (name, mobile, email, age)
   function showFormStep(){
     const formWrap = el('div', { class: 'aibhai-form' });
     formWrap.innerHTML = `
@@ -267,6 +236,7 @@
 
       submitBtn.disabled = true; submitBtn.textContent = 'सेव किया जा रहा है...';
 
+      // POST to server
       let ok = false;
       try{
         const payload = { device_id: deviceId, name, mobile, email, age };
@@ -278,22 +248,18 @@
         const j = await resp.json().catch(()=>null);
         if(j && (j.success || j.status === 'success' || j.saved === true || j.result === 'ok')) ok = true;
         if(!ok && j && Object.values(j).includes(true)) ok = true;
-        if(!ok && resp.ok) ok = true;
+        if(!ok && resp.ok) ok = true; // fallback
       } catch(e){
         console.warn('AI Bhai: save_user failed', e);
       }
 
       if(ok){
+        // set local flag and remove form + avatar + chat
         localStorage.setItem(LOCAL_REGISTER_KEY, '1');
         try{ formWrap.remove(); }catch(e){}
         await typeText(`🔥 ${name} भाई, आपने पहला कदम उठा लिया है — याद रखो: जो सपने देखता है वही उन्हें सच करता है! चलो मिलकर कुछ बड़ा करते हैं 💪🚀`);
-        setTimeout(() => {
-          try{
-            chat.remove();
-            if(HIDE_AVATAR_AFTER_REGISTER) avatarBtn.remove();
-            hideHideLayer();
-          }catch(e){}
-        }, 900);
+        // small delay then remove chat and avatar fully
+        setTimeout(()=>{ try{ chat.remove(); if(HIDE_AVATAR_AFTER_REGISTER) avatarBtn.remove(); }catch(e){} }, 900);
       } else {
         submitBtn.disabled = false; submitBtn.textContent = 'सबमिट करें';
         alert('सर्वर पर सेव करने में समस्या हुई — बाद में पुनः प्रयास करें।');
