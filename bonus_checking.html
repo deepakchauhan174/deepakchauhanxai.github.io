@@ -1,186 +1,680 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Fishing Bonus System – Coming Soon</title>
-  <style>
-    /* === FISHING THEME STYLES === */
-    body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
-                  url('https://images.unsplash.com/photo-1514897575457-c4db467cf78e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-      background-size: cover;
-      background-position: center;
-      color: #fff;
-      text-align: center;
-      padding: 40px 20px;
-      min-height: 100vh;
-    }
-    
-    .fishing-container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: rgba(10, 30, 50, 0.7);
-      border-radius: 15px;
-      padding: 30px;
-      border: 3px solid #0d6efd;
-      box-shadow: 0 0 30px rgba(13, 110, 253, 0.5);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .fishing-container::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, transparent 0%, rgba(13, 110, 253, 0.1) 50%, transparent 70%);
-      animation: water-ripple 15s infinite linear;
-    }
-    
-    h1 {
-      font-size: 2.5rem;
-      color: #ffc107;
-      margin-bottom: 25px;
-      text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
-      position: relative;
-    }
-    
-    h1::after {
-      content: "🎣";
-      position: absolute;
-      right: 20%;
-      top: -15px;
-      font-size: 1.5rem;
-      animation: float 3s ease-in-out infinite;
-    }
-    
-    p {
-      font-size: 1.1rem;
-      margin: 15px 0;
-      line-height: 1.6;
-    }
-    
-    .promotion-box {
-      border: 2px solid #0dcaf0;
-      border-radius: 15px;
-      padding: 20px;
-      margin: 30px 0;
-      background: rgba(13, 202, 240, 0.1);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .promotion-box::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, #0dcaf0, transparent);
-      animation: shine 3s infinite;
-    }
-    
-    h3 {
-      color: #ffc107;
-      margin-bottom: 15px;
-      font-size: 1.5rem;
-    }
-    
-    .category {
-      display: inline-block;
-      margin: 8px;
-      padding: 8px 15px;
-      background: rgba(13, 110, 253, 0.3);
-      border-radius: 20px;
-      border: 1px solid #0d6efd;
-      font-size: 0.9rem;
-    }
-    
-    .note {
-      color: #ff6b6b;
-      font-size: 0.9rem;
-      margin-top: 15px;
-    }
-    
-    .purpose {
-      color: #20c997;
-      font-size: 0.9rem;
-      margin: 15px 0;
-    }
-    
-    .contact {
-      margin-top: 20px;
-    }
-    
-    a {
-      color: #0dcaf0;
-      text-decoration: none;
-      transition: all 0.3s;
-    }
-    
-    a:hover {
-      color: #ffc107;
-      text-decoration: underline;
-    }
-    
-    /* ANIMATIONS */
-    @keyframes water-ripple {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    @keyframes shine {
-      0% { left: -100%; }
-      100% { left: 100%; }
-    }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      h1 { font-size: 2rem; }
-      .fishing-container { padding: 20px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DK Community | Royal Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --royal-purple: #3a0ca3;
+            --deep-purple: #2a0759;
+            --royal-gold: #ffd700;
+            --light-gold: #ffec8b;
+            --regal-blue: #4361ee;
+            --light-accent: #f72585;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(26, 11, 61, 0.85);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+        
+        /* Header Styling */
+        header {
+            background: linear-gradient(to right, var(--royal-purple), var(--deep-purple));
+            padding: 25px 40px;
+            text-align: center;
+            position: relative;
+            border-bottom: 3px solid var(--royal-gold);
+        }
+        
+        .crown {
+            position: absolute;
+            top: 15px;
+            left: 40px;
+            font-size: 36px;
+            color: var(--royal-gold);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            animation: glow 2s infinite alternate;
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--light-gold), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            margin: 10px 0;
+        }
+        
+        .small-text {
+            font-size: 24px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            margin-left: 10px;
+        }
+        
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+            background: rgba(43, 7, 89, 0.7);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        nav button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        nav button:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        nav button.active {
+            background: linear-gradient(to right, var(--light-accent), var(--regal-blue));
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.4);
+        }
+        
+        /* Stats Container */
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            padding: 30px 20px;
+            background: rgba(26, 11, 61, 0.5);
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 25px 35px;
+            min-width: 200px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-8px);
+            background: rgba(58, 12, 163, 0.3);
+        }
+        
+        .stat-value {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(to bottom, var(--light-gold), var(--royal-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            color: #d0c8f0;
+            letter-spacing: 1px;
+        }
+        
+        /* User Section */
+        .user-section {
+            padding: 30px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .section-header h2 {
+            font-size: 32px;
+            color: var(--light-gold);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--light-accent), var(--regal-blue));
+            border-radius: 3px;
+        }
+        
+        .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            color: var(--light-gold);
+        }
+        
+        .search-box input {
+            padding: 14px 20px 14px 45px;
+            border-radius: 50px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 16px;
+            width: 280px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(247, 37, 133, 0.3);
+        }
+        
+        .search-box input::placeholder {
+            color: #b0a8d0;
+        }
+        
+        /* User Grid */
+        .compact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .compact-card {
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.2), rgba(58, 12, 163, 0.3));
+            border-radius: 15px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .compact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(247, 37, 133, 0.3);
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.3), rgba(247, 37, 133, 0.2));
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--light-accent), var(--regal-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        
+        .user-info {
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .user-role {
+            font-size: 13px;
+            color: var(--light-gold);
+            background: rgba(255, 215, 0, 0.1);
+            padding: 3px 8px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .admin .user-role {
+            background: rgba(247, 37, 133, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(to right, var(--deep-purple), #1a0739);
+            padding: 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            border-top: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .royal-seal {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--royal-purple), var(--deep-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
+            border: 3px solid var(--royal-gold);
+            color: var(--royal-gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        .signature {
+            font-size: 18px;
+            color: var(--light-gold);
+            letter-spacing: 1px;
+        }
+        
+        /* Animations */
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.6);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section-header {
+                justify-content: center;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            nav {
+                gap: 10px;
+            }
+            
+            nav button {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            h1 {
+                font-size: 36px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .compact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-card {
+                width: 100%;
+            }
+            
+            header {
+                padding: 25px 20px;
+            }
+            
+            .crown {
+                position: static;
+                margin-bottom: 10px;
+            }
+        }
+        
+/* Button style */
+#openPopupBtn {
+  background: linear-gradient(45deg, #bfa243, #f9d56e);
+  color: #3a2e00;
+  border: none;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #bfa243;
+  transition: background 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+#openPopupBtn:hover {
+  background: linear-gradient(45deg, #d4bb5c, #ffe77a);
+}
+
+/* Overlay */
+#popupOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(10, 10, 10, 0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+}
+
+/* Popup Box */
+#popupBox {
+  background: linear-gradient(145deg, #3a2e00, #bfa243);
+  color: #fff8dc;
+  width: 90%;
+  max-width: 520px;
+  max-height: 85vh;
+  border-radius: 18px;
+  box-shadow: 0 0 25px #bfa243cc;
+  padding: 25px 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+#popupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+#avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 3px solid #fff3b0;
+  object-fit: contain;
+  box-shadow: 0 0 15px #fff3b0aa;
+}
+
+#closeBtn {
+  font-size: 1.6rem;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: #fff3b0;
+  font-weight: 900;
+  transition: color 0.3s ease;
+}
+#closeBtn:hover {
+  color: #ffd93b;
+}
+
+/* Messages container */
+#messagesContainer {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Each message block */
+.messageBlock {
+  margin-bottom: 22px;
+  border-bottom: 1px solid #a68a26;
+  padding-bottom: 12px;
+}
+
+/* User message */
+.userMsg {
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff8dc;
+  white-space: pre-wrap;
+  margin-bottom: 8px;
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 3px #ffd93baa;
+}
+
+/* AI Bhai reply */
+.aiReply {
+  font-size: 1.05rem;
+  color: #f0e6b8;
+  white-space: pre-wrap;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+#lockOverlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+  }
+  #lockBox {
+    background: linear-gradient(135deg, #222, #444);
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px #0f0f0f;
+    text-align: center;
+    width: 320px;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    color: #eee;
+  }
+  #lockBox h2 {
+    margin-bottom: 20px;
+  }
+  #lockPassword {
+    width: 100%;
+    padding: 12px 10px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    margin-bottom: 15px;
+  }
+  #lockSubmitBtn {
+    background: linear-gradient(45deg, #bfa243, #f9d56e);
+    border: none;
+    padding: 12px 0;
+    width: 100%;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #3a2e00;
+    font-weight: 700;
+    box-shadow: 0 0 10px #bfa243;
+    transition: background 0.3s ease;
+  }
+  #lockSubmitBtn:hover {
+    background: linear-gradient(45deg, #d4bb5c, #ffe77a);
+  }
+    </style>
 </head>
 <body>
-  <div class="fishing-container">
-    <h1>Fishing Reward System – Coming Soon</h1>
-    <p>हम एक ऐसा सिस्टम लाने जा रहे हैं जो हर मेंबर की वेबसाइट एक्टिविटी को ट्रैक करेगा।</p>
-    <p>हर हफ्ते सबसे ज्यादा एक्टिव मेंबर को मिलेगा स्पेशल बोनस!</p>
-    <p>यह सिस्टम बिना लॉगिन, सिर्फ एक्टिविटी के आधार पर काम करेगा।</p>
-    <p>Deepak</p>
-  </div>
-    <div class="promotion-box">
-      <h3>प्रमोशन के लिए Deepak Chauhan × AI Bhai से संपर्क करें</h3>
-      <div>
-        <span class="category">(1) YouTube Promotion</span>
-        <span class="category">(2) App Promotion</span>
-        <span class="category">(3) Instagram Promotion</span>
-        <span class="category">(4) Product Promotions</span>
-        <span class="category">(5) Coaching Class Promotion</span>
-        <span class="category">(6) आदि...</span>
-      </div>
-      
-      <p class="note">
-        <strong>Note:</strong> प्रमोशन डायरेक्ट वेबसाइट पर और मेंबर के थ्रू किया जाएगा इसलिए कोई भी गलत प्रचार नहीं किया जाएगा जैसे – Online Investment, Earning Platform, Colour Prediction, Lottery, आदि।
-      </p>
-      
-      <p class="purpose">
-        <strong>उद्देश्य:</strong> Deepak Chauhan × AI Bhai कभी भी गलत प्रचार नहीं कर सकते — Not for Role Match.
-      </p>
-      
-      <div class="contact">
-        संपर्क करें: <a href="mailto:deepak.aibhai.training@gmail.com">deepak.aibhai.training@gmail.com</a>
-      </div>
+<div class="container">
+  <header>
+    <div class="crown">👑</div>
+    <h1>
+      DK<span class="small-text">Community</span>
+    </h1>
+  </header>
+
+  <nav>
+    <button class="active"><i class="fas fa-home"></i> Home</button>
+    <button><i class="fas fa-info-circle"></i> About</button>
+    <button id="openPopupBtn"><i class="fas fa-trophy"></i> AI Bhai Reply</button>
+    <button class="active"><i class="fas fa-check"></i> चेक-इन ✅</button>
+    <button class="active"><i class="fas fa-trophy"></i> team बोनस 🏆</button>
+  </nav>
+
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-value" id="totalUsers">12</div>
+      <div class="stat-label">Active Users</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">24/7</div>
+      <div class="stat-label">Support</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">100%</div>
+      <div class="stat-label">Satisfaction</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">1+</div>
+      <div class="stat-label">Years</div>
     </div>
   </div>
+
+  <section class="user-section">
+    <div class="section-header">
+      <h2>Community Members</h2>
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Search members...">
+      </div>
+    </div>
+    
+    <div class="compact-grid" id="userGrid">
+      <!-- Compact user cards will be generated here -->
+    </div>
+  </section>
+
+<!-- Popup overlay -->
+<div id="popupOverlay" role="dialog" aria-modal="true" aria-labelledby="popupTitle" style="display:none;">
+  <div id="popupBox">
+    <div id="popupHeader">
+      <img id="avatar" src="https://deepakchauhanxai.xyz/images/AI-bhai.png" alt="AI Bhai Avatar" />
+      <button id="closeBtn" aria-label="बंद करें">❌</button>
+    </div>
+    <div id="messagesContainer" tabindex="0">
+      <!-- JSON messages will load here dynamically -->
+    </div>
+  </div>
+</div>
+
+<!-- Password Lock Popup -->
+<div id="lockOverlay" style="display:none;">
+  <div id="lockBox">
+    <h2>पेज एक्सेस के लिए पासवर्ड डालें</h2>
+    <input type="password" id="lockPassword" placeholder="पासवर्ड यहाँ डालें" autocomplete="off" />
+    <button id="lockSubmitBtn">जमा करें</button>
+    <p id="lockError" style="color:#f55; margin-top:10px; display:none;">गलत पासवर्ड, फिर कोशिश करें।</p>
+  </div>
+</div>
+  <footer>
+    <div class="royal-seal">DC</div>
+    <span class="signature">Deepak Chauhan x AI Bhai</span>
+  </footer>
+</div>
+
+<script>
+  const userGrid = document.getElementById('userGrid');
+  const searchInput = document.getElementById('searchInput');
+  const totalUsers = document.getElementById('totalUsers');
+  let users = []; // API se aane wale data ko store karenge
+
+  // API se users laane ka function
+  async function fetchUsers() {
+    try {
+      const res = await fetch("https://deepakchauhanxai.xyz/get_users.php");
+      const data = await res.json();
+      users = data; // API response ko users me store
+      totalUsers.textContent = users.length;
+      generateUserCards(users);
+    } catch (err) {
+      console.error("User fetch error:", err);
+    }
+  }
+
+  // Cards generate karne ka function (sirf naam)
+  function generateUserCards(userList) {
+    userGrid.innerHTML = '';
+    userList.forEach(user => {
+      const card = document.createElement('div');
+      card.className = 'compact-card';
+      card.textContent = user.name; // Sirf naam dikhana
+      card.style.padding = '10px 15px';
+      card.style.background = 'rgba(255,255,255,0.1)';
+      card.style.borderRadius = '6px';
+      card.style.color = '#fff';
+      card.style.fontWeight = 'bold';
+      card.style.fontSize = '16px';
+      userGrid.appendChild(card);
+    });
+  }
+
+  // Search filter (sirf naam pe search)
+  searchInput.addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    const filteredUsers = users.filter(user =>
+      user.name.toLowerCase().includes(searchTerm)
+    );
+    generateUserCards(filteredUsers);
+    totalUsers.textContent = filteredUsers.length;
+  });
+
+  // Pehli baar load hote hi API call
+  fetchUsers();
+</script>
+<script src="intro.js"></script>
+<script src="motivation.js"></script>
+  <script src="pasword.js"></script>
+  <script src="user_ai_bhai_reply.js"></script>
 </body>
 </html>
