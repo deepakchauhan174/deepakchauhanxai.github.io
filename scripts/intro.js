@@ -30,7 +30,7 @@
   const style = el('style');
   style.textContent = `
   /* AI Bhai embed single-file styles */
-  #aibhai-root{ position:fixed; bottom:18px; right:18px; z-index:2147483647; font-family: "Noto Sans", Roboto, sans-serif; }
+  #aibhai-root{ position:fixed; bottom:18px; left:18px; z-index:2147483647; font-family: "Noto Sans", Roboto, sans-serif; }
   #aibhai-avatar{ width:78px; height:78px; border-radius:50%; border:3px solid rgba(255,215,0,0.95); box-shadow:0 10px 36px rgba(0,0,0,0.45), 0 0 18px rgba(255,215,0,0.08); cursor:pointer; background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; overflow:hidden; }
   #aibhai-chat{ width:360px; max-width:calc(100vw - 40px); height:480px; background:linear-gradient(180deg, rgba(10,10,10,0.98), rgba(20,20,20,0.96)); border-radius:14px; border:1.5px solid rgba(255,215,0,0.85); box-shadow:0 20px 50px rgba(0,0,0,0.55); overflow:hidden; display:flex; flex-direction:column; transform:translateY(28px) scale(0.995); opacity:0; transition:all .42s cubic-bezier(.2,.9,.2,1); }
   #aibhai-chat.open{ transform:none; opacity:1; }
