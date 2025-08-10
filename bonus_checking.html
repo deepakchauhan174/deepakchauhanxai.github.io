@@ -494,6 +494,55 @@
   font-style: italic;
   line-height: 1.4;
 }
+
+#lockOverlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+  }
+  #lockBox {
+    background: linear-gradient(135deg, #222, #444);
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px #0f0f0f;
+    text-align: center;
+    width: 320px;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    color: #eee;
+  }
+  #lockBox h2 {
+    margin-bottom: 20px;
+  }
+  #lockPassword {
+    width: 100%;
+    padding: 12px 10px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    margin-bottom: 15px;
+  }
+  #lockSubmitBtn {
+    background: linear-gradient(45deg, #bfa243, #f9d56e);
+    border: none;
+    padding: 12px 0;
+    width: 100%;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #3a2e00;
+    font-weight: 700;
+    box-shadow: 0 0 10px #bfa243;
+    transition: background 0.3s ease;
+  }
+  #lockSubmitBtn:hover {
+    background: linear-gradient(45deg, #d4bb5c, #ffe77a);
+  }  
     </style>
 </head>
 <body>
