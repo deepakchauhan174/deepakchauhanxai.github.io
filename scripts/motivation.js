@@ -1,6 +1,5 @@
 (function() {
   const motivationURL = "https://deepakchauhanxai.xyz/motivation.json";
-  const nameURL = "https://deepakchauhanxai.xyz/get_users.php";
   const saveMsgURL = "https://deepakchauhanxai.xyz/save_user_msg.php";
   const avatarURL = "https://deepakchauhanxai.xyz/images/AI-bhai.png";
 
@@ -117,6 +116,10 @@
       display: none;
       user-select: none;
     }
+h3.note {
+  color: green;
+  font-weight: small;
+}
   `;
   document.head.appendChild(style);
 
@@ -132,8 +135,9 @@
       <div class="second-bot-close" title="Close">❌</div>
     </div>
     <div class="second-bot-msg">Loading...</div>
+    <h3 class="note">मैसेज के साथ नाम जरूर लिखो</h3>
     <div class="second-bot-input">
-      <input type="text" placeholder="कुछ पूछना हो तो लिखो, जवाब जल्दी मिलेगा..." />
+<input type="text" placeholder="कुछ पूछना हो तो लिखो नाम जरूर लिखे..." />
       <button>Send</button>
     </div>
     <div class="bot-toast">✅ मैसेज भेज दिया गया!</div>
@@ -188,22 +192,6 @@
 
   // Initialize event listeners
   setupEventListeners();
-
-  // Fetch username
-  fetch(nameURL)
-    .then(res => res.json())
-    .then(data => {
-      if (Array.isArray(data) && data.length > 0) {
-        const me = data.find(u => u.device_id && String(u.device_id) === String(deviceID));
-        if (me && me.name) {
-          userName = me.name;
-        } else if (data[0].name) {
-          userName = data[0].name;
-        }
-      }
-      titleText.innerText = `AI Bhai — ${userName}`;
-    })
-    .catch(() => { /* ignore errors */ });
 
   // Fetch motivation messages
   fetch(motivationURL)
