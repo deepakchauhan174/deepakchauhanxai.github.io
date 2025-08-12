@@ -882,7 +882,7 @@ function findReply(q) {
 
   for (const p of memory) {
     const memNorm = norm(p.user || "");
-    if (aliases.includes(memNorm)) {
+    if (aliases.some(alias => mapped.includes(alias))) {
       return randomReply(p);
     }
   }
