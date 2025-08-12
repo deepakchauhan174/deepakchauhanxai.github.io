@@ -880,13 +880,17 @@ function findReply(q) {
   const mapped = dictionary[qn] ? norm(dictionary[qn]) : qn;
   const aliases = reverseMap[mapped] || [mapped];
 
+  // ✅ Step 1: Direct phrase/substring match (fast return)
+  const lowerMapped = mapped.toLowerCase();
   for (const p of memory) {
     const memNorm = norm(p.user || "");
-    if (aliases.some(alias => mapped.includes(alias))) {
+    // Agar alias kahin bhi mapped ke andar mil gaya
+    if (aliases.some(alias => lowerMapped.includes(alias.toLowerCase()))) {
       return randomReply(p);
     }
   }
 
+  // ✅ Step 2: Fallback - Score-based best match
   let best = null, score = 0;
   for (const p of memory) {
     const pq = norm(p.user || "");
@@ -897,7 +901,7 @@ function findReply(q) {
     }
   }
 
-  // ✅ FINAL RETURN RULE
+  // ✅ Step 3: Final return rule (2+ words match only)
   return (score >= 2 && mapped.split(" ").length > 1) ? randomReply(best) : null;
 }
 
