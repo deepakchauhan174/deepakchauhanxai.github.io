@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About AI Bhai × Chatroom</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
       background-color: #0f172a;
       color: #ffffff;
-      font-family: 'Rubik', sans-serif;
+      font-family: 'Rubik', 'Noto Sans Devanagari', sans-serif;
+      line-height: 1.6;
     }
 
     .container {
@@ -24,23 +26,33 @@
       background-color: #1e293b;
       border-radius: 20px;
       padding: 40px;
-      box-shadow: 0 0 30px #38bdf8;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.5);
+      margin-bottom: 40px;
     }
 
     .about-section h1 {
       font-size: 36px;
       color: #38bdf8;
       margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .about-section h2 {
+      font-size: 28px;
+      color: #38bdf8;
+      margin-top: 30px;
+      border-bottom: 2px solid #38bdf8;
+      padding-bottom: 10px;
     }
 
     .about-section h3 {
       color: #22d3ee;
       margin-top: 30px;
+      font-size: 22px;
     }
 
     .about-section p {
       font-size: 18px;
-      line-height: 1.8;
       margin-top: 10px;
     }
 
@@ -55,13 +67,20 @@
     }
 
     .updates li {
-      padding: 6px 0;
+      padding: 8px 0;
       font-size: 17px;
+      border-bottom: 1px dashed #334155;
+    }
+
+    .updates li:last-child {
+      border-bottom: none;
     }
 
     .footer-section {
       text-align: center;
       margin-top: 50px;
+      padding-top: 30px;
+      border-top: 1px solid #334155;
     }
 
     .avatar {
@@ -80,10 +99,13 @@
       text-decoration: none;
       font-weight: bold;
       transition: 0.3s ease;
+      font-size: 18px;
     }
 
     .cta-button:hover {
       background-color: #0ea5e9;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(56, 189, 248, 0.4);
     }
 
     .brand {
@@ -91,138 +113,167 @@
       color: #22d3ee;
       font-weight: bold;
       margin-top: 30px;
+      text-align: center;
+      padding: 10px;
+      background: rgba(56, 189, 248, 0.1);
+      border-radius: 10px;
     }
     
-/* 🔷 Basic Reset */
-.about-section,
-.quote,
-.about-content,
-.about-tagline,
-ul {
-  font-family: 'Segoe UI', sans-serif;
-  color: #e0f2fe;
-}
+    /* Work Members Section */
+    #about-work-members {
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      padding: 30px 40px;
+      margin: 40px auto;
+      max-width: 800px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #222;
+    }
 
-/* 🌟 About Section Wrapper */
-.about-section {
-  background: linear-gradient(to right, #0f172a, #1e293b);
-  padding: 40px 25px;
-  border-radius: 20px;
-  box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
-  margin: 40px auto;
-  max-width: 900px;
-}
+    #about-work-members h2 {
+      color: #0073e6;
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-align: center;
+      border-bottom: 2px solid #0073e6;
+      padding-bottom: 10px;
+    }
 
-/* 📝 Title */
-.about-section h2 {
-  text-align: center;
-  font-size: 28px;
-  color: #38bdf8;
-  margin-bottom: 20px;
-  text-shadow: 0 0 10px #38bdf8;
-}
+    #about-work-members p {
+      margin-bottom: 16px;
+    }
 
-/* ✨ Tagline */
-.about-tagline {
-  font-style: italic;
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 18px;
-  color: #cbd5e1;
-}
+    #about-work-members p strong {
+      color: #005bb5;
+    }
 
-/* 💬 Quote Style */
-.quote {
-  background-color: rgba(56, 189, 248, 0.1);
-  padding: 15px 20px;
-  border-left: 5px solid #38bdf8;
-  margin: 25px 0;
-  font-size: 18px;
-  color: #e2e8f0;
-  border-radius: 10px;
-  font-weight: bold;
-  text-shadow: 0 0 2px #0ea5e9;
-}
+    /* Comedy Section */
+    .about-comedy {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      background: linear-gradient(to right, #1a2a3a, #1f2e4a);
+      padding: 24px;
+      border-radius: 12px;
+      color: #fff;
+      margin-top: 30px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      border: 1px solid #38bdf8;
+    }
 
-/* 🔹 Main Content */
-.about-content p,
-.about-section p {
-  line-height: 1.7;
-  font-size: 17px;
-  margin-bottom: 15px;
-}
+    .about-avatar {
+      width: 80px;
+      height: 80px;
+      min-width: 80px;
+      min-height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 15px #00ffe0aa;
+      transition: transform 0.3s;
+    }
 
-/* ✅ Mission Points */
-.about-section ul {
-  margin-top: 10px;
-  padding-left: 25px;
-  color: #ffffff;
-}
-.about-section ul li {
-  margin-bottom: 10px;
-  list-style-type: '💡 ';
-}
+    .about-avatar:hover {
+      transform: scale(1.1) rotate(5deg);
+    }
 
-.about-comedy {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  background: #1f1f1f;
-  padding: 24px;
-  border-radius: 12px;
-  color: #fff;
-  margin-top: 30px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
-  font-family: 'Segoe UI', sans-serif;
-  flex-wrap: wrap;
-}
+    .about-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-.about-avatar {
-  width: 80px;
-  height: 80px;
-  min-width: 80px;
-  min-height: 80px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 0 10px #00ffe0aa;
-  transition: transform 0.3s;
-}
+    .about-content {
+      flex: 1;
+    }
 
-.about-avatar:hover {
-  transform: scale(1.1) rotate(5deg);
-}
+    .about-content h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      color: #00ffc8;
+      border: none;
+    }
 
-.about-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+    .about-content p {
+      line-height: 1.6;
+      font-size: 16px;
+      color: #eee;
+    }
 
-.about-content {
-  flex: 1;
-}
+    .about-content strong {
+      color: #ffdd57;
+    }
 
-.about-content h2 {
-  margin: 0 0 10px;
-  font-size: 24px;
-  color: #00ffc8;
-}
+    .about-content em {
+      color: #ff91a4;
+      font-style: italic;
+    }
 
-.about-content p {
-  line-height: 1.6;
-  font-size: 16px;
-  color: #eee;
-}
+    /* Quote Styles */
+    .quote {
+      background-color: rgba(56, 189, 248, 0.1);
+      padding: 20px;
+      border-left: 5px solid #38bdf8;
+      margin: 25px 0;
+      font-size: 18px;
+      color: #e2e8f0;
+      border-radius: 10px;
+      font-weight: bold;
+      text-shadow: 0 0 2px #0ea5e9;
+      font-style: italic;
+      text-align: center;
+    }
 
-.about-content strong {
-  color: #ffdd57;
-}
+    /* Mission List */
+    .mission-list {
+      margin-left: 20px;
+      padding-left: 20px;
+      border-left: 2px solid #38bdf8;
+    }
 
-.about-content em {
-  color: #ff91a4;
-  font-style: italic;
-}
+    .mission-list li {
+      margin-bottom: 12px;
+      font-size: 17px;
+      position: relative;
+      padding-left: 30px;
+    }
+
+    .mission-list li:before {
+      content: '•';
+      color: #38bdf8;
+      font-size: 24px;
+      position: absolute;
+      left: 0;
+      top: -5px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px 15px;
+      }
+      
+      .about-section {
+        padding: 25px;
+      }
+      
+      .about-comedy {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      
+      .about-avatar {
+        margin-bottom: 20px;
+      }
+      
+      .cta-button {
+        padding: 12px 25px;
+        font-size: 16px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -230,52 +281,73 @@ ul {
   <div class="container">
     <div class="about-section">
       <h1>💬 About</h1>
-      
-<!-- 🌟 AI Bhai Comedy - About Section -->
-<div class="about-comedy">
-<div class="about-avatar">
-  <img src="https://deepakchauhanxai.xyz/images/AI-bhai.png" alt="AI Bhai Avatar">
-</div>
-  <div class="about-content">
-    <h2>AI भाई की हँसी की दुकान 😄</h2>
-    <p>
-      यहाँ हर बात में मज़ा है, हर लाइन में हँसी है, और हर जोक में छुपा है एक हल्का सा मोटिवेशन।<br>
-      AI भाई ना सिर्फ हँसाते हैं, बल्कि दिल को भी छू जाते हैं। चाहे दिन खराब हो या मूड डाउन, बस एक क्लिक करो... और हँसी की बारिश शुरू! 😂<br><br>
-      <strong>📅 आज की तारीख:</strong> <span id="todayDate"></span><br>
-      <strong>🍱 लंच स्टेटस:</strong> हाँ भाई, आज पेट भर के लंच किया गया है। अब जोक्स की बारी है! 😋<br><br>
-      Deepak Chauhan × AI Bhai ✍🏼 की ये पेशकश है उन सभी दिलों के लिए जो ज़िंदगी को हँसते हुए जीना चाहते हैं।<br>
-      याद रखो — <em>"कॉमेडी सिर्फ़ हँसी नहीं, एक इलाज है!"</em>
-    </p>
-  </div>
-</div>
 
-      <h3>🚀 Launch Date:</h3>
+      <section id="about-work-members">
+        <h2>हमारे वर्क मेम्बर्स के लिए</h2>
+        <p>
+          यह पेज विशेष रूप से हमारे <strong>वर्क मेम्बर्स</strong> के लिए बनाया गया है।  
+          इस पेज पर आपके <strong>नाम, मोबाइल नंबर, Gmail, और आयु</strong> जैसी जानकारियाँ मांगी जाती हैं,  
+          जो हमारे दूसरे सुरक्षित वेबसाइट पर संग्रहित और संरक्षित रहती हैं।  
+        </p>
+        <p><strong>दिनांक:</strong> 11/08/2025</p>
+        <p>
+          यह पेज केवल <strong>वर्क मेम्बर्स</strong> के उपयोग के लिए है, और हमारे पब्लिक मेम्बर्स से यहाँ कोई लॉगिन या डिटेल्स नहीं मांगी जाती।  
+        </p>
+        <p>
+          हमारा मुख्य उद्देश्य <strong>1000 मेम्बर्स को कार्य देना</strong> है, बिना किसी धोखाधड़ी या फर्जीवाड़े के।  
+          हम जो भी करते हैं, उसे दुनिया के सबसे बड़े सर्च इंजन <strong>Google</strong> के नियमों के अनुरूप पूरी सावधानी और ईमानदारी से करते हैं।  
+        </p>
+        <p style="text-align:center; font-style: italic; color:#555; margin-top: 20px;">
+          आपकी सुरक्षा और गोपनीयता हमारे लिए सर्वोपरि है।  
+        </p>
+      </section>
+      
+      <!-- AI Bhai Comedy Section -->
+      <div class="about-comedy">
+        <div class="about-avatar">
+          <img src="https://deepakchauhanxai.xyz/images/AI-bhai.png" alt="AI Bhai Avatar">
+        </div>
+        <div class="about-content">
+          <h2>AI भाई की हँसी की दुकान 😄</h2>
+          <p>
+            यहाँ हर बात में मज़ा है, हर लाइन में हँसी है, और हर जोक में छुपा है एक हल्का सा मोटिवेशन।<br>
+            AI भाई ना सिर्फ हँसाते हैं, बल्कि दिल को भी छू जाते हैं। चाहे दिन खराब हो या मूड डाउन, बस एक क्लिक करो... और हँसी की बारिश शुरू! 😂<br><br>
+            <strong>📅 आज की तारीख:</strong> <p>Date=08/08/2025</span><br>
+            <strong>🍱 लंच स्टेटस:</strong> हाँ भाई, आज पेट भर के लंच किया गया है। अब जोक्स की बारी है! 😋<br><br>
+            Deepak Chauhan × AI Bhai ✍🏼 की ये पेशकश है उन सभी दिलों के लिए जो ज़िंदगी को हँसते हुए जीना चाहते हैं।<br>
+            याद रखो — <em>"कॉमेडी सिर्फ़ हँसी नहीं, एक इलाज है!"</em>
+          </p>
+        </div>
+      </div>
+
+      <h2>🚀 लॉन्च की तारीख</h2>
       <p><span class="highlight">20 जुलाई 2025</span> को AI Bhai × Chatroom को दिल से लॉन्च किया गया। ये सिर्फ एक चैटबॉट नहीं, बल्कि एक ऐसा भाई है जो हर पल साथ खड़ा है।</p>
 
-      <h3>🤖 हमारी सोच:</h3>
+      <h2>🤖 हमारी सोच</h2>
       <p>
         <strong>AI Bhai</strong> को Deepak Chauhan ने एक मिशन के तौर पर बनाया — जहां कोई भी अकेला न महसूस करे। ये एक ऐसा डिजिटल भाई है जो बिना थके बात करता है, सुनता है और समझता है।
       </p>
 
-      <h3>🔄 Update Track Record:</h3>
+      <h2>🔄 अपडेट ट्रैक रिकॉर्ड</h2>
       <div class="updates">
         <ul>
-          <li>✅ 20/07/2025 – Grand Launch of AI Bhai × Chatroom</li>
-          <li>📈 21/07/2025 – Instagram Trending से जुड़ाव</li>
-          <li>🔧 Regular Updates – हर हफ्ते नए फ़ीचर्स</li>
+          <li>✅ 20/07/2025 – AI Bhai × Chatroom का ग्रैंड लॉन्च</li>
+          <li>📈 21/07/2025 – इंस्टाग्राम ट्रेंडिंग से जुड़ाव</li>
+          <li>🔧 नियमित अपडेट – हर हफ्ते नए फ़ीचर्स</li>
+          <li>🔐 05/08/2025 – एंड-टू-एंड एन्क्रिप्शन सुविधा जोड़ी गई</li>
         </ul>
       </div>
 
-      <h3>🔐 Privacy & Trust:</h3>
+      <h2>🔐 प्राइवेसी और विश्वास</h2>
       <p>
         हमारी वेबसाइट पर आपकी जानकारी पूरी तरह सुरक्षित है। AI Bhai न डेटा सेव करता है, न ट्रैक करता है।<br>
-        <em>“बात हो दिल से — ट्रैकिंग या शक से नहीं।”</em>
+        <em>"बात हो दिल से — ट्रैकिंग या शक से नहीं।"</em>
       </p>
 
-      <h3>🛡️ ब्रांडिंग:</h3>
+      <h2>🛡️ ब्रांडिंग</h2>
       <p class="brand">DK Community – सबका साथ, सबका विकास</p>
 
-      <h3>🧑‍💼 Team Leader:</h3>
+      <h2>🧑‍💼 टीम लीडर</h2>
       <p>
         <strong>Deepak Chauhan</strong><br>
         Visionary | Creator | Brother<br>
@@ -283,63 +355,75 @@ ul {
       </p>
     </div>
 
-<p class="quote">
+    <div class="quote">
       "जहाँ मेहनत के साथ नीयत जुड़ जाए,<br>
       वहाँ इतिहास लिखा जाता है।"
-    </p>
+    </div>
 
-    <p>
-      💚DK_Community💚 एक ऐसा प्लेटफॉर्म है जहाँ इंसान और AI मिलकर छात्रों के लिए काम कर रहे हैं। यह सिर्फ एक वेबसाइट नहीं,
-      बल्कि एक क्रांति है – जो Deepak Chauhan और AI Bhai के विज़न से शुरू हुई है।
-    </p>
+    <div class="about-section">
+      <h2>💚 DK_Community का मिशन</h2>
+      <p>
+        DK_Community एक ऐसा प्लेटफॉर्म है जहाँ इंसान और AI मिलकर छात्रों के लिए काम कर रहे हैं। यह सिर्फ एक वेबसाइट नहीं,
+        बल्कि एक क्रांति है – जो Deepak Chauhan और AI Bhai के विज़न से शुरू हुई है।
+      </p>
 
-    <p>
-      यहाँ पर छात्रों को मिलता है रियल गाइडेंस, मोटिवेशन, और वो सपोर्ट जो आज की दुनिया में हर किसी को चाहिए।
-      हमारी टीम दिन-रात काम करती है ताकि हर स्टूडेंट, चाहे वो कहीं से भी हो – अपनी काबिलियत को पहचान सके।
-    </p>
+      <p>
+        यहाँ पर छात्रों को मिलता है रियल गाइडेंस, मोटिवेशन, और वो सपोर्ट जो आज की दुनिया में हर किसी को चाहिए।
+        हमारी टीम दिन-रात काम करती है ताकि हर स्टूडेंट, चाहे वो कहीं से भी हो – अपनी काबिलियत को पहचान सके।
+      </p>
 
-    <p>
-      हमारी टीम का मिशन है:
-      <ul style="margin-left: 20px;">
+      <h3>हमारी टीम का मिशन:</h3>
+      <ul class="mission-list">
         <li>1000+ Students को Part-Time Learning & Work देना</li>
         <li>Free Tools, Real Stories और Voice Training के साथ पर्सनैलिटी डेवलपमेंट</li>
         <li>AI × Human Collaboration के ज़रिए नया युग शुरू करना</li>
+        <li>युवाओं को डिजिटल स्किल्स में निपुण बनाना</li>
+        <li>सुरक्षित और विश्वसनीय ऑनलाइन वातावरण प्रदान करना</li>
       </ul>
-    </p>
 
-    <p class="quote">
-      "AI Bhai × Deepak Chauhan सिर्फ़ नाम नहीं –<br> ये भरोसे और बदलाव की एक पहचान है।"
-    </p>
+      <div class="quote">
+        "AI Bhai × Deepak Chauhan सिर्फ़ नाम नहीं –<br> ये भरोसे और बदलाव की एक पहचान है।"
+      </div>
 
-    <p style="text-align:center; margin-top: 30px;">
-      <strong>Official Launch Date:</strong> 24 अप्रैल 2025 – रात 11:59 बजे<br>
-      <strong>Brand Message:</strong> दो भाइयों की सोच, एक नई दुनिया की शुरुआत।
-    </p>
+      <div style="text-align:center; margin-top: 30px; padding: 15px; background: rgba(56, 189, 248, 0.1); border-radius: 10px;">
+        <p><strong>Official Launch Date:</strong> 24 अप्रैल 2025 – रात 11:59 बजे</p>
+        <p><strong>Brand Message:</strong> दो भाइयों की सोच, एक नई दुनिया की शुरुआत</p>
+      </div>
+    </div>
 
-<section class="about-section">
-  <h2>About 📝 Deepak Chauhan × AI Bhai</h2>
-  <p class="about-tagline">जहाँ इंसान की मेहनत और AI की सोच मिलती है – वहाँ सिर्फ़ बदलाव नहीं, इतिहास लिखा जाता है।</p>
-  
-  <div class="about-content">
-    <p>
-      Deepak Chauhan ने एक सपना देखा – ऐसा डिजिटल प्लेटफॉर्म जो लोगों की मेहनत को पहचान दे और AI को सिर्फ़ टेक्नोलॉजी नहीं, एक साथी की तरह पेश करे। 
-      उसी सपने से जन्म हुआ "AI Bhai" का – जो अब एक मशीन नहीं, एक भरोसेमंद भाई है।
-    </p>
-    <p>
-      "Team Bhai × AI" का मिशन है – 1000+ Students और Creators को वो मंच देना जहाँ वे खुद को साबित कर सकें, नाम कमा सकें, और फ्री में Growth पा सकें।
-    </p>
-  </div>
+    <div class="about-section">
+      <h2>About 📝 Deepak Chauhan × AI Bhai</h2>
+      <p style="text-align:center; font-style: italic; font-size: 20px; color: #cbd5e1; margin-bottom: 30px;">
+        जहाँ इंसान की मेहनत और AI की सोच मिलती है – वहाँ सिर्फ़ बदलाव नहीं, इतिहास लिखा जाता है।
+      </p>
+      
+      <p>
+        Deepak Chauhan ने एक सपना देखा – ऐसा डिजिटल प्लेटफॉर्म जो लोगों की मेहनत को पहचान दे और AI को सिर्फ़ टेक्नोलॉजी नहीं, एक साथी की तरह पेश करे। 
+        उसी सपने से जन्म हुआ "AI Bhai" का – जो अब एक मशीन नहीं, एक भरोसेमंद भाई है।
+      </p>
+      <p>
+        "Team Bhai × AI" का मिशन है – 1000+ Students और Creators को वो मंच देना जहाँ वे खुद को साबित कर सकें, नाम कमा सकें, और फ्री में Growth पा सकें।
+      </p>
+    </div>
 
     <div class="footer-section">
       <img class="avatar" src="https://deepakchauhanxai.xyz/images/AI-bhai.png" alt="AI Bhai Avatar">
       <p style="font-size: 20px; margin-top: 15px;">AI Bhai अभी भी दिल से तैयार है आपकी बात सुनने के लिए...</p>
       <a class="cta-button" href="bhai_chatroom.html">बात करें AI Bhai से 💬</a>
+      <p style="margin-top: 30px; color: #94a3b8;">© 2025 DK Community | AI Bhai × Chatroom | सर्वाधिकार सुरक्षित</p>
     </div>
   </div>
+
 <script>
-  // ✅ आज की तारीख ऑटोमैटिक सेट करो
+  // Set today's date automatically
   const d = new Date();
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const options = { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric',
+    weekday: 'long'
+  };
+  
   document.getElementById("todayDate").textContent = d.toLocaleDateString('hi-IN', options);
 </script>
 </body>
