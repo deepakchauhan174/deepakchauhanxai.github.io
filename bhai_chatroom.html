@@ -905,7 +905,7 @@ function findReply(q) {
   }
 
   // ✅ Step 3: Final return rule
-  return (score >= 2 && normQ.split(" ").length > 1) ? randomReply(best) : null;
+  return (normQ.split(" ").length > 1) ? randomReply(best) : null;
 }
 
 /* ✅ POLISHING TEXT (as before) */
