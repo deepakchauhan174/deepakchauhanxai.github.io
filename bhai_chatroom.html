@@ -878,19 +878,17 @@ fetch("https://deepakchauhanxai.xyz/data/translit_dict.json")
 function findReply(q) {
   const qn = norm(q);
   const mapped = dictionary[qn] ? norm(dictionary[qn]) : qn;
-  const aliases = reverseMap[mapped] || [mapped];
-
-  // ✅ Step 1: Direct phrase/substring match (fast return)
   const lowerMapped = mapped.toLowerCase();
+
+  // ✅ Step 1: Direct memory phrase match (no alias dependency)
   for (const p of memory) {
-    const memNorm = norm(p.user || "");
-    // Agar alias kahin bhi mapped ke andar mil gaya
-    if (aliases.some(alias => lowerMapped.includes(alias.toLowerCase()))) {
+    const memNorm = norm(p.user || "").toLowerCase();
+    if (memNorm && lowerMapped.includes(memNorm)) {
       return randomReply(p);
     }
   }
 
-  // ✅ Step 2: Fallback - Score-based best match
+  // ✅ Step 2: Score-based fallback
   let best = null, score = 0;
   for (const p of memory) {
     const pq = norm(p.user || "");
@@ -901,10 +899,9 @@ function findReply(q) {
     }
   }
 
-  // ✅ Step 3: Final return rule (2+ words match only)
+  // ✅ Step 3: Final return rule
   return (score >= 2 && mapped.split(" ").length > 1) ? randomReply(best) : null;
 }
-
 
 /* ✅ POLISHING TEXT (as before) */
 function polishTask(text){
