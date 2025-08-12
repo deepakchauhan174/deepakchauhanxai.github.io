@@ -876,10 +876,10 @@ fetch("https://deepakchauhanxai.xyz/data/translit_dict.json")
 
 /* 2️⃣ नया findReply() — Fix applied */
 function findReply(q) {
-  const raw = q.toLowerCase().trim();          // raw user text
-  const normQ = norm(q).toLowerCase().trim();  // normalized user text
+  const raw = q.toLowerCase().trim();          
+  const normQ = norm(q).toLowerCase().trim();
 
-  // ✅ Step 1: Pure phrase match from memory
+  // Step 1: Exact/Phrase match
   for (const p of memory) {
     const memRaw = (p.user || "").toLowerCase().trim();
     const memNorm = norm(p.user || "").toLowerCase().trim();
@@ -892,10 +892,10 @@ function findReply(q) {
     }
   }
 
-  // ✅ Step 2: Fallback score match
+  // Step 2: Fallback keyword score
   let best = null, score = 0;
   for (const p of memory) {
-    const pq = norm(p.user || "");
+    const pq = norm(p.user || "").toLowerCase().trim();
     const c = common(pq, normQ);
     if (c > score) {
       score = c;
@@ -903,9 +903,14 @@ function findReply(q) {
     }
   }
 
-  // ✅ Step 3: Final return rule (loose but safe)
-  // कम से कम 1 meaningful शब्द match हो और वो 2 अक्षर या उससे बड़ा हो
-  if (score >= 1 && normQ.split(" ").some(w => w.length > 1)) {
+  // Step 3: Safety rules for fallback
+  const qWords = normQ.split(" ").filter(w => w.length > 1);
+  const bestWords = norm(best?.user || "").toLowerCase().trim().split(" ").filter(w => w.length > 1);
+
+  // Common words count
+  const commonCount = qWords.filter(w => bestWords.includes(w)).length;
+
+  if (score >= 2 && commonCount >= 2) {
     return randomReply(best);
   }
 
