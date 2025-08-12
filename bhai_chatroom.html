@@ -876,28 +876,28 @@ fetch("https://deepakchauhanxai.xyz/data/translit_dict.json")
 
 /* 2️⃣ नया findReply() — Fix applied */
 function findReply(q) {
-  const raw = q.toLowerCase().trim(); // Raw user text (lowercase)
-  const qn = norm(q); // Normalized text
-  const mapped = dictionary[qn] ? norm(dictionary[qn]) : qn;
-  const lowerMapped = mapped.toLowerCase();
+  const raw = q.toLowerCase().trim();          // raw user text
+  const normQ = norm(q).toLowerCase().trim();  // normalized user text
 
-  // ✅ Step 1: Direct phrase match (try raw first, then normalized)
+  // ✅ Step 1: Pure phrase match from memory
   for (const p of memory) {
-    const memNorm = norm(p.user || "").toLowerCase();
-    const memRaw = (p.user || "").toLowerCase();
+    const memRaw = (p.user || "").toLowerCase().trim();
+    const memNorm = norm(p.user || "").toLowerCase().trim();
+
+    // Check raw text OR normalized text contains memory phrase
     if (
-      (memNorm && lowerMapped.includes(memNorm)) ||
-      (memRaw && raw.includes(memRaw))
+      (memRaw && raw.includes(memRaw)) ||
+      (memNorm && normQ.includes(memNorm))
     ) {
       return randomReply(p);
     }
   }
 
-  // ✅ Step 2: Score-based fallback
+  // ✅ Step 2: Fallback score match
   let best = null, score = 0;
   for (const p of memory) {
     const pq = norm(p.user || "");
-    const c = common(pq, mapped);
+    const c = common(pq, normQ);
     if (c > score) {
       score = c;
       best = p;
@@ -905,7 +905,7 @@ function findReply(q) {
   }
 
   // ✅ Step 3: Final return rule
-  return (score >= 2 && mapped.split(" ").length > 1) ? randomReply(best) : null;
+  return (score >= 2 && normQ.split(" ").length > 1) ? randomReply(best) : null;
 }
 
 /* ✅ POLISHING TEXT (as before) */
