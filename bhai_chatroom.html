@@ -876,46 +876,30 @@ fetch("https://deepakchauhanxai.xyz/data/translit_dict.json")
 
 /* 2️⃣ नया findReply() — Fix applied */
 function findReply(q) {
-  const raw = q.toLowerCase().trim();          
-  const normQ = norm(q).toLowerCase().trim();
+  const qn = norm(q);
+  const mapped = dictionary[qn] ? norm(dictionary[qn]) : qn;
+  const aliases = reverseMap[mapped] || [mapped];
 
-  // Step 1: Exact/Phrase match
   for (const p of memory) {
-    const memRaw = (p.user || "").toLowerCase().trim();
-    const memNorm = norm(p.user || "").toLowerCase().trim();
-
-    if (
-      (memRaw && raw.includes(memRaw)) ||
-      (memNorm && normQ.includes(memNorm))
-    ) {
+    const memNorm = norm(p.user || "");
+    if (aliases.includes(memNorm)) {
       return randomReply(p);
     }
   }
 
-  // Step 2: Fallback keyword score
   let best = null, score = 0;
   for (const p of memory) {
-    const pq = norm(p.user || "").toLowerCase().trim();
-    const c = common(pq, normQ);
+    const pq = norm(p.user || "");
+    const c = common(pq, mapped);
     if (c > score) {
       score = c;
       best = p;
     }
   }
 
-  // Step 3: Safety rules for fallback
-  const qWords = normQ.split(" ").filter(w => w.length > 1);
-  const bestWords = norm(best?.user || "").toLowerCase().trim().split(" ").filter(w => w.length > 1);
-
-  // Common words count
-  const commonCount = qWords.filter(w => bestWords.includes(w)).length;
-
-  if (score >= 2 && commonCount >= 2) {
-    return randomReply(best);
-  }
-
-  return null;
-  }
+  // ✅ FINAL RETURN RULE
+  return (score >= 2 && mapped.split(" ").length > 1) ? randomReply(best) : null;
+}
 /* ✅ POLISHING TEXT (as before) */
 function polishTask(text){
   const map = [
