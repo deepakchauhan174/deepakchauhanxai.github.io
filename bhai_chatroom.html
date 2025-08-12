@@ -876,14 +876,19 @@ fetch("https://deepakchauhanxai.xyz/data/translit_dict.json")
 
 /* 2️⃣ नया findReply() — Fix applied */
 function findReply(q) {
-  const qn = norm(q);
+  const raw = q.toLowerCase().trim(); // Raw user text (lowercase)
+  const qn = norm(q); // Normalized text
   const mapped = dictionary[qn] ? norm(dictionary[qn]) : qn;
   const lowerMapped = mapped.toLowerCase();
 
-  // ✅ Step 1: Direct memory phrase match (no alias dependency)
+  // ✅ Step 1: Direct phrase match (try raw first, then normalized)
   for (const p of memory) {
     const memNorm = norm(p.user || "").toLowerCase();
-    if (memNorm && lowerMapped.includes(memNorm)) {
+    const memRaw = (p.user || "").toLowerCase();
+    if (
+      (memNorm && lowerMapped.includes(memNorm)) ||
+      (memRaw && raw.includes(memRaw))
+    ) {
       return randomReply(p);
     }
   }
