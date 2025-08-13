@@ -877,28 +877,85 @@ fetch("https://deepakchauhanxai.xyz/data/translit_dict.json")
 /* 2️⃣ नया findReply() — Fix applied */
 function findReply(q) {
   const qn = norm(q);
-  const mapped = dictionary[qn] ? norm(dictionary[qn]) : qn;
-  const aliases = reverseMap[mapped] || [mapped];
+  let matchedCategory = null;
+  let bestScore = 0;
 
-  for (const p of memory) {
-    const memNorm = norm(p.user || "");
-    if (aliases.includes(memNorm)) {
-      return randomReply(p);
+  // Simple Levenshtein distance function
+  function levenshtein(a, b) {
+    const dp = Array.from({ length: a.length + 1 }, () => []);
+    for (let i = 0; i <= a.length; i++) dp[i][0] = i;
+    for (let j = 0; j <= b.length; j++) dp[0][j] = j;
+    for (let i = 1; i <= a.length; i++) {
+      for (let j = 1; j <= b.length; j++) {
+        if (a[i - 1] === b[j - 1]) dp[i][j] = dp[i - 1][j - 1];
+        else dp[i][j] = 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+      }
+    }
+    return dp[a.length][b.length];
+  }
+
+  // 1️⃣ Dictionary match with scoring + fuzzy
+  for (const key in dictionary) {
+    const keyNorm = norm(key);
+    const keyWords = keyNorm.split(" ");
+    let score = 0;
+
+    // Exact phrase match (both ways)
+    if (qn.includes(keyNorm) || keyNorm.includes(qn)) {
+      score = 3;
+    }
+    // All words present
+    else if (keyWords.every(w => qn.includes(w))) {
+      score = 2;
+    }
+    // At least one word present
+    else if (keyWords.some(w => qn.includes(w))) {
+      score = 1;
+    }
+    // Fuzzy match if distance <= 2
+    else if (levenshtein(qn, keyNorm) <= 2) {
+      score = 2; // fuzzy matches treated like loose match
+    }
+
+    if (score > bestScore) {
+      bestScore = score;
+      matchedCategory = norm(dictionary[key]); // e.g. "Anytime Motivation"
     }
   }
 
+  // 2️⃣ If dictionary match found → Direct category reply
+  if (matchedCategory) {
+    for (const p of memory) {
+      const memNorm = norm(p.user || "");
+      if (memNorm === matchedCategory || memNorm.includes(matchedCategory)) {
+        return randomReply(p);
+      }
+    }
+  }
+
+  // 3️⃣ Reverse map (secondary alias check)
+  if (matchedCategory && reverseMap[matchedCategory]) {
+    const aliases = reverseMap[matchedCategory];
+    for (const p of memory) {
+      const memNorm = norm(p.user || "");
+      if (aliases.some(a => memNorm.includes(a) || a.includes(memNorm))) {
+        return randomReply(p);
+      }
+    }
+  }
+
+  // 4️⃣ Fallback: Old score system
   let best = null, score = 0;
   for (const p of memory) {
     const pq = norm(p.user || "");
-    const c = common(pq, mapped);
+    const c = common(pq, qn);
     if (c > score) {
       score = c;
       best = p;
     }
   }
 
-  // ✅ FINAL RETURN RULE
-  return (score >= 2 && mapped.split(" ").length > 1) ? randomReply(best) : null;
+  return best ? randomReply(best) : null;
 }
 /* ✅ POLISHING TEXT (as before) */
 function polishTask(text){
