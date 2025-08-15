@@ -622,9 +622,8 @@
 }
 
   </style>
-  <script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
+  <!-- HEAD me add karo (once per page) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924" crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="chat-container">
@@ -638,11 +637,8 @@
         <i class="fas fa-trash-alt"></i>
       </button>
     </div>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
-     crossorigin="anonymous"></script>
-<!-- chatroom_top_banner -->
-<div id="chatroom_top_banner" style="min-height: 100px; position: relative;">
-  <!-- AdSense Ad -->
+<!-- BODY me jahan ad chahiye wahan ye block chipka do -->
+<div id="chatroom_top_banner" class="ad-wrapper">
   <ins class="adsbygoogle"
        style="display:block"
        data-ad-client="ca-pub-6575643228502924"
@@ -650,6 +646,7 @@
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
 </div>
+
 <div class="problem-fixed">
       <i class="fas fa-check-circle"></i> Deepak Chauhan x AI Bhai active
     </div>
@@ -1358,24 +1355,61 @@ function confirmClearStorage() {
   };
 }
 </script>
-  <script>
-  (adsbygoogle = window.adsbygoogle || []).push({});
+<!-- BODY ke end me ye CSS + JS add karo -->
+<style>
+  .ad-wrapper { min-height: 90px; position: relative; }
+  .ad-fallback-img { width: 100%; height: auto; border-radius: 8px; display: block; }
+</style>
 
-  // Fallback check after 3 seconds
-  setTimeout(function() {
-    const adContainer = document.querySelector('#chatroom_top_banner');
-    if (adContainer && adContainer.offsetHeight < 50) { 
-      // Agar ad load nahi hua
-      adContainer.innerHTML = `
-        <a href="https://deepakchauhanxai.xyz/" target="_blank" style="display:block;">
-          <img src="https://deepakchauhanxai.xyz/images/ai-bhai-ads.png" 
-               alt="AI Bhai Ad" 
-               style="width:100%; height:auto; border-radius:8px;">
-        </a>
-      `;
-    }
-  }, 3000);
-  </script>
+<script>
+  // Reusable init: har slot ke liye call karo
+  function initAdWithFallback(containerId, fallbackUrl, waitMs = 2500, minSize = 40, linkHref = "https://deepakchauhanxai.xyz/") {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // Push AdSense render
+    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+
+    // Fallback checker
+    const showFallback = () => {
+      // Agar ad load nahi hua (size bahut chhota/0) to image dikhao
+      const h = container.offsetHeight || 0;
+      const w = container.offsetWidth || 0;
+      if (h < minSize || w < minSize || !container.querySelector("ins.adsbygoogle iframe")) {
+        container.innerHTML = `
+          <a href="${linkHref}" target="_blank" rel="nofollow noopener" style="display:block;">
+            <img class="ad-fallback-img" src="${fallbackUrl}" alt="Sponsored">
+          </a>
+        `;
+      }
+    };
+
+    // Wait a bit for ad to try rendering
+    setTimeout(showFallback, waitMs);
+
+    // Extra safety: agar layout change hua ya resize hua to dobara check
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(showFallback, 600);
+    });
+
+    // Optional: ad slot me mutation observe (agar iframe na aaye to fallback)
+    const obs = new MutationObserver(() => setTimeout(showFallback, 400));
+    obs.observe(container, { childList: true, subtree: true });
+  }
+
+  // === Initialize your slots here ===
+  initAdWithFallback(
+    "chatroom_top_banner",
+    "https://deepakchauhanxai.xyz/images/ai-bhai-ads.png",
+    2500, // wait (ms)
+    40    // minimum size (px)
+  );
+
+  // Example: agar second slot ho to aise call karo
+  // initAdWithFallback("chatroom_sidebar_banner", "https://deepakchauhanxai.xyz/images/ai-bhai-ads.png");
+</script>
   <script src="https://deepakchauhanxai.com/scripts/Ai-bhai-trening.js"></script>
 <script src="scripts/media-handler.js"></script>
 <script src="scripts/aibhai-2.0.js"></script>
