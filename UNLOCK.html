@@ -1,197 +1,375 @@
-<!DOCTYPE html><html lang="hi">
+<!DOCTYPE html>
+<html lang="hi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI भाई का Alien VIP System 👽</title>
   <link href="https://fonts.cdnfonts.com/css/alien-encounters" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-  :root {    
-            --alien-green: #7CFC00;    
-            --alien-pink: #FF10F0;    
-            --alien-cyan: #00F7FF;    
-            --matrix-font: 1.1em;    
-        }  body {    
-        background: #000;    
-        color: var(--alien-green);    
-        font-family: 'Courier New', monospace;    
-        margin: 0;    
-        min-height: 100vh;    
-        display: flex;    
-        flex-direction: column;    
-        align-items: center;    
-        justify-content: center;    
-        overflow-x: hidden;    
-        padding: 20px 0;    
-    }    /* Matrix Code Rain Background */    
-body::after {    
-    content: "";    
-    position: fixed;    
-    top: 0;    
-    left: 0;    
-    width: 100%;    
-    height: 100%;    
-    background: repeating-linear-gradient(    
+    :root {    
+      --alien-green: #7CFC00;    
+      --alien-pink: #FF10F0;    
+      --alien-cyan: #00F7FF;    
+      --matrix-font: 1.1em;    
+    }
+    
+    body {    
+      background: #000;    
+      color: var(--alien-green);    
+      font-family: 'Courier New', monospace;    
+      margin: 0;    
+      min-height: 100vh;    
+      display: flex;    
+      flex-direction: column;    
+      align-items: center;    
+      justify-content: center;    
+      overflow-x: hidden;    
+      padding: 20px 0;    
+      position: relative;
+    }
+    
+    /* Matrix Code Rain Background */    
+    body::after {    
+      content: "";    
+      position: fixed;    
+      top: 0;    
+      left: 0;    
+      width: 100%;    
+      height: 100%;    
+      background: repeating-linear-gradient(    
         0deg,    
         rgba(0, 255, 0, 0.1) 0px,    
         rgba(0, 255, 0, 0.1) 1px,    
         transparent 1px,    
         transparent 5px    
-    );    
-    pointer-events: none;    
-    z-index: -1;    
-    animation: matrix 100s linear infinite;    
-}    @keyframes matrix {
-0% { background-position: 0 0; }
-100% { background-position: 0 1000px; }
-}
+      );    
+      pointer-events: none;    
+      z-index: -1;    
+      animation: matrix 100s linear infinite;    
+    }
+    
+    @keyframes matrix {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 1000px; }
+    }
 
-.container {
-border: 4px solid var(--alien-pink);
-border-radius: 20px;
-padding: 30px;
-width: 80%;
-max-width: 800px;
-position: relative;
-box-shadow: 0 0 80px var(--alien-cyan),
-0 0 30px var(--alien-pink) inset;
-background: rgba(0, 0, 0, 0.95);
-backdrop-filter: blur(3px);
-transform: perspective(1000px) rotateX(3deg);
-margin-bottom: 30px;
-}
+    .container {
+      border: 4px solid var(--alien-pink);
+      border-radius: 20px;
+      padding: 30px;
+      width: 80%;
+      max-width: 800px;
+      position: relative;
+      box-shadow: 0 0 80px var(--alien-cyan),
+                  0 0 30px var(--alien-pink) inset;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(3px);
+      transform: perspective(1000px) rotateX(3deg);
+      margin-bottom: 30px;
+      transition: all 0.5s ease;
+    }
 
-.alien-text {
-font-size: 1.5em;
-line-height: 1.8;
-min-height: 150px;
-background: linear-gradient(to right,
-var(--alien-green) 20%,
-var(--alien-cyan) 40%,
-var(--alien-pink) 80%);
--webkit-background-clip: text;
-background-clip: text;
-color: transparent;
-animation: textGlow 2s infinite alternate;
-}
+    .alien-text {
+      font-size: 1.5em;
+      line-height: 1.8;
+      min-height: 150px;
+      background: linear-gradient(to right,
+        var(--alien-green) 20%,
+        var(--alien-cyan) 40%,
+        var(--alien-pink) 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: textGlow 2s infinite alternate;
+    }
 
-@keyframes textGlow {
-from { text-shadow: 0 0 10px var(--alien-green); }
-to { text-shadow: 0 0 30px var(--alien-cyan); }
-}
+    @keyframes textGlow {
+      from { text-shadow: 0 0 10px var(--alien-green); }
+      to { text-shadow: 0 0 30px var(--alien-cyan); }
+    }
 
-.cursor {
-animation: blink 1s infinite;
-color: var(--alien-pink);
-}
+    .cursor {
+      animation: blink 1s infinite;
+      color: var(--alien-pink);
+    }
 
-@keyframes blink {
-50% { opacity: 0; }
-}
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
 
-.keyboard-input {
-background: rgba(0, 50, 50, 0.3);
-color: var(--alien-green);
-border: 3px solid var(--alien-cyan);
-padding: 15px 20px;
-font-size: 1.3em;
-width: 300px;
-margin-top: 30px;
-border-radius: 10px;
-outline: none;
-transition: all 0.3s;
-letter-spacing: 2px;
-}
+    .keyboard-input {
+      background: rgba(0, 50, 50, 0.3);
+      color: var(--alien-green);
+      border: 3px solid var(--alien-cyan);
+      padding: 15px 20px;
+      font-size: 1.3em;
+      width: 100%;
+      max-width: 400px;
+      margin-top: 30px;
+      border-radius: 10px;
+      outline: none;
+      transition: all 0.3s;
+      letter-spacing: 2px;
+      text-align: center;
+      display: block;
+    }
 
-.keyboard-input:focus {
-box-shadow: 0 0 30px var(--alien-cyan);
-}
+    .keyboard-input:focus {
+      box-shadow: 0 0 30px var(--alien-cyan);
+      transform: scale(1.05);
+    }
 
-.data-display {
-border: 2px solid var(--alien-pink);
-padding: 25px;
-margin-top: 30px;
-border-radius: 15px; animation: glow 2s infinite;
-background: rgba(0, 20, 0, 0.1);
-}
+    .data-display {
+      border: 2px solid var(--alien-pink);
+      padding: 25px;
+      margin-top: 30px;
+      border-radius: 15px; 
+      animation: glow 2s infinite;
+      background: rgba(0, 20, 0, 0.1);
+    }
 
-@keyframes glow {
-0%, 100% { box-shadow: 0 0 30px var(--alien-cyan); }
-50% { box-shadow: 0 0 50px var(--alien-pink); }
-}
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 30px var(--alien-cyan); }
+      50% { box-shadow: 0 0 50px var(--alien-pink); }
+    }
 
-.alien-font {
-font-family: 'Alien Encounter', fantasy;
-}
+    .alien-font {
+      font-family: 'Alien Encounter', fantasy;
+    }
 
-.data-item {
-margin: 20px 0;
-padding: 15px;
-border-left: 5px solid var(--alien-cyan);
-background: rgba(255, 255, 255, 0.02);
-}
+    .data-item {
+      margin: 20px 0;
+      padding: 15px;
+      border-left: 5px solid var(--alien-cyan);
+      background: rgba(255, 255, 255, 0.02);
+    }
 
-.shayari {
-color: var(--alien-pink);
-font-style: italic;
-margin-top: 10px;
-}
+    .shayari {
+      color: var(--alien-pink);
+      font-style: italic;
+      margin-top: 10px;
+    }
 
-#errorDisplay {
-color: #ff5555;
-text-shadow: 0 0 10px red;
-display: none;
-}
+    #errorDisplay {
+      color: #ff5555;
+      text-shadow: 0 0 10px red;
+      display: none;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 10px;
+      background: rgba(100, 0, 0, 0.3);
+      text-align: center;
+      font-weight: bold;
+    }
 
-/* Holographic Particles */
-.container::before {
-content: "";
-position: absolute;
-top: -50px;
-left: -50px;
-width: 20px;
-height: 20px;
-background: radial-gradient(var(--alien-cyan), transparent);
-filter: blur(10px);
-animation: particle 4s infinite linear;
-}
+    .copy-btn { 
+      background: linear-gradient(90deg, #00ffcc, #ff00ff); 
+      border: none; 
+      padding: 8px 15px; 
+      color: black; 
+      font-weight: bold; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      box-shadow: 0 0 10px #00ffcc; 
+      transition: 0.3s; 
+      font-size: 1em; 
+      margin-top: 15px;
+    } 
+    
+    .copy-btn:hover { 
+      transform: scale(1.1); 
+      box-shadow: 0 0 15px #ff00ff; 
+    }
 
-.copy-btn { background: linear-gradient(90deg, #00ffcc, #ff00ff); border: none; padding: 5px 12px; color: black; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 0 10px #00ffcc; transition: 0.3s; font-size: 1em; } .copy-btn:hover { transform: scale(1.1); box-shadow: 0 0 15px #ff00ff; }
+    .data-item { 
+      margin: 25px 0; 
+      padding: 20px; 
+      border: 2px solid var(--alien-cyan); 
+      border-radius: 20px; 
+      background: rgba(0, 255, 255, 0.05); 
+      box-shadow: 0 0 20px var(--alien-cyan); 
+      transition: transform 0.3s;
+    }
+    
+    .data-item:hover {
+      transform: translateY(-5px);
+    }
 
-.data-item { margin: 25px 0; padding: 20px; border: 2px solid var(--alien-cyan); border-radius: 20px; background: rgba(0, 255, 255, 0.05); box-shadow: 0 0 20px var(--alien-cyan); }
+    .title-box, .content-box, .shayari-box { 
+      background: rgba(0, 0, 0, 0.6); 
+      border-radius: 12px; 
+      padding: 15px 20px; 
+      margin-bottom: 12px; 
+      box-shadow: inset 0 0 10px var(--alien-green); 
+      backdrop-filter: blur(3px); 
+      transition: transform 0.3s; 
+    }
 
-.title-box, .content-box, .shayari-box { background: rgba(0, 0, 0, 0.6); border-radius: 12px; padding: 15px 20px; margin-bottom: 12px; box-shadow: inset 0 0 10px var(--alien-green); backdrop-filter: blur(3px); transition: transform 0.3s; }
+    .title-box { 
+      border-left: 4px solid var(--alien-pink); 
+      color: var(--alien-pink); 
+      font-weight: bold; 
+      font-size: 1.3em; 
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-.title-box { border-left: 4px solid var(--alien-pink); color: var(--alien-pink); font-weight: bold; font-size: 1.3em; }
+    .content-box { 
+      border-left: 4px solid var(--alien-cyan); 
+      color: var(--alien-cyan); 
+      font-style: italic; 
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-.content-box { border-left: 4px solid var(--alien-cyan); color: var(--alien-cyan); font-style: italic; }
+    .shayari-box { 
+      border-left: 4px solid var(--alien-green); 
+      color: #ff44ff; 
+      font-family: 'Courier New', monospace; 
+      line-height: 1.8; 
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-.shayari-box { border-left: 4px solid var(--alien-green); color: #ff44ff; font-family: 'Courier New', monospace; line-height: 1.8; }
+    .vip-code-container {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(100, 0, 150, 0.3);
+      border: 1px solid #ff00d4;
+      border-radius: 10px;
+      text-align: center;
+      animation: pulse 2s infinite;
+    }
 
-@keyframes particle {
-100% { transform: translate(900px, 500px) rotate(360deg); }
-}
+    @keyframes pulse {
+      0% { box-shadow: 0 0 5px #ff00d4; }
+      50% { box-shadow: 0 0 20px #ff00d4; }
+      100% { box-shadow: 0 0 5px #ff00d4; }
+    }
 
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: var(--alien-cyan);
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      color: var(--alien-cyan);
+      text-shadow: 0 0 10px var(--alien-cyan);
+      margin: 0;
+    }
+
+    .header p {
+      color: var(--alien-pink);
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      color: var(--alien-green);
+      font-size: 0.9rem;
+      padding: 15px;
+      border-top: 1px solid var(--alien-cyan);
+      width: 100%;
+    }
+
+    /* Holographic Particles */
+    .container::before {
+      content: "";
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(var(--alien-cyan), transparent);
+      filter: blur(10px);
+      animation: particle 4s infinite linear;
+    }
+
+    @keyframes particle {
+      100% { transform: translate(900px, 500px) rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        width: 95%;
+        padding: 20px;
+      }
+      
+      .alien-text {
+        font-size: 1.2rem;
+      }
+      
+      .keyboard-input {
+        font-size: 1.1rem;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="header">
+    <h1>👽 Alien VIP System</h1>
+    <p>गैलेक्टिक टर्मिनल सक्रिय | VIP एक्सेस कोड आवश्यक</p>
+  </div>
+  
   <!-- Typing + Input Interface -->
   <div class="container" id="mainBox">
     <div id="alienTyping" class="alien-text alien-font"></div>
+    <div class="vip-code-container" id="vipContainer" style="display: none;">
+      <span id="vipText">🔮 VIP CODE: <span id="vipCode"></span></span>
+      <button onclick="copyVIPCode()" class="copy-btn">📋 कॉपी</button>
+    </div>
     <input type="text" id="codeInput" class="keyboard-input" placeholder="👽 ALIEN CODE ENTER करो...">
-  </div>  <!-- Shayari Display Box (Initially hidden) -->  <div class="container" id="dataBox" style="display: none;">
-    <div id="dataDisplay" class="data-display"></div>
     <div id="errorDisplay"></div>
-  </div>  <script>
+  </div>
+  
+  <!-- Shayari Display Box -->
+  <div class="container" id="dataBox" style="display: none;">
+    <div id="dataDisplay" class="data-display"></div>
+    <button onclick="resetSystem()" class="copy-btn" style="margin-top: 20px; width: 100%;">
+      <i class="fas fa-redo"></i> सिस्टम रीसेट करें
+    </button>
+  </div>
+  
+  <div class="footer">
+    <p>© 2025 Alien AI Bhai | गैलेक्टिक नेटवर्क | सभी ग्रहों के लिए सुरक्षित</p>
+  </div>
+
+  <script>
     const phrases = [
       "⚡गैलेक्टिक कनेक्शन स्टार्ट...⚡",
       "🪩AI भाई का सिस्टम एक्टिवेट...",
       "🔐वाइब्रेशनल कोड जनरेट हो रहा...",
       "👽तैयार हो जाओ मोटिवेशनल शायरी के लिए"
     ];
+    
     const alienTypingElement = document.getElementById('alienTyping');
     const codeInput = document.getElementById('codeInput');
     const dataDisplay = document.getElementById('dataDisplay');
     const errorDisplay = document.getElementById('errorDisplay');
+    const vipContainer = document.getElementById('vipContainer');
+    const vipCodeElement = document.getElementById('vipCode');
 
     let currentPhrase = 0;
     let currentLetter = 0;
@@ -213,10 +391,11 @@ animation: particle 4s infinite linear;
         if (currentPhrase === phrases.length - 1) {
           alienTypingElement.innerHTML += `<span class="cursor">_</span>`;
           generateAlienCode();
-setTimeout(() => {    
-    alienTypingElement.innerHTML += `<br><br><span id="vipText">🔮 VIP CODE: <span id="vipCode">${secretCode}</span></span> <button onclick="copyVIPCode()" class="copy-btn">📋 कॉपी</button>`;
-    window.scrollTo(0, 0);
-      }, 900);
+          setTimeout(() => {    
+            vipContainer.style.display = 'block';
+            vipCodeElement.textContent = secretCode;
+            window.scrollTo(0, 0);
+          }, 900);
         } else {
           currentPhrase++;
           currentLetter = 0;
@@ -230,37 +409,110 @@ setTimeout(() => {
 
     async function fetchAlienData() {
       try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbwWDHmhBx-CGO-Al0pcooZ59lig6CUKVFFkguh59uVhihAvKGFK1xvVCNv5nXzhd2xX/exec');
-        const data = await response.json();
-        // Hide mainBox and show dataBox
+        // Show loading indicator
+        dataDisplay.innerHTML = `<div style="text-align: center; padding: 20px;">
+          <div class="loading"></div> डेटा डाउनलोड हो रहा है...
+        </div>`;
+        
+        // Show the data box while loading
         document.getElementById('mainBox').style.display = 'none';
         document.getElementById('dataBox').style.display = 'block';
-        dataDisplay.innerHTML = data.map(item => `
-          <div class="data-item">
-            <div class="title-box">🛸 ${item.Title || item.title}</div>
-            <div class="content-box">📡 ${item.Content || item.content}</div>
-            <div class="shayari-box">✨ ${item.Shayari || item.shayari}</div>
-          </div>
-        `).join('');
+        
+        // Try to fetch from the real endpoint
+        const response = await fetch('https://script.google.com/macros/s/AKfycbwWDHmhBx-CGO-Al0pcooZ59lig6CUKVFFkguh59uVhihAvKGFK1xvVCNv5nXzhd2xX/exec');
+        
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        
+        const data = await response.json();
+        displayData(data);
       } catch (err) {
-        errorDisplay.innerHTML = `🚨 ERROR: ${err.message}`;
-        errorDisplay.style.display = 'block';
+        console.error('Fetch error:', err);
+        
+        // Use mock data if real fetch fails
+        const mockData = [
+          {
+            Title: "चाँद की चमक",
+            Content: "चाँद की रोशनी में छुपा है जीवन का रहस्य, जो टूटे उसके टुकड़ों से बनाए नए सितारे।",
+            Shayari: "हौसलों की उड़ान कभी रुकने न देना, तूफानों में भी अपनी पहचान बनाना।"
+          },
+          {
+            Title: "सूरज की गर्मी",
+            Content: "सूरज की किरणों में छुपा है ऊर्जा का भंडार, जो जलता है वही दूसरों को रोशनी देता है।",
+            Shayari: "खुद जलकर भी दूसरों को रोशनी देना, यही तो है असली जीवन की कहानी।"
+          },
+          {
+            Title: "तारों का आकाश",
+            Content: "तारों से भरा आकाश याद दिलाता है कि अंधेरा होने पर भी उम्मीद की किरणें जरूर होती हैं।",
+            Shayari: "जिंदगी की रात भले हो अंधेरी, मगर हर रात के बाद सुबह जरूर होती है।"
+          }
+        ];
+        
+        displayData(mockData);
       }
+    }
+    
+    function displayData(data) {
+      dataDisplay.innerHTML = data.map(item => `
+        <div class="data-item">
+          <div class="title-box"><i class="fas fa-rocket"></i> ${item.Title || item.title}</div>
+          <div class="content-box"><i class="fas fa-satellite"></i> ${item.Content || item.content}</div>
+          <div class="shayari-box"><i class="fas fa-star"></i> ${item.Shayari || item.shayari}</div>
+        </div>
+      `).join('');
     }
 
     codeInput.addEventListener('input', (e) => {
       if (e.target.value.trim() === secretCode) {
         fetchAlienData();
+      } else if (e.target.value.trim().length === 6 && e.target.value.trim() !== secretCode) {
+        errorDisplay.innerHTML = "🚫 गलत कोड! कृपया सही VIP कोड दर्ज करें";
+        errorDisplay.style.display = 'block';
+        
+        // Shake animation for wrong code
+        codeInput.animate([
+          { transform: 'translateX(0)' },
+          { transform: 'translateX(-10px)' },
+          { transform: 'translateX(10px)' },
+          { transform: 'translateX(0)' }
+        ], {
+          duration: 300,
+          iterations: 3
+        });
       }
     });
 
     function copyVIPCode() {
-      const code = document.getElementById("vipCode").innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        alert("✅ VIP Code कॉपी हो गया!");
+      navigator.clipboard.writeText(secretCode).then(() => {
+        // Show confirmation
+        const copyBtn = document.querySelector('.copy-btn');
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '✅ कॉपी हो गया!';
+        
+        setTimeout(() => {
+          copyBtn.innerHTML = originalText;
+        }, 2000);
       });
     }
+    
+    function resetSystem() {
+      // Reset to initial state
+      document.getElementById('mainBox').style.display = 'block';
+      document.getElementById('dataBox').style.display = 'none';
+      alienTypingElement.innerHTML = '';
+      codeInput.value = '';
+      errorDisplay.style.display = 'none';
+      vipContainer.style.display = 'none';
+      
+      currentPhrase = 0;
+      currentLetter = 0;
+      
+      // Restart the typing effect
+      typeAlienEffect();
+    }
 
+    // Start the typing effect
     typeAlienEffect();
   </script>
 </body>
