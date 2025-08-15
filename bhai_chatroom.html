@@ -645,12 +645,12 @@
        data-ad-slot="3037667154"></ins>
   <script>
        (adsbygoogle = window.adsbygoogle || []).push({});
-       
-       // 3 sec wait, agar ad na aaye to fallback banner
+
+       // Check ad load after 4 sec
        setTimeout(function(){
            let adBox = document.querySelector('#adContainer ins');
-           if(adBox && adBox.innerHTML.trim() === ""){
-               adBox.style.display = "none";
+           if(adBox && (adBox.innerHTML.trim() === "" || adBox.offsetHeight < 50)) {
+               adBox.remove(); // remove empty ad
                document.getElementById('adContainer').innerHTML = `
                    <div style="
                        padding:10px; 
@@ -666,12 +666,14 @@
                        justify-content:center;
                        gap:8px;
                    ">
-                       <img src="https://deepakchauhanxai.xyz/images/ai-bhai-ads.png" alt="AI Bhai" style="height:40px; border-radius:50%; box-shadow:0 0 6px rgba(255,255,255,0.6);">
+                       <img src="https://deepakchauhanxai.xyz/images/ai-bhai-ads.png" 
+                            alt="AI Bhai" 
+                            style="height:40px; border-radius:50%; box-shadow:0 0 6px rgba(255,255,255,0.6);">
                        <span>AI Bhai × Dil Se Baaten ❤️</span>
                    </div>
                `;
            }
-       }, 3000);
+       }, 4000);
   </script>
 </div>
 <div class="problem-fixed">
