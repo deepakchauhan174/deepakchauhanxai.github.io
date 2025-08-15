@@ -646,14 +646,28 @@
   <script>
        (adsbygoogle = window.adsbygoogle || []).push({});
        
-       // Check if ad loads in 3 sec, otherwise show fallback
+       // 3 sec wait, agar ad na aaye to fallback banner
        setTimeout(function(){
            let adBox = document.querySelector('#adContainer ins');
            if(adBox && adBox.innerHTML.trim() === ""){
                adBox.style.display = "none";
                document.getElementById('adContainer').innerHTML = `
-                   <div style="padding:10px; color:#555; font-size:14px; font-family:sans-serif;">
-                       💡 <b>AI Bhai की सलाह:</b> मेहनत करते रहो, सफलता जरूर मिलेगी!
+                   <div style="
+                       padding:10px; 
+                       background:linear-gradient(45deg, #ff758c, #ff7eb3); 
+                       color:white; 
+                       font-size:16px; 
+                       font-family:'Segoe UI', sans-serif; 
+                       font-weight:bold; 
+                       border-radius:8px; 
+                       box-shadow:0 2px 5px rgba(0,0,0,0.2);
+                       display:flex;
+                       align-items:center;
+                       justify-content:center;
+                       gap:8px;
+                   ">
+                       <img src="https://deepakchauhanxai.xyz/images/AI-bhai.png" alt="AI Bhai" style="height:40px; border-radius:50%; box-shadow:0 0 6px rgba(255,255,255,0.6);">
+                       <span>AI Bhai × Dil Se Baaten ❤️</span>
                    </div>
                `;
            }
