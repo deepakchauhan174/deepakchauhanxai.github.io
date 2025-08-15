@@ -622,8 +622,7 @@
 }
 
   </style>
-  <!-- HEAD me add karo (once per page) -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924" crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924" crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="chat-container">
@@ -638,7 +637,6 @@
       </button>
     </div>
 <!-- टॉप बैनर Ad -->
-<!-- BODY me jahan ad chahiye wahan ye block chipka do -->
 <div id="chatroom_top_banner" class="ad-wrapper">
   <ins class="adsbygoogle"
        style="display:block"
@@ -1361,54 +1359,44 @@ function confirmClearStorage() {
   .ad-fallback-img { width: 100%; height: auto; border-radius: 8px; display: block; }
 </style>
 
+<style>
+  .ad-wrapper {
+    min-height: 90px; /* banner ka min height */
+    position: relative;
+  }
+  .ad-fallback-img {
+    width: 100%;
+    height: auto;
+    max-height: 120px; /* max banner height */
+    border-radius: 8px;
+    display: block;
+    object-fit: cover;
+  }
+</style>
+
 <script>
-  // Reusable init: har slot ke liye call karo
-  function initAdWithFallback(containerId, fallbackUrl, waitMs = 2500, minSize = 40, linkHref = "https://deepakchauhanxai.xyz/") {
+  function initAdWithFallback(containerId, fallbackUrl, waitMs = 2500, linkHref = "https://deepakchauhanxai.xyz/") {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    // Push AdSense render
     try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
 
-    // Fallback checker
-    const showFallback = () => {
-      // Agar ad load nahi hua (size bahut chhota/0) to image dikhao
-      const h = container.offsetHeight || 0;
-      const w = container.offsetWidth || 0;
-      if (h < minSize || w < minSize || !container.querySelector("ins.adsbygoogle iframe")) {
+    setTimeout(() => {
+      const iframe = container.querySelector("ins.adsbygoogle iframe");
+      if (!iframe || iframe.offsetHeight < 40) {
         container.innerHTML = `
-          <a href="${linkHref}" target="_blank" rel="nofollow noopener" style="display:block;">
+          <a href="${linkHref}" target="_blank" rel="nofollow noopener">
             <img class="ad-fallback-img" src="${fallbackUrl}" alt="Sponsored">
           </a>
         `;
       }
-    };
-
-    // Wait a bit for ad to try rendering
-    setTimeout(showFallback, waitMs);
-
-    // Extra safety: agar layout change hua ya resize hua to dobara check
-    let resizeTimer;
-    window.addEventListener("resize", () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(showFallback, 600);
-    });
-
-    // Optional: ad slot me mutation observe (agar iframe na aaye to fallback)
-    const obs = new MutationObserver(() => setTimeout(showFallback, 400));
-    obs.observe(container, { childList: true, subtree: true });
+    }, waitMs);
   }
 
-  // === Initialize your slots here ===
   initAdWithFallback(
     "chatroom_top_banner",
-    "https://deepakchauhanxai.xyz/images/ai-bhai-ads.png",
-    2500, // wait (ms)
-    40    // minimum size (px)
+    "https://deepakchauhanxai.xyz/images/ai-bhai-ads.png"
   );
-
-  // Example: agar second slot ho to aise call karo
-  // initAdWithFallback("chatroom_sidebar_banner", "https://deepakchauhanxai.xyz/images/ai-bhai-ads.png");
 </script>
   <script src="https://deepakchauhanxai.com/scripts/Ai-bhai-trening.js"></script>
 <script src="scripts/media-handler.js"></script>
