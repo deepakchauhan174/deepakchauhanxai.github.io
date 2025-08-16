@@ -578,7 +578,8 @@
       observer.observe(section);
     });
   </script>
-  <script>(function(){
+  <script>
+(function(){
     // ====== Popup container ======
     let popup = document.createElement("div");
     popup.id = "shayari-popup";
@@ -626,11 +627,28 @@
     const loadMoreBtn = popup.querySelector("#loadMoreBtn");
     const closePopup = popup.querySelector("#closePopup");
 
+    // ===== Floating Avatar =====
+    let avatar = document.createElement("div");
+    avatar.id = "ai-avatar";
+    avatar.style.cssText = `
+        position:fixed;bottom:20px;right:20px;width:70px;height:70px;border-radius:50%;
+        background:url('https://deepakchauhanxai.xyz/images/AI-bhai.png') center/cover no-repeat;
+        border:3px solid #fff;box-shadow:0 5px 15px rgba(0,0,0,0.3);
+        cursor:pointer;z-index:9998;display:none;transition:transform 0.3s;
+    `;
+    avatar.addEventListener("mouseenter",()=>avatar.style.transform="scale(1.1)");
+    avatar.addEventListener("mouseleave",()=>avatar.style.transform="scale(1)");
+    avatar.addEventListener("click",()=>{
+        popup.style.visibility="visible";
+        popup.style.opacity="1";
+        avatar.style.display="none";
+    });
+    document.body.appendChild(avatar);
+
     let shayaris = [];
     let shown = 0;
     let isTyping = false;
 
-    // ====== Typing Effect ======
     function typeEffect(element, text, callback){
         isTyping = true;
         let i=0;
@@ -648,7 +666,6 @@
         typing();
     }
 
-    // ====== Show Shayari ======
     function showOneShayari(){
         if(shown >= 15 || isTyping) return;
         
@@ -660,24 +677,16 @@
             border-left:4px solid #4a6fa5;line-height:1.5;
             position:relative;overflow:visible;
         `;
-        box.innerHTML += `<div style="position:absolute;top:0;right:0;width:50px;height:50px;background:linear-gradient(135deg,#6a93cb22,#4a6fa522);border-radius:0 0 0 50px;"></div>`;
         boxContainer.appendChild(box);
 
         typeEffect(box, shayaris[shown], () => {
             shown++;
-
-            // Button दिखाना/छुपाना
-            if(shown < 15) {
-                loadMoreBtn.style.display = "block";
-            } else {
-                loadMoreBtn.style.display = "none";
-            }
-
+            if(shown < 15) loadMoreBtn.style.display = "block";
+            else loadMoreBtn.style.display = "none";
             saveProgress();
         });
     }
 
-    // ====== Save progress in localStorage ======
     function saveProgress(){
         let todayKey = getTodayKey();
         localStorage.setItem("shayari_progress", JSON.stringify({
@@ -687,7 +696,6 @@
         }));
     }
 
-    // ====== Load progress ======
     function loadProgress(){
         let todayKey = getTodayKey();
         let data = JSON.parse(localStorage.getItem("shayari_progress") || "{}");
@@ -715,7 +723,6 @@
         return false;
     }
 
-    // ====== Daily Reset Key (6 AM) ======
     function getTodayKey(){
         let d = new Date();
         if(d.getHours() < 6){
@@ -724,26 +731,16 @@
         return d.toDateString();
     }
 
-    // ====== Button Events ======
     loadMoreBtn.addEventListener("click", () => {
         if(!isTyping) showOneShayari();
     });
-    loadMoreBtn.addEventListener("mouseenter", () => {
-        loadMoreBtn.style.background = "linear-gradient(to right,#5a7fb5,#7aa3d5)";
-        loadMoreBtn.style.boxShadow = "0 6px 15px rgba(74,111,165,0.6)";
-    });
-    loadMoreBtn.addEventListener("mouseleave", () => {
-        loadMoreBtn.style.background = "linear-gradient(to right,#4a6fa5,#6a93cb)";
-        loadMoreBtn.style.boxShadow = "0 4px 10px rgba(74,111,165,0.4)";
-    });
 
-    // ====== Close Popup ======
     closePopup.addEventListener("click", () => {
         popup.style.opacity = "0";
         popup.style.visibility = "hidden";
+        avatar.style.display="block"; // close पर avatar दिखेगा
     });
 
-    // ====== Fetch JSON ======
     fetch("https://deepakchauhanxai.xyz/youtube_short.json")
         .then(res => res.json())
         .then(data => {
@@ -753,8 +750,6 @@
                 popup.style.opacity = "1";
                 return;
             }
-
-            // Daily shuffle
             let today = getTodayKey();
             let seed = today.split("").reduce((a,b) => a + b.charCodeAt(0), 0);
             function seededRandom(){
@@ -763,9 +758,7 @@
             }
             all = all.sort(() => seededRandom() - 0.5);
             shayaris = all.slice(0, 15);
-
             saveProgress();
-
             popup.style.visibility = "visible";
             popup.style.opacity = "1";
             showOneShayari();
@@ -776,9 +769,9 @@
                     border-radius:10px;font-weight:500;">
                     शायरी लोड नहीं हो पाई! कृपया बाद में पुनः प्रयास करें
                 </div>`;
-            console.error("Shayari loading error:", err);
         });
 })();
-  </script>
+</script>
+
 </body>
   </html>
