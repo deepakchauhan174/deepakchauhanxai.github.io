@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI भाई - जीवन बदलने वाली प्रेरणा</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&family=Yantramanav:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4a6fa5;
+      --secondary: #e74c3c;
+      --accent: #f39c12;
+      --light: #f5f7fa;
+      --dark: #2c3e50;
+      --success: #27ae60;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Hind', 'Noto Sans Devanagari', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa, #c3d9f0);
+      color: var(--dark);
+      line-height: 1.7;
+      overflow-x: hidden;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%234a6fa5" stroke-width="0.5" stroke-dasharray="5,5" opacity="0.1"/></svg>');
+    }
+    
+    /* Header Styles */
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #4a6fa5, #6a93cb);
+      color: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+      opacity: 0.2;
+    }
+    
+    .logo-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    
+    .logo-container::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      animation: pulse 3s infinite;
+    }
+    
+    header img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 5px solid white;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      transition: transform 0.5s;
+    }
+    
+    header img:hover {
+      transform: scale(1.05) rotate(5deg);
+    }
+    
+    header h1 {
+      margin: 20px 0 10px;
+      font-size: 2.8rem;
+      letter-spacing: 1px;
+      font-family: 'Yantramanav', sans-serif;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .tagline {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.3rem;
+      line-height: 1.6;
+      color: #f0f4fa;
+      background: rgba(0,0,0,0.1);
+      padding: 15px;
+      border-radius: 15px;
+      position: relative;
+      backdrop-filter: blur(5px);
+    }
+    
+    .tagline::after {
+      content: """;
+      position: absolute;
+      top: -30px;
+      left: 20px;
+      font-size: 5rem;
+      color: rgba(255,255,255,0.1);
+      font-family: serif;
+    }
+    
+    /* Navigation */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .tab {
+      padding: 12px 25px;
+      margin: 5px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+    
+    .tab:hover, .tab.active {
+      background: rgba(255,255,255,0.3);
+      border: 2px solid white;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    /* Main Content */
+    main {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    
+    section {
+      background: rgba(255,255,255,0.95);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 40px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeUp 0.8s forwards;
+    }
+    
+    section:nth-child(1) { animation-delay: 0.2s; }
+    section:nth-child(2) { animation-delay: 0.4s; }
+    section:nth-child(3) { animation-delay: 0.6s; }
+    section:nth-child(4) { animation-delay: 0.8s; }
+    
+    section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+    }
+    
+    section h2 {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      color: var(--primary);
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    section h2::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+    
+    .quote-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 30px;
+    }
+    
+    .quote-card {
+      flex: 1 1 300px;
+      background: linear-gradient(135deg, #f9f9f9, #ffffff);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      border-left: 5px solid var(--accent);
+      transition: transform 0.3s;
+      position: relative;
+    }
+    
+    .quote-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .quote-card i {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 2.5rem;
+      color: rgba(0,0,0,0.05);
+    }
+    
+    .quote-text {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: var(--dark);
+      font-weight: 500;
+    }
+    
+    .quote-author {
+      text-align: right;
+      font-style: italic;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    /* Key Principles Section */
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+    
+    .principle {
+      text-align: center;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, #f9f9f9, #ffffff);
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s;
+    }
+    
+    .principle:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      background: linear-gradient(135deg, #ffffff, #f9f9f9);
+    }
+    
+    .principle i {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: var(--primary);
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .principle h3 {
+      margin: 15px 0;
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+    
+    /* Daily Motivation */
+    .daily-motivation {
+      text-align: center;
+      padding: 40px;
+      background: linear-gradient(135deg, #4a6fa5, #6a93cb);
+      color: white;
+      border-radius: 20px;
+      margin: 40px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .daily-motivation::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+      opacity: 0.2;
+    }
+    
+    .daily-quote {
+      font-size: 1.8rem;
+      font-weight: 600;
+      max-width: 800px;
+      margin: 0 auto 30px;
+      line-height: 1.6;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .author {
+      font-size: 1.3rem;
+      font-style: italic;
+    }
+    
+    /* Action Section */
+    .action-section {
+      text-align: center;
+      padding: 50px 30px;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 15px 40px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      margin: 20px 10px;
+    }
+    
+    .btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 3px solid var(--primary);
+      color: var(--primary);
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 40px;
+    }
+    
+    .social-icons {
+      margin: 20px 0;
+    }
+    
+    .social-icons a {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      margin: 0 10px;
+      line-height: 50px;
+      color: white;
+      font-size: 1.3rem;
+      transition: all 0.3s;
+    }
+    
+    .social-icons a:hover {
+      background: var(--primary);
+      transform: translateY(-5px);
+    }
+    
+    .copyright {
+      margin-top: 20px;
+      opacity: 0.7;
+    }
+    
+    /* Animations */
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.7; }
+      50% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.7; }
+    }
+    
+    @keyframes fadeUp {
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.2rem; }
+      .tagline { font-size: 1.1rem; }
+      section { padding: 30px 20px; }
+      .daily-quote { font-size: 1.4rem; }
+    }
+    
+    @media (max-width: 480px) {
+      header h1 { font-size: 1.8rem; }
+      .tabs { flex-direction: column; }
+      .tab { margin: 5px auto; width: 80%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-overlay"></div>
+    <div class="logo-container">
+      <img src="https://deepakchauhanxai.xyz/images/AI-bhai.png" alt="AI भाई">
+    </div>
+    <h1>🙏 AI भाई की मोटिवेशनल बातें 🙏</h1>
+    <div class="tagline">
+      "हर दिन नई शुरुआत है। सफलता उन्हीं को मिलती है जो हार नहीं मानते। मेहनत, विश्वास और सकारात्मक सोच से कोई भी लक्ष्य हासिल किया जा सकता है।"
+    </div>
+  </header>
+  
+  <main>
+    <section class="intro">
+      <h2>✨ प्रेरणा की शक्ति ✨</h2>
+      <p>
+        इंसान की असली ताकत उसके विचारों में छिपी होती है। सकारात्मक सोच हमें हर मुश्किल हालात में मजबूत बनाती है। हार-जीत तो जीवन का हिस्सा है, लेकिन कोशिश करना कभी बंद मत करो। जो लोग संघर्ष से भागते नहीं, वही आगे चलकर दुनिया के लिए प्रेरणा बनते हैं।
+      </p>
+      <p>
+        हमेशा याद रखो – <b>"कड़ी मेहनत और विश्वास से असंभव भी संभव हो जाता है।"</b> जीवन में सफल होने के लिए सिर्फ योग्यता ही काफी नहीं है, बल्कि उस योग्यता पर अटूट विश्वास भी जरूरी है।
+      </p>
+      
+      <div class="quote-container">
+        <div class="quote-card">
+          <i class="fas fa-quote-right"></i>
+          <div class="quote-text">
+            "जो सपने देखते हैं और उन्हें पूरा करने की हिम्मत रखते हैं, वे ही दुनिया बदलते हैं।"
+          </div>
+          <div class="quote-author">- AI भाई</div>
+        </div>
+        
+        <div class="quote-card">
+          <i class="fas fa-quote-right"></i>
+          <div class="quote-text">
+            "आपकी सोच ही आपकी सीमा तय करती है। अगर आप सोच सकते हैं कि आप कर सकते हैं, तो आप कर सकते हैं।"
+          </div>
+          <div class="quote-author">- AI भाई</div>
+        </div>
+        
+        <div class="quote-card">
+          <i class="fas fa-quote-right"></i>
+          <div class="quote-text">
+            "सफलता छोटे-छोटे प्रयासों का योग है, जो रोज किया जाता है।"
+          </div>
+          <div class="quote-author">- AI भाई</div>
+        </div>
+      </div>
+    </section>
+    
+    <section>
+      <h2>🚀 सफलता के सूत्र 🚀</h2>
+      <p>
+        सफलता कोई दुर्घटना नहीं है। यह कड़ी मेहनत, दृढ़ता, सीखना, बलिदान और सबसे बढ़कर जो आप कर रहे हैं उससे प्यार करने का परिणाम है। नीचे दिए गए सिद्धांतों का पालन करके आप भी अपने जीवन में सफलता प्राप्त कर सकते हैं:
+      </p>
+      
+      <div class="principles">
+        <div class="principle">
+          <i class="fas fa-brain"></i>
+          <h3>सकारात्मक सोच</h3>
+          <p>अपनी सोच को सकारात्मक बनाए रखें। सकारात्मक विचार आपको सफलता की ओर ले जाते हैं।</p>
+        </div>
+        
+        <div class="principle">
+          <i class="fas fa-bullseye"></i>
+          <h3>लक्ष्य निर्धारण</h3>
+          <p>स्पष्ट लक्ष्य निर्धारित करें। लक्ष्य के बिना प्रयास बिखराव हो जाते हैं।</p>
+        </div>
+        
+        <div class="principle">
+          <i class="fas fa-clock"></i>
+          <h3>समय प्रबंधन</h3>
+          <p>समय का सदुपयोग करें। समय ही एकमात्र संसाधन है जो सभी को समान मिलता है।</p>
+        </div>
+        
+        <div class="principle">
+          <i class="fas fa-hands-helping"></i>
+          <h3>अनुशासन</h3>
+          <p>अनुशासन सफलता की कुंजी है। बिना अनुशासन के प्रतिभा व्यर्थ चली जाती है।</p>
+        </div>
+      </div>
+    </section>
+    
+    <div class="daily-motivation">
+      <h2>🌟 आज का प्रेरणादायक विचार 🌟</h2>
+      <div class="daily-quote">
+        "अगर आप किसी काम को करने में विश्वास रखते हैं, तो पूरी दुनिया की शक्तियां आपके साथ हो जाती हैं। जब आप दृढ़ संकल्प कर लेते हैं तो भाग्य भी आपका साथ देने लगता है।"
+      </div>
+      <div class="author">- AI भाई</div>
+    </div>
+    
+    <section class="action-section">
+      <h2>📱 AI भाई से जुड़ें</h2>
+      <p>रोजाना नए प्रेरणादायक विचार, सफलता के मंत्र और जीवन बदलने वाली सीख प्राप्त करें</p>
+    </section>
+  </main>
+  
+  <footer>
+    <h3>AI भाई की मोटिवेशनल बातें</h3>
+    <p>जीवन बदलने वाली प्रेरणा और सफलता के मंत्र</p>
+    
+    
+    <div class="copyright">
+      © 2025 AI भाई | सर्वाधिकार सुरक्षित
+    </div>
+  </footer>
+  
+  <script>
+    // Animation for tab switching
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+    
+    // Daily quote rotation
+    const quotes = [
+      "सफलता उन्हें मिलती है जो अपने सपनों के प्रति ईमानदार रहते हैं, चाहे रास्ते कितने भी कठिन क्यों न हों।",
+      "हर सुबह नई शुरुआत का संदेश लेकर आती है। बीते हुए कल को भूलकर आज को अपना सर्वश्रेष्ठ दें।",
+      "असफलता सफलता की सीढ़ी का पहला कदम है। हर गिरकर उठना आपको मजबूत बनाता है।",
+      "आपके विचार ही आपकी दुनिया बनाते हैं। सकारात्मक सोच के साथ आगे बढ़ें और चमत्कार देखें।",
+      "कभी हार न मानें। जो लोग लगातार प्रयास करते हैं, वे अंततः सफलता प्राप्त करते हैं।"
+    ];
+    
+    const authors = [
+      "- AI भाई",
+      "- AI भाई",
+      "- AI भाई",
+      "- AI भाई",
+      "- AI भाई"
+    ];
+    
+    let quoteIndex = 0;
+    const dailyQuote = document.querySelector('.daily-quote');
+    const authorElem = document.querySelector('.author');
+    
+    function rotateQuote() {
+      dailyQuote.style.opacity = 0;
+      authorElem.style.opacity = 0;
+      
+      setTimeout(() => {
+        quoteIndex = (quoteIndex + 1) % quotes.length;
+        dailyQuote.textContent = quotes[quoteIndex];
+        authorElem.textContent = authors[quoteIndex];
+        dailyQuote.style.opacity = 1;
+        authorElem.style.opacity = 1;
+      }, 500);
+    }
+    
+    // Rotate quote every 10 seconds
+    setInterval(rotateQuote, 10000);
+    
+    // Animate cards on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animation = 'fadeUp 0.8s forwards';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+  <script>(function(){
+    // ====== Popup container ======
+    let popup = document.createElement("div");
+    popup.id = "shayari-popup";
+    popup.style.cssText = `
+        position:fixed;top:0;left:0;width:100%;height:100%;
+        background:rgba(0,0,0,0.7);display:flex;align-items:center;
+        justify-content:center;z-index:9999;visibility:hidden;opacity:0;
+        transition:all 0.4s ease;backdrop-filter:blur(5px);
+    `;
+    document.body.appendChild(popup);
+
+    // ====== Inner Box ======
+    popup.innerHTML = `
+        <div style="max-width:500px;width:90%;background:linear-gradient(135deg,#f5f7fa,#e4edf5);
+            border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.2), inset 2px 2px 5px rgba(255,255,255,0.7);
+            padding:25px;font-family:'Segoe UI','Noto Sans Devanagari',sans-serif;position:relative;
+            max-height:90vh;overflow:auto;border:1px solid rgba(255,255,255,0.3);">
+            
+            <span id="closePopup" 
+                style="position:absolute;top:15px;right:20px;font-size:28px;
+                cursor:pointer;color:#4a6fa5;transition:all 0.3s;font-weight:bold;z-index:10;
+                text-shadow:0 1px 2px rgba(0,0,0,0.1);">✖</span>
+            
+            <div style="text-align:center;margin:10px 0 25px 0;position:relative;">
+                <div style="width:90px;height:90px;border-radius:50%;margin:0 auto 15px;
+                    background:linear-gradient(135deg,#6a93cb,#4a6fa5);padding:4px;box-shadow:0 5px 15px rgba(0,0,0,0.2);">
+                    <img src="https://deepakchauhanxai.xyz/images/AI-bhai.png" 
+                         style="width:100%;height:100%;border-radius:50%;border:2px solid white;"/>
+                </div>
+                <h2 style="font-size:22px;margin:0;color:#2c3e50;font-weight:600;letter-spacing:0.5px;
+                    text-shadow:0 1px 1px rgba(0,0,0,0.1);">AI भाई की शायरी</h2>
+                <div style="height:3px;width:80px;background:linear-gradient(to right,#4a6fa5,#6a93cb);margin:8px auto 0;border-radius:10px;"></div>
+            </div>
+            
+            <div id="shayari-boxes" style="margin:20px 0;"></div>
+            <button id="loadMoreBtn" 
+                style="display:none;margin:25px auto 10px;padding:12px 30px;width:80%;
+                border:none;border-radius:50px;background:linear-gradient(to right,#4a6fa5,#6a93cb);color:#fff;
+                cursor:pointer;font-size:17px;font-weight:500;letter-spacing:0.5px;box-shadow:0 4px 10px rgba(74,111,165,0.4);
+                transition:all 0.3s;position:relative;overflow:hidden;">अगली शायरी दिखाओ</button>
+        </div>
+    `;
+
+    const boxContainer = popup.querySelector("#shayari-boxes");
+    const loadMoreBtn = popup.querySelector("#loadMoreBtn");
+    const closePopup = popup.querySelector("#closePopup");
+
+    let shayaris = [];
+    let shown = 0;
+    let isTyping = false;
+
+    // ====== Typing Effect ======
+    function typeEffect(element, text, callback){
+        isTyping = true;
+        let i=0;
+        element.innerHTML = "";
+        function typing(){
+            if(i < text.length){
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typing, 40);
+            } else {
+                isTyping = false;
+                if(callback) callback();
+            }
+        }
+        typing();
+    }
+
+    // ====== Show Shayari ======
+    function showOneShayari(){
+        if(shown >= 15 || isTyping) return;
+        
+        let box = document.createElement("div");
+        box.style.cssText = `
+            padding:20px;margin:0 0 25px 0;border-radius:15px;
+            font-size:17px;color:#2c3e50;min-height:60px;
+            background:white;box-shadow:0 5px 15px rgba(0,0,0,0.08);
+            border-left:4px solid #4a6fa5;line-height:1.5;
+            position:relative;overflow:visible;
+        `;
+        box.innerHTML += `<div style="position:absolute;top:0;right:0;width:50px;height:50px;background:linear-gradient(135deg,#6a93cb22,#4a6fa522);border-radius:0 0 0 50px;"></div>`;
+        boxContainer.appendChild(box);
+
+        typeEffect(box, shayaris[shown], () => {
+            shown++;
+
+            // Button दिखाना/छुपाना
+            if(shown < 15) {
+                loadMoreBtn.style.display = "block";
+            } else {
+                loadMoreBtn.style.display = "none";
+            }
+
+            saveProgress();
+        });
+    }
+
+    // ====== Save progress in localStorage ======
+    function saveProgress(){
+        let todayKey = getTodayKey();
+        localStorage.setItem("shayari_progress", JSON.stringify({
+            date: todayKey,
+            shown: shown,
+            shayaris: shayaris
+        }));
+    }
+
+    // ====== Load progress ======
+    function loadProgress(){
+        let todayKey = getTodayKey();
+        let data = JSON.parse(localStorage.getItem("shayari_progress") || "{}");
+        if(data.date === todayKey && data.shayaris){
+            shayaris = data.shayaris;
+            shown = 0;
+            boxContainer.innerHTML = "";
+            for(let i=0;i<data.shown;i++){
+                let box = document.createElement("div");
+                box.style.cssText = `
+                    padding:20px;margin:0 0 25px 0;border-radius:15px;
+                    font-size:17px;color:#2c3e50;
+                    background:white;box-shadow:0 5px 15px rgba(0,0,0,0.08);
+                    border-left:4px solid #4a6fa5;line-height:1.5;
+                    position:relative;overflow:visible;
+                `;
+                box.innerHTML = data.shayaris[i];
+                boxContainer.appendChild(box);
+                shown++;
+            }
+            if(shown < 15) loadMoreBtn.style.display = "block";
+            else loadMoreBtn.style.display = "none";
+            return true;
+        }
+        return false;
+    }
+
+    // ====== Daily Reset Key (6 AM) ======
+    function getTodayKey(){
+        let d = new Date();
+        if(d.getHours() < 6){
+            d.setDate(d.getDate()-1);
+        }
+        return d.toDateString();
+    }
+
+    // ====== Button Events ======
+    loadMoreBtn.addEventListener("click", () => {
+        if(!isTyping) showOneShayari();
+    });
+    loadMoreBtn.addEventListener("mouseenter", () => {
+        loadMoreBtn.style.background = "linear-gradient(to right,#5a7fb5,#7aa3d5)";
+        loadMoreBtn.style.boxShadow = "0 6px 15px rgba(74,111,165,0.6)";
+    });
+    loadMoreBtn.addEventListener("mouseleave", () => {
+        loadMoreBtn.style.background = "linear-gradient(to right,#4a6fa5,#6a93cb)";
+        loadMoreBtn.style.boxShadow = "0 4px 10px rgba(74,111,165,0.4)";
+    });
+
+    // ====== Close Popup ======
+    closePopup.addEventListener("click", () => {
+        popup.style.opacity = "0";
+        popup.style.visibility = "hidden";
+    });
+
+    // ====== Fetch JSON ======
+    fetch("https://deepakchauhanxai.xyz/youtube_short.json")
+        .then(res => res.json())
+        .then(data => {
+            let all = data.motivational_shayari;
+            if(loadProgress()) {
+                popup.style.visibility = "visible";
+                popup.style.opacity = "1";
+                return;
+            }
+
+            // Daily shuffle
+            let today = getTodayKey();
+            let seed = today.split("").reduce((a,b) => a + b.charCodeAt(0), 0);
+            function seededRandom(){
+                seed = (seed * 9301 + 49297) % 233280;
+                return seed / 233280;
+            }
+            all = all.sort(() => seededRandom() - 0.5);
+            shayaris = all.slice(0, 15);
+
+            saveProgress();
+
+            popup.style.visibility = "visible";
+            popup.style.opacity = "1";
+            showOneShayari();
+        })
+        .catch(err => {
+            boxContainer.innerHTML = `
+                <div style="padding:20px;text-align:center;color:#e74c3c;background:#ffebee;
+                    border-radius:10px;font-weight:500;">
+                    शायरी लोड नहीं हो पाई! कृपया बाद में पुनः प्रयास करें
+                </div>`;
+            console.error("Shayari loading error:", err);
+        });
+})();
+  </script>
+</body>
+  </html>
