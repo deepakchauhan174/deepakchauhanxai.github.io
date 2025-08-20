@@ -4,105 +4,318 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI Story Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body {
-      font-family: Arial, sans-serif;
-      background-color: #000;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
       color: #fff;
       padding: 20px;
       margin: 0;
+      min-height: 100vh;
     }
+    
     .container {
-      max-width: 800px;
+      max-width: 850px;
       margin: 0 auto;
     }
-    .story-box {
-      background-color: #1a1a1a;
-      border-radius: 10px;
-      padding: 20px;
+    
+    .header {
+      text-align: center;
       margin-bottom: 30px;
-      box-shadow: 0 0 35px #ffff66;
+      padding: 20px;
     }
+    
+    .header h1 {
+      font-size: 2.8rem;
+      background: linear-gradient(90deg, #ffff66, #ffcc00, #ffff66);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 15px rgba(255, 255, 102, 0.5);
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    
+    .header p {
+      color: #ccc;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .story-box {
+      background: linear-gradient(145deg, #1a1a1a, #222222);
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 35px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3), 
+                  0 0 25px rgba(255, 255, 102, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .story-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600);
+      z-index: 1;
+    }
+    
+    .story-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 
+                  0 0 30px rgba(255, 255, 102, 0.6);
+    }
+    
     .story-img {
       width: 100%;
       border-radius: 8px;
       margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
     }
+    
+    .story-img:hover {
+      transform: scale(1.02);
+    }
+    
     .story-title {
-      color: #ffff66;
-      margin-top: 0;
-      margin-bottom: 15px;
+      font-size: 1.6rem;
+      font-weight: bold;
+      padding: 12px 20px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600);
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
+      text-align: center;
+      color: #000;
+      text-shadow: 0 0 4px #fff;
+      margin-bottom: 20px;
+      animation: titleGlow 6s infinite linear;
+      position: relative;
+      overflow: hidden;
     }
+    
+    .story-title::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0)
+      );
+      transform: rotate(30deg);
+      animation: shine 4s infinite;
+    }
+    
+    @keyframes shine {
+      0% {
+        transform: translateX(-100%) rotate(30deg);
+      }
+      100% {
+        transform: translateX(100%) rotate(30deg);
+      }
+    }
+    
+    @keyframes titleGlow {
+      0% { background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600); }
+      50% { background: linear-gradient(90deg, #ff6600, #00ffff, #ff00cc); }
+      100% { background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600); }
+    }
+    
     .story-text {
-      line-height: 1.6;
+      line-height: 1.7;
       min-height: 60px;
       border-left: 3px solid #ffff66;
-      padding-left: 15px;
+      padding: 15px 20px;
       margin-bottom: 20px;
+      font-size: 1.05rem;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 0 8px 8px 0;
+      position: relative;
     }
+    
+    .story-text::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: linear-gradient(transparent, #1a1a1a);
+      pointer-events: none;
+      border-radius: 0 0 8px 0;
+    }
+    
     .signature {
       color: #66b3ff;
       font-style: italic;
       text-align: right;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      text-shadow: 0 0 5px rgba(102, 179, 255, 0.5);
     }
+    
     .copyright {
-      font-size: 12px;
+      font-size: 0.9rem;
       color: #888;
       text-align: center;
+      margin-top: 10px;
+      padding: 8px;
+      border-top: 1px dashed #444;
     }
+    
     .loading {
       text-align: center;
-      font-size: 18px;
+      font-size: 1.4rem;
       color: #ffff66;
-      padding: 50px;
+      padding: 60px 20px;
+      text-shadow: 0 0 10px rgba(255, 255, 102, 0.7);
     }
+    
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
     button {
-      padding: 8px 16px;
-      font-size: 14px;
+      padding: 10px 20px;
+      font-size: 1rem;
       font-weight: bold;
-      margin: 0 5px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
-    .story-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  padding: 10px 15px;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600);
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
-  text-align: center;
-  color: #000;
-  text-shadow: 0 0 4px #fff;
-  margin-bottom: 10px;
-  animation: titleGlow 6s infinite linear;
-}
-
-@keyframes titleGlow {
-  0% { background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600); }
-  50% { background: linear-gradient(90deg, #ff6600, #00ffff, #ff00cc); }
-  100% { background: linear-gradient(90deg, #00ff88, #ff00cc, #ff6600); }
-}
+    
+    button.copy-btn {
+      background: linear-gradient(to bottom, #ffff66, #ffcc00);
+      color: #000;
+    }
+    
+    button.copy-btn:hover {
+      background: linear-gradient(to bottom, #ffcc00, #ffff66);
+      box-shadow: 0 0 15px rgba(255, 255, 102, 0.7);
+    }
+    
+    button.share-btn {
+      background: linear-gradient(to bottom, #66ffcc, #00cc99);
+      color: #000;
+    }
+    
+    button.share-btn:hover {
+      background: linear-gradient(to bottom, #00cc99, #66ffcc);
+      box-shadow: 0 0 15px rgba(102, 255, 204, 0.7);
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      color: #888;
+      font-size: 0.9rem;
+      border-top: 1px solid #333;
+    }
+    
+    .typing-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background-color: #ffff66;
+      margin-left: 2px;
+      animation: blink 0.7s infinite;
+      vertical-align: middle;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 15px;
+      }
+      
+      .header h1 {
+        font-size: 2.2rem;
+      }
+      
+      .story-box {
+        padding: 20px;
+        margin-bottom: 25px;
+      }
+      
+      .story-title {
+        font-size: 1.4rem;
+        padding: 10px 15px;
+      }
+      
+      .buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924"
      crossorigin="anonymous"></script>
 </head>
 <body>
-  <div class="container" id="stories-container">
-    <div class="loading">Loading stories...</div>
+  <div class="container">
+    <div class="header">
+      <h1><i class="fas fa-robot"></i> YouTube full story </h1>
+<p> 💎 हमारी टीम – मेहनत का दूसरा नाम (not copyright)</p>
+    </div>
+    
+    <div id="stories-container">
+      <div class="loading">
+        <i class="fas fa-spinner fa-spin"></i> Loading stories...
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p>Powered by AI Story Generator | Not Copyright © 2023</p>
+    </div>
   </div>
 
   <script>
     function typeWriter(element, text, speed = 20) {
       let i = 0;
-      element.innerHTML = '';
+      element.innerHTML = '<span class="typing-cursor"></span>';
       function typing() {
         if (i < text.length) {
-          element.innerHTML += text.charAt(i);
+          element.innerHTML = text.substring(0, i+1) + '<span class="typing-cursor"></span>';
           i++;
           setTimeout(typing, speed);
+        } else {
+          element.innerHTML = text;
         }
       }
       typing();
@@ -116,30 +329,41 @@
         const stories = await response.json();
         container.innerHTML = '';
 
+        if (stories.length === 0) {
+          container.innerHTML = '<div class="loading">No stories found</div>';
+          return;
+        }
+
         stories.forEach(story => {
           const storyBox = document.createElement('div');
           storyBox.className = 'story-box';
 
           storyBox.innerHTML = `
             ${story.imgUrl ? `<img src="${story.imgUrl}" class="story-img" alt="${story.storyTitle}">` : ''}
-            ${story.storyTitle || ''}
+            <h2 class="story-title">${story.storyTitle || 'Untitled Story'}</h2>
             <p class="story-text"></p>
-            ${story.signature ? `<div class="signature">${story.signature}</div>` : ''}
-            <div class="copyright">not copyright ©</div>
-            <div style="text-align: center; margin-top: 15px;">
-              <button onclick="copyText(this)" style="background: #ffff66; color: #000;">Copy</button>
-              <button onclick="shareText(this)" style="background: #66ffcc; color: #000;">Share</button>
+            ${story.signature ? `<div class="signature">— ${story.signature}</div>` : ''}
+            <div class="buttons">
+              <button class="copy-btn"><i class="fas fa-copy"></i> Copy</button>
+              <button class="share-btn"><i class="fas fa-share-alt"></i> Share</button>
             </div>
+            <div class="copyright">Not Copyright ©</div>
           `;
 
           container.appendChild(storyBox);
           const textElement = storyBox.querySelector('.story-text');
           typeWriter(textElement, story.fullStory || 'No story content available');
+          
+          // Add event listeners to buttons
+          storyBox.querySelector('.copy-btn').addEventListener('click', function() {
+            copyText(this);
+          });
+          
+          storyBox.querySelector('.share-btn').addEventListener('click', function() {
+            shareText(this);
+          });
         });
 
-        if (container.innerHTML === '') {
-          container.innerHTML = '<div class="loading">No stories found</div>';
-        }
       } catch (error) {
         console.error('Error fetching stories:', error);
         container.innerHTML = '<div class="loading">Error loading stories. Please check URL or Sheet!</div>';
@@ -149,26 +373,37 @@
     function copyText(button) {
       const text = button.closest('.story-box').querySelector('.story-text').innerText;
       navigator.clipboard.writeText(text).then(() => {
-        alert('Copied!');
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        setTimeout(() => {
+          button.innerHTML = originalText;
+        }, 2000);
       });
     }
 
     function shareText(button) {
       const text = button.closest('.story-box').querySelector('.story-text').innerText;
+      const title = button.closest('.story-box').querySelector('.story-title').innerText;
       const url = window.location.href;
+      
       if (navigator.share) {
         navigator.share({
-          title: 'Motivational Story',
+          title: title,
           text: text,
           url: url
-        }).catch(() => alert('Share cancelled or failed.'));
+        }).catch(() => {
+          const originalText = button.innerHTML;
+          button.innerHTML = '<i class="fas fa-times"></i> Failed';
+          setTimeout(() => {
+            button.innerHTML = originalText;
+          }, 2000);
+        });
       } else {
-        alert('Sharing not supported on this device');
+        alert('Sharing not supported on this device. Copy the text instead.');
       }
     }
 
     document.addEventListener('DOMContentLoaded', fetchStories);
   </script>
-  <script src="https://deepakchauhanxai.xyz/widgets/ai_bhai_popup2.js"></script>
 </body>
 </html>
