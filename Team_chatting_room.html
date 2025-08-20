@@ -2,81 +2,203 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Chat Room</title>
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
     body {
       font-family: Arial, sans-serif;
       background: #f4f4f9;
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin: 0;
+      height: 100vh;
       padding: 20px;
     }
-    #chatBox {
-      width: 90%;
-      max-width: 500px;
-      height: 400px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      margin: 20px auto;
-      padding: 10px;
-      overflow-y: scroll;
-      background: #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    #chatBox p {
-      margin: 5px 0;
-      padding: 6px 10px;
-      border-radius: 8px;
-      word-wrap: break-word;
-    }
-    .me { background: #DCF8C6; text-align: right; }
-    .other { background: #f1f1f1; text-align: left; }
-    #controls {
-      width: 90%;
-      max-width: 500px;
+    
+    .container {
+      width: 100%;
+      max-width: 800px;
+      height: 100%;
       display: flex;
-      margin-bottom: 20px;
-      gap: 5px;
+      flex-direction: column;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
     }
-    #msg {
-      flex: 1;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-    #send, #fileBtn {
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
+    
+    header {
       background: #4CAF50;
       color: white;
-      cursor: pointer;
+      padding: 15px 20px;
+      text-align: center;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
     }
-    #fileBtn { background: #2196F3; }
-    #send:hover { background: #45a049; }
-    #fileBtn:hover { background: #1976D2; }
+    
+    #chatBox {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background: #f9f9f9;
+    }
+    
+    #chatBox p {
+      margin: 8px 0;
+      padding: 10px 15px;
+      border-radius: 18px;
+      word-wrap: break-word;
+      max-width: 80%;
+      clear: both;
+    }
+    
+    .me { 
+      background: #DCF8C6; 
+      float: right;
+      margin-left: 20%;
+    }
+    
+    .other { 
+      background: #f1f1f1; 
+      float: left;
+      margin-right: 20%;
+    }
+    
     .status {
+      clear: both;
       color: #666;
       font-style: italic;
       text-align: center;
       margin: 5px 0;
+      background: transparent !important;
+      float: none !important;
+      max-width: 100% !important;
+    }
+    
+    .controls-container {
+      display: flex;
+      padding: 15px;
+      background: white;
+      border-top: 1px solid #eee;
+      gap: 8px;
+    }
+    
+    #msg {
+      flex: 1;
+      padding: 12px 15px;
+      border-radius: 24px;
+      border: 1px solid #ddd;
+      outline: none;
+      font-size: 16px;
+    }
+    
+    #msg:focus {
+      border-color: #4CAF50;
+    }
+    
+    .btn-group {
+      display: flex;
+      gap: 8px;
+    }
+    
+    #send, #fileBtn, #recordBtn {
+      padding: 12px 16px;
+      border: none;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    #send { background: #4CAF50; }
+    #fileBtn { background: #2196F3; }
+    #recordBtn { background: #FF5722; }
+    
+    #send:hover { background: #45a049; }
+    #fileBtn:hover { background: #1976D2; }
+    #recordBtn:hover { background: #E64A19; }
+    
+    #recordBtn.recording {
+      background: #f44336;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+    
+    #recordingIndicator {
+      padding: 8px 15px;
+      text-align: center;
+      background: #ffebee;
+      color: #f44336;
+      font-weight: bold;
+      display: none;
+    }
+    
+    .clear {
+      clear: both;
+    }
+    
+    /* Media queries for responsiveness */
+    @media (max-width: 600px) {
+      .container {
+        border-radius: 0;
+        height: 100%;
+      }
+      
+      header {
+        border-radius: 0;
+      }
+      
+      #chatBox p {
+        max-width: 90%;
+      }
+      
+      .me { 
+        margin-left: 10%;
+      }
+      
+      .other { 
+        margin-right: 10%;
+      }
     }
   </style>
 </head>
 <body>
 
-<h2>💬 Live Chat Room</h2>
-
-<div id="chatBox">
-  <p class="status">चैट लोड हो रही है...</p>
-</div>
-
-<div id="controls">
-  <input type="text" id="msg" placeholder="Type a message...">
-  <button id="send">Send</button>
-  <button id="fileBtn">📎</button>
+<div class="container">
+  <header>
+    <h2>💬 Live Chat Room</h2>
+  </header>
+  
+  <div id="chatBox">
+    <p class="status">चैट लोड हो रही है...</p>
+  </div>
+  
+  <div id="recordingIndicator">Recording... Click again to stop</div>
+  
+  <div class="controls-container">
+    <input type="text" id="msg" placeholder="Type a message...">
+    <div class="btn-group">
+      <button id="fileBtn">📎</button>
+      <button id="recordBtn">🎤</button>
+      <button id="send">➤</button>
+    </div>
+  </div>
 </div>
 
 <!-- hidden file input -->
@@ -90,6 +212,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Current User (testing ke liye fix, baad me login se change kar dena)
   let currentUser = "Deepak";
+  
+  // Audio recording variables
+  let mediaRecorder = null;
+  let audioChunks = [];
+  let isRecording = false;
+  
+  // Track if we're at the bottom of the chat
+  let isAtBottom = true;
 
   // =============== TEXT MESSAGE SEND ==================
   document.getElementById("send").addEventListener("click", sendMessage);
@@ -99,6 +229,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.key === 'Enter') {
       sendMessage();
     }
+  });
+  
+  // Check if user is scrolled to bottom
+  document.getElementById("chatBox").addEventListener("scroll", function() {
+    const chatBox = this;
+    isAtBottom = chatBox.scrollHeight - chatBox.scrollTop - chatBox.clientHeight < 50;
   });
 
   function sendMessage(){
@@ -189,6 +325,84 @@ document.addEventListener('DOMContentLoaded', function() {
     return "file";
   }
 
+  // =============== AUDIO RECORDING FUNCTIONALITY ==================
+  const recordBtn = document.getElementById('recordBtn');
+  const recordingIndicator = document.getElementById('recordingIndicator');
+  
+  recordBtn.addEventListener('click', toggleRecording);
+  
+  async function toggleRecording() {
+    if (!isRecording) {
+      // Start recording
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+        
+        mediaRecorder.ondataavailable = (event) => {
+          audioChunks.push(event.data);
+        };
+        
+        mediaRecorder.onstop = async () => {
+          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+          const audioFile = new File([audioBlob], 'recording.webm', { type: 'audio/webm' });
+          
+          // Send the recorded audio
+          sendAudio(audioFile);
+          
+          // Stop all tracks
+          stream.getTracks().forEach(track => track.stop());
+        };
+        
+        mediaRecorder.start();
+        isRecording = true;
+        recordBtn.classList.add('recording');
+        recordingIndicator.style.display = 'block';
+      } catch (error) {
+        console.error('Error accessing microphone:', error);
+        alert('माइक्रोफ़ोन तक पहुंचने में त्रुटि। कृपया अनुमति दें।');
+      }
+    } else {
+      // Stop recording
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+        isRecording = false;
+        recordBtn.classList.remove('recording');
+        recordingIndicator.style.display = 'none';
+      }
+    }
+  }
+  
+  function sendAudio(audioFile) {
+    let chatBox = document.getElementById("chatBox");
+    chatBox.innerHTML += `<p class="me status"><b>${currentUser}:</b> ऑडियो भेज रहा है...</p>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+    
+    let formData = new FormData();
+    formData.append("sender", currentUser);
+    formData.append("message", "Audio recording");
+    formData.append("type", "audio");
+    formData.append("file", audioFile);
+
+    fetch(API_SEND, {
+      method: "POST",
+      body: formData
+    })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return res.text();
+    })
+    .then(() => {
+      loadMessages();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      chatBox.innerHTML += `<p class="status">त्रुटि: ऑडियो भेजने में असफल</p>`;
+    });
+  }
+
   // =============== LOAD MESSAGES ==================
   function loadMessages(){
     fetch(API_GET)
@@ -200,6 +414,9 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .then(data => {
       let chatBox = document.getElementById("chatBox");
+      const previousScrollHeight = chatBox.scrollHeight;
+      const previousScrollTop = chatBox.scrollTop;
+      
       chatBox.innerHTML = "";
       
       if (data.length === 0) {
@@ -214,18 +431,25 @@ document.addEventListener('DOMContentLoaded', function() {
         if(m.type === "text"){
           content = m.message;
         } else if(m.type === "image"){
-          content = `<img src="https://deepakchauhanxai.xyz/${m.file}" width="200">`;
+          content = `<img src="https://deepakchauhanxai.xyz/${m.file}" width="200" style="border-radius: 8px;">`;
         } else if(m.type === "audio"){
-          content = `<audio controls src="https://deepakchauhanxai.xyz/${m.file}"></audio>`;
+          content = `<audio controls src="https://deepakchauhanxai.xyz/${m.file}" style="width: 250px; margin: 5px 0;"></audio>`;
         } else if(m.type === "video"){
-          content = `<video controls width="250" src="https://deepakchauhanxai.xyz/${m.file}"></video>`;
+          content = `<video controls width="250" src="https://deepakchauhanxai.xyz/${m.file}" style="border-radius: 8px;"></video>`;
         } else {
-          content = `<a href="https://deepakchauhanxai.xyz/${m.file}" target="_blank">Download File</a>`;
+          content = `<a href="https://deepakchauhanxai.xyz/${m.file}" target="_blank" style="color: #2196F3; text-decoration: none;">Download File</a>`;
         }
 
         chatBox.innerHTML += `<p class="${cls}"><b>${m.sender}:</b><br>${content}</p>`;
       });
-      chatBox.scrollTop = chatBox.scrollHeight;
+      
+      // Add clear div to fix float issues
+      chatBox.innerHTML += `<div class="clear"></div>`;
+      
+      // Auto-scroll only if user was at bottom before update
+      if (isAtBottom) {
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
     })
     .catch(error => {
       console.error('Error:', error);
