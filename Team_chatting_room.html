@@ -1,168 +1,244 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <title>Chat Room</title>
+  <title>My Chat Room</title>
   <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding: 20px;
+    }
     #chatBox {
-      width: 100%;
+      width: 90%;
+      max-width: 500px;
       height: 400px;
       border: 1px solid #ccc;
-      overflow-y: scroll;
+      border-radius: 10px;
+      margin: 20px auto;
       padding: 10px;
-      background: #f9f9f9;
+      overflow-y: scroll;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    .msg {
+    #chatBox p {
       margin: 5px 0;
-      padding: 8px;
-      border-radius: 5px;
-      background: #d4fcd4;
+      padding: 6px 10px;
+      border-radius: 8px;
+      word-wrap: break-word;
     }
-    #chatInput {
+    .me { background: #DCF8C6; text-align: right; }
+    .other { background: #f1f1f1; text-align: left; }
+    #controls {
+      width: 90%;
+      max-width: 500px;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 10px;
-      border-top: 1px solid #ccc;
-      padding: 5px;
+      margin-bottom: 20px;
+      gap: 5px;
     }
-    #messageInput {
+    #msg {
       flex: 1;
-      margin: 0 5px;
-      padding: 8px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
-    #fileBtn, #sendBtn {
-      padding: 8px 12px;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
+    #send, #fileBtn {
+      padding: 10px 15px;
       border: none;
-    }
-    #fileBtn {
-      background: #eee;
-    }
-    #sendBtn {
+      border-radius: 8px;
       background: #4CAF50;
       color: white;
+      cursor: pointer;
+    }
+    #fileBtn { background: #2196F3; }
+    #send:hover { background: #45a049; }
+    #fileBtn:hover { background: #1976D2; }
+    .status {
+      color: #666;
+      font-style: italic;
+      text-align: center;
+      margin: 5px 0;
     }
   </style>
 </head>
 <body>
-  <h2>Chat Room</h2>
 
-  <div id="chatBox"></div>
+<h2>💬 Live Chat Room</h2>
 
-  <div id="chatInput">
-    <!-- 📎 Left Side -->
-    <button type="button" id="fileBtn">📎</button>
-    <input type="file" id="fileInput" style="display:none">
+<div id="chatBox">
+  <p class="status">चैट लोड हो रही है...</p>
+</div>
 
-    <!-- Middle Input -->
-    <input type="text" id="messageInput" placeholder="Type a message...">
+<div id="controls">
+  <input type="text" id="msg" placeholder="Type a message...">
+  <button id="send">Send</button>
+  <button id="fileBtn">📎</button>
+</div>
 
-    <!-- ➡️ Right Side -->
-    <button id="sendBtn">Send</button>
-  </div>
+<!-- hidden file input -->
+<input type="file" id="fileInput" style="display:none">
 
-  <script>
-    const API_URL = "https://deepakchauhanxai.xyz"; // PHP वाला server
+<script>
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+  const API_SEND = "https://deepakchauhanxai.xyz/sendMessage.php";
+  const API_GET  = "https://deepakchauhanxai.xyz/getMessages.php";
 
-    // 📎 button click → file chooser khole
-    document.getElementById("fileBtn").onclick = function () {
-      document.getElementById("fileInput").click();
-    };
+  // Current User (testing ke liye fix, baad me login se change kar dena)
+  let currentUser = "Deepak";
 
-    // file select होने पर भेज दो
-    document.getElementById("fileInput").onchange = function () {
-      if (this.files.length > 0) {
-        let file = this.files[0];
-        sendFile(file);
-      }
-    };
+  // =============== TEXT MESSAGE SEND ==================
+  document.getElementById("send").addEventListener("click", sendMessage);
+  
+  // Allow sending message with Enter key
+  document.getElementById("msg").addEventListener("keypress", function(e) {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  });
 
-    // send text message
-    document.getElementById("sendBtn").onclick = function () {
-      let msg = document.getElementById("messageInput").value.trim();
-      if (msg !== "") {
-        sendMessage(msg);
-        document.getElementById("messageInput").value = "";
-      }
-    };
+  function sendMessage(){
+    let msgInput = document.getElementById("msg");
+    let msg = msgInput.value;
+    
+    if(msg.trim() === "") return;
+    
+    // Show sending status
+    let chatBox = document.getElementById("chatBox");
+    chatBox.innerHTML += `<p class="me status"><b>${currentUser}:</b> भेज रहा है...</p>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
 
-    function sendMessage(msg) {
-      let formData = new FormData();
-      formData.append("sender", "Deepak");
-      formData.append("message", msg);
-      formData.append("type", "text");
-
-      fetch(API_URL + "/sendMessage.php", {
-        method: "POST",
-        body: formData
+    fetch(API_SEND, {
+      method:"POST",
+      headers:{ "Content-Type":"application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        sender: currentUser, 
+        message: msg, 
+        type: "text", 
+        file: ""
       })
-      .then(res => res.text())
-      .then(data => {
-        console.log("Message sent:", data);
+    })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return res.text();
+    })
+    .then(() => {
+      msgInput.value = "";
+      loadMessages();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      chatBox.innerHTML += `<p class="status">त्रुटि: संदेश भेजने में असफल</p>`;
+    });
+  }
+
+  // =============== FILE MESSAGE SEND ==================
+  document.getElementById("fileBtn").addEventListener("click", ()=>{
+     document.getElementById("fileInput").click();
+  });
+
+  document.getElementById("fileInput").addEventListener("change", function(){
+     if(this.files.length > 0){
+        sendFile(this.files[0]);
+        // Reset file input
+        this.value = '';
+     }
+  });
+
+  function sendFile(file){
+     let chatBox = document.getElementById("chatBox");
+     chatBox.innerHTML += `<p class="me status"><b>${currentUser}:</b> फ़ाइल अपलोड कर रहा है...</p>`;
+     chatBox.scrollTop = chatBox.scrollHeight;
+     
+     let formData = new FormData();
+     formData.append("sender", currentUser);
+     formData.append("message", "");
+     formData.append("type", getFileType(file.name));
+     formData.append("file", file);
+
+     fetch(API_SEND, {
+       method: "POST",
+       body: formData
+     })
+     .then(res => {
+       if (!res.ok) {
+         throw new Error('Network response was not ok');
+       }
+       return res.text();
+     })
+     .then(() => {
         loadMessages();
+     })
+     .catch(error => {
+        console.error('Error:', error);
+        chatBox.innerHTML += `<p class="status">त्रुटि: फ़ाइल अपलोड करने में असफल</p>`;
+     });
+  }
+
+  function getFileType(name){
+    let ext = name.split(".").pop().toLowerCase();
+    if(["jpg","jpeg","png","gif","webp"].includes(ext)) return "image";
+    if(["mp3","wav","ogg"].includes(ext)) return "audio";
+    if(["mp4","webm","mkv"].includes(ext)) return "video";
+    return "file";
+  }
+
+  // =============== LOAD MESSAGES ==================
+  function loadMessages(){
+    fetch(API_GET)
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return res.json();
+    })
+    .then(data => {
+      let chatBox = document.getElementById("chatBox");
+      chatBox.innerHTML = "";
+      
+      if (data.length === 0) {
+        chatBox.innerHTML = `<p class="status">कोई संदेश नहीं है। पहला संदेश भेजें!</p>`;
+        return;
+      }
+      
+      data.forEach(m => {
+        let cls = (m.sender === currentUser) ? "me" : "other";
+        let content = "";
+
+        if(m.type === "text"){
+          content = m.message;
+        } else if(m.type === "image"){
+          content = `<img src="https://deepakchauhanxai.xyz/${m.file}" width="200">`;
+        } else if(m.type === "audio"){
+          content = `<audio controls src="https://deepakchauhanxai.xyz/${m.file}"></audio>`;
+        } else if(m.type === "video"){
+          content = `<video controls width="250" src="https://deepakchauhanxai.xyz/${m.file}"></video>`;
+        } else {
+          content = `<a href="https://deepakchauhanxai.xyz/${m.file}" target="_blank">Download File</a>`;
+        }
+
+        chatBox.innerHTML += `<p class="${cls}"><b>${m.sender}:</b><br>${content}</p>`;
       });
-    }
+      chatBox.scrollTop = chatBox.scrollHeight;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      let chatBox = document.getElementById("chatBox");
+      chatBox.innerHTML = `<p class="status">त्रुटि: संदेश लोड करने में असफल</p>`;
+    });
+  }
 
-    function sendFile(file) {
-      let formData = new FormData();
-      formData.append("sender", "Deepak");
-      formData.append("message", "");
-      formData.append("type", getFileType(file.name));
-      formData.append("file", file);
+  // Auto refresh
+  setInterval(loadMessages, 2000);
+  loadMessages();
+});
+</script>
 
-      fetch(API_URL + "/sendMessage.php", {
-        method: "POST",
-        body: formData
-      })
-      .then(res => res.text())
-      .then(data => {
-        console.log("File sent:", data);
-        loadMessages();
-      });
-    }
-
-    function getFileType(name) {
-      let ext = name.split(".").pop().toLowerCase();
-      if(["jpg","jpeg","png","gif","webp"].includes(ext)) return "image";
-      if(["mp3","wav","ogg"].includes(ext)) return "audio";
-      if(["mp4","webm","mkv"].includes(ext)) return "video";
-      return "file";
-    }
-
-    // load messages from PHP
-    function loadMessages() {
-      fetch(API_URL + "/getMessages.php")
-      .then(res => res.json())
-      .then(data => {
-        let chatBox = document.getElementById("chatBox");
-        chatBox.innerHTML = "";
-        data.forEach(msg => {
-          let div = document.createElement("div");
-          div.className = "msg";
-
-          if (msg.type === "text") {
-            div.innerHTML = `<b>${msg.sender}:</b> ${msg.message}`;
-          } else if (msg.type === "image") {
-            div.innerHTML = `<b>${msg.sender}:</b><br><img src="${msg.message}" width="150">`;
-          } else if (msg.type === "audio") {
-            div.innerHTML = `<b>${msg.sender}:</b><br><audio controls src="${msg.message}"></audio>`;
-          } else if (msg.type === "video") {
-            div.innerHTML = `<b>${msg.sender}:</b><br><video controls width="200" src="${msg.message}"></video>`;
-          } else {
-            div.innerHTML = `<b>${msg.sender}:</b> <a href="${msg.message}" target="_blank">Download File</a>`;
-          }
-
-          chatBox.appendChild(div);
-        });
-        chatBox.scrollTop = chatBox.scrollHeight;
-      });
-    }
-
-    setInterval(loadMessages, 3000); // auto refresh
-    loadMessages();
-  </script>
 </body>
 </html>
