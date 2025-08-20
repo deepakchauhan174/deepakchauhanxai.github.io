@@ -12,24 +12,25 @@
     }
     
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
       display: flex;
       flex-direction: column;
       align-items: center;
-      height: 100vh;
+      justify-content: center;
+      min-height: 100vh;
       padding: 20px;
     }
     
     .container {
       width: 100%;
       max-width: 800px;
-      height: 100%;
+      height: 90vh;
       display: flex;
       flex-direction: column;
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       overflow: hidden;
     }
     
@@ -38,8 +39,45 @@
       color: white;
       padding: 15px 20px;
       text-align: center;
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    #userName {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 20px;
+      padding: 6px 12px;
+      color: white;
+      font-weight: bold;
+      width: 120px;
+    }
+    
+    #userName::placeholder {
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    #onlineCount {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 14px;
     }
     
     #chatBox {
@@ -47,38 +85,54 @@
       padding: 15px;
       overflow-y: auto;
       background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
     }
     
     #chatBox p {
       margin: 8px 0;
-      padding: 10px 15px;
+      padding: 12px 16px;
       border-radius: 18px;
       word-wrap: break-word;
       max-width: 80%;
-      clear: both;
+      position: relative;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .me { 
       background: #DCF8C6; 
-      float: right;
-      margin-left: 20%;
+      align-self: flex-end;
+      border-bottom-right-radius: 5px;
     }
     
     .other { 
-      background: #f1f1f1; 
-      float: left;
-      margin-right: 20%;
+      background: #ffffff; 
+      align-self: flex-start;
+      border-bottom-left-radius: 5px;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
+    
+    .message-info {
+      font-size: 12px;
+      color: #888;
+      margin-top: 4px;
+      text-align: right;
     }
     
     .status {
-      clear: both;
       color: #666;
       font-style: italic;
       text-align: center;
       margin: 5px 0;
       background: transparent !important;
-      float: none !important;
+      align-self: center;
       max-width: 100% !important;
+      font-size: 14px;
     }
     
     .controls-container {
@@ -86,48 +140,52 @@
       padding: 15px;
       background: white;
       border-top: 1px solid #eee;
-      gap: 8px;
+      gap: 10px;
+      align-items: center;
     }
     
     #msg {
       flex: 1;
-      padding: 12px 15px;
+      padding: 14px 18px;
       border-radius: 24px;
       border: 1px solid #ddd;
       outline: none;
       font-size: 16px;
+      transition: border-color 0.3s;
     }
     
     #msg:focus {
       border-color: #4CAF50;
+      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
     }
     
     .btn-group {
       display: flex;
-      gap: 8px;
+      gap: 10px;
     }
     
     #send, #fileBtn, #recordBtn {
-      padding: 12px 16px;
+      padding: 12px;
       border: none;
       border-radius: 50%;
       color: white;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 18px;
       width: 50px;
       height: 50px;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 0.1s, background 0.3s;
     }
     
     #send { background: #4CAF50; }
     #fileBtn { background: #2196F3; }
     #recordBtn { background: #FF5722; }
     
-    #send:hover { background: #45a049; }
-    #fileBtn:hover { background: #1976D2; }
-    #recordBtn:hover { background: #E64A19; }
+    #send:hover { background: #45a049; transform: scale(1.05); }
+    #fileBtn:hover { background: #1976D2; transform: scale(1.05); }
+    #recordBtn:hover { background: #E64A19; transform: scale(1.05); }
     
     #recordBtn.recording {
       background: #f44336;
@@ -135,29 +193,156 @@
     }
     
     @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.6; }
-      100% { opacity: 1; }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
     
     #recordingIndicator {
-      padding: 8px 15px;
+      padding: 10px 15px;
       text-align: center;
       background: #ffebee;
       color: #f44336;
       font-weight: bold;
       display: none;
+      font-size: 14px;
     }
     
-    .clear {
-      clear: both;
+    /* File type indicators */
+    .file-message {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 0;
+    }
+    
+    .file-icon {
+      font-size: 24px;
+    }
+    
+    /* Login modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    .modal h2 {
+      margin-bottom: 20px;
+      color: #4CAF50;
+    }
+    
+    #userNameInput {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 20px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      text-align: center;
+    }
+    
+    #userNameInput:focus {
+      border-color: #4CAF50;
+      outline: none;
+    }
+    
+    #joinChat {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    #joinChat:hover {
+      background: #45a049;
+    }
+    
+    /* Scrollbar styling */
+    #chatBox::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    #chatBox::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    #chatBox::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 10px;
+    }
+    
+    #chatBox::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
     }
     
     /* Media queries for responsiveness */
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      .container {
+        height: 95vh;
+        border-radius: 12px;
+      }
+      
+      header {
+        padding: 12px 15px;
+        border-radius: 12px 12px 0 0;
+      }
+      
+      #chatBox p {
+        max-width: 85%;
+        padding: 10px 14px;
+      }
+      
+      .btn-group {
+        gap: 8px;
+      }
+      
+      #send, #fileBtn, #recordBtn {
+        width: 46px;
+        height: 46px;
+        font-size: 16px;
+      }
+      
+      #msg {
+        padding: 12px 16px;
+      }
+      
+      .header-content h2 {
+        font-size: 18px;
+      }
+    }
+    
+    @media (max-width: 480px) {
       .container {
         border-radius: 0;
-        height: 100%;
+        height: 100vh;
       }
       
       header {
@@ -168,21 +353,95 @@
         max-width: 90%;
       }
       
-      .me { 
-        margin-left: 10%;
+      .controls-container {
+        padding: 12px;
       }
       
-      .other { 
-        margin-right: 10%;
+      .btn-group {
+        gap: 6px;
+      }
+      
+      #send, #fileBtn, #recordBtn {
+        width: 44px;
+        height: 44px;
+      }
+      
+      #userName {
+        width: 100px;
+        font-size: 14px;
+      }
+    }
+    
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: linear-gradient(135deg, #2c3e50, #4a235a);
+      }
+      
+      .container {
+        background: #1e1e1e;
+        color: #f0f0f0;
+      }
+      
+      #chatBox {
+        background: #121212;
+      }
+      
+      .other {
+        background: #2d2d2d;
+        color: #f0f0f0;
+      }
+      
+      .status {
+        color: #aaa;
+      }
+      
+      #msg {
+        background: #2d2d2d;
+        color: #f0f0f0;
+        border-color: #444;
+      }
+      
+      .controls-container {
+        background: #1e1e1e;
+        border-color: #333;
+      }
+      
+      /* Scrollbar for dark mode */
+      #chatBox::-webkit-scrollbar-track {
+        background: #2d2d2d;
+      }
+      
+      #chatBox::-webkit-scrollbar-thumb {
+        background: #555;
+      }
+      
+      #chatBox::-webkit-scrollbar-thumb:hover {
+        background: #777;
       }
     }
   </style>
 </head>
 <body>
 
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <h2>चैट रूम में आपका स्वागत है</h2>
+    <input type="text" id="userNameInput" placeholder="अपना नाम दर्ज करें" maxlength="20">
+    <button id="joinChat">चैट में शामिल हों</button>
+  </div>
+</div>
+
 <div class="container">
   <header>
-    <h2>💬 Live Chat Room</h2>
+    <div class="header-content">
+      <h2>💬 Live Chat Room</h2>
+      <div class="user-info">
+        <input type="text" id="userName" placeholder="आपका नाम" readonly>
+        <span id="onlineCount">0 Online</span>
+      </div>
+    </div>
   </header>
   
   <div id="chatBox">
@@ -192,11 +451,11 @@
   <div id="recordingIndicator">Recording... Click again to stop</div>
   
   <div class="controls-container">
-    <input type="text" id="msg" placeholder="Type a message...">
+    <input type="text" id="msg" placeholder="Type a message..." disabled>
     <div class="btn-group">
-      <button id="fileBtn">📎</button>
-      <button id="recordBtn">🎤</button>
-      <button id="send">➤</button>
+      <button id="fileBtn" title="Attach file">📎</button>
+      <button id="recordBtn" title="Record audio">🎤</button>
+      <button id="send" title="Send message">➤</button>
     </div>
   </div>
 </div>
@@ -210,8 +469,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const API_SEND = "https://deepakchauhanxai.xyz/sendMessage.php";
   const API_GET  = "https://deepakchauhanxai.xyz/getMessages.php";
 
-  // Current User (testing ke liye fix, baad me login se change kar dena)
-  let currentUser = "Deepak";
+  // Current User
+  let currentUser = "";
   
   // Audio recording variables
   let mediaRecorder = null;
@@ -220,31 +479,65 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Track if we're at the bottom of the chat
   let isAtBottom = true;
+  
+  // DOM Elements
+  const loginModal = document.getElementById("loginModal");
+  const userNameInput = document.getElementById("userNameInput");
+  const joinChatBtn = document.getElementById("joinChat");
+  const userNameDisplay = document.getElementById("userName");
+  const msgInput = document.getElementById("msg");
+  const sendBtn = document.getElementById("send");
+  const fileBtn = document.getElementById("fileBtn");
+  const recordBtn = document.getElementById("recordBtn");
+  const fileInput = document.getElementById("fileInput");
+  const chatBox = document.getElementById("chatBox");
+  const recordingIndicator = document.getElementById("recordingIndicator");
+  const onlineCount = document.getElementById("onlineCount");
+
+  // =============== USER LOGIN ==================
+  joinChatBtn.addEventListener("click", function() {
+    const name = userNameInput.value.trim();
+    if (name) {
+      currentUser = name;
+      userNameDisplay.value = currentUser;
+      loginModal.style.display = "none";
+      msgInput.disabled = false;
+      loadMessages();
+    } else {
+      userNameInput.focus();
+    }
+  });
+
+  userNameInput.addEventListener("keypress", function(e) {
+    if (e.key === 'Enter') {
+      joinChatBtn.click();
+    }
+  });
+
+  // Focus on input when modal opens
+  userNameInput.focus();
 
   // =============== TEXT MESSAGE SEND ==================
-  document.getElementById("send").addEventListener("click", sendMessage);
+  sendBtn.addEventListener("click", sendMessage);
   
   // Allow sending message with Enter key
-  document.getElementById("msg").addEventListener("keypress", function(e) {
+  msgInput.addEventListener("keypress", function(e) {
     if (e.key === 'Enter') {
       sendMessage();
     }
   });
   
   // Check if user is scrolled to bottom
-  document.getElementById("chatBox").addEventListener("scroll", function() {
-    const chatBox = this;
+  chatBox.addEventListener("scroll", function() {
     isAtBottom = chatBox.scrollHeight - chatBox.scrollTop - chatBox.clientHeight < 50;
   });
 
   function sendMessage(){
-    let msgInput = document.getElementById("msg");
     let msg = msgInput.value;
     
     if(msg.trim() === "") return;
     
     // Show sending status
-    let chatBox = document.getElementById("chatBox");
     chatBox.innerHTML += `<p class="me status"><b>${currentUser}:</b> भेज रहा है...</p>`;
     chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -275,11 +568,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // =============== FILE MESSAGE SEND ==================
-  document.getElementById("fileBtn").addEventListener("click", ()=>{
-     document.getElementById("fileInput").click();
+  fileBtn.addEventListener("click", ()=>{
+     fileInput.click();
   });
 
-  document.getElementById("fileInput").addEventListener("change", function(){
+  fileInput.addEventListener("change", function(){
      if(this.files.length > 0){
         sendFile(this.files[0]);
         // Reset file input
@@ -288,13 +581,12 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   function sendFile(file){
-     let chatBox = document.getElementById("chatBox");
      chatBox.innerHTML += `<p class="me status"><b>${currentUser}:</b> फ़ाइल अपलोड कर रहा है...</p>`;
      chatBox.scrollTop = chatBox.scrollHeight;
      
      let formData = new FormData();
      formData.append("sender", currentUser);
-     formData.append("message", "");
+     formData.append("message", file.name);
      formData.append("type", getFileType(file.name));
      formData.append("file", file);
 
@@ -326,9 +618,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // =============== AUDIO RECORDING FUNCTIONALITY ==================
-  const recordBtn = document.getElementById('recordBtn');
-  const recordingIndicator = document.getElementById('recordingIndicator');
-  
   recordBtn.addEventListener('click', toggleRecording);
   
   async function toggleRecording() {
@@ -374,7 +663,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function sendAudio(audioFile) {
-    let chatBox = document.getElementById("chatBox");
     chatBox.innerHTML += `<p class="me status"><b>${currentUser}:</b> ऑडियो भेज रहा है...</p>`;
     chatBox.scrollTop = chatBox.scrollHeight;
     
@@ -413,7 +701,6 @@ document.addEventListener('DOMContentLoaded', function() {
       return res.json();
     })
     .then(data => {
-      let chatBox = document.getElementById("chatBox");
       const previousScrollHeight = chatBox.scrollHeight;
       const previousScrollTop = chatBox.scrollTop;
       
@@ -431,36 +718,40 @@ document.addEventListener('DOMContentLoaded', function() {
         if(m.type === "text"){
           content = m.message;
         } else if(m.type === "image"){
-          content = `<img src="https://deepakchauhanxai.xyz/${m.file}" width="200" style="border-radius: 8px;">`;
+          content = `<img src="https://deepakchauhanxai.xyz/${m.file}" width="200" style="border-radius: 8px; max-width: 100%;">`;
         } else if(m.type === "audio"){
-          content = `<audio controls src="https://deepakchauhanxai.xyz/${m.file}" style="width: 250px; margin: 5px 0;"></audio>`;
+          content = `<audio controls src="https://deepakchauhanxai.xyz/${m.file}" style="width: 250px; max-width: 100%; margin: 5px 0;"></audio>`;
         } else if(m.type === "video"){
-          content = `<video controls width="250" src="https://deepakchauhanxai.xyz/${m.file}" style="border-radius: 8px;"></video>`;
+          content = `<video controls width="250" src="https://deepakchauhanxai.xyz/${m.file}" style="border-radius: 8px; max-width: 100%;"></video>`;
         } else {
-          content = `<a href="https://deepakchauhanxai.xyz/${m.file}" target="_blank" style="color: #2196F3; text-decoration: none;">Download File</a>`;
+          content = `<div class="file-message">
+                      <span class="file-icon">📄</span>
+                      <a href="https://deepakchauhanxai.xyz/${m.file}" target="_blank" style="color: #2196F3; text-decoration: none;">${m.message || 'Download File'}</a>
+                    </div>`;
         }
 
-        chatBox.innerHTML += `<p class="${cls}"><b>${m.sender}:</b><br>${content}</p>`;
+        // Add timestamp if available
+        const timestamp = m.timestamp ? new Date(m.timestamp).toLocaleTimeString() : new Date().toLocaleTimeString();
+        
+        chatBox.innerHTML += `<p class="${cls}"><b>${m.sender}:</b><br>${content}<div class="message-info">${timestamp}</div></p>`;
       });
-      
-      // Add clear div to fix float issues
-      chatBox.innerHTML += `<div class="clear"></div>`;
       
       // Auto-scroll only if user was at bottom before update
       if (isAtBottom) {
         chatBox.scrollTop = chatBox.scrollHeight;
       }
+      
+      // Update online count (simulated)
+      onlineCount.textContent = `${Math.floor(Math.random() * 10) + 1} Online`;
     })
     .catch(error => {
       console.error('Error:', error);
-      let chatBox = document.getElementById("chatBox");
       chatBox.innerHTML = `<p class="status">त्रुटि: संदेश लोड करने में असफल</p>`;
     });
   }
 
   // Auto refresh
-  setInterval(loadMessages, 2000);
-  loadMessages();
+  setInterval(loadMessages, 3000);
 });
 </script>
 
