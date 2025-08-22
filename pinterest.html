@@ -42,6 +42,28 @@
   .pill{padding:6px 10px;border-radius:999px;background:#0b1225;border:1px solid #334155;color:#cbd5e1;margin-left:8px}
   .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
   .hint{color:#a3a3a3;font-size:12px}
+  .add-btn {
+  background: linear-gradient(135deg, #0073e6, #005bb5);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.add-btn:hover {
+  background: linear-gradient(135deg, #005bb5, #003f88);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.add-btn:active {
+  transform: scale(0.97);
+}
 </style>
 </head>
 <body>
@@ -49,6 +71,9 @@
   <div class="wrap">
     <h1>📌 Admin Panel <span class="pill mono" id="env">loading…</span></h1>
     <div class="sub">Pinterest Auto Uploader • Queue देखें, फ़िल्टर करें, Done/Delete करें</div>
+    <button class="add-btn" onclick="window.location.href='https://deepakchauhanxai.com/add_member.html'">
+  ➕ Add New Member
+    </button>
     <div class="toolbar card controls">
       <input id="search" placeholder="Search: title / description / link / username" />
       <select id="status">
