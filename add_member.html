@@ -16,14 +16,14 @@
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       padding: 25px;
-      width: 400px;
+      width: 420px;
     }
     h2 {
       text-align: center;
       color: #333;
       margin-bottom: 20px;
     }
-    input, button {
+    input, button, select {
       width: 100%;
       padding: 12px;
       margin: 8px 0;
@@ -38,14 +38,39 @@
       cursor: pointer;
       transition: 0.3s;
     }
-    button:hover {
-      background: #005bb5;
-    }
+    button:hover { background: #005bb5; }
     .note {
       font-size: 13px;
       color: #777;
       text-align: center;
       margin-top: 10px;
+    }
+
+    /* Dark tool for boards */
+    .board-tool {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      background: #111827;
+    }
+    .board-tool input,
+    .board-tool select,
+    .board-tool button {
+      width: 100%;
+      margin: 6px 0;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #0b1225;
+      color: #e5e7eb;
+      font-size: 14px;
+      padding: 10px;
+    }
+    .board-tool input::placeholder { color: #64748b; }
+    .board-tool button {
+      background: linear-gradient(90deg,#06b6d4,#22d3ee);
+      color: #04222a;
+      font-weight: 600;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -58,12 +83,51 @@
       <input type="text" name="app_id" placeholder="Pinterest App ID" required>
       <input type="text" name="app_secret" placeholder="Pinterest App Secret" required>
       <input type="text" name="access_token" placeholder="Pinterest Access Token" required>
-      <input type="text" name="default_board_id" placeholder="Default Board ID" required>
+      <input type="text" name="default_board_id" id="defaultBoard" placeholder="Default Board ID" required>
       <button type="submit">Add Member</button>
     </form>
-    <div class="note">
-      All details will be saved securely in DB.
+
+    <div class="note">All details will be saved securely in DB.</div>
+
+    <!-- Get Boards Tool -->
+    <div class="board-tool">
+      <input type="text" id="accessToken" placeholder="Enter Pinterest Access Token">
+      <button type="button" onclick="loadBoards()">Get Boards</button>
+      <select id="boardSelect" onchange="setBoardId()">
+        <option>Select your board</option>
+      </select>
     </div>
   </div>
+
+  <script>
+  function loadBoards(){
+    let token = document.getElementById("accessToken").value;
+    if(!token){ alert("Enter Access Token"); return; }
+    fetch("https://deepakchauhanxai.xyz/pinterest/fetch_boards.php?token=" + token)
+    .then(r => r.json())
+    .then(data => {
+      let sel = document.getElementById("boardSelect");
+      sel.innerHTML = "";
+      if(data.items){
+        data.items.forEach(board => {
+          let opt = document.createElement("option");
+          opt.value = board.id;
+          opt.textContent = board.name + " (" + board.id + ")";
+          sel.appendChild(opt);
+        });
+      } else {
+        let opt = document.createElement("option");
+        opt.textContent = "Error fetching boards";
+        sel.appendChild(opt);
+      }
+    })
+    .catch(err => alert("Error: " + err));
+  }
+
+  function setBoardId(){
+    let val = document.getElementById("boardSelect").value;
+    document.getElementById("defaultBoard").value = val;
+  }
+  </script>
 </body>
 </html>
