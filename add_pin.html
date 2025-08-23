@@ -64,55 +64,53 @@
   </div>
 
   <script>
-    // Members load karna
-    fetch("https://deepakchauhanxai.xyz/pinterest/list_members.php")
-      .then(res => res.json())
-      .then(data => {
-        const memberSelect = document.getElementById("member");
-        memberSelect.innerHTML = "";
-        if (data.ok && data.members.length > 0) {
-          data.members.forEach(m => {
-            let option = document.createElement("option");
-            option.value = m.id; // member_id
-            option.setAttribute("data-board_id", m.default_board_id); // 👈 board_id bhi store
-            option.textContent = m.name + " (" + m.username + ")";
-            memberSelect.appendChild(option);
-          });
-        } else {
-          memberSelect.innerHTML = "<option>No members</option>";
-        }
-      })
-      .catch(err => {
-        console.error("Member load error:", err);
-        document.getElementById("member").innerHTML = "<option>Error loading</option>";
+// Members load karna
+fetch("https://deepakchauhanxai.xyz/pinterest/list_members.php")
+  .then(res => res.json())
+  .then(data => {
+    const memberSelect = document.getElementById("member");
+    memberSelect.innerHTML = "";
+    if (data.ok && data.members.length > 0) {
+      data.members.forEach(m => {
+        let option = document.createElement("option");
+        option.value = m.board_id; // अब value में board_id rakha
+        option.textContent = m.name + " (" + m.username + ")";
+        memberSelect.appendChild(option);
       });
-
-    // Pin submit karna
-    function submitPin() {
-      const memberSelect = document.getElementById("member");
-      const selectedOption = memberSelect.options[memberSelect.selectedIndex];
-
-      const formData = new FormData();
-      formData.append("member_id", selectedOption.value);
-      formData.append("board_id", selectedOption.getAttribute("data-board_id")); // 👈 board_id bhejna
-      formData.append("image_url", document.getElementById("image").value);
-      formData.append("title", document.getElementById("title").value);
-      formData.append("description", document.getElementById("description").value);
-
-      fetch("https://deepakchauhanxai.xyz/pinterest/add_pin.php", {
-        method: "POST",
-        body: formData
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log("Response:", data);
-        alert(data.msg);
-      })
-      .catch(err => {
-        console.error("Fetch error:", err);
-        alert("❌ Network/API error");
-      });
+    } else {
+      memberSelect.innerHTML = "<option>No members</option>";
     }
+  })
+  .catch(err => {
+    console.error("Member load error:", err);
+    document.getElementById("member").innerHTML = "<option>Error loading</option>";
+  });
+
+// Pin submit karna
+function submitPin() {
+  const formData = new FormData();
+  const select = document.getElementById("member");
+  
+  formData.append("member_id", select.options[select.selectedIndex].text.split(" ")[0]); // id name se extract
+  formData.append("board_id", select.value); // board_id ab yahan se aa raha
+  formData.append("image_url", document.getElementById("image").value);
+  formData.append("title", document.getElementById("title").value);
+  formData.append("description", document.getElementById("description").value);
+
+  fetch("https://deepakchauhanxai.xyz/pinterest/add_pin.php", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log("Response:", data);
+    alert(data.msg);
+  })
+  .catch(err => {
+    console.error("Fetch error:", err);
+    alert("❌ Network/API error");
+  });
+}
   </script>
 </body>
 </html>
