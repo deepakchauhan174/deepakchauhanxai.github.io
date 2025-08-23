@@ -51,11 +51,6 @@
       <option value="">Loading...</option>
     </select>
 
-    <label>📌 Select Board</label>
-    <select id="board">
-      <option value="">Select member first</option>
-    </select>
-
     <label>🖼️ Image URL</label>
     <input type="text" id="image" placeholder="https://example.com/image.jpg" />
 
@@ -65,14 +60,11 @@
     <label>📝 Description</label>
     <textarea id="description" placeholder="Enter Pin Description"></textarea>
 
-    <label>🏷️ Tags (comma separated)</label>
-    <input type="text" id="tags" placeholder="tag1, tag2, tag3" />
-
     <button onclick="submitPin()">Submit</button>
   </div>
 
   <script>
-    // ✅ Members load karna
+    // Members load karna
     fetch("https://deepakchauhanxai.xyz/pinterest/list_members.php")
       .then(res => res.json())
       .then(data => {
@@ -81,7 +73,8 @@
         if (data.ok && data.members.length > 0) {
           data.members.forEach(m => {
             let option = document.createElement("option");
-            option.value = m.id;
+            option.value = m.id; // member_id
+            option.setAttribute("data-board_id", m.default_board_id); // 👈 board_id bhi store
             option.textContent = m.name + " (" + m.username + ")";
             memberSelect.appendChild(option);
           });
@@ -94,40 +87,17 @@
         document.getElementById("member").innerHTML = "<option>Error loading</option>";
       });
 
-    // ✅ Boards load karna (jab member select kare)
-    document.getElementById("member").addEventListener("change", function() {
-      const memberId = this.value;
-      fetch("https://deepakchauhanxai.xyz/pinterest/list_boards.php?member_id=" + memberId)
-        .then(res => res.json())
-        .then(data => {
-          const boardSelect = document.getElementById("board");
-          boardSelect.innerHTML = "";
-          if (data.ok && data.boards.length > 0) {
-            data.boards.forEach(b => {
-              let option = document.createElement("option");
-              option.value = b.id;
-              option.textContent = b.name;
-              boardSelect.appendChild(option);
-            });
-          } else {
-            boardSelect.innerHTML = "<option>No boards</option>";
-          }
-        })
-        .catch(err => {
-          console.error("Board load error:", err);
-          document.getElementById("board").innerHTML = "<option>Error loading</option>";
-        });
-    });
-
-    // ✅ Pin submit karna
+    // Pin submit karna
     function submitPin() {
+      const memberSelect = document.getElementById("member");
+      const selectedOption = memberSelect.options[memberSelect.selectedIndex];
+
       const formData = new FormData();
-      formData.append("member_id", document.getElementById("member").value);
-      formData.append("board_id", document.getElementById("board").value);
+      formData.append("member_id", selectedOption.value);
+      formData.append("board_id", selectedOption.getAttribute("data-board_id")); // 👈 board_id bhejna
       formData.append("image_url", document.getElementById("image").value);
       formData.append("title", document.getElementById("title").value);
       formData.append("description", document.getElementById("description").value);
-      formData.append("tags", document.getElementById("tags").value);
 
       fetch("https://deepakchauhanxai.xyz/pinterest/add_pin.php", {
         method: "POST",
