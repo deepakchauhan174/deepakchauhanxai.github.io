@@ -1,158 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <title>Add New Pin</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f3f4f7;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-    }
-    .container {
-      background: #fff;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      width: 400px;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #e60023;
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-      color: #333;
-    }
-    input, textarea, select {
-      width: 100%;
-      padding: 10px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      outline: none;
-      transition: 0.2s;
-    }
-    input:focus, textarea:focus, select:focus {
-      border-color: #e60023;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      font-weight: bold;
-      background: #e60023;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    button:hover {
-      background: #c2001b;
-    }
-    #result {
-      margin-top: 15px;
-      text-align: center;
-      font-weight: bold;
-    }
-    .success { color: green; }
-    .error { color: red; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>➕ Add New Pin — AI Bhai</title>
+<style>
+  :root{--bg:#0f172a;--card:#111827;--muted:#9ca3af;--text:#e5e7eb;--accent:#22d3ee;}
+  *{box-sizing:border-box} body{margin:0;background:linear-gradient(120deg,#0b1225,#111827 40%,#0b1225);font-family:system-ui,-apple-system,Segoe UI,Roboto;color:var(--text)}
+  .wrap{max-width:720px;margin:24px auto;padding:16px}
+  .card{background:#0b1225;border:1px solid #1f2937;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:20px}
+  h1{margin:0 0 8px;font-size:22px}
+  .sub{color:#a3a3a3;font-size:13px;margin-bottom:16px}
+  label{display:block;font-size:14px;margin:12px 0 6px}
+  input,select,textarea{width:100%;height:44px;border-radius:10px;border:1px solid #334155;background:#0b1225;color:var(--text);padding:0 12px;outline:none}
+  textarea{height:100px;padding:10px 12px;resize:vertical}
+  input[readonly]{opacity:.8}
+  input::placeholder,textarea::placeholder{color:#64748b}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  button{height:44px;border:none;border-radius:10px;cursor:pointer;font-weight:700;background:linear-gradient(90deg,#06b6d4,#22d3ee);color:#04222a}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  .muted{font-size:12px;color:#9ca3af;margin-top:6px}
+  .msg{margin-top:12px;padding:10px;border-radius:10px;display:none}
+  .ok{background:#062e26;border:1px solid #065f46;color:#d1fae5}
+  .bad{background:#2a0c0c;border:1px solid #7f1d1d;color:#fecaca}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h2>➕ Add New Pin</h2>
+  <div class="wrap">
+    <div class="card">
+      <h1>➕ Add New Pin</h1>
+      <div class="sub">Member चुनें, Image URL/Title/Description भरें — बाकी auto-fill.</div>
 
-    <div class="form-group">
-      <label for="memberSelect">Select Member</label>
-      <select id="memberSelect"></select>
+      <label for="member">Select Member</label>
+      <select id="member"></select>
+      <div class="muted" id="memberHint">Board ID auto-fill होगा.</div>
+
+      <label for="image">Image URL</label>
+      <input id="image" type="url" placeholder="https://example.com/image.jpg" />
+
+      <div class="row">
+        <div>
+          <label for="title">Title</label>
+          <input id="title" type="text" placeholder="Pin Title" />
+        </div>
+        <div>
+          <label for="link">Link (auto)</label>
+          <input id="link" type="url" value="https://deepakchauhanxai.com" readonly />
+        </div>
+      </div>
+
+      <label for="desc">Description</label>
+      <textarea id="desc" placeholder="Pin Description"></textarea>
+
+      <div class="row">
+        <div>
+          <label for="board">Board ID (auto)</label>
+          <input id="board" type="text" placeholder="Board ID" readonly />
+        </div>
+        <div>
+          <label for="when">Schedule (optional)</label>
+          <input id="when" type="datetime-local" />
+        </div>
+      </div>
+
+      <div class="muted">Tip: Schedule खाली छोड़ोगे तो अभी queue में pending के रूप में जुड़ जाएगा.</div>
+
+      <div style="margin-top:14px;display:flex;gap:10px">
+        <button id="btn" onclick="submitPin()">Upload Pin</button>
+        <button type="button" onclick="resetForm()">Clear</button>
+      </div>
+
+      <div id="msg" class="msg"></div>
     </div>
-
-    <div class="form-group">
-      <label for="imageUrl">Image URL</label>
-      <input type="text" id="imageUrl" placeholder="https://example.com/image.jpg">
-    </div>
-
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input type="text" id="title" placeholder="Enter Pin Title">
-    </div>
-
-    <div class="form-group">
-      <label for="description">Description</label>
-      <textarea id="description" rows="3" placeholder="Enter Pin Description"></textarea>
-    </div>
-
-    <button onclick="uploadPin()">🚀 Upload Pin</button>
-
-    <p id="result"></p>
   </div>
 
-  <script>
-  // Load members in dropdown
-  function loadMembers(){
-    fetch("https://deepakchauhanxai.xyz/pinterest/list_members.php")
-      .then(r => r.json())
-      .then(data => {
-        let sel = document.getElementById("memberSelect");
-        sel.innerHTML = "";
+<script>
+const API_BASE = "https://deepakchauhanxai.xyz/pinterest";
 
-        data.members.forEach(member => {
-          let opt = document.createElement("option");
-          opt.value = member.id;
-          opt.textContent = member.name + " (" + member.username + ")";
-          sel.appendChild(opt);
-        });
-      })
-      .catch(err => console.error("Error loading members:", err));
+const dd = id=>document.getElementById(id);
+const memberSel = dd('member'), boardInp = dd('board'), linkInp = dd('link');
+const imgInp = dd('image'), titleInp = dd('title'), descInp = dd('desc'), whenInp = dd('when');
+const msgBox = dd('msg'), btn = dd('btn');
+
+function showMsg(text, ok=true){
+  msgBox.textContent = text;
+  msgBox.className = 'msg ' + (ok ? 'ok' : 'bad');
+  msgBox.style.display = 'block';
+}
+
+function hideMsg(){ msgBox.style.display = 'none'; }
+
+function resetForm(){
+  imgInp.value = ""; titleInp.value = ""; descInp.value = ""; whenInp.value = "";
+  hideMsg();
+}
+
+async function loadMembers(){
+  memberSel.innerHTML = `<option value="">Loading members…</option>`;
+  try{
+    const r = await fetch(`${API_BASE}/list_members.php`, {method:'GET'});
+    const data = await r.json();
+    if(!data.ok){ memberSel.innerHTML = `<option value="">Failed to load</option>`; return; }
+    const items = data.members || [];
+    if(!items.length){ memberSel.innerHTML = `<option value="">No members found</option>`; return; }
+    memberSel.innerHTML = `<option value="">— Select Member —</option>` +
+      items.map(m=>`<option value="${m.id}" data-board="${m.default_board_id||''}" data-username="${m.username||''}">
+        ${m.name} (${m.username})
+      </option>`).join('');
+  }catch(e){
+    memberSel.innerHTML = `<option value="">Error loading members</option>`;
+  }
+}
+
+memberSel.addEventListener('change', ()=>{
+  const opt = memberSel.options[memberSel.selectedIndex];
+  boardInp.value = opt?.getAttribute('data-board') || '';
+});
+
+async function submitPin(){
+  hideMsg();
+  const member_id = memberSel.value.trim();
+  const image = imgInp.value.trim();
+  const title = titleInp.value.trim();
+  const description = descInp.value.trim();
+  const scheduled_at = whenInp.value.trim(); // optional
+
+  if(!member_id || !image || !title || !description){
+    showMsg("कृपया Member, Image URL, Title, Description भरें.", false);
+    return;
   }
 
-  // Upload new pin
-  function uploadPin(){
-    let member_id = document.getElementById("memberSelect").value;
-    let image_url = document.getElementById("imageUrl").value;
-    let title = document.getElementById("title").value;
-    let description = document.getElementById("description").value;
+  btn.disabled = true;
 
-    fetch("https://deepakchauhanxai.xyz/pinterest/add_pin.php", {
-      method: "POST",
-      headers: {"Content-Type": "application/x-www-form-urlencoded"},
-      body: "member_id=" + encodeURIComponent(member_id) +
-            "&image_url=" + encodeURIComponent(image_url) +
-            "&title=" + encodeURIComponent(title) +
-            "&description=" + encodeURIComponent(description)
-    })
-    .then(r => r.json())
-    .then(res => {
-      let result = document.getElementById("result");
-      if(res.ok){
-        result.textContent = "✅ " + res.msg + " (Pin ID: " + res.pin_id + ")";
-        result.className = "success";
-      } else {
-        result.textContent = "❌ " + res.msg;
-        result.className = "error";
-      }
-    })
-    .catch(err => {
-      document.getElementById("result").textContent = "Error uploading pin.";
-      document.getElementById("result").className = "error";
-      console.error(err);
+  const body = new URLSearchParams();
+  body.set('member_id', member_id);
+  body.set('image', image);
+  body.set('title', title);
+  body.set('description', description);
+  if(scheduled_at) body.set('scheduled_at', scheduled_at); // API support हो तो save कर देगा
+
+  try{
+    const r = await fetch(`${API_BASE}/add_pin_api.php`, {
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body
     });
+    const res = await r.json();
+    if(res.ok){
+      showMsg(`✅ Added to queue (ID: ${res.pin_id || '—'})`);
+      resetForm();
+    }else{
+      showMsg(`❌ ${res.msg || 'Failed to add'}`, false);
+    }
+  }catch(e){
+    showMsg("❌ Network/API error", false);
+  }finally{
+    btn.disabled = false;
   }
+}
 
-  // Auto load members when page opens
-  loadMembers();
-  </script>
+// init
+loadMembers();
+</script>
 </body>
 </html>
