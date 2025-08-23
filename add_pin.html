@@ -1,87 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
   <title>Add Pin</title>
   <style>
-    body { font-family: Arial, sans-serif; background:#f4f4f4; padding:20px; }
-    form { background:#fff; padding:20px; border-radius:10px; max-width:400px; margin:auto; }
-    input, textarea, select, button {
-      width:100%; padding:10px; margin:8px 0;
-      border:1px solid #ccc; border-radius:5px;
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    button { background:#007bff; color:white; border:none; cursor:pointer; }
-    button:hover { background:#0056b3; }
-    #msg { margin-top:10px; font-weight:bold; }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      width: 400px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    input, textarea, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
   </style>
 </head>
 <body>
-  <h2>Add New Pin</h2>
-  <form id="pinForm">
-    <label>Member</label>
-    <select id="member_id" required></select>
+  <div class="container">
+    <h2>➕ Add New Pin</h2>
+    
+    <label>👤 Select Member</label>
+    <select id="member">
+      <option value="">Loading...</option>
+    </select>
 
-    <label>Image URL</label>
-    <input type="text" id="image_url" placeholder="https://..." required>
+    <label>🖼️ Image URL</label>
+    <input type="text" id="image" placeholder="https://example.com/image.jpg" />
 
-    <label>Title</label>
-    <input type="text" id="title" placeholder="Enter title" required>
+    <label>📌 Title</label>
+    <input type="text" id="title" placeholder="Enter Pin Title" />
 
-    <label>Description</label>
-    <textarea id="description" placeholder="Enter description"></textarea>
+    <label>📝 Description</label>
+    <textarea id="description" placeholder="Enter Pin Description"></textarea>
 
-    <button type="submit">Upload Pin</button>
-    <div id="msg"></div>
-  </form>
+    <button onclick="submitPin()">Submit</button>
+  </div>
 
   <script>
-    // 🔹 Members list लोड करना (drop-down में दिखेगा)
+    // Members load karna
     fetch("https://deepakchauhanxai.xyz/pinterest/list_members.php")
       .then(res => res.json())
       .then(data => {
-        if (data.ok) {
-          let select = document.getElementById("member_id");
+        const memberSelect = document.getElementById("member");
+        memberSelect.innerHTML = "";
+        if (data.ok && data.members.length > 0) {
           data.members.forEach(m => {
-            let opt = document.createElement("option");
-            opt.value = m.id;
-            opt.textContent = m.name + " (" + m.username + ")";
-            select.appendChild(opt);
+            let option = document.createElement("option");
+            option.value = m.id;
+            option.textContent = m.name + " (" + m.username + ")";
+            memberSelect.appendChild(option);
           });
+        } else {
+          memberSelect.innerHTML = "<option>No members</option>";
         }
+      })
+      .catch(err => {
+        console.error("Member load error:", err);
+        document.getElementById("member").innerHTML = "<option>Error loading</option>";
       });
 
-    // 🔹 Form Submit करना
-    document.getElementById("pinForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+    // Pin submit karna
+    function submitPin() {
+      const memberId = document.getElementById("member").value;
+      const imageUrl = document.getElementById("image").value;
+      const title = document.getElementById("title").value;
+      const description = document.getElementById("description").value;
 
-      let payload = {
-        member_id: document.getElementById("member_id").value,
-        image_url: document.getElementById("image_url").value.trim(),
-        title: document.getElementById("title").value.trim(),
-        description: document.getElementById("description").value.trim()
-      };
+      if (!memberId || !imageUrl || !title) {
+        alert("❌ Member, Image और Title जरूरी हैं!");
+        return;
+      }
 
       fetch("https://deepakchauhanxai.xyz/pinterest/add_pin.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+          member_id: memberId,
+          image_url: imageUrl,
+          title: title,
+          description: description
+        })
       })
       .then(res => res.json())
       .then(data => {
-        let msg = document.getElementById("msg");
-        if (data.ok) {
-          msg.style.color = "green";
-          msg.textContent = data.msg;
-          document.getElementById("pinForm").reset();
-        } else {
-          msg.style.color = "red";
-          msg.textContent = "❌ " + data.msg;
-        }
+        console.log("Response:", data);
+        alert(data.msg);
       })
       .catch(err => {
-        document.getElementById("msg").textContent = "❌ Network error: " + err;
+        console.error("Fetch error:", err);
+        alert("❌ Network/API error");
       });
-    });
+    }
   </script>
 </body>
 </html>
