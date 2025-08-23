@@ -6,11 +6,24 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      padding: 20px;
+      background: #f3f4f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 400px;
     }
     h2 {
-      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #e60023;
     }
     .form-group {
       margin-bottom: 15px;
@@ -19,52 +32,72 @@
       display: block;
       margin-bottom: 5px;
       font-weight: bold;
+      color: #333;
     }
-    input, textarea, select, button {
+    input, textarea, select {
       width: 100%;
       padding: 10px;
       font-size: 14px;
       border: 1px solid #ccc;
       border-radius: 6px;
+      outline: none;
+      transition: 0.2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: #e60023;
     }
     button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
       background: #e60023;
       color: white;
       border: none;
+      border-radius: 6px;
       cursor: pointer;
-      font-weight: bold;
+      transition: 0.2s;
     }
     button:hover {
       background: #c2001b;
     }
+    #result {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .success { color: green; }
+    .error { color: red; }
   </style>
 </head>
 <body>
-  <h2>Add New Pin</h2>
+  <div class="container">
+    <h2>➕ Add New Pin</h2>
 
-  <div class="form-group">
-    <label for="memberSelect">Select Member</label>
-    <select id="memberSelect"></select>
+    <div class="form-group">
+      <label for="memberSelect">Select Member</label>
+      <select id="memberSelect"></select>
+    </div>
+
+    <div class="form-group">
+      <label for="imageUrl">Image URL</label>
+      <input type="text" id="imageUrl" placeholder="https://example.com/image.jpg">
+    </div>
+
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" id="title" placeholder="Enter Pin Title">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" rows="3" placeholder="Enter Pin Description"></textarea>
+    </div>
+
+    <button onclick="uploadPin()">🚀 Upload Pin</button>
+
+    <p id="result"></p>
   </div>
-
-  <div class="form-group">
-    <label for="imageUrl">Image URL</label>
-    <input type="text" id="imageUrl" placeholder="https://example.com/image.jpg">
-  </div>
-
-  <div class="form-group">
-    <label for="title">Title</label>
-    <input type="text" id="title" placeholder="Enter Pin Title">
-  </div>
-
-  <div class="form-group">
-    <label for="description">Description</label>
-    <textarea id="description" rows="3" placeholder="Enter Pin Description"></textarea>
-  </div>
-
-  <button onclick="uploadPin()">Upload Pin</button>
-
-  <p id="result"></p>
 
   <script>
   // Load members in dropdown
@@ -77,7 +110,7 @@
 
         data.members.forEach(member => {
           let opt = document.createElement("option");
-          opt.value = member.id; // id से पहचान होगा
+          opt.value = member.id;
           opt.textContent = member.name + " (" + member.username + ")";
           sel.appendChild(opt);
         });
@@ -88,7 +121,7 @@
   // Upload new pin
   function uploadPin(){
     let member_id = document.getElementById("memberSelect").value;
-    let image = document.getElementById("imageUrl").value;
+    let image_url = document.getElementById("imageUrl").value;
     let title = document.getElementById("title").value;
     let description = document.getElementById("description").value;
 
@@ -96,16 +129,24 @@
       method: "POST",
       headers: {"Content-Type": "application/x-www-form-urlencoded"},
       body: "member_id=" + encodeURIComponent(member_id) +
-            "&image=" + encodeURIComponent(image) +
+            "&image_url=" + encodeURIComponent(image_url) +
             "&title=" + encodeURIComponent(title) +
             "&description=" + encodeURIComponent(description)
     })
     .then(r => r.json())
     .then(res => {
-      document.getElementById("result").textContent = res.msg;
+      let result = document.getElementById("result");
+      if(res.ok){
+        result.textContent = "✅ " + res.msg + " (Pin ID: " + res.pin_id + ")";
+        result.className = "success";
+      } else {
+        result.textContent = "❌ " + res.msg;
+        result.className = "error";
+      }
     })
     .catch(err => {
       document.getElementById("result").textContent = "Error uploading pin.";
+      document.getElementById("result").className = "error";
       console.error(err);
     });
   }
