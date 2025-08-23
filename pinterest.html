@@ -144,12 +144,15 @@ qDate.addEventListener("change", render);
 
 async function load(){
   tbody.innerHTML = `<tr><td colspan="9" class="hint">Loading…</td></tr>`;
-  try{
+  try {
     const res = await fetch(`${API_BASE}/list_queue.php`, {credentials:"omit"});
     const data = await res.json();
-    rows = Array.isArray(data) ? data : (data.rows || []);
+
+    // sahi array nikalna
+    rows = data.data || data.rows || (Array.isArray(data) ? data : []);
+
     render();
-  }catch(e){
+  } catch(e) {
     tbody.innerHTML = `<tr><td colspan="9" class="hint">Error loading data</td></tr>`;
   }
 }
