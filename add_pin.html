@@ -37,77 +37,85 @@
 </div>
 
 <script>
-async function loadMembers() {
-  try {
-    const res = await fetch("https://deepakchauhanxai.xyz/pinterest/list_members.php");
-    const data = await res.json();
-    const memberSelect = document.getElementById("member");
+  // ✅ Members load karna
+  fetch("https://deepakchauhanxai.xyz/pinterest/list_members.php")
+    .then(res => res.json())
+    .then(data => {
+      const memberSelect = document.getElementById("member");
+      memberSelect.innerHTML = "";
+
+      if (data.ok && data.members.length > 0) {
+        data.members.forEach(m => {
+          let option = document.createElement("option");
+          option.value = m.id;
+          option.setAttribute("data-board", m.board_id); // board_id bhi store kar rahe
+          option.textContent = m.name + " (" + m.username + ")";
+          memberSelect.appendChild(option);
+        });
+
+        // ✅ Agar sirf ek member hai to auto select
+        if (data.members.length === 1) {
+          memberSelect.selectedIndex = 0;
+          loadBoards(data.members[0].id, data.members[0].board_id);
+        }
+      } else {
+        memberSelect.innerHTML = "<option>No members</option>";
+      }
+    })
+    .catch(err => {
+      console.error("Member load error:", err);
+      document.getElementById("member").innerHTML = "<option>Error loading</option>";
+    });
+
+  // ✅ Member select hone par boards load
+  document.getElementById("member").addEventListener("change", function () {
+    const memberId = this.value;
+    const boardId = this.options[this.selectedIndex].getAttribute("data-board");
+    loadBoards(memberId, boardId);
+  });
+
+  // ✅ Boards load karna
+  function loadBoards(memberId, boardId) {
     const boardSelect = document.getElementById("board");
-    memberSelect.innerHTML = "";
-    if(data.ok && data.members.length > 0) {
-      data.members.forEach(m => {
-        let option = document.createElement("option");
-        option.value = m.id;
-        option.setAttribute("data-board", m.board_id);
-        option.textContent = m.name + " (" + m.username + ")";
-        memberSelect.appendChild(option);
-      });
-      // Automatic select first member and board
-      memberSelect.selectedIndex = 0;
-      updateBoard();
+    boardSelect.innerHTML = "";
+
+    if (boardId) {
+      let option = document.createElement("option");
+      option.value = boardId;
+      option.textContent = boardId; // फिलहाल सिर्फ़ board_id दिखा रहे हैं
+      boardSelect.appendChild(option);
+
+      // ✅ Agar ek hi board hai to auto select
+      boardSelect.selectedIndex = 0;
     } else {
-      memberSelect.innerHTML = "<option>No members</option>";
       boardSelect.innerHTML = "<option>No boards</option>";
     }
-  } catch(e) {
-    console.error(e);
-    document.getElementById("member").innerHTML = "<option>Error loading</option>";
   }
-}
 
-function updateBoard() {
-  const memberSelect = document.getElementById("member");
-  const boardSelect = document.getElementById("board");
-  const selectedOption = memberSelect.options[memberSelect.selectedIndex];
-  if(selectedOption) {
-    const boardId = selectedOption.getAttribute("data-board");
-    boardSelect.innerHTML = "";
-    let option = document.createElement("option");
-    option.value = boardId;
-    option.textContent = "Default Board"; // name dikhana
-    option.selected = true;
-    boardSelect.appendChild(option);
+  // ✅ Pin submit karna
+  function submitPin() {
+    const formData = new FormData();
+    formData.append("member_id", document.getElementById("member").value);
+    formData.append("board_id", document.getElementById("board").value);
+    formData.append("image_url", document.getElementById("image").value);
+    formData.append("title", document.getElementById("title").value);
+    formData.append("description", document.getElementById("description").value);
+    formData.append("tags", document.getElementById("tags").value);
+
+    fetch("https://deepakchauhanxai.xyz/pinterest/add_pin.php", {
+      method: "POST",
+      body: formData
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log("Response:", data);
+        alert(data.msg);
+      })
+      .catch(err => {
+        console.error("Fetch error:", err);
+        alert("❌ Network/API error");
+      });
   }
-}
-
-document.getElementById("member").addEventListener("change", updateBoard);
-
-async function submitPin() {
-  const member = document.getElementById("member").value;
-  const board = document.getElementById("board").value;
-  const image = document.getElementById("image").value;
-  if(!member || !board || !image) { alert("❌ कृपया सभी जरूरी फील्ड भरें!"); return; }
-
-  const formData = new FormData();
-  formData.append("member_id", member);
-  formData.append("board_id", board);
-  formData.append("image_url", image);
-  formData.append("title", document.getElementById("title").value);
-  formData.append("description", document.getElementById("description").value);
-  formData.append("tags", document.getElementById("tags").value);
-
-  try {
-    const res = await fetch("https://deepakchauhanxai.xyz/pinterest/add_pin.php", {method:"POST", body: formData});
-    const data = await res.json();
-    alert(data.msg || "✅ Pin added successfully!");
-  } catch(e) {
-    console.error(e);
-    alert("❌ Network/API error");
-  }
-}
-
-// Load members on page load
-loadMembers();
 </script>
 </body>
 </html>
