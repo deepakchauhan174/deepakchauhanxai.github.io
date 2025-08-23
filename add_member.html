@@ -78,14 +78,13 @@
   <div class="card">
     <h2>Add New Member</h2>
     <form method="post" action="https://deepakchauhanxai.xyz/pinterest/add_member.php">
-      <input type="text" name="username" placeholder="Username (e.g. Komal)" required>
-      <input type="text" name="secret_key" placeholder="Secret Key" required>
-      <input type="text" name="app_id" placeholder="Pinterest App ID" required>
-      <input type="text" name="app_secret" placeholder="Pinterest App Secret" required>
-      <input type="text" name="access_token" placeholder="Pinterest Access Token" required>
-      <input type="text" name="default_board_id" id="defaultBoard" placeholder="Default Board ID" required>
-      <button type="submit">Add Member</button>
-    </form>
+  <input type="text" name="name" placeholder="Full Name (e.g. Komal)" required>
+  <input type="text" name="username" placeholder="Username" required>
+  <input type="text" name="secret_key" placeholder="Secret Key" required>
+  <input type="text" name="pint_access_token" placeholder="Pinterest Access Token" required>
+  <input type="text" name="default_board_id" placeholder="Default Board ID (optional)">
+  <button type="submit">Add Member</button>
+</form>
 
     <div class="note">All details will be saved securely in DB.</div>
 
