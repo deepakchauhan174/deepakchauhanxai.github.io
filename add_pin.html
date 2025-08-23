@@ -88,35 +88,25 @@
 
     // Pin submit karna
     function submitPin() {
-      const memberId = document.getElementById("member").value;
-      const imageUrl = document.getElementById("image").value;
-      const title = document.getElementById("title").value;
-      const description = document.getElementById("description").value;
+  const formData = new FormData();
+  formData.append("member_id", document.getElementById("member").value);
+  formData.append("image_url", document.getElementById("image").value);
+  formData.append("title", document.getElementById("title").value);
+  formData.append("description", document.getElementById("description").value);
 
-      if (!memberId || !imageUrl || !title) {
-        alert("❌ Member, Image और Title जरूरी हैं!");
-        return;
-      }
-
-      fetch("https://deepakchauhanxai.xyz/pinterest/add_pin.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          member_id: memberId,
-          image_url: imageUrl,
-          title: title,
-          description: description
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log("Response:", data);
-        alert(data.msg);
-      })
-      .catch(err => {
-        console.error("Fetch error:", err);
-        alert("❌ Network/API error");
-      });
+  fetch("https://deepakchauhanxai.xyz/pinterest/add_pin.php", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log("Response:", data);
+    alert(data.msg);
+  })
+  .catch(err => {
+    console.error("Fetch error:", err);
+    alert("❌ Network/API error");
+  });
     }
   </script>
 </body>
