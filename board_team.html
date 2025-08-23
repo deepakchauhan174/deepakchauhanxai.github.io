@@ -2,58 +2,88 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<title>Member Page</title>
+<title>Member Dashboard</title>
 <style>
 body { font-family: Arial, sans-serif; background:#f4f4f9; margin:0; padding:0; }
 header { background:#222; color:#fff; padding:15px; text-align:center; }
-.image-card { border:1px solid #ccc; padding:10px; margin:10px; display:inline-block; vertical-align:top; width:200px; background:#fff; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.2);}
+.container { padding:20px; max-width:1000px; margin:auto; }
+.image-card { border:1px solid #ccc; padding:10px; margin:10px; display:inline-block; vertical-align:top; width:220px; background:#fff; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.2);}
 .image-card img { width:100%; border-radius:5px; }
-button { padding:5px 10px; margin-top:5px; cursor:pointer; border:none; background:#0073e6; color:#fff; border-radius:4px; }
-button:hover { background:#005bb5; }
-.container { padding:20px; }
+input, textarea, button { width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:8px; font-size:14px; }
+button { background:#007bff; color:white; border:none; cursor:pointer; }
+button:hover { background:#0056b5; }
+.flex-container { display:flex; flex-wrap:wrap; justify-content:space-around; }
 </style>
-<script>
-// Load user images dynamically
-async function loadImages(user_id){
-    let res = await fetch(`https://deepakchauhanxai.xyz/pinterest/fetch_images.php?user_id=${user_id}`);
-    let images = await res.json();
-    let container = document.getElementById('images');
-    container.innerHTML = '';
-    images.forEach(img => {
-        let div = document.createElement('div');
-        div.classList.add('image-card');
-        div.innerHTML = `
-            <img src="${img.image_url}" alt="${img.title}">
-            <h4>${img.title}</h4>
-            <p>${img.description}</p>
-            <button onclick="upload(${img.id}, ${user_id})">Upload to Pinterest</button>
-        `;
-        container.appendChild(div);
-    });
-}
-
-// Upload to Pinterest
-async function upload(image_id, user_id){
-    let formData = new FormData();
-    formData.append('image_id', image_id);
-    formData.append('user_id', user_id);
-    let res = await fetch('https://deepakchauhanxai.xyz/pinterest/pinterest_upload.php',{method:'POST',body:formData});
-    let result = await res.json();
-    alert("Uploaded: " + JSON.stringify(result));
-}
-
-window.onload = function(){
-    let user_id = 1; // Login/session id
-    loadImages(user_id);
-}
-</script>
 </head>
 <body>
 <header>
 <h1>Member Dashboard</h1>
 </header>
-<div class="container" id="images">
-<!-- Dynamic user images will appear here -->
+
+<div class="container">
+  <h2>📌 Your Boards & Pins</h2>
+  <div class="flex-container" id="pinsContainer">
+    <!-- Dynamic member images + editable fields will appear here -->
+  </div>
 </div>
+
+<script>
+// Replace with actual logged-in member ID (session or login)
+const member_id = 1; 
+
+// Load member images
+async function loadPins() {
+  try {
+    let res = await fetch(`https://deepakchauhanxai.xyz/pinterest/fetch_images.php?user_id=${member_id}`);
+    let data = await res.json();
+    const container = document.getElementById("pinsContainer");
+    container.innerHTML = "";
+    data.forEach(img => {
+      let div = document.createElement("div");
+      div.classList.add("image-card");
+      div.innerHTML = `
+        <img src="${img.image_url}" alt="${img.title}">
+        <input type="text" value="${img.title}" id="title-${img.id}" placeholder="Title">
+        <textarea id="desc-${img.id}" placeholder="Description">${img.description}</textarea>
+        <input type="text" value="${img.tags}" id="tags-${img.id}" placeholder="Tags">
+        <input type="text" value="${img.website_url}" id="url-${img.id}" placeholder="Website URL">
+        <button onclick="uploadPin(${img.id})">Upload to Pinterest</button>
+      `;
+      container.appendChild(div);
+    });
+  } catch(err) {
+    console.error("Load pins error:", err);
+  }
+}
+
+// Upload pin
+function uploadPin(image_id) {
+  const title = document.getElementById(`title-${image_id}`).value;
+  const description = document.getElementById(`desc-${image_id}`).value;
+  const tags = document.getElementById(`tags-${image_id}`).value;
+  const website_url = document.getElementById(`url-${image_id}`).value;
+
+  const formData = new FormData();
+  formData.append("image_id", image_id);
+  formData.append("user_id", member_id);
+  formData.append("title", title);
+  formData.append("description", description);
+  formData.append("tags", tags);
+  formData.append("website_url", website_url);
+
+  fetch("https://deepakchauhanxai.xyz/pinterest/pinterest_upload.php", {method:"POST", body:formData})
+    .then(res => res.json())
+    .then(data => {
+      alert("Uploaded: " + JSON.stringify(data));
+    })
+    .catch(err => {
+      console.error("Upload error:", err);
+      alert("❌ Upload failed");
+    });
+}
+
+// Initial load
+window.onload = loadPins;
+</script>
 </body>
 </html>
