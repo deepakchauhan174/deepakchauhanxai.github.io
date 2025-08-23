@@ -190,8 +190,8 @@ function rowTpl(r){
     <td>
       <a class="link mono" href="${escapeAttr(r.link||'#')}" target="_blank">${escapeHtml(r.link||'')}</a>
     </td>
-    <td class="mono">${escapeHtml(r.board_id||'—')}</td>
-    <td class="mono">${escapeHtml(r.username||'—')}</td>
+    <td class="mono">${escapeHtml(r.board_name||'—')}</td>
+<td class="mono">${escapeHtml(r.username||'—')}</td>
     <td class="mono">${escapeHtml(r.scheduled_at||'—')}</td>
     <td><span class="status ${sCls}">${escapeHtml(r.status||'pending')}</span></td>
     <td class="row-actions">
