@@ -83,10 +83,13 @@
           data.members.forEach(m => {
             let option = document.createElement("option");
             option.value = m.id; // member_id
-            option.setAttribute("data-board", m.board_id); // board_id store kar di
+            option.setAttribute("data-board", m.board_id); // board_id store
             option.textContent = m.name + " (" + m.username + ")";
             memberSelect.appendChild(option);
           });
+          // Automatic first member select
+          memberSelect.selectedIndex = 0;
+          loadBoards(); // board load kar do automatic
         } else {
           memberSelect.innerHTML = "<option>No members</option>";
         }
@@ -96,21 +99,40 @@
       }
     }
 
-    // Board automatically set karna
-    document.getElementById("member").addEventListener("change", function() {
-      const selectedOption = this.options[this.selectedIndex];
+    // Boards load karna
+    async function loadBoards() {
+      const memberSelect = document.getElementById("member");
       const boardSelect = document.getElementById("board");
-      boardSelect.innerHTML = "";
-      if(selectedOption && selectedOption.value) {
-        const boardId = selectedOption.getAttribute("data-board");
-        let option = document.createElement("option");
-        option.value = boardId;
-        option.textContent = "Default Board"; // Agar multiple board system hai toh API se fetch kar sakte ho
-        boardSelect.appendChild(option);
-      } else {
+      const memberId = memberSelect.value;
+
+      if(!memberId) {
         boardSelect.innerHTML = "<option>Select member first</option>";
+        return;
       }
-    });
+
+      try {
+        const res = await fetch("https://deepakchauhanxai.xyz/pinterest/list_boards.php?member_id=" + memberId);
+        const data = await res.json();
+        boardSelect.innerHTML = "";
+        if(data.ok && data.boards.length > 0) {
+          data.boards.forEach((b, index) => {
+            let option = document.createElement("option");
+            option.value = b.id;
+            option.textContent = b.name;
+            if(index === 0) option.selected = true; // first board automatic select
+            boardSelect.appendChild(option);
+          });
+        } else {
+          boardSelect.innerHTML = "<option>No boards</option>";
+        }
+      } catch(err) {
+        console.error("Board load error:", err);
+        boardSelect.innerHTML = "<option>Error loading</option>";
+      }
+    }
+
+    // Member change event
+    document.getElementById("member").addEventListener("change", loadBoards);
 
     // Pin submit karna
     async function submitPin() {
