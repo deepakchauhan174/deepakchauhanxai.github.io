@@ -45,10 +45,15 @@
 <body>
   <div class="container">
     <h2>➕ Add New Pin</h2>
-    
+
     <label>👤 Select Member</label>
     <select id="member">
-      <option value="">Loading...</option>
+      <option value="">Loading members...</option>
+    </select>
+
+    <label>📌 Select Board</label>
+    <select id="board">
+      <option value="">Select member first</option>
     </select>
 
     <label>🖼️ Image URL</label>
@@ -60,57 +65,87 @@
     <label>📝 Description</label>
     <textarea id="description" placeholder="Enter Pin Description"></textarea>
 
+    <label>🏷️ Tags (comma separated)</label>
+    <input type="text" id="tags" placeholder="tag1, tag2, tag3" />
+
     <button onclick="submitPin()">Submit</button>
   </div>
 
   <script>
-// Members load karna
-fetch("https://deepakchauhanxai.xyz/pinterest/list_members.php")
-  .then(res => res.json())
-  .then(data => {
-    const memberSelect = document.getElementById("member");
-    memberSelect.innerHTML = "";
-    if (data.ok && data.members.length > 0) {
-      data.members.forEach(m => {
-        let option = document.createElement("option");
-        option.value = m.board_id; // अब value में board_id rakha
-        option.textContent = m.name + " (" + m.username + ")";
-        memberSelect.appendChild(option);
-      });
-    } else {
-      memberSelect.innerHTML = "<option>No members</option>";
+    // Members load karna
+    async function loadMembers() {
+      try {
+        const res = await fetch("https://deepakchauhanxai.xyz/pinterest/list_members.php");
+        const data = await res.json();
+        const memberSelect = document.getElementById("member");
+        memberSelect.innerHTML = "";
+        if (data.ok && data.members.length > 0) {
+          data.members.forEach(m => {
+            let option = document.createElement("option");
+            option.value = m.id; // member_id
+            option.setAttribute("data-board", m.board_id); // board_id store kar di
+            option.textContent = m.name + " (" + m.username + ")";
+            memberSelect.appendChild(option);
+          });
+        } else {
+          memberSelect.innerHTML = "<option>No members</option>";
+        }
+      } catch(err) {
+        console.error("Member load error:", err);
+        document.getElementById("member").innerHTML = "<option>Error loading</option>";
+      }
     }
-  })
-  .catch(err => {
-    console.error("Member load error:", err);
-    document.getElementById("member").innerHTML = "<option>Error loading</option>";
-  });
 
-// Pin submit karna
-function submitPin() {
-  const formData = new FormData();
-  const select = document.getElementById("member");
-  
-  formData.append("member_id", select.options[select.selectedIndex].text.split(" ")[0]); // id name se extract
-  formData.append("board_id", select.value); // board_id ab yahan se aa raha
-  formData.append("image_url", document.getElementById("image").value);
-  formData.append("title", document.getElementById("title").value);
-  formData.append("description", document.getElementById("description").value);
+    // Board automatically set karna
+    document.getElementById("member").addEventListener("change", function() {
+      const selectedOption = this.options[this.selectedIndex];
+      const boardSelect = document.getElementById("board");
+      boardSelect.innerHTML = "";
+      if(selectedOption && selectedOption.value) {
+        const boardId = selectedOption.getAttribute("data-board");
+        let option = document.createElement("option");
+        option.value = boardId;
+        option.textContent = "Default Board"; // Agar multiple board system hai toh API se fetch kar sakte ho
+        boardSelect.appendChild(option);
+      } else {
+        boardSelect.innerHTML = "<option>Select member first</option>";
+      }
+    });
 
-  fetch("https://deepakchauhanxai.xyz/pinterest/add_pin.php", {
-    method: "POST",
-    body: formData
-  })
-  .then(res => res.json())
-  .then(data => {
-    console.log("Response:", data);
-    alert(data.msg);
-  })
-  .catch(err => {
-    console.error("Fetch error:", err);
-    alert("❌ Network/API error");
-  });
-}
+    // Pin submit karna
+    async function submitPin() {
+      const memberSelect = document.getElementById("member");
+      const boardSelect = document.getElementById("board");
+
+      if(!memberSelect.value || !boardSelect.value || !document.getElementById("image").value) {
+        alert("❌ कृपया सभी जरूरी फील्ड भरें!");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("member_id", memberSelect.value);
+      formData.append("board_id", boardSelect.value);
+      formData.append("image_url", document.getElementById("image").value);
+      formData.append("title", document.getElementById("title").value);
+      formData.append("description", document.getElementById("description").value);
+      formData.append("tags", document.getElementById("tags").value);
+
+      try {
+        const res = await fetch("https://deepakchauhanxai.xyz/pinterest/add_pin.php", {
+          method: "POST",
+          body: formData
+        });
+        const data = await res.json();
+        console.log("Response:", data);
+        alert(data.msg || "✅ Pin added successfully!");
+      } catch(err) {
+        console.error("Fetch error:", err);
+        alert("❌ Network/API error");
+      }
+    }
+
+    // Page load hone par members load karo
+    loadMembers();
   </script>
 </body>
 </html>
