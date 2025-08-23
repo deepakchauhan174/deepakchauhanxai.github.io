@@ -2,44 +2,155 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<title>Admin Panel</title>
+<title>Admin Dashboard</title>
 <style>
-.image-card { border:1px solid #ccc; padding:10px; margin:10px; display:inline-block; }
+body { font-family: Arial, sans-serif; background:#f4f4f9; margin:0; padding:0; }
+header { background:#222; color:#fff; padding:15px; text-align:center; }
+.container { padding:20px; max-width:1000px; margin:auto; }
+section { background:#fff; padding:15px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.2); margin-bottom:20px;}
+h2 { text-align:center; margin-bottom:15px; }
+input, textarea, select, button { width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:8px; font-size:14px; }
+button { background:#007bff; color:white; border:none; cursor:pointer; }
+button:hover { background:#0056b5; }
+.image-card { border:1px solid #ccc; padding:10px; margin:10px; display:inline-block; vertical-align:top; width:220px; background:#fff; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.2);}
+.image-card img { width:100%; border-radius:5px; }
+.flex-container { display:flex; flex-wrap:wrap; justify-content:space-around; }
 </style>
-<script>
-async function loadAllUsers(){
-    let res = await fetch('https://deepakchauhanxai.xyz/pinterest/fetch_all_users_images.php');
-    let data = await res.json();
-    let container = document.getElementById('users');
-    container.innerHTML = '';
-    data.forEach(img=>{
-        let div = document.createElement('div');
-        div.classList.add('image-card');
-        div.innerHTML = `
-            <strong>${img.user_name}</strong><br>
-            <img src="${img.image_url}" width="100"><br>
-            <strong>${img.title}</strong><br>
-            <p>${img.description}</p>
-            <button onclick="upload(${img.id}, ${img.user_id})">Upload to Pinterest</button>
-        `;
-        container.appendChild(div);
-    });
-}
-
-async function upload(image_id, user_id){
-    let formData = new FormData();
-    formData.append('image_id', image_id);
-    formData.append('user_id', user_id);
-    let res = await fetch('https://deepakchauhanxai.xyz/pinterest/pinterest_upload.php',{method:'POST',body:formData});
-    let result = await res.json();
-    alert("Uploaded: " + JSON.stringify(result));
-}
-
-window.onload = function(){ loadAllUsers(); }
-</script>
 </head>
 <body>
-<h1>Admin Panel</h1>
-<div id="users"></div>
+<header>
+<h1>Admin Dashboard</h1>
+</header>
+
+<div class="container">
+  <!-- Add New Pin Section -->
+  <section>
+    <h2>➕ Add New Pin</h2>
+    <label>👤 Select Member</label>
+    <select id="memberSelect"><option>Loading members...</option></select>
+
+    <label>🖼️ Image URL</label>
+    <input type="text" id="image" placeholder="https://example.com/image.jpg">
+
+    <label>📌 Title</label>
+    <input type="text" id="title" placeholder="Enter Pin Title">
+
+    <label>📝 Description</label>
+    <textarea id="description" placeholder="Enter Pin Description"></textarea>
+
+    <button onclick="submitPin()">Submit Pin</button>
+  </section>
+
+  <!-- Existing Pins Section -->
+  <section>
+    <h2>📌 Existing Pins</h2>
+    <div class="flex-container" id="pinsContainer">
+      <!-- Dynamic member images + editable fields will appear here -->
+    </div>
+  </section>
+</div>
+
+<script>
+// Load all members for dropdown
+async function loadMembers() {
+  try {
+    let res = await fetch("https://deepakchauhanxai.xyz/pinterest/list_members.php");
+    let data = await res.json();
+    const memberSelect = document.getElementById("memberSelect");
+    memberSelect.innerHTML = "";
+    if (data.ok && data.members.length > 0) {
+      data.members.forEach(m => {
+        let option = document.createElement("option");
+        option.value = m.id;
+        option.setAttribute("data-board_id", m.default_board_id);
+        option.textContent = m.name + " (" + m.username + ")";
+        memberSelect.appendChild(option);
+      });
+    } else {
+      memberSelect.innerHTML = "<option>No members</option>";
+    }
+  } catch(err) {
+    console.error("Member load error:", err);
+    document.getElementById("memberSelect").innerHTML = "<option>Error loading</option>";
+  }
+}
+
+// Submit new pin
+function submitPin() {
+  const memberSelect = document.getElementById("memberSelect");
+  const selectedOption = memberSelect.options[memberSelect.selectedIndex];
+  const formData = new FormData();
+  formData.append("member_id", selectedOption.value);
+  formData.append("board_id", selectedOption.getAttribute("data-board_id"));
+  formData.append("image_url", document.getElementById("image").value);
+  formData.append("title", document.getElementById("title").value);
+  formData.append("description", document.getElementById("description").value);
+
+  fetch("https://deepakchauhanxai.xyz/pinterest/add_pin.php", {
+    method:"POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(data.msg);
+    loadPins(); // Refresh pins after add
+  })
+  .catch(err => {
+    console.error("Submit pin error:", err);
+    alert("❌ Network/API error");
+  });
+}
+
+// Load all pins dynamically
+async function loadPins() {
+  try {
+    let res = await fetch("https://deepakchauhanxai.xyz/pinterest/fetch_all_users_images.php");
+    let data = await res.json();
+    const container = document.getElementById("pinsContainer");
+    container.innerHTML = "";
+    data.forEach(img => {
+      let div = document.createElement("div");
+      div.classList.add("image-card");
+      div.innerHTML = `
+        <strong>${img.user_name}</strong>
+        <img src="${img.image_url}" alt="${img.title}">
+        <input type="text" value="${img.title}" id="title-${img.id}">
+        <textarea id="desc-${img.id}">${img.description}</textarea>
+        <button onclick="uploadPin(${img.id}, ${img.user_id})">Upload to Pinterest</button>
+      `;
+      container.appendChild(div);
+    });
+  } catch(err) {
+    console.error("Load pins error:", err);
+  }
+}
+
+// Upload pin
+function uploadPin(image_id, user_id) {
+  const title = document.getElementById(`title-${image_id}`).value;
+  const description = document.getElementById(`desc-${image_id}`).value;
+  const formData = new FormData();
+  formData.append("image_id", image_id);
+  formData.append("user_id", user_id);
+  formData.append("title", title);
+  formData.append("description", description);
+
+  fetch("https://deepakchauhanxai.xyz/pinterest/pinterest_upload.php", {method:"POST", body:formData})
+  .then(res => res.json())
+  .then(data => {
+    alert("Uploaded: " + JSON.stringify(data));
+  })
+  .catch(err => {
+    console.error("Upload error:", err);
+    alert("❌ Upload failed");
+  });
+}
+
+// Initial load
+window.onload = function(){
+  loadMembers();
+  loadPins();
+}
+</script>
 </body>
 </html>
