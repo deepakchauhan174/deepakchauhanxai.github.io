@@ -4,128 +4,99 @@
   <meta charset="UTF-8">
   <title>Add New Member</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
-      padding: 30px;
-      display: flex;
-      justify-content: center;
+    body { font-family: Arial, sans-serif; background:#f4f6f9; padding:30px; display:flex; justify-content:center; }
+    .card { background:#fff; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); padding:25px; width:420px; }
+    h2 { text-align:center; color:#333; margin-bottom:20px; }
+    input, button, select { width:100%; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ccc; font-size:15px; }
+    button { background:#0073e6; color:#fff; border:none; cursor:pointer; transition:.3s; }
+    button:hover { background:#005bb5; }
+    .note { font-size:13px; color:#777; text-align:center; margin-top:10px; }
+    .board-tool { margin-top:20px; padding:15px; border-radius:10px; background:#111827; }
+    .board-tool input, .board-tool select, .board-tool button {
+      width:100%; margin:6px 0; border-radius:8px; border:1px solid #334155; background:#0b1225; color:#e5e7eb; font-size:14px; padding:10px;
     }
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      padding: 25px;
-      width: 420px;
-    }
-    h2 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 20px;
-    }
-    input, button, select {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-    }
-    button {
-      background: #0073e6;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover { background: #005bb5; }
-    .note {
-      font-size: 13px;
-      color: #777;
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    /* Dark tool for boards */
-    .board-tool {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 10px;
-      background: #111827;
-    }
-    .board-tool input,
-    .board-tool select,
-    .board-tool button {
-      width: 100%;
-      margin: 6px 0;
-      border-radius: 8px;
-      border: 1px solid #334155;
-      background: #0b1225;
-      color: #e5e7eb;
-      font-size: 14px;
-      padding: 10px;
-    }
-    .board-tool input::placeholder { color: #64748b; }
-    .board-tool button {
-      background: linear-gradient(90deg,#06b6d4,#22d3ee);
-      color: #04222a;
-      font-weight: 600;
-      cursor: pointer;
-    }
+    .board-tool input::placeholder { color:#64748b; }
+    .board-tool button { background:linear-gradient(90deg,#06b6d4,#22d3ee); color:#04222a; font-weight:600; cursor:pointer; }
+    .mini { font-size:12px; color:#9ca3af; white-space:pre-wrap; }
+    .err { color:#fca5a5; }
   </style>
 </head>
 <body>
   <div class="card">
     <h2>Add New Member</h2>
+
+    <!-- MAIN FORM -->
     <form method="post" action="https://deepakchauhanxai.xyz/pinterest/add_member.php">
-  <input type="text" name="name" placeholder="Full Name (e.g. Komal)" required>
-  <input type="text" name="username" placeholder="Username" required>
-  <input type="text" name="secret_key" placeholder="Secret Key" required>
-  <input type="text" name="pint_access_token" placeholder="Pinterest Access Token" required>
-  <input type="text" name="default_board_id" placeholder="Default Board ID (optional)">
-  <button type="submit">Add Member</button>
-</form>
+      <input type="text" name="name" placeholder="Full Name (e.g. Komal)" required>
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="text" name="secret_key" placeholder="Secret Key" required>
+      <input type="text" name="pint_access_token" placeholder="Pinterest Access Token" required>
+
+      <!-- ✅ यहाँ id="defaultBoard" जोड़ा गया है -->
+      <input type="text" id="defaultBoard" name="default_board_id" placeholder="Default Board ID (optional)">
+      <button type="submit">Add Member</button>
+    </form>
 
     <div class="note">All details will be saved securely in DB.</div>
 
-    <!-- Get Boards Tool -->
+    <!-- GET BOARDS TOOL -->
     <div class="board-tool">
       <input type="text" id="accessToken" placeholder="Enter Pinterest Access Token">
       <button type="button" onclick="loadBoards()">Get Boards</button>
       <select id="boardSelect" onchange="setBoardId()">
         <option>Select your board</option>
       </select>
+      <div id="boardsMsg" class="mini"></div>
     </div>
   </div>
 
   <script>
-  function loadBoards(){
-    let token = document.getElementById("accessToken").value;
-    if(!token){ alert("Enter Access Token"); return; }
-    fetch("https://deepakchauhanxai.xyz/pinterest/fetch_boards.php?token=" + token)
-    .then(r => r.json())
-    .then(data => {
-      let sel = document.getElementById("boardSelect");
-      sel.innerHTML = "";
-      if(data.items){
-        data.items.forEach(board => {
-          let opt = document.createElement("option");
-          opt.value = board.id;
-          opt.textContent = board.name + " (" + board.id + ")";
-          sel.appendChild(opt);
-        });
-      } else {
-        let opt = document.createElement("option");
-        opt.textContent = "Error fetching boards";
-        sel.appendChild(opt);
+  async function loadBoards(){
+    const token = document.getElementById("accessToken").value.trim();
+    const sel = document.getElementById("boardSelect");
+    const msg = document.getElementById("boardsMsg");
+    sel.innerHTML = "<option>Loading…</option>";
+    msg.textContent = "";
+
+    if(!token){ alert("Enter Access Token"); sel.innerHTML="<option>Enter token first</option>"; return; }
+
+    try{
+      const r = await fetch("https://deepakchauhanxai.xyz/pinterest/fetch_boards.php?token=" + encodeURIComponent(token));
+      const text = await r.text();
+      let data; try{ data = JSON.parse(text); }catch{ data = null; }
+
+      if(!r.ok){
+        sel.innerHTML = "<option>Error fetching boards</option>";
+        msg.innerHTML = "❌ API Error ("+r.status+"):\n" + (text || "");
+        msg.classList.add("err");
+        return;
       }
-    })
-    .catch(err => alert("Error: " + err));
+
+      const items = (data && data.items) ? data.items : [];
+      if(!items.length){
+        sel.innerHTML = "<option>No boards found</option>";
+        return;
+      }
+
+      sel.innerHTML = "";
+      items.forEach(b=>{
+        const opt = document.createElement("option");
+        opt.value = b.id;
+        opt.textContent = `${b.name} (${b.id})`;
+        sel.appendChild(opt);
+      });
+      // auto-fill first board
+      setBoardId();
+    }catch(e){
+      sel.innerHTML = "<option>Error fetching boards</option>";
+      msg.textContent = "❌ Network error: " + e.message;
+      msg.classList.add("err");
+    }
   }
 
   function setBoardId(){
-    let val = document.getElementById("boardSelect").value;
-    document.getElementById("defaultBoard").value = val;
+    const val = document.getElementById("boardSelect").value || "";
+    document.getElementById("defaultBoard").value = val; // ✅ अब ये input मौजूद है
   }
   </script>
 </body>
