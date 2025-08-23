@@ -48,7 +48,7 @@
         data.members.forEach(m => {
           let option = document.createElement("option");
           option.value = m.id;
-          option.setAttribute("data-board", m.board_id); // board_id bhi store kar rahe
+          option.setAttribute("board_id", m.board_id); // board_id bhi store kar rahe
           option.textContent = m.name + " (" + m.username + ")";
           memberSelect.appendChild(option);
         });
