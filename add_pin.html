@@ -1,166 +1,92 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>➕ Add New Pin — AI Bhai</title>
-<style>
-  :root{--bg:#0f172a;--card:#111827;--muted:#9ca3af;--text:#e5e7eb;--accent:#22d3ee;}
-  *{box-sizing:border-box} body{margin:0;background:linear-gradient(120deg,#0b1225,#111827 40%,#0b1225);font-family:system-ui,-apple-system,Segoe UI,Roboto;color:var(--text)}
-  .wrap{max-width:720px;margin:24px auto;padding:16px}
-  .card{background:#0b1225;border:1px solid #1f2937;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:20px}
-  h1{margin:0 0 8px;font-size:22px}
-  .sub{color:#a3a3a3;font-size:13px;margin-bottom:16px}
-  label{display:block;font-size:14px;margin:12px 0 6px}
-  input,select,textarea{width:100%;height:44px;border-radius:10px;border:1px solid #334155;background:#0b1225;color:var(--text);padding:0 12px;outline:none}
-  textarea{height:100px;padding:10px 12px;resize:vertical}
-  input[readonly]{opacity:.8}
-  input::placeholder,textarea::placeholder{color:#64748b}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  button{height:44px;border:none;border-radius:10px;cursor:pointer;font-weight:700;background:linear-gradient(90deg,#06b6d4,#22d3ee);color:#04222a}
-  button:disabled{opacity:.5;cursor:not-allowed}
-  .muted{font-size:12px;color:#9ca3af;margin-top:6px}
-  .msg{margin-top:12px;padding:10px;border-radius:10px;display:none}
-  .ok{background:#062e26;border:1px solid #065f46;color:#d1fae5}
-  .bad{background:#2a0c0c;border:1px solid #7f1d1d;color:#fecaca}
-</style>
+  <meta charset="UTF-8">
+  <title>Add Pin</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; }
+    form { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
+    input, textarea, select, button { width: 100%; margin: 10px 0; padding: 10px; }
+    button { background: #0073e6; color: white; border: none; cursor: pointer; }
+    button:hover { background: #005bb5; }
+    .msg { margin-top: 15px; font-weight: bold; }
+  </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <h1>➕ Add New Pin</h1>
-      <div class="sub">Member चुनें, Image URL/Title/Description भरें — बाकी auto-fill.</div>
 
-      <label for="member">Select Member</label>
-      <select id="member"></select>
-      <div class="muted" id="memberHint">Board ID auto-fill होगा.</div>
+<h2>Add New Pin</h2>
 
-      <label for="image">Image URL</label>
-      <input id="image" type="url" placeholder="https://example.com/image.jpg" />
+<form id="pinForm">
+  <label for="member">Select Member:</label>
+  <select id="member" name="member_id" required>
+    <option value="">Loading...</option>
+  </select>
 
-      <div class="row">
-        <div>
-          <label for="title">Title</label>
-          <input id="title" type="text" placeholder="Pin Title" />
-        </div>
-        <div>
-          <label for="link">Link (auto)</label>
-          <input id="link" type="url" value="https://deepakchauhanxai.com" readonly />
-        </div>
-      </div>
+  <label for="image_url">Image URL:</label>
+  <input type="url" id="image_url" name="image_url" placeholder="https://example.com/image.jpg" required>
 
-      <label for="desc">Description</label>
-      <textarea id="desc" placeholder="Pin Description"></textarea>
+  <label for="title">Title:</label>
+  <input type="text" id="title" name="title" required>
 
-      <div class="row">
-        <div>
-          <label for="board">Board ID (auto)</label>
-          <input id="board" type="text" placeholder="Board ID" readonly />
-        </div>
-        <div>
-          <label for="when">Schedule (optional)</label>
-          <input id="when" type="datetime-local" />
-        </div>
-      </div>
+  <label for="description">Description:</label>
+  <textarea id="description" name="description" rows="4"></textarea>
 
-      <div class="muted">Tip: Schedule खाली छोड़ोगे तो अभी queue में pending के रूप में जुड़ जाएगा.</div>
+  <button type="submit">Add Pin</button>
+</form>
 
-      <div style="margin-top:14px;display:flex;gap:10px">
-        <button id="btn" onclick="submitPin()">Upload Pin</button>
-        <button type="button" onclick="resetForm()">Clear</button>
-      </div>
-
-      <div id="msg" class="msg"></div>
-    </div>
-  </div>
+<div class="msg" id="msg"></div>
 
 <script>
-const API_BASE = "https://deepakchauhanxai.xyz/pinterest";
-
-const dd = id=>document.getElementById(id);
-const memberSel = dd('member'), boardInp = dd('board'), linkInp = dd('link');
-const imgInp = dd('image'), titleInp = dd('title'), descInp = dd('desc'), whenInp = dd('when');
-const msgBox = dd('msg'), btn = dd('btn');
-
-function showMsg(text, ok=true){
-  msgBox.textContent = text;
-  msgBox.className = 'msg ' + (ok ? 'ok' : 'bad');
-  msgBox.style.display = 'block';
-}
-
-function hideMsg(){ msgBox.style.display = 'none'; }
-
-function resetForm(){
-  imgInp.value = ""; titleInp.value = ""; descInp.value = ""; whenInp.value = "";
-  hideMsg();
-}
-
-async function loadMembers(){
-  memberSel.innerHTML = `<option value="">Loading members…</option>`;
-  try{
-    const r = await fetch(`${API_BASE}/list_members.php`, {method:'GET'});
-    const data = await r.json();
-    if(!data.ok){ memberSel.innerHTML = `<option value="">Failed to load</option>`; return; }
-    const items = data.members || [];
-    if(!items.length){ memberSel.innerHTML = `<option value="">No members found</option>`; return; }
-    memberSel.innerHTML = `<option value="">— Select Member —</option>` +
-      items.map(m=>`<option value="${m.id}" data-board="${m.default_board_id||''}" data-username="${m.username||''}">
-        ${m.name} (${m.username})
-      </option>`).join('');
-  }catch(e){
-    memberSel.innerHTML = `<option value="">Error loading members</option>`;
-  }
-}
-
-memberSel.addEventListener('change', ()=>{
-  const opt = memberSel.options[memberSel.selectedIndex];
-  boardInp.value = opt?.getAttribute('data-board') || '';
-});
-
-async function submitPin(){
-  hideMsg();
-  const member_id = memberSel.value.trim();
-  const image = imgInp.value.trim();
-  const title = titleInp.value.trim();
-  const description = descInp.value.trim();
-  const scheduled_at = whenInp.value.trim(); // optional
-
-  if(!member_id || !image || !title || !description){
-    showMsg("कृपया Member, Image URL, Title, Description भरें.", false);
-    return;
-  }
-
-  btn.disabled = true;
-
-  const body = new URLSearchParams();
-  body.set('member_id', member_id);
-  body.set('image', image);
-  body.set('title', title);
-  body.set('description', description);
-  if(scheduled_at) body.set('scheduled_at', scheduled_at); // API support हो तो save कर देगा
-
-  try{
-    const r = await fetch(`${API_BASE}/add_pin_api.php`, {
-      method:'POST',
-      headers:{'Content-Type':'application/x-www-form-urlencoded'},
-      body
-    });
-    const res = await r.json();
-    if(res.ok){
-      showMsg(`✅ Added to queue (ID: ${res.pin_id || '—'})`);
-      resetForm();
-    }else{
-      showMsg(`❌ ${res.msg || 'Failed to add'}`, false);
+// Members list भरना
+fetch("https://deepakchauhanxai.xyz/pinterest/list_members.php")
+  .then(res => res.json())
+  .then(data => {
+    const memberSelect = document.getElementById("member");
+    memberSelect.innerHTML = "";
+    if (data.ok) {
+      data.members.forEach(m => {
+        let opt = document.createElement("option");
+        opt.value = m.id;
+        opt.textContent = m.name + " (" + m.username + ")";
+        memberSelect.appendChild(opt);
+      });
+    } else {
+      memberSelect.innerHTML = "<option>No members found</option>";
     }
-  }catch(e){
-    showMsg("❌ Network/API error", false);
-  }finally{
-    btn.disabled = false;
-  }
-}
+  });
 
-// init
-loadMembers();
+// Form submit करना
+document.getElementById("pinForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const payload = {
+    member_id: document.getElementById("member").value,
+    image_url: document.getElementById("image_url").value,
+    title: document.getElementById("title").value,
+    description: document.getElementById("description").value
+  };
+
+  fetch("https://deepakchauhanxai.xyz/pinterest/add_pin.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  })
+  .then(res => res.json())
+  .then(result => {
+    document.getElementById("msg").textContent = result.msg;
+    if (result.ok) {
+      document.getElementById("msg").style.color = "green";
+      document.getElementById("pinForm").reset();
+    } else {
+      document.getElementById("msg").style.color = "red";
+    }
+  })
+  .catch(err => {
+    document.getElementById("msg").textContent = "❌ Network/API error";
+    document.getElementById("msg").style.color = "red";
+  });
+});
 </script>
+
 </body>
 </html>
