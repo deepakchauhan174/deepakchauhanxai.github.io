@@ -42,28 +42,10 @@
   .pill{padding:6px 10px;border-radius:999px;background:#0b1225;border:1px solid #334155;color:#cbd5e1;margin-left:8px}
   .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
   .hint{color:#a3a3a3;font-size:12px}
-  .add-btn {
-  background: linear-gradient(135deg, #0073e6, #005bb5);
-  color: #fff;
-  border: none;
-  padding: 12px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  transition: all 0.3s ease;
-}
-
-.add-btn:hover {
-  background: linear-gradient(135deg, #005bb5, #003f88);
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-}
-
-.add-btn:active {
-  transform: scale(0.97);
-}
+  .add-btn{background:linear-gradient(135deg,#0073e6,#005bb5);color:#fff;border:none;padding:12px 20px;font-size:16px;font-weight:bold;border-radius:8px;cursor:pointer;box-shadow:0 4px 8px rgba(0,0,0,0.15);transition:all .3s}
+  .add-btn:hover{background:linear-gradient(135deg,#005bb5,#003f88);transform:scale(1.05);box-shadow:0 6px 12px rgba(0,0,0,0.2)}
+  .add-btn:active{transform:scale(0.97)}
+  .top-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
 </style>
 </head>
 <body>
@@ -71,9 +53,14 @@
   <div class="wrap">
     <h1>📌 Admin Panel <span class="pill mono" id="env">loading…</span></h1>
     <div class="sub">Pinterest Auto Uploader • Queue देखें, फ़िल्टर करें, Done/Delete करें</div>
-    <button class="add-btn" onclick="window.location.href='https://deepakchauhanxai.com/add_member.html'">
-  ➕ Add New Member
-    </button>
+
+    <div class="top-actions">
+      <!-- .com पर रखा गया add_pin.html खोलेगा -->
+      <button class="add-btn" onclick="window.location.href='/add_pin.html'">➕ Add New Pin</button>
+      <!-- .com पर रखा गया add_member.html (अगर बनाना हो) -->
+      <button class="add-btn" onclick="window.location.href='/add_member.html'">➕ Add New Member</button>
+    </div>
+
     <div class="toolbar card controls">
       <input id="search" placeholder="Search: title / description / link / username" />
       <select id="status">
@@ -119,9 +106,9 @@
 </div>
 
 <script>
-// ======== CONFIG ========
-const API_BASE = "https://deepakchauhanxai.xyz/pinterest";  // ← अपने server की base path डालो
-// ========================
+// ======== CONFIG (Backend API base — .xyz) ========
+const API_BASE = "https://deepakchauhanxai.xyz/pinterest";
+// ================================================
 
 const envEl = document.querySelector("#env");
 envEl.textContent = new URL(API_BASE).host;
@@ -134,7 +121,7 @@ const qDate = $("#date");
 const btnRefresh = $("#refresh");
 const btnClear = $("#clear");
 
-let rows = []; // full data cached
+let rows = []; // full data cache
 
 btnRefresh.addEventListener("click", load);
 btnClear.addEventListener("click", () => { qSearch.value=""; qStatus.value=""; qDate.value=""; render(); });
@@ -142,17 +129,18 @@ qSearch.addEventListener("input", render);
 qStatus.addEventListener("change", render);
 qDate.addEventListener("change", render);
 
+// Load queue from API
 async function load(){
   tbody.innerHTML = `<tr><td colspan="9" class="hint">Loading…</td></tr>`;
-  try {
-    const res = await fetch(`${API_BASE}/list_queue.php`, {credentials:"omit"});
+  try{
+    const res = await fetch(`${API_BASE}/list_queue.php`, {mode:"cors", credentials:"omit"});
     const data = await res.json();
 
-    // sahi array nikalna
-    rows = data.data || data.rows || (Array.isArray(data) ? data : []);
-
+    // API कभी array देता है, कभी {rows:[]} — दोनों handle
+    rows = Array.isArray(data) ? data : (data.rows || []);
     render();
-  } catch(e) {
+  }catch(e){
+    console.error(e);
     tbody.innerHTML = `<tr><td colspan="9" class="hint">Error loading data</td></tr>`;
   }
 }
@@ -163,8 +151,15 @@ function render(){
   const day = qDate.value;
 
   let out = rows.filter(r=>{
-    if(st && r.status!==st) return false;
-    if(day && (!r.scheduled_at || !r.scheduled_at.startsWith(day))) return false;
+    if(st && (r.status||"")!==st) return false;
+
+    // scheduled_at नहीं है तो created_at लो
+    const scheduled = (r.scheduled_at && r.scheduled_at !== '0000-00-00 00:00:00')
+      ? r.scheduled_at
+      : (r.created_at || "");
+
+    if(day && (!scheduled || !scheduled.startsWith(day))) return false;
+
     if(term){
       const hay = `${r.title||""} ${r.description||""} ${r.link||""} ${r.username||""}`.toLowerCase();
       if(!hay.includes(term)) return false;
@@ -181,41 +176,55 @@ function render(){
 }
 
 function rowTpl(r){
-  const sCls = r.status==='done'?'s-done':r.status==='error'?'s-error':r.status==='processing'?'s-processing':'s-pending';
+  const s = (r.status||'pending').toLowerCase();
+  const sCls = s==='done'?'s-done':s==='error'?'s-error':s==='processing'?'s-processing':'s-pending';
+
+  const scheduled = (r.scheduled_at && r.scheduled_at !== '0000-00-00 00:00:00')
+    ? r.scheduled_at
+    : (r.created_at || '—');
+
+  // कुछ APIs में board_id/board_name नहीं है — fallback '—'
+  const boardText = r.board_name || r.board_id || '—';
+  const memberText = r.username ? `${r.username}` : (r.member_id ? `#${r.member_id}` : '—');
+
   return `
   <tr>
-    <td class="mono">#${r.id}</td>
-    <td><img class="img" src="${escapeHtml(r.image_url||'')}" alt=""></td>
+    <td class="mono">#${escapeHtml(r.id)}</td>
+    <td>${r.image_url ? `<img class="img" src="${escapeAttr(r.image_url)}" alt="">` : '—'}</td>
     <td>
       <div class="mono badge">${escapeHtml(r.title||'')}</div>
       <div style="margin-top:6px;white-space:pre-wrap;line-height:1.3">${escapeHtml(r.description||'')}</div>
     </td>
     <td>
-      <a class="link mono" href="${escapeAttr(r.link||'#')}" target="_blank">${escapeHtml(r.link||'')}</a>
+      ${r.link ? `<a class="link mono" href="${escapeAttr(r.link)}" target="_blank">${escapeHtml(r.link)}</a>` : '—'}
     </td>
-    <td class="mono">${escapeHtml(r.board_name||'—')}</td>
-<td class="mono">${escapeHtml(r.username||'—')}</td>
-    <td class="mono">${escapeHtml(r.scheduled_at||'—')}</td>
-    <td><span class="status ${sCls}">${escapeHtml(r.status||'pending')}</span></td>
+    <td class="mono">${escapeHtml(boardText)}</td>
+    <td class="mono">${escapeHtml(memberText)}</td>
+    <td class="mono">${escapeHtml(scheduled)}</td>
+    <td><span class="status ${sCls}">${escapeHtml(s)}</span></td>
     <td class="row-actions">
-      <button class="btn-ok" onclick="markDone(${+r.id})">Mark Done</button>
-      <button class="btn-bad" onclick="delRow(${+r.id})">Delete</button>
+      <button class="btn-ok" onclick="markDone(${Number(r.id)})">Mark Done</button>
+      <button class="btn-bad" onclick="delRow(${Number(r.id)})">Delete</button>
     </td>
   </tr>`;
 }
 
-function escapeHtml(s){return (s||'').replace(/[&<>"]/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m]))}
+function escapeHtml(s){return (s==null?'':String(s)).replace(/[&<>"]/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m]))}
 function escapeAttr(s){return escapeHtml(s).replace(/"/g,"%22")}
 
 async function markDone(id){
   if(!confirm("Mark as done?")) return;
-  await fetch(`${API_BASE}/update_status.php?id=${id}&status=done`,{method:"GET"});
-  load();
+  try{
+    await fetch(`${API_BASE}/update_status.php?id=${encodeURIComponent(id)}&status=done`, {method:"GET", mode:"cors", credentials:"omit"});
+    load();
+  }catch(e){ alert("Failed to update."); }
 }
 async function delRow(id){
   if(!confirm("Delete this item?")) return;
-  await fetch(`${API_BASE}/delete_queue.php?id=${id}`,{method:"GET"});
-  load();
+  try{
+    await fetch(`${API_BASE}/delete_queue.php?id=${encodeURIComponent(id)}`, {method:"GET", mode:"cors", credentials:"omit"});
+    load();
+  }catch(e){ alert("Failed to delete."); }
 }
 
 // auto load
