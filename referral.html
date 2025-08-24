@@ -789,24 +789,37 @@ async function loadWallet(){
 
 // --- Leaderboard
 async function loadLeaderboard(){
-  const r=await fetch(API_BASE+'/leaderboard.php'); const j=await r.json(); if(!j.ok) return;
-  const t3=document.getElementById('top3'); t3.innerHTML='';
+  const r = await fetch(API_BASE+'/leaderboard.php'); 
+  const j = await r.json(); 
+  if(!j.ok) return;
+
+  const t3 = document.getElementById('top3'); 
+  t3.innerHTML='';
   (j.data.top3||[]).forEach((u,i)=>{
-    const d=document.createElement('div'); d.className=`leader-item rank-${i+1}`;
+    const score = u.score_paise > 0 
+      ? "₹" + (u.score_paise/100).toFixed(2) 
+      : "🚀 Ready to Earn";
+    const d = document.createElement('div'); 
+    d.className=`leader-item rank-${i+1}`;
     d.innerHTML=`
       <div class="rank-badge">#${i+1}</div>
       <div>${u.name||'User'}</div>
-      <div class="leader-score">₹${(u.score_paise/100).toFixed(2)}</div>
+      <div class="leader-score">${score}</div>
     `;
     t3.appendChild(d);
   });
-  const n7=document.getElementById('next7'); n7.innerHTML='';
+
+  const n7 = document.getElementById('next7'); 
+  n7.innerHTML='';
   (j.data.next7||[]).forEach((u,i)=>{
-    const li=document.createElement('li');
+    const score = u.score_paise > 0 
+      ? "₹" + (u.score_paise/100).toFixed(2) 
+      : "🚀 Ready to Earn";
+    const li = document.createElement('li');
     li.innerHTML=`
       <span class="list-rank">#${i+4}</span>
       <span class="list-name">${u.name||'User'}</span>
-      <span class="list-score">₹${(u.score_paise/100).toFixed(2)}</span>
+      <span class="list-score">${score}</span>
     `;
     n7.appendChild(li);
   });
