@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin — Referral Control</title>
+<style>
+  body{font-family:system-ui,Segoe UI,Roboto,Arial;background:#0b1220;color:#e9edf5;margin:0}
+  .wrap{max-width:980px;margin:0 auto;padding:16px}
+  h2{margin:16px 0}
+  .card{background:#121a2b;border:1px solid #1c2740;border-radius:14px;padding:16px;margin:12px 0}
+  input,button,select{background:#0f1627;color:#e9edf5;border:1px solid #223154;border-radius:10px;padding:9px 12px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  button{cursor:pointer}
+  .ok{color:#34d399}.err{color:#f87171}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Admin Panel (Light)</h1>
+
+  <div class="card">
+    <h2>Admin Key</h2>
+    <div class="row">
+      <input id="adminkey" placeholder="X-ADMIN-KEY" />
+      <button id="saveKey">Save</button>
+    </div>
+    <div id="keyMsg"></div>
+  </div>
+
+  <div class="card">
+    <h2>Work Create (Pending)</h2>
+    <div class="row3">
+      <input id="wc_email" placeholder="User Email" />
+      <input id="wc_amt" type="number" placeholder="Amount (₹)" />
+      <input id="wc_note" placeholder="Note" />
+    </div>
+    <button id="wc_btn">Create</button>
+    <div id="wc_msg"></div>
+  </div>
+
+  <div class="card">
+    <h2>Work Approve / Reject / Reverse</h2>
+    <div class="row3">
+      <input id="wa_id" type="number" placeholder="Work ID" />
+      <select id="wa_action">
+        <option value="APPROVE">APPROVE</option>
+        <option value="REJECT">REJECT</option>
+        <option value="REVERSE">REVERSE</option>
+      </select>
+      <input id="wa_note" placeholder="Note" />
+    </div>
+    <button id="wa_btn">Submit</button>
+    <div id="wa_msg"></div>
+  </div>
+
+  <div class="card">
+    <h2>Leaderboard Control</h2>
+    <div class="row3">
+      <input id="lb_slot" type="number" placeholder="Slot (1..10)" />
+      <input id="lb_email" placeholder="User Email" />
+      <select id="lb_mode">
+        <option value="pin">pin</option>
+        <option value="unpin">unpin</option>
+        <option value="visibility">visibility</option>
+      </select>
+    </div>
+    <div class="row">
+      <input id="lb_visible" type="number" placeholder="visible (1/0 for visibility)" />
+      <button id="lb_btn">Apply</button>
+    </div>
+    <div id="lb_msg"></div>
+  </div>
+
+  <div class="card">
+    <h2>Manual Wallet Adjust</h2>
+    <div class="row3">
+      <input id="ma_email" placeholder="User Email" />
+      <select id="ma_type">
+        <option value="CREDIT">CREDIT</option>
+        <option value="DEBIT">DEBIT</option>
+      </select>
+      <input id="ma_amt" type="number" placeholder="Amount (₹)" />
+    </div>
+    <div class="row">
+      <input id="ma_note" placeholder="Reason / Note" />
+      <button id="ma_btn">Adjust</button>
+    </div>
+    <div id="ma_msg"></div>
+  </div>
+</div>
+
+<script>
+const API_BASE = 'https://deepakchauhanxai.xyz/referral/api';
+const H = ()=>({'Content-Type':'application/json','X-ADMIN-KEY':(localStorage.getItem('admin_key')||'')});
+
+document.getElementById('adminkey').value = localStorage.getItem('admin_key')||'';
+document.getElementById('saveKey').onclick = ()=>{
+  localStorage.setItem('admin_key', document.getElementById('adminkey').value.trim());
+  document.getElementById('keyMsg').innerHTML='<span class="ok">Saved</span>';
+};
+
+document.getElementById('wc_btn').onclick = async ()=>{
+  const email = document.getElementById('wc_email').value.trim().toLowerCase();
+  const amount_rupees = parseFloat(document.getElementById('wc_amt').value||'0');
+  const note = document.getElementById('wc_note').value.trim();
+  const res = await fetch(API_BASE+'/work_create.php',{method:'POST',headers:H(),body:JSON.stringify({email,amount_rupees,note})});
+  const j = await res.json();
+  document.getElementById('wc_msg').textContent = j.ok? ('Created work #'+j.data.work_id): (j.error||'Error');
+};
+
+document.getElementById('wa_btn').onclick = async ()=>{
+  const work_id = parseInt(document.getElementById('wa_id').value||'0');
+  const action = document.getElementById('wa_action').value;
+  const note = document.getElementById('wa_note').value.trim();
+  const res = await fetch(API_BASE+'/work_approve.php',{method:'POST',headers:H(),body:JSON.stringify({work_id,action,note})});
+  const j = await res.json();
+  document.getElementById('wa_msg').textContent = j.ok? ('Status: '+j.data.status): (j.error||'Error');
+};
+
+document.getElementById('lb_btn').onclick = async ()=>{
+  const mode = document.getElementById('lb_mode').value;
+  let payload = {mode};
+  if(mode==='pin'){ payload.slot=parseInt(document.getElementById('lb_slot').value||'0'); payload.email=document.getElementById('lb_email').value.trim().toLowerCase(); }
+  if(mode==='unpin'){ payload.slot=parseInt(document.getElementById('lb_slot').value||'0'); }
+  if(mode==='visibility'){ payload.email=document.getElementById('lb_email').value.trim().toLowerCase(); payload.visible=parseInt(document.getElementById('lb_visible').value||'1'); }
+  const res = await fetch(API_BASE+'/leaderboard_pin.php',{method:'POST',headers:H(),body:JSON.stringify(payload)});
+  const j = await res.json();
+  document.getElementById('lb_msg').textContent = j.ok? 'Done' : (j.error||'Error');
+};
+
+document.getElementById('ma_btn').onclick = async ()=>{
+  const email = document.getElementById('ma_email').value.trim().toLowerCase();
+  const type = document.getElementById('ma_type').value;
+  const amount_rupees = parseFloat(document.getElementById('ma_amt').value||'0');
+  const note = document.getElementById('ma_note').value.trim();
+  const res = await fetch(API_BASE+'/manual_adjust.php',{method:'POST',headers:H(),body:JSON.stringify({email,type,amount_rupees,note})});
+  const j = await res.json();
+  document.getElementById('ma_msg').textContent = j.ok? 'Adjusted' : (j.error||'Error');
+};
+</script>
+</body>
+</html>
