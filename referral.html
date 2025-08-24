@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Deepak × AI Bhai — Referral</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#0b1220;color:#e9edf5;margin:0}
+    .wrap{max-width:980px;margin:0 auto;padding:16px}
+    header{display:flex;justify-content:space-between;align-items:center;padding:12px 0}
+    h1{font-size:20px;margin:0}
+    .card{background:#121a2b;border:1px solid #1c2740;border-radius:14px;padding:16px;margin:12px 0}
+    input,button,select{background:#0f1627;color:#e9edf5;border:1px solid #223154;border-radius:10px;padding:10px 12px}
+    input,select{width:100%}
+    button{cursor:pointer}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .row3{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:12px}
+    .muted{opacity:.7;font-size:13px}
+    .pill{background:#1b2540;border:1px solid #24345b;padding:6px 10px;border-radius:999px;font-size:12px;display:inline-block}
+    .list li{display:flex;justify-content:space-between;padding:8px 6px;border-bottom:1px dashed #223154}
+    .list li:last-child{border-bottom:0}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .top3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .topcard{background:#16213a;border:1px solid #26406b;border-radius:16px;padding:14px;text-align:center}
+    .rank{font-weight:700;font-size:26px}
+    .next7 li{display:flex;justify-content:space-between;border-bottom:1px dashed #223154;padding:8px 6px}
+    .copy{font-size:12px;margin-left:6px}
+    .ok{color:#34d399} .err{color:#f87171}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Deepak Chauhan × AI Bhai — Referral</h1>
+      <span class="pill" id="loginInfo">Guest</span>
+    </header>
+
+    <!-- Referral capture note -->
+    <div class="card">
+      <b>Referral Code:</b> <span id="refView">—</span>
+      <span class="muted"> (लिंक से आए हो तो अपने‑आप सेव हो गया है)</span>
+    </div>
+
+    <!-- Sign Up -->
+    <div class="card">
+      <h3>नया अकाउंट बनाएँ</h3>
+      <div class="row">
+        <div><input id="name" placeholder="नाम" /></div>
+        <div><input id="email" placeholder="Email" type="email" /></div>
+      </div>
+      <div class="row">
+        <div><input id="password" placeholder="पासवर्ड (6+ अक्षर)" type="password" /></div>
+        <div><button id="btnSignup">Create Account</button></div>
+      </div>
+      <div class="muted" id="signupMsg"></div>
+    </div>
+
+    <!-- My Profile -->
+    <div class="card">
+      <h3>मेरा प्रोफाइल</h3>
+      <div class="row3">
+        <div>
+          <div><b>Referral Code:</b> <span id="myCode">—</span>
+            <button class="copy" id="copyCode">कॉपी</button></div>
+          <div class="muted">Share link: <span id="shareLink">—</span></div>
+        </div>
+        <div>
+          <b>Direct Joinings:</b> <span id="joinings">0</span>
+          <div class="muted">Level Rate: <span id="rate">0%</span></div>
+        </div>
+        <div>
+          <b>Wallet Balance:</b> ₹<span id="balance">0.00</span>
+          <div class="muted"><a href="#wallet">History देखें</a></div>
+        </div>
+      </div>
+      <div style="margin-top:10px">
+        <div class="muted">Level Progress: 10 → 50 → 100 → 160</div>
+        <div style="height:10px;background:#0f1627;border:1px solid #223154;border-radius:8px;overflow:hidden">
+          <div id="bar" style="height:100%;width:0%;background:#2dd4bf"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaderboard -->
+    <div class="card">
+      <h3>Leaderboard</h3>
+      <div class="top3" id="top3"></div>
+      <ul class="next7 list" id="next7"></ul>
+    </div>
+
+    <!-- Wallet -->
+    <div class="card" id="wallet">
+      <h3>Wallet History</h3>
+      <ul class="list" id="walletList"></ul>
+    </div>
+  </div>
+
+<script>
+const API_BASE = 'https://deepakchauhanxai.xyz/referral/api';
+
+// 1) Referral code capture (from URL) + save
+(function(){
+  const u = new URL(location.href);
+  const ref = (u.searchParams.get('ref') || '').toUpperCase();
+  if(ref){ localStorage.setItem('ref_code', ref); }
+  document.getElementById('refView').textContent = localStorage.getItem('ref_code') || '—';
+})();
+
+// 2) State
+let currentEmail = localStorage.getItem('my_email') || '';
+
+// 3) Signup
+document.getElementById('btnSignup').addEventListener('click', async ()=>{
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const password = document.getElementById('password').value;
+  const ref = localStorage.getItem('ref_code') || '';
+  const msg = document.getElementById('signupMsg');
+
+  if(!name || !email || password.length < 6){ msg.innerHTML='<span class="err">कृपया सही विवरण भरें</span>'; return; }
+
+  try{
+    const res = await fetch(API_BASE+'/register.php', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({name,email,password,ref})
+    });
+    const data = await res.json();
+    if(!data.ok){ msg.innerHTML = '<span class="err">'+(data.error||'Failed')+'</span>'; return; }
+
+    currentEmail = email;
+    localStorage.setItem('my_email', email);
+    msg.innerHTML = '<span class="ok">Account बन गया!</span>';
+    await loadMe();
+    await loadWallet();
+    await loadLeaderboard();
+  }catch(e){
+    msg.innerHTML = '<span class="err">Network error</span>';
+  }
+});
+
+// 4) Load Me
+async function loadMe(){
+  const email = currentEmail || document.getElementById('email').value.trim().toLowerCase();
+  if(!email) return;
+  document.getElementById('loginInfo').textContent = email;
+  const r = await fetch(API_BASE+'/me.php?email='+encodeURIComponent(email));
+  const j = await r.json();
+  if(!j.ok) return;
+
+  document.getElementById('myCode').textContent = j.data.referral_code;
+  const share = location.origin + location.pathname + '?ref=' + j.data.referral_code;
+  document.getElementById('shareLink').textContent = share;
+  document.getElementById('joinings').textContent = j.data.direct_joinings;
+  document.getElementById('rate').textContent = j.data.current_level_rate_percent + '%';
+  document.getElementById('balance').textContent = (j.data.balance_paise/100).toFixed(2);
+
+  // progress bar (towards 10, 50, 100, 160)
+  const J = j.data.direct_joinings;
+  const cap = J>=160?160: J>=100?100: J>=50?50:10;
+  const pct = Math.min(100, Math.round((J/ cap)*100));
+  document.getElementById('bar').style.width = pct+'%';
+}
+document.getElementById('copyCode').addEventListener('click', ()=>{
+  const code = document.getElementById('myCode').textContent;
+  navigator.clipboard.writeText(code);
+  alert('Referral code copied: '+code);
+});
+
+// 5) Wallet
+async function loadWallet(){
+  const email = currentEmail || document.getElementById('email').value.trim().toLowerCase();
+  if(!email) return;
+  const r = await fetch(API_BASE+'/wallet_history.php?email='+encodeURIComponent(email));
+  const j = await r.json();
+  if(!j.ok) return;
+  const ul = document.getElementById('walletList');
+  ul.innerHTML='';
+  (j.data.entries||[]).forEach(x=>{
+    const ru = (x.amount_paise/100).toFixed(2);
+    const sign = x.type==='CREDIT'?'+':'-';
+    const li = document.createElement('li');
+    li.innerHTML = `<span>${x.note || x.ref_type} <span class="muted">#${x.id}</span></span>
+                    <span>${sign}₹${ru}</span>`;
+    ul.appendChild(li);
+  });
+}
+
+// 6) Leaderboard
+async function loadLeaderboard(){
+  const r = await fetch(API_BASE+'/leaderboard.php');
+  const j = await r.json();
+  if(!j.ok) return;
+
+  const t3 = document.getElementById('top3'); t3.innerHTML='';
+  (j.data.top3||[]).forEach((u,i)=>{
+    const d = document.createElement('div');
+    d.className='topcard';
+    d.innerHTML = `<div class="rank">#${i+1}</div>
+                   <div>${u.name||'User'}</div>
+                   <div class="muted">₹${(u.score_paise/100).toFixed(2)}</div>`;
+    t3.appendChild(d);
+  });
+
+  const n7 = document.getElementById('next7'); n7.innerHTML='';
+  (j.data.next7||[]).forEach((u,i)=>{
+    const li = document.createElement('li');
+    li.innerHTML = `<span>#${i+4} ${u.name||'User'}</span>
+                    <span class="muted">₹${(u.score_paise/100).toFixed(2)}</span>`;
+    n7.appendChild(li);
+  });
+}
+
+// Auto boot
+if(currentEmail){ loadMe(); loadWallet(); }
+loadLeaderboard();
+</script>
+</body>
+</html>
