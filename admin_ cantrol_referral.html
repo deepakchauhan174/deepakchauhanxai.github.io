@@ -895,7 +895,13 @@ document.getElementById('md_work_create').onclick = async ()=>{
 loadMembers();
 
   // ===== Broadcast Admin =====
-  function bc_ctaRow(label='', href=''){
+function BC_h(){ 
+  return {'Content-Type':'application/json','X-ADMIN-KEY':(localStorage.getItem('admin_key')||'')}; 
+}
+const BC_API = API_BASE + '/broadcast.php';
+
+// CTA row (label + href)
+function bc_ctaRow(label='', href=''){
   const wrap = document.createElement('div');
   wrap.style = 'display:grid;grid-template-columns:200px 1fr 80px;gap:8px;margin:6px 0';
   wrap.innerHTML = `
@@ -905,10 +911,9 @@ loadMembers();
   `;
   wrap.querySelector('.bc_c_del').onclick = ()=> wrap.remove();
   return wrap;
-  }
-function BC_h(){ return {'Content-Type':'application/json','X-ADMIN-KEY':(localStorage.getItem('admin_key')||'')}; }
-const BC_API = API_BASE + '/broadcast.php';
+}
 
+// Media row (type + url)
 function bc_mediaRow(type='', url=''){
   const wrap = document.createElement('div');
   wrap.style = 'display:grid;grid-template-columns:140px 1fr 80px;gap:8px;margin:6px 0';
@@ -925,25 +930,28 @@ function bc_mediaRow(type='', url=''){
   return wrap;
 }
 
+// Load current JSON -> form
 async function bc_load(){
-  const r = await fetch(BC_API); const j = await r.json();
+  const r = await fetch(BC_API); 
+  const j = await r.json();
   if(!j.ok){ document.getElementById('bc_msg').textContent = j.error||'Error'; return; }
   const d = j.data;
-  document.getElementById('bc_enabled').value = (d.enabled ? 'true':'false');
-  document.getElementById('bc_typing').value  = (d.typingTitle ? 'true':'false');
-  document.getElementById('bc_title').value   = d.title || '';
-  document.getElementById('bc_name').value    = d.nameTag || '';
-  document.getElementById('bc_footer').value  = d.footer || '';
-  document.getElementById('bc_audience').value= d.audience || 'all';
-  document.getElementById('bc_text').value    = d.textHtml || '';
-  document.getElementById('bc_cta_label').value = (d.cta && d.cta.label) ? d.cta.label : '';
-  document.getElementById('bc_cta_href').value  = (d.cta && d.cta.href)  ? d.cta.href  : '';
 
-  const cont = document.getElementById('bc_media'); cont.innerHTML='';
+  // basic fields
+  document.getElementById('bc_enabled').value  = (d.enabled ? 'true':'false');
+  document.getElementById('bc_typing').value   = (d.typingTitle ? 'true':'false');
+  document.getElementById('bc_title').value    = d.title || '';
+  document.getElementById('bc_name').value     = d.nameTag || '';
+  document.getElementById('bc_footer').value   = d.footer || '';
+  document.getElementById('bc_audience').value = d.audience || 'all';
+  document.getElementById('bc_text').value     = d.textHtml || '';
+
+  // media list
+  const cont = document.getElementById('bc_media'); 
+  cont.innerHTML='';
   (d.media||[]).forEach(m=> cont.appendChild(bc_mediaRow(m.type, m.url)));
-  document.getElementById('bc_msg').textContent='Loaded';
-}
-  // CTAs
+
+  // CTAs list (multi)
   const cwrap = document.getElementById('bc_ctas'); 
   cwrap.innerHTML = '';
   if (Array.isArray(d.ctas) && d.ctas.length) {
@@ -953,19 +961,27 @@ async function bc_load(){
     cwrap.appendChild(bc_ctaRow(d.cta.label, d.cta.href));
   }
 
+  document.getElementById('bc_msg').textContent='Loaded';
+}
+
+// Save form -> JSON (POST)
 async function bc_save(){
+  // collect media
   const media = [];
   document.querySelectorAll('#bc_media > div').forEach(row=>{
     const type = row.querySelector('.bc_m_type').value;
     const url  = row.querySelector('.bc_m_url').value.trim();
     if(url) media.push({type, url});
   });
-const ctas = [];
+
+  // collect CTAs (multi)
+  const ctas = [];
   document.querySelectorAll('#bc_ctas > div').forEach(row=>{
     const label = row.querySelector('.bc_c_label').value.trim() || 'Open';
     const href  = row.querySelector('.bc_c_href').value.trim();
     if(href) ctas.push({label, href});
   });
+
   const payload = {
     enabled:      document.getElementById('bc_enabled').value==='true',
     typingTitle:  document.getElementById('bc_typing').value==='true',
@@ -975,64 +991,49 @@ const ctas = [];
     audience:     document.getElementById('bc_audience').value,
     textHtml:     document.getElementById('bc_text').value,
     media,
-    cta: (document.getElementById('bc_cta_href').value.trim()
-         ? { label: document.getElementById('bc_cta_label').value.trim() || 'Open',
-             href:  document.getElementById('bc_cta_href').value.trim() }
-         : null)
+    ctas                 // <<— अब multi-CTAs भेजेंगे
+    // NOTE: legacy single `cta` अब नहीं भेज रहे; API चाहो तो first CTA को 'cta' भी set कर देगा।
   };
 
   const r = await fetch(BC_API, {method:'POST', headers:BC_h(), body:JSON.stringify(payload)});
   const j = await r.json();
   document.getElementById('bc_msg').innerHTML = j.ok? '<span class="ok">Saved</span>' : ('<span class="err">'+(j.error||'Error')+'</span>');
+  return j;
 }
 
-function bc_preview(){
-  // current form → object
-  const media = [];
-  document.querySelectorAll('#bc_media > div').forEach(row=>{
-    const type = row.querySelector('.bc_m_type').value;
-    const url  = row.querySelector('.bc_m_url').value.trim();
-    if(url) media.push({type, url});
-  });
-  const data = {
-    enabled: document.getElementById('bc_enabled').value==='true',
-    typingTitle: document.getElementById('bc_typing').value==='true',
-    title: document.getElementById('bc_title').value.trim() || 'AI Bhai',
-    nameTag: document.getElementById('bc_name').value.trim(),
-    footer: document.getElementById('bc_footer').value.trim(),
-    audience: document.getElementById('bc_audience').value,
-    textHtml: document.getElementById('bc_text').value,
-    media,
-    cta: (document.getElementById('bc_cta_href').value.trim()
-         ? { label: document.getElementById('bc_cta_label').value.trim() || 'Open',
-             href:  document.getElementById('bc_cta_href').value.trim() }
-         : null)
-  };
+// Preview: पहले save, फिर widget open
+async function bc_preview(){
+  const j = await bc_save();
+  if(!j || !j.ok){ return; }
 
-  // widget preview (same avatar as widget)
   const avatar = 'https://deepakchauhanxai.xyz/images/AI-bhai.png';
   if(typeof AIBhaiPopup === 'function'){
     const inst = AIBhaiPopup({
       avatarUrl: avatar,
-      dataUrl: BC_API, // not used in preview open
+      dataUrl: BC_API,  // widget GET करेगा और नया JSON लेगा
       position: 'br',
       accent: '#2dd4bf',
       pollSec: 0
     });
-    // internal open with current data:
-    // छोटा hack: widget के renderModal को reuse नहीं कर सकते तो एक बार saved data से open होने देंगे
-    // इसलिए पहले save कर दो फिर open भी कर सकते हो — लेकिन बेहतर: widget को click करें:
-    inst.open && inst.open(); // fallback open (will fetch from API)
+    inst.open && inst.open();
   } else {
     alert('AIBhaiPopup script not loaded on this page.');
   }
 }
 
 // buttons
-document.getElementById('bc_add_media').onclick = ()=> document.getElementById('bc_media').appendChild(bc_mediaRow('image',''));
+document.getElementById('bc_add_media').onclick = ()=> 
+  document.getElementById('bc_media').appendChild(bc_mediaRow('image',''));
+
+document.getElementById('bc_add_cta').onclick = ()=> 
+  document.getElementById('bc_ctas').appendChild(bc_ctaRow('Open','https://'));
+
+document.getElementById('bc_add_whatsapp').onclick = ()=> 
+  document.getElementById('bc_ctas').appendChild(bc_ctaRow('Join WhatsApp','https://wa.me/91XXXXXXXXXX'));
+
 document.getElementById('bc_load').onclick = bc_load;
-document.getElementById('bc_save').onclick = bc_save;
-document.getElementById('bc_preview').onclick = bc_preview;
+document.getElementById('bc_save').onclick = ()=>bc_save();
+document.getElementById('bc_preview').onclick = ()=>bc_preview();
 
 // auto-load
 bc_load();
