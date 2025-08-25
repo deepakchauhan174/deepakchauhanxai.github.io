@@ -787,39 +787,61 @@ async function loadWallet(){
   });
 }
 
-// --- Leaderboard
+// --- Leaderboard (with client-side fallback sort + joinings display)
 async function loadLeaderboard(){
-  const r = await fetch(API_BASE+'/leaderboard.php'); 
+  const r = await fetch(API_BASE + '/leaderboard.php'); 
   const j = await r.json(); 
   if(!j.ok) return;
 
+  // 1) Combine and fallback sort (in case API not sorted correctly)
+  let all = [...(j.data.top3 || []), ...(j.data.next7 || [])];
+
+  // normalize
+  all = all.map(u => ({
+    ...u,
+    score_paise: Number(u.score_paise || 0),
+    direct_joinings: Number(u.direct_joinings || 0),
+    id: Number(u.id || 0),
+    name: u.name || 'User'
+  }));
+
+  // fallback sort: score desc, joinings desc, id asc
+  all.sort((a,b)=>{
+    if(a.score_paise !== b.score_paise) return b.score_paise - a.score_paise;
+    if(a.direct_joinings !== b.direct_joinings) return b.direct_joinings - a.direct_joinings;
+    return a.id - b.id;
+  });
+
+  // split back into top3 / next7
+  const top3  = all.slice(0,3);
+  const next7 = all.slice(3,10);
+
+  // 2) Render
+  const fmt = new Intl.NumberFormat('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
   const t3 = document.getElementById('top3'); 
-  t3.innerHTML='';
-  (j.data.top3||[]).forEach((u,i)=>{
-    const score = u.score_paise > 0 
-      ? "₹" + (u.score_paise/100).toFixed(2) 
-      : "🚀 Ready to Earn";
+  t3.innerHTML = '';
+  top3.forEach((u,i)=>{
+    const scoreText = u.score_paise > 0 ? ("₹" + fmt.format(u.score_paise/100)) : "🚀 Ready to Earn";
     const d = document.createElement('div'); 
-    d.className=`leader-item rank-${i+1}`;
-    d.innerHTML=`
+    d.className = `leader-item rank-${i+1}`;
+    d.innerHTML = `
       <div class="rank-badge">#${i+1}</div>
-      <div>${u.name||'User'}</div>
-      <div class="leader-score">${score}</div>
+      <div>${u.name}</div>
+      <div class="leader-score">${scoreText} • Joinings: ${u.direct_joinings}</div>
     `;
     t3.appendChild(d);
   });
 
   const n7 = document.getElementById('next7'); 
-  n7.innerHTML='';
-  (j.data.next7||[]).forEach((u,i)=>{
-    const score = u.score_paise > 0 
-      ? "₹" + (u.score_paise/100).toFixed(2) 
-      : "🚀 Ready to Earn";
+  n7.innerHTML = '';
+  next7.forEach((u,i)=>{
+    const scoreText = u.score_paise > 0 ? ("₹" + fmt.format(u.score_paise/100)) : "🚀 Ready to Earn";
     const li = document.createElement('li');
-    li.innerHTML=`
+    li.innerHTML = `
       <span class="list-rank">#${i+4}</span>
-      <span class="list-name">${u.name||'User'}</span>
-      <span class="list-score">${score}</span>
+      <span class="list-name">${u.name}</span>
+      <span class="list-score">${scoreText} • J:${u.direct_joinings}</span>
     `;
     n7.appendChild(li);
   });
