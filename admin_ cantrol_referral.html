@@ -5,29 +5,34 @@
 <title>Admin — Referral Control</title>
 <style>
   body{font-family:system-ui,Segoe UI,Roboto,Arial;background:#0b1220;color:#e9edf5;margin:0}
-  .wrap{max-width:980px;margin:0 auto;padding:16px}
-  h2{margin:16px 0}
+  .wrap{max-width:1100px;margin:0 auto;padding:16px}
+  h1,h2,h4{margin:12px 0}
   .card{background:#121a2b;border:1px solid #1c2740;border-radius:14px;padding:16px;margin:12px 0}
   input,button,select{background:#0f1627;color:#e9edf5;border:1px solid #223154;border-radius:10px;padding:9px 12px}
   .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  @media (max-width:900px){ .row,.row3{grid-template-columns:1fr} }
   button{cursor:pointer}
-  .ok{color:#34d399}.err{color:#f87171}
+  .ok{color:#34d399}.err{color:#f87171}.muted{color:#a6b0c3;font-size:13px}
+  .chip{background:#1b2540;border:1px solid #24345b;padding:4px 8px;border-radius:8px;font-size:12px;display:inline-block}
+  table th, table td{font-size:14px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>Admin Panel (Light)</h1>
 
+  <!-- Admin Key -->
   <div class="card">
     <h2>Admin Key</h2>
     <div class="row">
       <input id="adminkey" placeholder="X-ADMIN-KEY" />
       <button id="saveKey">Save</button>
     </div>
-    <div id="keyMsg"></div>
+    <div id="keyMsg" class="muted"></div>
   </div>
 
+  <!-- Work Create -->
   <div class="card">
     <h2>Work Create (Pending)</h2>
     <div class="row3">
@@ -39,6 +44,7 @@
     <div id="wc_msg"></div>
   </div>
 
+  <!-- Work Approve/Reject/Reverse -->
   <div class="card">
     <h2>Work Approve / Reject / Reverse</h2>
     <div class="row3">
@@ -54,6 +60,7 @@
     <div id="wa_msg"></div>
   </div>
 
+  <!-- Leaderboard Control -->
   <div class="card">
     <h2>Leaderboard Control</h2>
     <div class="row3">
@@ -72,6 +79,7 @@
     <div id="lb_msg"></div>
   </div>
 
+  <!-- Manual Wallet Adjust -->
   <div class="card">
     <h2>Manual Wallet Adjust</h2>
     <div class="row3">
@@ -88,6 +96,97 @@
     </div>
     <div id="ma_msg"></div>
   </div>
+
+  <!-- Members Console -->
+  <div class="card">
+    <h2>Members</h2>
+    <div class="row">
+      <input id="m_q" placeholder="Search name/email/ref code" />
+      <div class="row">
+        <button id="m_search">Search</button>
+        <button id="m_reset">Reset</button>
+      </div>
+    </div>
+    <div class="muted" id="m_meta"></div>
+
+    <div id="m_table" style="margin-top:10px; overflow:auto; max-height:380px; border:1px solid #1c2740; border-radius:10px;">
+      <table style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr style="background:#0f1627">
+            <th style="text-align:left; padding:8px; border-bottom:1px solid #1c2740;">Name</th>
+            <th style="text-align:left; padding:8px; border-bottom:1px solid #1c2740;">Email</th>
+            <th style="text-align:left; padding:8px; border-bottom:1px solid #1c2740;">Ref Code</th>
+            <th style="text-align:right; padding:8px; border-bottom:1px solid #1c2740;">Joinings</th>
+            <th style="text-align:right; padding:8px; border-bottom:1px solid #1c2740;">Balance (₹)</th>
+            <th style="text-align:right; padding:8px; border-bottom:1px solid #1c2740;">Action</th>
+          </tr>
+        </thead>
+        <tbody id="m_rows"></tbody>
+      </table>
+    </div>
+
+    <div class="row" style="margin-top:10px">
+      <button id="m_prev">Prev</button>
+      <button id="m_next">Next</button>
+    </div>
+  </div>
+
+  <!-- Member Details Panel -->
+  <div class="card" id="md_panel" style="display:none">
+    <h2>Member Details</h2>
+    <div class="muted" id="md_head"></div>
+
+    <div class="row3" style="margin-top:10px">
+      <div class="card"><h4>Direct Joinings</h4><div style="font-size:22px;font-weight:700" id="md_joinings">0</div></div>
+      <div class="card"><h4>Balance</h4><div style="font-size:22px;font-weight:700">₹<span id="md_balance">0.00</span></div></div>
+      <div class="card"><h4>Total Commission</h4><div style="font-size:22px;font-weight:700">₹<span id="md_totalc">0.00</span></div></div>
+    </div>
+
+    <div class="row" style="margin-top:10px">
+      <div>
+        <h4>Quick Actions</h4>
+        <div class="row">
+          <select id="md_adj_type"><option value="CREDIT">CREDIT</option><option value="DEBIT">DEBIT</option></select>
+          <input id="md_adj_amt" type="number" placeholder="₹ Amount" />
+        </div>
+        <div class="row">
+          <input id="md_adj_note" placeholder="Reason/Note" />
+          <button id="md_adj_btn">Apply</button>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <select id="md_vis_val">
+            <option value="1">Visible in Leaderboard</option>
+            <option value="0">Hide from Leaderboard</option>
+          </select>
+          <button id="md_vis_btn">Save Visibility</button>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <input id="md_work_amt" type="number" placeholder="Work Amount ₹" />
+          <input id="md_work_note" placeholder="Work Note" />
+        </div>
+        <div class="row">
+          <button id="md_work_create">Create Work</button>
+        </div>
+      </div>
+
+      <div>
+        <h4>Recent Wallet</h4>
+        <ul class="muted" id="md_wallet" style="list-style:none;padding:0;margin:0"></ul>
+      </div>
+
+      <div>
+        <h4>Recent Works</h4>
+        <ul class="muted" id="md_works" style="list-style:none;padding:0;margin:0"></ul>
+      </div>
+    </div>
+
+    <div style="margin-top:10px">
+      <h4>Direct Referees (last 50)</h4>
+      <ul class="muted" id="md_refs" style="list-style:none;padding:0;margin:0"></ul>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -100,6 +199,7 @@ document.getElementById('saveKey').onclick = ()=>{
   document.getElementById('keyMsg').innerHTML='<span class="ok">Saved</span>';
 };
 
+// Work Create
 document.getElementById('wc_btn').onclick = async ()=>{
   const email = document.getElementById('wc_email').value.trim().toLowerCase();
   const amount_rupees = parseFloat(document.getElementById('wc_amt').value||'0');
@@ -109,6 +209,7 @@ document.getElementById('wc_btn').onclick = async ()=>{
   document.getElementById('wc_msg').textContent = j.ok? ('Created work #'+j.data.work_id): (j.error||'Error');
 };
 
+// Work Approve/Reject/Reverse
 document.getElementById('wa_btn').onclick = async ()=>{
   const work_id = parseInt(document.getElementById('wa_id').value||'0');
   const action = document.getElementById('wa_action').value;
@@ -118,6 +219,7 @@ document.getElementById('wa_btn').onclick = async ()=>{
   document.getElementById('wa_msg').textContent = j.ok? ('Status: '+j.data.status): (j.error||'Error');
 };
 
+// Leaderboard Control
 document.getElementById('lb_btn').onclick = async ()=>{
   const mode = document.getElementById('lb_mode').value;
   let payload = {mode};
@@ -129,6 +231,7 @@ document.getElementById('lb_btn').onclick = async ()=>{
   document.getElementById('lb_msg').textContent = j.ok? 'Done' : (j.error||'Error');
 };
 
+// Manual Adjust
 document.getElementById('ma_btn').onclick = async ()=>{
   const email = document.getElementById('ma_email').value.trim().toLowerCase();
   const type = document.getElementById('ma_type').value;
@@ -138,6 +241,119 @@ document.getElementById('ma_btn').onclick = async ()=>{
   const j = await res.json();
   document.getElementById('ma_msg').textContent = j.ok? 'Adjusted' : (j.error||'Error');
 };
+
+// ===== Members Console =====
+let M_PAGE = 1, M_LIMIT = 20, M_LAST_Q = '';
+let MD_EMAIL = '';
+
+function fmtINR(paise){ return (paise/100).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+async function loadMembers(){
+  const q = document.getElementById('m_q').value.trim();
+  const url = `${API_BASE}/users_list.php?q=${encodeURIComponent(q)}&page=${M_PAGE}&limit=${M_LIMIT}`;
+  const res = await fetch(url, { headers: H() });
+  const j = await res.json();
+  if(!j.ok){ document.getElementById('m_meta').textContent = j.error || 'Error'; return; }
+
+  M_LAST_Q = q;
+  const rows = j.data.users || [];
+  const tb = document.getElementById('m_rows'); tb.innerHTML='';
+
+  rows.forEach(u=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="padding:8px;border-bottom:1px solid #1c2740">${u.name||''}</td>
+      <td style="padding:8px;border-bottom:1px solid #1c2740;word-break:break-all">${u.email||''}</td>
+      <td style="padding:8px;border-bottom:1px solid #1c2740"><span class="chip">${u.referral_code||''}</span></td>
+      <td style="padding:8px;border-bottom:1px solid #1c2740; text-align:right">${u.direct_joinings}</td>
+      <td style="padding:8px;border-bottom:1px solid #1c2740; text-align:right">₹${fmtINR(u.balance_paise||0)}</td>
+      <td style="padding:8px;border-bottom:1px solid #1c2740; text-align:right">
+        <button class="view-btn" data-email="${u.email}">View</button>
+      </td>
+    `;
+    tb.appendChild(tr);
+  });
+
+  document.getElementById('m_meta').textContent = `Total: ${j.data.total} • Page ${j.data.page}`;
+  document.querySelectorAll('.view-btn').forEach(btn=>{
+    btn.onclick = ()=> openMember(btn.getAttribute('data-email'));
+  });
+}
+
+async function openMember(email){
+  MD_EMAIL = email;
+  const res = await fetch(`${API_BASE}/user_details.php?email=${encodeURIComponent(email)}`, { headers: H() });
+  const j = await res.json(); if(!j.ok){ alert(j.error||'Error'); return; }
+
+  const me = j.data.user, k = j.data.kpi;
+  document.getElementById('md_head').textContent = `${me.name} • ${me.email} • Ref: ${me.referral_code}`;
+  document.getElementById('md_joinings').textContent = k.direct_joinings;
+  document.getElementById('md_balance').textContent = fmtINR(k.balance_paise||0);
+  document.getElementById('md_totalc').textContent = fmtINR(k.total_commission_paise||0);
+
+  const wul = document.getElementById('md_wallet'); wul.innerHTML='';
+  (j.data.wallet_recent||[]).forEach(x=>{
+    const ru = fmtINR(x.amount_paise||0);
+    const sign = x.type==='CREDIT'?'+':'–';
+    const li = document.createElement('li');
+    li.innerHTML = `<span>${x.note||x.ref_type} <span class="muted">#${x.id}</span></span><span>${sign}₹${ru}</span>`;
+    wul.appendChild(li);
+  });
+
+  const wl = document.getElementById('md_works'); wl.innerHTML='';
+  (j.data.works_recent||[]).forEach(w=>{
+    const amt = fmtINR(w.base_earning_paise||0);
+    const li = document.createElement('li');
+    li.innerHTML = `<span>#${w.id} — ${w.status}</span><span class="muted">₹${amt}</span>`;
+    wl.appendChild(li);
+  });
+
+  const rl = document.getElementById('md_refs'); rl.innerHTML='';
+  (j.data.direct_referees||[]).forEach(r=>{
+    const li = document.createElement('li');
+    const dt = r.created_at ? new Date(r.created_at.replace(' ','T')).toLocaleDateString('en-IN') : '';
+    li.innerHTML = `<span>${r.name||'User'} <span class="muted">${r.email}</span></span><span class="muted">${dt}</span>`;
+    rl.appendChild(li);
+  });
+
+  document.getElementById('md_panel').style.display = 'block';
+}
+
+// members controls
+document.getElementById('m_search').onclick = ()=>{ M_PAGE=1; loadMembers(); };
+document.getElementById('m_reset').onclick = ()=>{ document.getElementById('m_q').value=''; M_PAGE=1; loadMembers(); };
+document.getElementById('m_prev').onclick = ()=>{ if(M_PAGE>1){ M_PAGE--; loadMembers(); } };
+document.getElementById('m_next').onclick = ()=>{ M_PAGE++; loadMembers(); };
+
+// quick actions on detail
+document.getElementById('md_adj_btn').onclick = async ()=>{
+  if(!MD_EMAIL) return;
+  const type = document.getElementById('md_adj_type').value;
+  const amount_rupees = parseFloat(document.getElementById('md_adj_amt').value||'0');
+  const note = document.getElementById('md_adj_note').value.trim();
+  const res = await fetch(`${API_BASE}/manual_adjust.php`, { method:'POST', headers: H(), body: JSON.stringify({email:MD_EMAIL,type,amount_rupees,note})});
+  const j = await res.json(); alert(j.ok?'Adjusted':(j.error||'Error'));
+  if(j.ok){ openMember(MD_EMAIL); loadMembers(); }
+};
+
+document.getElementById('md_vis_btn').onclick = async ()=>{
+  if(!MD_EMAIL) return;
+  const visible = parseInt(document.getElementById('md_vis_val').value||'1');
+  const res = await fetch(`${API_BASE}/leaderboard_pin.php`, { method:'POST', headers: H(), body: JSON.stringify({mode:'visibility', email:MD_EMAIL, visible})});
+  const j = await res.json(); alert(j.ok?'Saved':(j.error||'Error'));
+};
+
+document.getElementById('md_work_create').onclick = async ()=>{
+  if(!MD_EMAIL) return;
+  const amount_rupees = parseFloat(document.getElementById('md_work_amt').value||'0');
+  const note = document.getElementById('md_work_note').value.trim();
+  const res = await fetch(`${API_BASE}/work_create.php`, { method:'POST', headers: H(), body: JSON.stringify({email:MD_EMAIL, amount_rupees, note})});
+  const j = await res.json(); alert(j.ok?('Work #'+j.data.work_id+' created'):(j.error||'Error'));
+  if(j.ok){ openMember(MD_EMAIL); }
+};
+
+// boot
+loadMembers();
 </script>
 </body>
 </html>
