@@ -661,6 +661,55 @@
     </div>
   </div>
 
+  <!-- Broadcast Popup -->
+<div class="card">
+  <h2>Broadcast Popup</h2>
+  <div class="row">
+    <select id="bc_enabled">
+      <option value="true">Enabled</option>
+      <option value="false">Disabled</option>
+    </select>
+    <select id="bc_typing">
+      <option value="true">Typing Title ON</option>
+      <option value="false">Typing Title OFF</option>
+    </select>
+  </div>
+  <div class="row">
+    <input id="bc_title" placeholder="Title" />
+    <input id="bc_name" placeholder="Name Tag (e.g., Deepak Chauhan)" />
+  </div>
+  <div class="row">
+    <input id="bc_footer" placeholder="Footer (e.g., — Admin Team)" />
+    <select id="bc_audience">
+      <option value="all">Audience: All</option>
+      <option value="loggedin">Audience: Logged-in</option>
+      <option value="new">Audience: New Users</option>
+    </select>
+  </div>
+
+  <div style="margin-top:10px">
+    <h4>Message (HTML allowed)</h4>
+    <textarea id="bc_text" rows="5" style="width:100%;background:#0f1627;color:#e9edf5;border:1px solid #223154;border-radius:10px;padding:10px"></textarea>
+  </div>
+
+  <div style="margin-top:10px">
+    <h4>Media (image/gif/sticker)</h4>
+    <div id="bc_media"></div>
+    <button id="bc_add_media">+ Add Media</button>
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <input id="bc_cta_label" placeholder="CTA Label (optional)" />
+    <input id="bc_cta_href"  placeholder="CTA Link (https://...)" />
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <button id="bc_load">Load Current</button>
+    <button id="bc_save">Save</button>
+    <button id="bc_preview">Preview Popup</button>
+  </div>
+  <div id="bc_msg" class="muted"></div>
+</div>
 <script>
 const API_BASE = 'https://deepakchauhanxai.xyz/referral/api';
 const H = ()=>({'Content-Type':'application/json','X-ADMIN-KEY':(localStorage.getItem('admin_key')||'')});
@@ -829,6 +878,124 @@ document.getElementById('md_work_create').onclick = async ()=>{
 
 // boot
 loadMembers();
+
+  // ===== Broadcast Admin =====
+function BC_h(){ return {'Content-Type':'application/json','X-ADMIN-KEY':(localStorage.getItem('admin_key')||'')}; }
+const BC_API = API_BASE + '/broadcast.php';
+
+function bc_mediaRow(type='', url=''){
+  const wrap = document.createElement('div');
+  wrap.style = 'display:grid;grid-template-columns:140px 1fr 80px;gap:8px;margin:6px 0';
+  wrap.innerHTML = `
+    <select class="bc_m_type">
+      <option value="image"${type==='image'?' selected':''}>image</option>
+      <option value="gif"${type==='gif'?' selected':''}>gif</option>
+      <option value="sticker"${type==='sticker'?' selected':''}>sticker</option>
+    </select>
+    <input class="bc_m_url" placeholder="https://..." value="${url||''}">
+    <button class="bc_m_del">Delete</button>
+  `;
+  wrap.querySelector('.bc_m_del').onclick = ()=> wrap.remove();
+  return wrap;
+}
+
+async function bc_load(){
+  const r = await fetch(BC_API); const j = await r.json();
+  if(!j.ok){ document.getElementById('bc_msg').textContent = j.error||'Error'; return; }
+  const d = j.data;
+  document.getElementById('bc_enabled').value = (d.enabled ? 'true':'false');
+  document.getElementById('bc_typing').value  = (d.typingTitle ? 'true':'false');
+  document.getElementById('bc_title').value   = d.title || '';
+  document.getElementById('bc_name').value    = d.nameTag || '';
+  document.getElementById('bc_footer').value  = d.footer || '';
+  document.getElementById('bc_audience').value= d.audience || 'all';
+  document.getElementById('bc_text').value    = d.textHtml || '';
+  document.getElementById('bc_cta_label').value = (d.cta && d.cta.label) ? d.cta.label : '';
+  document.getElementById('bc_cta_href').value  = (d.cta && d.cta.href)  ? d.cta.href  : '';
+
+  const cont = document.getElementById('bc_media'); cont.innerHTML='';
+  (d.media||[]).forEach(m=> cont.appendChild(bc_mediaRow(m.type, m.url)));
+  document.getElementById('bc_msg').textContent='Loaded';
+}
+
+async function bc_save(){
+  const media = [];
+  document.querySelectorAll('#bc_media > div').forEach(row=>{
+    const type = row.querySelector('.bc_m_type').value;
+    const url  = row.querySelector('.bc_m_url').value.trim();
+    if(url) media.push({type, url});
+  });
+
+  const payload = {
+    enabled:      document.getElementById('bc_enabled').value==='true',
+    typingTitle:  document.getElementById('bc_typing').value==='true',
+    title:        document.getElementById('bc_title').value.trim(),
+    nameTag:      document.getElementById('bc_name').value.trim(),
+    footer:       document.getElementById('bc_footer').value.trim(),
+    audience:     document.getElementById('bc_audience').value,
+    textHtml:     document.getElementById('bc_text').value,
+    media,
+    cta: (document.getElementById('bc_cta_href').value.trim()
+         ? { label: document.getElementById('bc_cta_label').value.trim() || 'Open',
+             href:  document.getElementById('bc_cta_href').value.trim() }
+         : null)
+  };
+
+  const r = await fetch(BC_API, {method:'POST', headers:BC_h(), body:JSON.stringify(payload)});
+  const j = await r.json();
+  document.getElementById('bc_msg').innerHTML = j.ok? '<span class="ok">Saved</span>' : ('<span class="err">'+(j.error||'Error')+'</span>');
+}
+
+function bc_preview(){
+  // current form → object
+  const media = [];
+  document.querySelectorAll('#bc_media > div').forEach(row=>{
+    const type = row.querySelector('.bc_m_type').value;
+    const url  = row.querySelector('.bc_m_url').value.trim();
+    if(url) media.push({type, url});
+  });
+  const data = {
+    enabled: document.getElementById('bc_enabled').value==='true',
+    typingTitle: document.getElementById('bc_typing').value==='true',
+    title: document.getElementById('bc_title').value.trim() || 'AI Bhai',
+    nameTag: document.getElementById('bc_name').value.trim(),
+    footer: document.getElementById('bc_footer').value.trim(),
+    audience: document.getElementById('bc_audience').value,
+    textHtml: document.getElementById('bc_text').value,
+    media,
+    cta: (document.getElementById('bc_cta_href').value.trim()
+         ? { label: document.getElementById('bc_cta_label').value.trim() || 'Open',
+             href:  document.getElementById('bc_cta_href').value.trim() }
+         : null)
+  };
+
+  // widget preview (same avatar as widget)
+  const avatar = 'https://deepakchauhanxai.xyz/images/AI-bhai.png';
+  if(typeof AIBhaiPopup === 'function'){
+    const inst = AIBhaiPopup({
+      avatarUrl: avatar,
+      dataUrl: BC_API, // not used in preview open
+      position: 'br',
+      accent: '#2dd4bf',
+      pollSec: 0
+    });
+    // internal open with current data:
+    // छोटा hack: widget के renderModal को reuse नहीं कर सकते तो एक बार saved data से open होने देंगे
+    // इसलिए पहले save कर दो फिर open भी कर सकते हो — लेकिन बेहतर: widget को click करें:
+    inst.open && inst.open(); // fallback open (will fetch from API)
+  } else {
+    alert('AIBhaiPopup script not loaded on this page.');
+  }
+}
+
+// buttons
+document.getElementById('bc_add_media').onclick = ()=> document.getElementById('bc_media').appendChild(bc_mediaRow('image',''));
+document.getElementById('bc_load').onclick = bc_load;
+document.getElementById('bc_save').onclick = bc_save;
+document.getElementById('bc_preview').onclick = bc_preview;
+
+// auto-load
+bc_load();
 </script>
 </body>
 </html>
