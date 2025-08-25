@@ -702,7 +702,16 @@
     <input id="bc_cta_label" placeholder="CTA Label (optional)" />
     <input id="bc_cta_href"  placeholder="CTA Link (https://...)" />
   </div>
-
+  
+<div style="margin-top:10px">
+  <h4>Buttons (CTAs)</h4>
+  <div id="bc_ctas"></div>
+  <div class="row" style="margin-top:6px">
+    <button id="bc_add_cta">+ Add CTA</button>
+    <button id="bc_add_whatsapp">+ Add WhatsApp</button>
+  </div>
+</div>
+  
   <div class="row" style="margin-top:10px">
     <button id="bc_load">Load Current</button>
     <button id="bc_save">Save</button>
@@ -848,7 +857,13 @@ document.getElementById('m_search').onclick = ()=>{ M_PAGE=1; loadMembers(); };
 document.getElementById('m_reset').onclick = ()=>{ document.getElementById('m_q').value=''; M_PAGE=1; loadMembers(); };
 document.getElementById('m_prev').onclick = ()=>{ if(M_PAGE>1){ M_PAGE--; loadMembers(); } };
 document.getElementById('m_next').onclick = ()=>{ M_PAGE++; loadMembers(); };
-
+document.getElementById('bc_add_cta').onclick = ()=>{
+  document.getElementById('bc_ctas').appendChild(bc_ctaRow('Open','https://'));
+  document.getElementById('bc_add_cta').onclick = ()=>{
+  document.getElementById('bc_ctas').appendChild(bc_ctaRow('Open','https://'));
+document.getElementById('bc_add_whatsapp').onclick = ()=>{
+  document.getElementById('bc_ctas').appendChild(bc_ctaRow('Join WhatsApp','https://wa.me/91XXXXXXXXXX'));
+};
 // quick actions on detail
 document.getElementById('md_adj_btn').onclick = async ()=>{
   if(!MD_EMAIL) return;
@@ -880,6 +895,17 @@ document.getElementById('md_work_create').onclick = async ()=>{
 loadMembers();
 
   // ===== Broadcast Admin =====
+  function bc_ctaRow(label='', href=''){
+  const wrap = document.createElement('div');
+  wrap.style = 'display:grid;grid-template-columns:200px 1fr 80px;gap:8px;margin:6px 0';
+  wrap.innerHTML = `
+    <input class="bc_c_label" placeholder="Label (e.g., Join WhatsApp)" value="${label||''}">
+    <input class="bc_c_href" placeholder="https://..." value="${href||''}">
+    <button class="bc_c_del">Delete</button>
+  `;
+  wrap.querySelector('.bc_c_del').onclick = ()=> wrap.remove();
+  return wrap;
+  }
 function BC_h(){ return {'Content-Type':'application/json','X-ADMIN-KEY':(localStorage.getItem('admin_key')||'')}; }
 const BC_API = API_BASE + '/broadcast.php';
 
@@ -917,6 +943,15 @@ async function bc_load(){
   (d.media||[]).forEach(m=> cont.appendChild(bc_mediaRow(m.type, m.url)));
   document.getElementById('bc_msg').textContent='Loaded';
 }
+  // CTAs
+  const cwrap = document.getElementById('bc_ctas'); 
+  cwrap.innerHTML = '';
+  if (Array.isArray(d.ctas) && d.ctas.length) {
+    d.ctas.forEach(c => cwrap.appendChild(bc_ctaRow(c.label, c.href)));
+  } else if (d.cta && d.cta.href) {
+    // legacy single
+    cwrap.appendChild(bc_ctaRow(d.cta.label, d.cta.href));
+  }
 
 async function bc_save(){
   const media = [];
@@ -925,7 +960,12 @@ async function bc_save(){
     const url  = row.querySelector('.bc_m_url').value.trim();
     if(url) media.push({type, url});
   });
-
+const ctas = [];
+  document.querySelectorAll('#bc_ctas > div').forEach(row=>{
+    const label = row.querySelector('.bc_c_label').value.trim() || 'Open';
+    const href  = row.querySelector('.bc_c_href').value.trim();
+    if(href) ctas.push({label, href});
+  });
   const payload = {
     enabled:      document.getElementById('bc_enabled').value==='true',
     typingTitle:  document.getElementById('bc_typing').value==='true',
