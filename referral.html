@@ -854,5 +854,24 @@ async function loadLeaderboard(){
   loadLeaderboard();
 })();
 </script>
+  <!-- जहाँ लगाना है वहाँ बस ये script जोड़ दो -->
+<script>
+(function(){
+  // स्क्रिप्ट लोड:
+  var s=document.createElement('script');
+  s.src='https://deepakchauhanxai.com/scripts/ai_bhai_congratulations_popup.js'; // <-- तुम ये JS नीचे वाला कोड कॉपी करके इस URL पर रख देना
+  s.onload=function(){
+    // init:
+    AIBhaiPopup({
+      avatarUrl: 'https://deepakchauhanxai.xyz/images/AI-bhai.png',
+      dataUrl:   'https://deepakchauhanxai.xyz/referral/broadcast.json', // या बाद में API
+      position:  'br',        // br=bottom-right, bl, tr, tl
+      accent:    '#CC5500',   // थीम रंग
+      pollSec:   60           // कितने सेकंड में refresh (admin ने कुछ नया डाला तो)
+    });
+  };
+  document.head.appendChild(s);
+})();
+</script>
 </body>
 </html>
