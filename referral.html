@@ -1002,5 +1002,23 @@ async function loadPayoutTicker(){
   loadPayoutTicker();    // visible even if not logged
 })();
 </script>
+    <!-- ============ AI Bhai Popup Widget (Top-Right, sticky) ============ -->
+<script>
+(function(){
+  var s=document.createElement('script');
+  s.src='https://deepakchauhanxai.com/scripts/ai_bhai_congratulations_popup.js';   // ← यहाँ अपना final JS रखें
+  s.onload=function(){
+    AIBhaiPopup({
+      avatarUrl:'https://deepakchauhanxai.xyz/images/AI-bhai.png',
+      dataUrl:'https://deepakchauhanxai.xyz/referral/api/broadcast.php', // ← API से JSON (ctas सहित)
+      position:'tl',   // top-right
+      offset:'18px',   // edge से दूरी
+      accent:'#2dd4bf',
+      pollSec:60
+    });
+  };
+  document.head.appendChild(s);
+})();
+</script>
 </body>
 </html>
