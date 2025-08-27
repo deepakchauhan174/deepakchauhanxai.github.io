@@ -703,156 +703,187 @@
   </div>
 
 <script>
+// ========== CONFIG ==========
 const API_BASE = 'https://deepakchauhanxai.xyz/referral/api';
 
-// capture ref
-(function(){
-  const u = new URL(location.href);
-  const ref = (u.searchParams.get('ref') || '').toUpperCase();
-  if(ref){ localStorage.setItem('ref_code', ref); }
-  document.getElementById('refView').textContent = localStorage.getItem('ref_code') || '—';
-})();
-
-// Tab functionality
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    
-    tab.classList.add('active');
-    document.getElementById(tab.dataset.tab + 'Tab').classList.add('active');
-  });
-});
-
-// Copy referral link function
-function copyLink() {
-  const link = document.getElementById('shareLink').textContent;
-  navigator.clipboard.writeText(link).then(() => {
-    alert('Link copied to clipboard!');
-  });
-}
-
-// state
-let currentEmail = localStorage.getItem('my_email') || '';
-let currentName  = localStorage.getItem('my_name')  || '';
-
+// ========== UTILS ==========
+function inr(paise){ return '₹'+(Number(paise||0)/100).toFixed(2); }
+function fmtDate(s){ try{const d=new Date((s||'').replace(' ','T')); return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'});}catch(e){return ''} }
+function safe(str){ return (str||'').replace(/[<>&]/g, s=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[s])) }
 function maskEmails(str){
   if(!str) return '';
   const emailRegex=/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
   return str.replace(emailRegex,'hidden');
 }
 
-function setLoggedUI(on){
-  document.getElementById('authBlock').classList.toggle('hide', on);
-  document.getElementById('loggedCard').classList.toggle('hide', !on);
-  document.getElementById('loginInfo').innerHTML = on ? `<i class="fas fa-user"></i><span>${currentName || 'User'}</span>` : '<i class="fas fa-user"></i><span>Guest</span>';
+// ========== REF CAPTURE ==========
+(function(){
+  const u = new URL(location.href);
+  const ref = (u.searchParams.get('ref') || '').toUpperCase();
+  if(ref){ localStorage.setItem('ref_code', ref); }
+  const refView = document.getElementById('refView');
+  if(refView) refView.textContent = localStorage.getItem('ref_code') || '—';
+})();
+
+// ========== TABS ==========
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const pane = document.getElementById(tab.dataset.tab+'Tab');
+    if(pane) pane.classList.add('active');
+  });
+});
+
+// ========== COPY LINK ==========
+function copyLink(){
+  const el = document.getElementById('shareLink');
+  if(!el) return;
+  const link = el.textContent.trim();
+  navigator.clipboard.writeText(link).then(()=> alert('Link copied!'));
 }
 
-// --- SIGNUP (OTP) ---
-document.getElementById('su_getotp').onclick = async ()=>{
-  const email = document.getElementById('su_email').value.trim().toLowerCase();
+// ========== AUTH STATE ==========
+let currentEmail = localStorage.getItem('my_email') || '';
+let currentName  = localStorage.getItem('my_name')  || '';
+
+function setLoggedUI(on){
+  const authBlock  = document.getElementById('authBlock');
+  const loggedCard = document.getElementById('loggedCard');
+  const loginInfo  = document.getElementById('loginInfo');
+  if(authBlock)  authBlock.classList.toggle('hide', on);
+  if(loggedCard) loggedCard.classList.toggle('hide', !on);
+  if(loginInfo)  loginInfo.innerHTML = on ? `<i class="fas fa-user"></i><span>${currentName || 'User'}</span>` : '<i class="fas fa-user"></i><span>Guest</span>';
+}
+
+// ========== SIGNUP (OTP) ==========
+const su_getotp = document.getElementById('su_getotp');
+if(su_getotp) su_getotp.onclick = async ()=>{
+  const email = (document.getElementById('su_email')?.value||'').trim().toLowerCase();
   if(!email){ alert('Email भरें'); return; }
-  const r = await fetch(API_BASE+'/otp_request.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email, purpose:'REGISTER'})});
+  const r = await fetch(API_BASE+'/otp_request.php',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email, purpose:'REGISTER'})
+  });
   const j = await r.json(); alert(j.ok?'OTP sent to email':(j.error||'Error'));
 };
 
-document.getElementById('btnSignup').onclick = async ()=>{
-  const name = document.getElementById('su_name').value.trim();
-  const email = document.getElementById('su_email').value.trim().toLowerCase();
-  const password = document.getElementById('su_pass').value;
-  const otp_code = document.getElementById('su_otp').value.trim();
+const btnSignup = document.getElementById('btnSignup');
+if(btnSignup) btnSignup.onclick = async ()=>{
+  const name = (document.getElementById('su_name')?.value||'').trim();
+  const email = (document.getElementById('su_email')?.value||'').trim().toLowerCase();
+  const password = (document.getElementById('su_pass')?.value||'');
+  const otp_code = (document.getElementById('su_otp')?.value||'').trim();
   const ref = localStorage.getItem('ref_code') || '';
   const msg = document.getElementById('signupMsg');
 
-  if(!name || !email || password.length<6 || !/^\d{6}$/.test(otp_code)){ msg.innerHTML='<span style="color:var(--danger)">कृपया सही विवरण + OTP भरें</span>'; return; }
+  if(!name || !email || password.length<6 || !/^\d{6}$/.test(otp_code)){
+    if(msg) msg.innerHTML='<span style="color:var(--danger)">कृपया सही विवरण + OTP भरें</span>'; 
+    return;
+  }
 
-  const res = await fetch(API_BASE+'/register.php', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name,email,password,ref,otp_code})});
+  const res = await fetch(API_BASE+'/register.php',{
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({name,email,password,ref,otp_code})
+  });
   const j = await res.json();
-  if(!j.ok){ msg.innerHTML='<span style="color:var(--danger)">'+(j.error||'Error')+'</span>'; return; }
+  if(!j.ok){ if(msg) msg.innerHTML='<span style="color:var(--danger)">'+(j.error||'Error')+'</span>'; return; }
 
   currentEmail=email; currentName=name;
   localStorage.setItem('my_email',email); localStorage.setItem('my_name',name);
-  msg.innerHTML='<span style="color:var(--success)">Account बन गया</span>';
+  if(msg) msg.innerHTML='<span style="color:var(--success)">Account बन गया</span>';
   afterLoginUI();
 };
 
-// --- LOGIN (OTP) ---
-document.getElementById('li_getotp').onclick = async ()=>{
-  const email = document.getElementById('li_email').value.trim().toLowerCase();
+// ========== LOGIN (OTP) ==========
+const li_getotp = document.getElementById('li_getotp');
+if(li_getotp) li_getotp.onclick = async ()=>{
+  const email = (document.getElementById('li_email')?.value||'').trim().toLowerCase();
   if(!email){ alert('Email भरें'); return; }
-  const r = await fetch(API_BASE+'/otp_request.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email, purpose:'LOGIN'})});
+  const r = await fetch(API_BASE+'/otp_request.php',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email, purpose:'LOGIN'})
+  });
   const j = await r.json(); alert(j.ok?'OTP sent to email':(j.error||'Error'));
 };
 
-document.getElementById('btnLogin').onclick = async ()=>{
-  const email = document.getElementById('li_email').value.trim().toLowerCase();
-  const code  = document.getElementById('li_otp').value.trim();
+const btnLogin = document.getElementById('btnLogin');
+if(btnLogin) btnLogin.onclick = async ()=>{
+  const email = (document.getElementById('li_email')?.value||'').trim().toLowerCase();
+  const code  = (document.getElementById('li_otp')?.value||'').trim();
   const msg = document.getElementById('loginMsg');
-  if(!email || !/^\d{6}$/.test(code)){ msg.innerHTML='<span style="color:var(--danger)">Email/OTP सही भरें</span>'; return; }
+  if(!email || !/^\d{6}$/.test(code)){ if(msg) msg.innerHTML='<span style="color:var(--danger)">Email/OTP सही भरें</span>'; return; }
 
-  const r = await fetch(API_BASE+'/login_verify.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email, code})});
+  const r = await fetch(API_BASE+'/login_verify.php',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email, code})
+  });
   const j = await r.json();
-  if(!j.ok){ msg.innerHTML='<span style="color:var(--danger)">'+(j.error||'Error')+'</span>'; return; }
+  if(!j.ok){ if(msg) msg.innerHTML='<span style="color:var(--danger)">'+(j.error||'Error')+'</span>'; return; }
 
   currentEmail=j.data.email; currentName=j.data.name;
   localStorage.setItem('my_email',currentEmail); localStorage.setItem('my_name',currentName);
-  msg.innerHTML='<span style="color:var(--success)">Logged in</span>';
+  if(msg) msg.innerHTML='<span style="color:var(--success)">Logged in</span>';
   afterLoginUI();
 };
 
-// --- After login
+// ========== AFTER LOGIN ==========
 async function afterLoginUI(){
   setLoggedUI(true);
   await loadMe();
   await loadWallet();
   await loadLeaderboard();
+  await loadPayoutTicker();
 }
 
-document.getElementById('btnLogout').onclick = ()=>{
+const btnLogout = document.getElementById('btnLogout');
+if(btnLogout) btnLogout.onclick = ()=>{
   localStorage.removeItem('my_email'); localStorage.removeItem('my_name');
   currentEmail=''; currentName='';
   setLoggedUI(false);
-  // साफ view
-  document.getElementById('walletList').innerHTML='';
-  document.getElementById('joinings').textContent='0';
-  document.getElementById('rate').textContent='0';
-  document.getElementById('balance').textContent='0.00';
-  document.getElementById('bar').style.width='0%';
+  const wl = document.getElementById('walletList'); if(wl) wl.innerHTML='';
+  const jn = document.getElementById('joinings'); if(jn) jn.textContent='0';
+  const rt = document.getElementById('rate'); if(rt) rt.textContent='0';
+  const bl = document.getElementById('balance'); if(bl) bl.textContent='0.00';
+  const bar = document.getElementById('bar'); if(bar) bar.style.width='0%';
 };
 
-// --- Me
+// ========== LOAD ME ==========
 async function loadMe(){
   if(!currentEmail) return;
   const r = await fetch(API_BASE+'/me.php?email='+encodeURIComponent(currentEmail));
   const j = await r.json(); if(!j.ok) return;
   const me=j.data;
 
-  currentName = me.name || currentName || currentEmail.split('@')[0];
+  currentName = me.name || currentName || (currentEmail.split('@')[0]);
   localStorage.setItem('my_name', currentName);
 
   setLoggedUI(true);
-  document.getElementById('loggedName').textContent=currentName;
-  document.getElementById('loginInfo').innerHTML=`<i class="fas fa-user"></i><span>${currentName}</span>`;
-  document.getElementById('loggedCode').textContent=me.referral_code;
-  const share = location.origin + location.pathname + '?ref=' + me.referral_code;
-  document.getElementById('shareLink').textContent = share;
+  const ln = document.getElementById('loggedName'); if(ln) ln.textContent=currentName;
+  const li = document.getElementById('loginInfo');  if(li) li.innerHTML=`<i class="fas fa-user"></i><span>${currentName}</span>`;
+  const lc = document.getElementById('loggedCode'); if(lc) lc.textContent=me.referral_code;
 
-  document.getElementById('joinings').textContent=me.direct_joinings;
-  document.getElementById('rate').textContent=me.current_level_rate_percent;
-  document.getElementById('balance').textContent=(me.balance_paise/100).toFixed(2);
+  const share = location.origin + location.pathname + '?ref=' + me.referral_code;
+  const sl = document.getElementById('shareLink'); if(sl) sl.textContent = share;
+
+  const jj = document.getElementById('joinings'); if(jj) jj.textContent=me.direct_joinings;
+  const rr = document.getElementById('rate'); if(rr) rr.textContent=me.current_level_rate_percent;
+  const bb = document.getElementById('balance'); if(bb) bb.textContent=(me.balance_paise/100).toFixed(2);
 
   const J=me.direct_joinings, cap=J>=160?160: J>=100?100: J>=50?50:10;
-  document.getElementById('bar').style.width = Math.min(100, Math.round((J/cap)*100))+'%';
+  const bar = document.getElementById('bar'); if(bar) bar.style.width = Math.min(100, Math.round((J/cap)*100))+'%';
 }
 
-// --- Wallet
+// ========== WALLET ==========
 async function loadWallet(){
   if(!currentEmail) return;
   const r = await fetch(API_BASE+'/wallet_history.php?email='+encodeURIComponent(currentEmail));
   const j = await r.json(); if(!j.ok) return;
-  const ul=document.getElementById('walletList'); ul.innerHTML='';
+  const ul=document.getElementById('walletList'); if(!ul) return;
+  ul.innerHTML='';
   (j.data.entries||[]).forEach(x=>{
-    const ru=(x.amount_paise/100).toFixed(2);
+    const ru=inr(x.amount_paise);
     const sign=x.type==='CREDIT'?'+':'-';
     const safeNote=maskEmails(x.note || x.ref_type);
     const li=document.createElement('li');
@@ -861,138 +892,115 @@ async function loadWallet(){
         <div>${safeNote}</div>
         <div class="text-muted">#${x.id}</div>
       </div>
-      <div class="${x.type==='CREDIT'?'transaction-credit':'transaction-debit'}">${sign}₹${ru}</div>
+      <div class="${x.type==='CREDIT'?'transaction-credit':'transaction-debit'}">${sign}${ru}</div>
     `;
     ul.appendChild(li);
   });
 }
 
-// --- Leaderboard (with client-side fallback sort + joinings display)
+// ========== LEADERBOARD (fallback sort) ==========
 async function loadLeaderboard(){
-  const r = await fetch(API_BASE + '/leaderboard.php'); 
+  const r = await fetch(API_BASE + '/leaderboard.php',{cache:'no-store'}); 
   const j = await r.json(); 
   if(!j.ok) return;
 
-  // 1) Combine and fallback sort (in case API not sorted correctly)
-  let all = [...(j.data.top3 || []), ...(j.data.next7 || [])];
-
-  // normalize
-  all = all.map(u => ({
+  let all = [...(j.data.top3 || []), ...(j.data.next7 || [])].map(u=>({
     ...u,
-    score_paise: Number(u.score_paise || 0),
-    direct_joinings: Number(u.direct_joinings || 0),
-    id: Number(u.id || 0),
+    score_paise: Number(u.score_paise||0),
+    direct_joinings: Number(u.direct_joinings||0),
+    id: Number(u.id||0),
     name: u.name || 'User'
   }));
 
-  // fallback sort: score desc, joinings desc, id asc
   all.sort((a,b)=>{
     if(a.score_paise !== b.score_paise) return b.score_paise - a.score_paise;
     if(a.direct_joinings !== b.direct_joinings) return b.direct_joinings - a.direct_joinings;
     return a.id - b.id;
   });
 
-  // split back into top3 / next7
   const top3  = all.slice(0,3);
   const next7 = all.slice(3,10);
 
-  // 2) Render
-  const fmt = new Intl.NumberFormat('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const t3 = document.getElementById('top3'); if(t3){ t3.innerHTML='';
+    top3.forEach((u,i)=>{
+      const scoreText = u.score_paise>0 ? inr(u.score_paise) : '🚀 Ready to Earn';
+      const d=document.createElement('div'); d.className=`leader-item rank-${i+1}`;
+      d.innerHTML = `
+        <div class="rank-badge">#${i+1}</div>
+        <div>${safe(u.name)}</div>
+        <div class="leader-score">${scoreText} • Joinings: ${u.direct_joinings}</div>
+      `;
+      t3.appendChild(d);
+    });
+  }
 
-  const t3 = document.getElementById('top3'); 
-  t3.innerHTML = '';
-  top3.forEach((u,i)=>{
-    const scoreText = u.score_paise > 0 ? ("₹" + fmt.format(u.score_paise/100)) : "🚀 Ready to Earn";
-    const d = document.createElement('div'); 
-    d.className = `leader-item rank-${i+1}`;
-    d.innerHTML = `
-      <div class="rank-badge">#${i+1}</div>
-      <div>${u.name}</div>
-      <div class="leader-score">${scoreText} • Joinings: ${u.direct_joinings}</div>
-    `;
-    t3.appendChild(d);
-  });
-
-  const n7 = document.getElementById('next7'); 
-  n7.innerHTML = '';
-  next7.forEach((u,i)=>{
-    const scoreText = u.score_paise > 0 ? ("₹" + fmt.format(u.score_paise/100)) : "🚀 Ready to Earn";
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <span class="list-rank">#${i+4}</span>
-      <span class="list-name">${u.name}</span>
-      <span class="list-score">${scoreText} • J:${u.direct_joinings}</span>
-    `;
-    n7.appendChild(li);
-  });
+  const n7 = document.getElementById('next7'); if(n7){ n7.innerHTML='';
+    next7.forEach((u,i)=>{
+      const scoreText = u.score_paise>0 ? inr(u.score_paise) : '🚀 Ready to Earn';
+      const li=document.createElement('li');
+      li.innerHTML = `
+        <span class="list-rank">#${i+4}</span>
+        <span class="list-name">${safe(u.name)}</span>
+        <span class="list-score">${scoreText} • J:${u.direct_joinings}</span>
+      `;
+      n7.appendChild(li);
+    });
+  }
 }
 
-// boot
-(function(){
-  const ref = localStorage.getItem('ref_code') || ''; document.getElementById('refView').textContent = ref || '—';
-  if(currentEmail){ setLoggedUI(true); afterLoginUI(); } else { setLoggedUI(false); }
-  loadLeaderboard();
-})();
-</script>
-<script>
-const API_BASE = "https://deepakchauhanxai.xyz/referral/api"; // अपनी API base
-
-function fmtDate(s){
-  try{
-    const d = new Date((s||'').replace(' ','T'));
-    return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'});
-  }catch(e){ return ''; }
-}
-function inr(paise){ return '₹'+(paise/100).toFixed(2); }
-
+// ========== PAYOUT TICKER ==========
 async function loadPayoutTicker(){
   try{
-    const r = await fetch(API_BASE+"/payout_feed_list.php?limit=15",{cache:"no-store"});
-    const j = await r.json(); 
-    if(!j.ok) return;
+    const resp = await fetch(API_BASE+"/payout_feed_list.php?limit=15",{cache:"no-store"});
+    const j = await resp.json(); if(!j.ok) return;
 
     const list = j.data.items||[];
     if(list.length===0) return;
 
     const track=document.getElementById("payoutTrack");
+    if(!track) return;
     track.innerHTML='';
 
-    // एक batch render
     const frag=document.createDocumentFragment();
     list.forEach(x=>{
       const chip=document.createElement("span");
-      chip.className="payout-chip";
+      chip.className="payout-chip"; // NOTE: class नाम CSS के जैसा
       const title=x.title||"Bonus";
-      const note=x.note?` • ${x.note}`:"";
-      const meta=fmtDate(x.created_at);
+      const note = x.note ? ` • ${safe(x.note)}` : '';
+      const meta = x.created_at ? ` • ${fmtDate(x.created_at)}` : '';
       chip.innerHTML=`
         <span>✅</span>
-        <span class="name">${x.display_name}</span>
+        <span class="name">${safe(x.display_name)}</span>
         <span class="amt">${inr(x.amount_paise)}</span>
-        <span class="meta">• ${title}${note}${meta?' • '+meta:''}</span>
+        <span class="meta">• ${safe(title)}${note}${meta}</span>
       `;
       frag.appendChild(chip);
     });
 
-    // seamless loop के लिए duplicate
-    const frag2=frag.cloneNode(true);
+    // seamless loop: content duplicate
+    track.appendChild(frag.cloneNode(true));
     track.appendChild(frag);
-    track.appendChild(frag2);
 
-    // dynamic animation duration
+    // dynamic animation duration (so it never “cuts” midway)
     requestAnimationFrame(()=>{
-      const w=track.scrollWidth;
-      const speed=100; // px per second
-      const dur=Math.max(20,Math.round(w/speed));
-      track.style.animationDuration=dur+"s";
+      const w = track.scrollWidth;
+      const speed = 100; // px/sec (80-140 adjust कर सकता)
+      const dur = Math.max(20, Math.round(w/speed));
+      track.style.animationDuration = dur + 's';
     });
 
   }catch(e){ console.error(e); }
 }
 
-// load once + हर 60s refresh
-loadPayoutTicker();
-setInterval(loadPayoutTicker,60000);
+// ========== BOOT ==========
+(function boot(){
+  const ref = localStorage.getItem('ref_code') || '';
+  const refView = document.getElementById('refView'); if(refView) refView.textContent = ref || '—';
+
+  if(currentEmail){ setLoggedUI(true); afterLoginUI(); } else { setLoggedUI(false); }
+  loadLeaderboard();     // visible even if not logged
+  loadPayoutTicker();    // visible even if not logged
+})();
 </script>
 </body>
 </html>
