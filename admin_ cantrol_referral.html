@@ -537,24 +537,56 @@ document.getElementById('bc_preview').onclick = ()=>bc_preview();
 loadMembers();
 bc_load();
 </script>
-  <script>
-function H(){ return {'Content-Type':'application/json','X-ADMIN-KEY':(localStorage.getItem('admin_key')||'')}; }
-document.getElementById('pf_save').onclick = async ()=>{
-  const display_name  = document.getElementById('pf_name').value.trim();
-  const amount_rupees = parseFloat(document.getElementById('pf_amt').value||'0');
-  const title         = document.getElementById('pf_title').value.trim() || 'Bonus';
-  const note          = document.getElementById('pf_note').value.trim();
-  if(!display_name || amount_rupees<=0){
-    document.getElementById('pf_msg').textContent = 'Name/Amount required'; return;
+<script>
+(function(){
+  // API_BASE और H पहले से defined होने चाहिए
+  if (typeof API_BASE === 'undefined') {
+    console.error('API_BASE missing'); 
+    return;
   }
-  const r = await fetch(API_BASE+'/payout_feed_create.php',{
-    method:'POST', headers:H(),
-    body: JSON.stringify({display_name, amount_rupees, title, note, visible:1})
-  });
-  const j = await r.json();
-  document.getElementById('pf_msg').textContent = j.ok ? ('Saved #'+j.data.id) : (j.error||'Error');
-};
-  </script>
+  if (typeof H !== 'function') {
+    console.error('H() helper missing'); 
+    return;
+  }
+
+  const btn = document.getElementById('pf_save');
+  if(!btn){ 
+    console.warn('#pf_save button not found. Add the Payout Feed card HTML first.');
+    return;
+  }
+
+  btn.onclick = async ()=>{
+    const nameEl  = document.getElementById('pf_name');
+    const amtEl   = document.getElementById('pf_amt');
+    const titleEl = document.getElementById('pf_title');
+    const noteEl  = document.getElementById('pf_note');
+
+    const display_name  = (nameEl?.value||'').trim();
+    const amount_rupees = parseFloat(amtEl?.value||'0');
+    const title         = (titleEl?.value||'').trim() || 'Join Bonus';
+    const note          = (noteEl?.value||'').trim();
+
+    const msgEl = document.getElementById('pf_msg');
+
+    if(!display_name || !(amount_rupees>0)){
+      if(msgEl) msgEl.textContent = 'Name/Amount required';
+      return;
+    }
+
+    try{
+      const r = await fetch(API_BASE+'/payout_feed_create.php', {
+        method:'POST',
+        headers: H(),
+        body: JSON.stringify({display_name, amount_rupees, title, note, visible:1})
+      });
+      const j = await r.json();
+      if(msgEl) msgEl.textContent = j.ok ? ('Saved #'+j.data.id) : (j.error||'Error');
+    }catch(e){
+      if(msgEl) msgEl.textContent = 'Network error';
+    }
+  };
+})();
+</script>
 <script src="https://deepakchauhanxai.com/scripts/ai_bhai_congratulations_popup.js"></script>
 </body>
 </html>
