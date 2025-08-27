@@ -200,6 +200,20 @@
     </div>
   </div>
 
+<div class="card">
+  <h2>Payout Feed (Ticker)</h2>
+  <div class="row3">
+    <input id="pf_name" placeholder="Display Name (e.g., Roshani)">
+    <input id="pf_amt" type="number" step="0.01" placeholder="Amount (₹)">
+    <input id="pf_title" placeholder="Title (e.g., Join Bonus)">
+  </div>
+  <div class="row">
+    <input id="pf_note" placeholder="Note (e.g., 13 joinings complete)">
+    <button id="pf_save">Save Entry</button>
+  </div>
+  <div id="pf_msg" class="muted"></div>
+</div>
+  
   <!-- Broadcast Popup (Multi-CTAs) -->
   <div class="card">
     <h2>Broadcast Popup</h2>
@@ -523,6 +537,24 @@ document.getElementById('bc_preview').onclick = ()=>bc_preview();
 loadMembers();
 bc_load();
 </script>
+  <script>
+function H(){ return {'Content-Type':'application/json','X-ADMIN-KEY':(localStorage.getItem('admin_key')||'')}; }
+document.getElementById('pf_save').onclick = async ()=>{
+  const display_name  = document.getElementById('pf_name').value.trim();
+  const amount_rupees = parseFloat(document.getElementById('pf_amt').value||'0');
+  const title         = document.getElementById('pf_title').value.trim() || 'Bonus';
+  const note          = document.getElementById('pf_note').value.trim();
+  if(!display_name || amount_rupees<=0){
+    document.getElementById('pf_msg').textContent = 'Name/Amount required'; return;
+  }
+  const r = await fetch(API_BASE+'/payout_feed_create.php',{
+    method:'POST', headers:H(),
+    body: JSON.stringify({display_name, amount_rupees, title, note, visible:1})
+  });
+  const j = await r.json();
+  document.getElementById('pf_msg').textContent = j.ok ? ('Saved #'+j.data.id) : (j.error||'Error');
+};
+  </script>
 <script src="https://deepakchauhanxai.com/scripts/ai_bhai_congratulations_popup.js"></script>
 </body>
 </html>
