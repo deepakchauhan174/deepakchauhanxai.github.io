@@ -479,60 +479,44 @@
         }
         
        .payout-ticker{
-  position: relative; 
+  position: relative;
   overflow: hidden;
-  border-top:1px solid #2dd4bf;   /* neon teal line */
-  border-bottom:1px solid #6366f1;/* violet line */
-  background: linear-gradient(90deg, #0f172a, #1e293b); /* dark gradient bg */
+  border-radius: 10px;
+  margin: 15px 0;
+  background: linear-gradient(90deg,#0f172a,#1e293b);
+  border: 1px solid rgba(45,212,191,0.3);
+  padding: 10px 0;
 }
 
 .payout-track{
-  display:inline-flex; 
-  gap:24px; 
+  display:inline-flex;
+  gap:30px;
   white-space:nowrap;
   will-change: transform;
-  animation: tickerScroll 40s linear infinite;
+  animation: tickerScroll 35s linear infinite;
+  padding-left:100%; /* scroll start outside */
 }
 
 .payout-ticker:hover .payout-track{ animation-play-state: paused; }
 
 .payout-chip{
-  display:inline-flex; 
-  align-items:center; 
-  gap:8px;
-  padding:8px 14px; 
-  border:1px solid rgba(45,212,191,0.4); /* subtle neon border */
-  border-radius:999px;
-  background: rgba(45,212,191,0.08); /* light teal glass effect */
-  color:#f8fafc; 
+  display:inline-flex; align-items:center; gap:10px;
+  padding:6px 14px;
+  border-radius:20px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color:#f8fafc;
   font-size:14px;
-  box-shadow: 0 0 8px rgba(45,212,191,0.25); /* glowing touch */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 6px rgba(0,0,0,0.4);
 }
 
-.payout-chip:hover{
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 0 12px rgba(99,102,241,0.4); /* violet glow on hover */
-}
-
-.payout-chip .amt{ 
-  font-weight:800; 
-  color:#38bdf8;   /* bright cyan for amount */
-}
-
-.payout-chip .name{ 
-  font-weight:700; 
-  color:#a78bfa;   /* violet name accent */
-}
-
-.payout-chip .meta{ 
-  color:#94a3b8; 
-  font-size:12px 
-}
+.payout-chip .amt{ font-weight:800; color:#2dd4bf; }
+.payout-chip .name{ font-weight:700; color:#38bdf8; }
+.payout-chip .meta{ color:#94a3b8; font-size:12px }
 
 @keyframes tickerScroll{
   0%{ transform: translateX(0); }
-  100%{ transform: translateX(-50%); }
+  100%{ transform: translateX(-100%); }
 }
     </style>
 </head>
@@ -692,14 +676,19 @@
     </div>
 
     <!-- Leaderboard -->
-    <div class="card">
-        
- <h3 class="section-title"><i class="fas fa-trophy"></i> Leaderboard</h3>
-     <div id="payoutTicker" class="payout-ticker">
-         <div class="payout-track" id="payoutTrack"></div>
-          </div>
-        <div class="leaderboard-top" id="top3"></div>
-     <ul class="leaderboard-list" id="next7"></ul>
+  <div class="card">
+  <h3 class="section-title"><i class="fas fa-trophy"></i> Leaderboard</h3>
+
+  <!-- 🔥 New Payout Ticker -->
+  <div id="payoutTicker" class="payout-ticker">
+    <div class="payout-track" id="payoutTrack"></div>
+  </div>
+
+  <!-- Top 3 -->
+  <div class="leaderboard-top" id="top3"></div>
+
+  <!-- Next 7 -->
+  <ul class="leaderboard-list" id="next7"></ul>
 </div>
     <!-- Wallet -->
     <div class="card" id="wallet">
@@ -946,59 +935,64 @@ async function loadLeaderboard(){
 })();
 </script>
 <script>
-// API base उसी का जो पहले है
-const API_BASE = 'https://deepakchauhanxai.xyz/referral/api';
+const API_BASE = "https://deepakchauhanxai.xyz/referral/api"; // अपनी API base
 
-// human date
 function fmtDate(s){
   try{
     const d = new Date((s||'').replace(' ','T'));
-    return d.toLocaleDateString('en-IN', {day:'2-digit', month:'short'});
+    return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'});
   }catch(e){ return ''; }
 }
 function inr(paise){ return '₹'+(paise/100).toFixed(2); }
 
-// render payout chips
 async function loadPayoutTicker(){
   try{
-    const r = await fetch(API_BASE + '/payout_feed_list.php?limit=20', {cache:'no-store'});
-    const j = await r.json(); if(!j.ok) return;
+    const r = await fetch(API_BASE+"/payout_feed_list.php?limit=15",{cache:"no-store"});
+    const j = await r.json(); 
+    if(!j.ok) return;
 
-    const list = j.data.items || [];
+    const list = j.data.items||[];
     if(list.length===0) return;
 
-    const track = document.getElementById('payoutTrack');
-    track.innerHTML = '';
+    const track=document.getElementById("payoutTrack");
+    track.innerHTML='';
 
-    // एक बार का कंटेंट
-    const frag = document.createDocumentFragment();
+    // एक batch render
+    const frag=document.createDocumentFragment();
     list.forEach(x=>{
-      const chip = document.createElement('span');
-      chip.className = 'payout-chip';
-      // उदाहरण: ✅ Roshani • ₹39.00 • Join Bonus • 13 joins • 26 Aug
-      const title = x.title || 'Bonus';
-      const meta  = fmtDate(x.created_at);
-      const note  = x.note ? ` • ${x.note}` : '';
-      chip.innerHTML = `
+      const chip=document.createElement("span");
+      chip.className="payout-chip";
+      const title=x.title||"Bonus";
+      const note=x.note?` • ${x.note}`:"";
+      const meta=fmtDate(x.created_at);
+      chip.innerHTML=`
         <span>✅</span>
         <span class="name">${x.display_name}</span>
         <span class="amt">${inr(x.amount_paise)}</span>
-        <span class="meta">• ${title}${note ? note : ''}${meta? ' • '+meta: ''}</span>
+        <span class="meta">• ${title}${note}${meta?' • '+meta:''}</span>
       `;
       frag.appendChild(chip);
     });
 
-    // seamless loop के लिए डुप्लीकेट जोड़ेंगे (कुल 2x)
-    const frag2 = frag.cloneNode(true);
-
+    // seamless loop के लिए duplicate
+    const frag2=frag.cloneNode(true);
     track.appendChild(frag);
     track.appendChild(frag2);
-  }catch(e){}
+
+    // dynamic animation duration
+    requestAnimationFrame(()=>{
+      const w=track.scrollWidth;
+      const speed=100; // px per second
+      const dur=Math.max(20,Math.round(w/speed));
+      track.style.animationDuration=dur+"s";
+    });
+
+  }catch(e){ console.error(e); }
 }
 
-// पहली बार load + हर 60s में refresh
+// load once + हर 60s refresh
 loadPayoutTicker();
-setInterval(loadPayoutTicker, 60000);
-</script>    
+setInterval(loadPayoutTicker,60000);
+</script>
 </body>
 </html>
