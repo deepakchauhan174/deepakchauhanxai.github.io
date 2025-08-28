@@ -56,6 +56,17 @@
         <img src="images/circle2.jpg" alt="AI Bhai" class="w-20 h-20 md:w-24 md:h-24 rounded-full ring-4 ring-cyan-400/50 mx-auto md:mx-0">
       </div>
 
+<!-- AD: below hero -->
+<div class="max-w-7xl mx-auto px-4 pt-4">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6575643228502924"
+       data-ad-slot="3037667154"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      
       <!-- Controls -->
       <div class="mt-5 flex flex-col md:flex-row gap-3">
         <input id="search" type="text" placeholder="🔎 Search: voice, video, SEO, design, coding…"
@@ -93,6 +104,17 @@
     <div id="empty" class="hidden text-center text-cyan-100/80 py-12">कोई रिज़ल्ट नहीं मिला। सर्च/फ़िल्टर बदलकर देखें।</div>
   </main>
 
+<!-- AD: above footer -->
+<div class="max-w-7xl mx-auto px-4 pb-6">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6575643228502924"
+       data-ad-slot="3037667154"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  
   <!-- Footer -->
   <footer class="max-w-7xl mx-auto px-4 pb-10">
     <div class="glass rounded-2xl p-5 text-center">
@@ -193,10 +215,30 @@
       </div>`;
     }
 
-    function render(list){
-      grid.innerHTML = list.map(card).join('');
-      document.getElementById('empty').classList.toggle('hidden', list.length !== 0);
-    }
+    function adBlockHTML(){
+  return `
+    <div class="glass rounded-2xl p-4 flex items-center justify-center min-h-[120px]">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6575643228502924"
+           data-ad-slot="3037667154"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+  `;
+}
+
+function render(list){
+  const cards = list.map(card);
+  // हर 8th item के बाद ad insert
+  for(let i=8; i<cards.length; i+=9){
+    cards.splice(i, 0, adBlockHTML());
+  }
+  grid.innerHTML = cards.join('');
+  document.getElementById('empty').classList.toggle('hidden', list.length !== 0);
+
+  try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e){}
+}
 
     // ---------- Filters ----------
     function applyFilters(){
