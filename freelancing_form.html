@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Bhai — Freelance Work Finder (Hindi)</title>
+
+  <!-- ✅ Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924" crossorigin="anonymous"></script>
+
+  <!-- TailwindCSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .reveal{max-height:0;overflow:hidden;transition:max-height .35s ease}
+    .reveal.open{max-height:520px}
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-white via-[#f6fbff] to-[#eef7ff] text-[#0b1530]">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="images/circle2.jpg" alt="AI Bhai" class="w-10 h-10 rounded-full ring-2 ring-cyan-400/80">
+        <div>
+          <h1 class="text-xl md:text-2xl font-extrabold tracking-wide">
+            <span class="text-cyan-600">AI</span> Bhai <span class="text-xs md:text-sm text-cyan-700/70">Freelance Hub</span>
+          </h1>
+          <p class="text-xs md:text-sm text-cyan-700/80">बिना upfront fees — Genuine Work Links + Tips 🚀</p>
+        </div>
+      </div>
+      <a href="/" class="hidden md:inline-flex px-3 py-1.5 rounded-lg bg-cyan-600 text-white font-semibold hover:bg-cyan-500 transition">← Home</a>
+    </div>
+  </header>
+
+  <!-- Hero / Controls -->
+  <section class="max-w-7xl mx-auto px-4 pt-6">
+    <div class="rounded-3xl border bg-white shadow-sm">
+      <div class="p-6 md:p-8">
+        <div class="flex flex-col md:flex-row md:items-center gap-5">
+          <div class="flex-1">
+            <h2 class="text-2xl md:text-3xl font-bold leading-tight">
+              Find Real Freelance Work — <span class="text-cyan-600">Free Signup, No Upfront</span>
+            </h2>
+            <p class="mt-2 text-slate-600">
+              Design, Writing, Video, Voice, Marketing, Coding, Data — सब categories एक जगह। Search करो, filter लगाओ, Details पढ़ो और apply करो।
+            </p>
+          </div>
+          <img src="images/circle2.jpg" alt="AI Bhai" class="w-20 h-20 md:w-24 md:h-24 rounded-full ring-4 ring-cyan-500/40 mx-auto md:mx-0">
+        </div>
+
+        <div class="mt-5 flex flex-col md:flex-row gap-3">
+          <input id="search" type="text" placeholder="🔎 Search: fiverr, india, design, no upfront…"
+                 class="flex-1 px-4 py-2 rounded-xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                 oninput="applyFilters()">
+          <select id="category"
+                  class="px-4 py-2 rounded-xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                  onchange="applyFilters()">
+            <option value="all">🧩 All</option>
+            <option value="design">🎨 Design</option>
+            <option value="writing">✍️ Writing</option>
+            <option value="video">🎥 Video</option>
+            <option value="voice">🎤 Voice</option>
+            <option value="marketing">📣 Marketing/SEO</option>
+            <option value="coding">👨‍💻 Coding/Tech</option>
+            <option value="data">📊 Data/Analytics</option>
+            <option value="general">🌐 General</option>
+            <option value="india">🇮🇳 India Focus</option>
+          </select>
+        </div>
+
+        <div class="mt-3 flex flex-wrap gap-2 text-sm">
+          <button class="px-3 py-1 rounded-full border border-slate-200 bg-white hover:bg-slate-50" onclick="quickTag('no upfront')">#NoUpfront</button>
+          <button class="px-3 py-1 rounded-full border border-slate-200 bg-white hover:bg-slate-50" onclick="quickTag('commission')">#CommissionOnly</button>
+          <button class="px-3 py-1 rounded-full border border-slate-200 bg-white hover:bg-slate-50" onclick="quickTag('india')">#India</button>
+          <button class="px-3 py-1 rounded-full border border-slate-200 bg-white hover:bg-slate-50" onclick="quickTag('remote')">#Remote</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grid -->
+  <main class="max-w-7xl mx-auto px-4 py-6">
+    <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+    <div id="empty" class="hidden text-center text-slate-600 py-12">No results. Try different filters.</div>
+
+    <!-- Transparency Note -->
+    <div class="mt-8 rounded-2xl border bg-white p-4 text-sm text-slate-700">
+      <b>Note:</b> Signup free है; ज्यादातर platforms project पूरा होने पर commission लेते हैं.  
+      सुरक्षा के लिए कभी upfront payment न करें; escrow/milestones पर work करें; platform के बाहर chat/payment से बचें.
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="max-w-7xl mx-auto px-4 pb-10">
+    <div class="rounded-2xl border bg-white p-5 text-center">
+      <p class="text-slate-700 text-sm">
+        Built by <span class="text-cyan-600 font-semibold">AI Bhai</span> — “काम ढूँढो, skills दिखाओ, earning बढ़ाओ.” ✨
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ---------- DATA: Free signup / commission-based or no upfront ----------
+    const sites = [
+// General (Global)
+{id:'fiverr', name:'Fiverr', cat:'general', tags:['no upfront','commission','remote'], 
+ desc:'Global marketplace for quick gigs — design, writing, video, voice, dev.',
+ details:'Fiverr पर free signup करो. कोई भी upfront money नहीं लगता. Profile complete करो और अपनी skills choose करो. फिर portfolio में 2-3 छोटे samples add करो. Gigs create करके काम offer करो. जब client order देगा तो काम complete करने के बाद payment मिलेगा (Fiverr commission काटकर). Beginner-friendly platform, घर से part-time work possible.',
+ url:'https://www.fiverr.com/'},
+
+{id:'upwork', name:'Upwork', cat:'general', tags:['no upfront','commission','remote'], 
+ desc:'Serious clients, long-term projects. Connects system.',
+ details:'Upwork एक global freelancing marketplace है जहाँ लाखों clients और freelancers जुड़े हैं। यहाँ पर digital services जैसे development, design, writing, marketing, support, finance, और भी बहुत कुछ मिलता है।  Free account बना सकते हो और proposals भेजने के लिए Connects system use होता है (हर महीने कुछ free मिलते हैं)। शुरुआत में छोटे projects pick करो और धीरे-धीरे strong profile बनाओ। Profile में अपनी skills, experience और portfolio properly showcase करो। Case-studies और पिछले काम के samples add करने से client को trust होता है। जब projects complete होते हैं तो clients feedback और rating देते हैं — ये future work के लिए बहुत important है।  Upwork पर short-term gigs से लेकर long-term contracts तक options available हैं। यह platform खास तौर पर serious clients और long-term professional growth के लिए जाना जाता है।',
+ url:'https://www.upwork.com/'},
+
+{id:'freelancer', name:'Freelancer.com', cat:'general', tags:['no upfront','commission','contests'], 
+ desc:'Projects + contest model. Commission after hire/win.',
+ details:'Freelancer.com दुनिया के सबसे बड़े freelancing platforms में से एक है। इस पर 50 मिलियन+ registered users हैं और हर industry से projects regularly post होते हैं। यहाँ दो तरीके से काम मिलता है — (1) Projects पर bid करना और (2) Contests में हिस्सा लेना।  Free account बनाकर profile complete करो और अपनी skills clearly mention करो। Projects section में जाकर अपनी expertise के अनुसार काम पर bid करो। Proposal लिखते समय short, clear और professional approach रखो। Contest option में logo design, content writing या अन्य creative काम submit करके जीत सकते हो।  Payment हमेशा platform के secure system से होता है — project जीतने/complete करने के बाद ही मिलता है और commission कटने के बाद balance withdraw कर सकते हो।  अच्छा काम पाने के लिए शुरुआत में छोटे projects या contests से trust build करो, फिर धीरे-धीरे high-budget clients को target करो। Ratings और client reviews long-term success के लिए बहुत जरूरी हैं।',
+ url:'https://www.freelancer.com/'},
+
+{id:'pph', name:'PeoplePerHour', cat:'general', tags:['no upfront','commission','remote'], 
+ desc:'Hourly या Offers model. Mixed categories.',
+ details:'PeoplePerHour (PPH) एक UK-based freelancing marketplace है जहाँ लाखों clients और freelancers registered हैं। यह platform खास तौर पर Europe और UK clients में popular है।  PPH पर दो main models हैं — (1) Hourly work और (2) Offers (pre-packaged services)। Hourly model में आप अपनी per-hour rate set करके काम कर सकते हैं। Offers model में आप fixed services जैसे logo design, content writing या website setup pre-defined price पर डाल सकते हैं और quick orders पा सकते हैं।  Profile complete करना और professional portfolio add करना बहुत जरूरी है। शुरुआत में छोटे Offers डालकर orders लाओ और अच्छे reviews collect करो। Ratings और positive feedback मिलने पर profile की visibility बढ़ती है और high-budget clients से long-term projects मिलने लगते हैं।  PPH पर काम करने के लिए proposals भी भेज सकते हो, लेकिन Offers feature से नए freelancers जल्दी establish हो जाते हैं। यह platform multiple categories cover करता है — design, writing, development, marketing, admin support और भी बहुत कुछ।',
+ url:'https://www.peopleperhour.com/'},
+
+{id:'guru', name:'Guru', cat:'general', tags:['no upfront','commission','milestones'], 
+ desc:'Milestones + SafePay escrow.',
+ details:'Guru.com एक पुराना और trusted freelancing marketplace है, जहाँ लाखों professionals और companies जुड़े हुए हैं। यह खास तौर पर IT, design, writing, marketing और admin services जैसी categories में popular है।  Guru का सबसे बड़ा feature है Workroom और SafePay system। Workroom एक जगह है जहाँ client और freelancer project discuss करते हैं, files share करते हैं और काम manage करते हैं। SafePay escrow system में client पहले से payment deposit करता है और milestones पूरा होने पर payment release करता है, जिससे काम secure रहता है।  Freelancer को proposal भेजते समय project का scope, timeline और budget clear लिखना चाहिए। Professional approach और transparent communication से client trust बनता है।  Guru पर शुरुआत छोटे milestones से करो ताकि reviews और ratings build हों। Positive feedback से profile visibility बढ़ेगी और high-paying clients long-term contracts offer करेंगे। यह platform खासकर उन लोगों के लिए अच्छा है जो structured और secure environment में freelancing करना चाहते हैं।',
+ url:'https://www.guru.com/'},
+ 
+{id:'contra', name:'Contra', cat:'general', tags:['portfolio','low fees','remote'], 
+ desc:'Portfolio-first platform, low/zero fees.',
+ details:'Contra एक modern freelancing platform है जो खासकर creative professionals (designers, developers, writers, marketers आदि) के लिए बना है। इसकी सबसे बड़ी खासियत है कि यहाँ आपका profile एक personal portfolio website जैसा दिखता है, जहाँ आप अपना काम showcase कर सकते हो और clients को impress कर सकते हो।  Contra पर commission बहुत कम है (कई cases में zero fees) इसलिए freelancers को earning में ज़्यादा फायदा मिलता है। यहाँ पर आप projects के लिए proposals भेज सकते हो, साथ ही direct clients भी आपको contact कर सकते हैं।  अच्छा काम पाने के लिए profile को visually attractive बनाना, high-quality samples upload करना और clear description लिखना जरूरी है। Contra का network काफी fast-growing है, खासकर startups और creative agencies इस platform पर active रहती हैं।  शुरुआत में छोटे projects से trust build करो, और धीरे-धीरे large clients और recurring contracts पर focus करो। Contra उन लोगों के लिए बढ़िया है जो professional portfolio maintain करना चाहते हैं और बिना ज़्यादा commission दिए clients से directly deal करना चाहते हैं।',
+ url:'https://contra.com/'},
+
+{id:'wellfound', name:'Wellfound (AngelList)', cat:'general', tags:['startups','remote','no upfront'], 
+ desc:'Startup roles; कई contract/freelance.',
+ details:'Wellfound (पहले AngelList के नाम से जाना जाता था) एक global platform है जो startups को talent से connect करता है। इस पर आपको early-stage और growth-stage startups के साथ काम करने के बहुत मौके मिलते हैं।  यहाँ पर contract, part-time, remote और freelance roles available रहते हैं। कई बार startups equity-based opportunities भी offer करते हैं, यानि आपको पैसे के साथ-साथ company में छोटा सा ownership हिस्सा भी मिल सकता है।  Profile बनाते समय अपनी skills और startup-relevant experience highlight करना ज़रूरी है। Network feature से आप सीधे founders और hiring managers से जुड़ सकते हो, जिससे response तेज़ मिलता है।  अच्छा काम पाने के लिए startup culture और fast-paced environment को समझना जरूरी है। शुरुआत में contract roles लेकर trust build करो, और बाद में long-term या equity-based roles की ओर बढ़ सकते हो। यह platform खास तौर पर उन लोगों के लिए अच्छा है जो नए ideas और innovation-driven कंपनियों के साथ काम करना चाहते हैं।',
+ url:'https://wellfound.com/'},
+
+{id:'remoteok', name:'Remote OK', cat:'general', tags:['remote','no upfront'], 
+ desc:'Remote job board—contract/freelance filter.',
+ details:'Remote OK एक popular global job board है जो खास तौर पर remote काम के लिए famous है। यहाँ पर दुनिया भर की कंपनियाँ remote jobs, contracts और freelance roles पोस्ट करती हैं।  आप keywords और filters का इस्तेमाल करके केवल "freelance" या "contract" projects आसानी से खोज सकते हो। हर job listing में company details, role expectations और apply link clear mention रहता है।  Profile बनाते समय अपना portfolio link, LinkedIn या personal website जरूर attach करो ताकि employers जल्दी trust करें। कई बार direct company portal पर apply करना पड़ता है, इसलिए resume और portfolio पहले से ready रखें।  अच्छे काम पाने के लिए niche-specific keywords (जैसे "React developer", "Content writer freelance") इस्तेमाल करो। Consistency से apply करते रहो और जिन companies में interest है उन्हें follow भी कर सकते हो। Remote OK पर regularly high-paying startup और tech jobs आती रहती हैं, जो global exposure और long-term remote career के लिए बहुत बढ़िया हैं।',
+ url:'https://remoteok.com/'},
+
+{id:'wwr', name:'We Work Remotely', cat:'general', tags:['remote','no upfront'], 
+ desc:'Remote roles (contract/freelance).',
+ details:'We Work Remotely (WWR) दुनिया के सबसे बड़े remote job boards में से एक है। यहाँ global कंपनियाँ contract, part-time और freelance roles पोस्ट करती हैं, खासकर tech, design, writing और marketing categories में।  इस platform पर apply करने से पहले हमेशा company details verify करें और spam/fake posts से बचें। ज्यादातर listings direct company website या hiring portal पर redirect करती हैं, जिससे application process secure रहता है।  Profile और portfolio को update रखना जरूरी है ताकि employers को तुरंत आपकी skills और experience दिखे। Resume में remote work skills (जैसे communication, time management, collaboration tools का use) highlight करना helpful रहता है।  अच्छे काम पाने के लिए niche-specific roles (जैसे "UI/UX Designer Remote", "Freelance Writer Remote") filter करें और direct company connect के लिए उनकी official sites पर भी apply करें। WWR पर high-quality remote jobs regularly post होती हैं, जो serious professionals और long-term remote career बनाने वालों के लिए best हैं।',
+ url:'https://weworkremotely.com/'},
+
+{id:'linkedin', name:'LinkedIn Jobs', cat:'general', tags:['free','network','india'], 
+ desc:'Jobs tab + “freelance/contract” filters.',
+ details:'LinkedIn सिर्फ़ professional networking site ही नहीं बल्कि एक बड़ा job marketplace भी है। LinkedIn Jobs tab में आप “freelance” या “contract” keyword डालकर relevant projects और roles filter कर सकते हो।  Profile को professional तरीके से update करना बहुत ज़रूरी है — headline में अपनी services clear लिखें और “Open to Work” option on करें। Portfolio, certifications और previous work showcase करने से credibility बढ़ती है।  Relevant LinkedIn groups में active रहें और अपना काम share करें। Networking से कई बार direct clients और hidden opportunities भी मिल जाती हैं। Recruiters भी regularly LinkedIn search का इस्तेमाल करते हैं, इसलिए सही keywords और skills profile में होना चाहिए।  अच्छा काम पाने के लिए consistent engagement रखें (जैसे posts, comments, recommendations) और targeted applications करें। LinkedIn खासकर India और global market दोनों के लिए freelancing + contract roles ढूँढने का strong source है।',
+ url:'https://www.linkedin.com/jobs/'},
+
+      // India Focus
+{id:'indeed', name:'Indeed India', cat:'india', tags:['free','india','remote'], 
+ desc:'Freelance/contract filters से local gigs.',
+ details:'Indeed India देश का सबसे बड़ा job search engine है जहाँ छोटे local gigs से लेकर बड़ी कंपनियों के freelancing और contract roles तक सब कुछ available है।  Free account बनाकर आप अपना resume upload कर सकते हो और साथ ही portfolio या work samples attach कर सकते हो। Search में “freelance” या “contract” keyword डालकर results filter करो और location/remote option से अपने हिसाब से काम चुन सकते हो।  Companies और recruiters सीधे Indeed के माध्यम से candidates से connect करते हैं, इसलिए resume का formatting साफ़-सुथरा और professional होना जरूरी है। Apply करते समय short और targeted cover letter लिखना helpful रहता है।  अच्छा काम पाने के लिए profile को regularly update करो, relevant alerts set करो और जिन companies में interest है उन्हें follow करो। Indeed India खासकर उन लोगों के लिए useful है जो India में रहते हुए freelancing या contract opportunities ढूँढ रहे हैं।',
+ url:'https://in.indeed.com/'},
+
+{id:'naukri', name:'Naukri', cat:'india', tags:['free','india'], 
+ desc:'India-focused roles; कई contract gigs.',
+ details:'Naukri.com भारत का सबसे बड़ा job portal है, जहाँ लाखों recruiters और companies active रहते हैं। यहाँ पर full-time jobs के साथ-साथ contract और freelance roles भी regularly post होते हैं।  Search section में “Contract / Freelance” filter लगाकर आप relevant projects ढूँढ सकते हो। Resume को detail में update करना और keywords (जैसे web developer, content writer, digital marketing freelance) use करना ज़रूरी है ताकि recruiters आसानी से profile देख सकें।  Recruiters से हमेशा Naukri platform पर ही बात करें, direct phone/email scams से बचें। Profile visibility बढ़ाने के लिए regular login करें और अपने resume को updated रखें।  अच्छा काम पाने के लिए targeted applications करें, relevant recruiters को connect करें और अच्छे feedback/endorsements से trust build करें। Naukri खासकर India-based professionals के लिए freelancing और contract roles का strong source है।',
+ url:'https://www.naukri.com/'},
+
+{id:'shine', name:'Shine', cat:'india', tags:['free','india'], 
+ desc:'India jobs—filter for freelance/part-time.',
+ details:'Shine.com भारत का एक जाना-माना job portal है, जहाँ बड़ी और छोटी दोनों तरह की companies अपनी job openings डालती हैं। यहाँ full-time roles के साथ-साथ freelance और part-time opportunities भी मिलती हैं।  Relevant work ढूँढने के लिए niche keywords (जैसे video editor, content writer, React developer) search box में डालो और filters में “freelance/part-time” select करो। Resume update करके रखें और profile को regular active करो ताकि recruiters आसानी से notice करें।  Shine खासकर India-based roles और mid-level professionals के लिए अच्छा platform है जो contract या flexible jobs खोज रहे हैं।',
+ url:'https://www.shine.com/'},
+
+{id:'internshala', name:'Internshala', cat:'india', tags:['students','part-time','india'], 
+ desc:'Students/entry-level—part-time + freelance.',
+ details:'Internshala भारत का सबसे popular platform है students और freshers के लिए। यहाँ पर internships, part-time projects और freelancing gigs regularly post होते हैं।  Platform पर free account बनाकर skill-based filters (जैसे graphic design, web development, content writing) use करके relevant काम आसानी से ढूँढ सकते हो। Projects पर usually छोटे stipends मिलते हैं, लेकिन ये learning और experience build करने के लिए best है।  Profile पर अपनी skills और training certificates डालना helpful रहता है और internship complete करने पर मिले certificates future career में बहुत valuable होते हैं। Internshala उन लोगों के लिए perfect है जो शुरुआत में freelancing career build करना चाहते हैं।',
+ url:'https://internshala.com/'},
+
+{id:'truelancer', name:'Truelancer', cat:'india', tags:['no upfront','india','commission'], 
+ desc:'India-first marketplace.',
+ details:'Truelancer एक India-first freelancing marketplace है, जहाँ local clients और छोटे business projects regularly post होते हैं। इस पर writing, design, development, data entry और marketing जैसी categories में बहुत demand है।  Hindi content और India-specific काम के chances यहाँ ज्यादा रहते हैं। Free account बनाकर profile complete करो और projects पर bid करना शुरू करो। Payment हमेशा Truelancer platform पर secure होता है और काम complete होने पर ही release होता है (commission कटने के बाद)।  शुरुआत छोटे gigs से करो, reviews build करो और धीरे-धीरे high-paying clients target करो। Truelancer खासकर उन freelancers के लिए अच्छा है जो India-based local clients से connect करना चाहते हैं।',
+ url:'https://www.truelancer.com/'},
+
+{id:'worknhire', name:'WorknHire', cat:'india', tags:['india','no upfront'], 
+ desc:'India-focused freelance site.',
+ details:'WorknHire एक India-focused freelancing site है जहाँ content writing, design, web development और admin support जैसे projects अक्सर post होते हैं।  यहाँ ज़्यादातर छोटे gigs और short-term projects मिलते हैं। Apply करने से पहले client profile और reviews verify करना जरूरी है ताकि fake या unreliable postings से बचा जा सके।  Profile को updated रखो और छोटे projects से शुरुआत करो। Positive feedback और ratings मिलने के बाद अच्छे और consistent काम मिलने लगते हैं। WorknHire खासकर उन लोगों के लिए अच्छा है जो India में रहकर initial freelancing career शुरू करना चाहते हैं।',
+ url:'https://worknhire.com/'},
+
+      // Design / Creative
+{id:'behance', name:'Behance Jobs', cat:'design', tags:['design','portfolio','remote'], 
+ desc:'Creative jobs + portfolio showcase.',
+ details:'Behance सिर्फ़ portfolio showcase platform ही नहीं बल्कि एक dedicated job board भी है जहाँ global companies creative talent ढूँढती हैं। Design, illustration, UI/UX, animation और branding जैसी categories में projects और full-time roles regularly post होते हैं।  Behance पर strong portfolio होना जरूरी है — high-quality work samples, case studies और organized projects profile पर डालो। Keywords use करके job alerts बनाओ ताकि relevant freelance/remote काम की तुरंत notification मिले।  Clients और recruiters सीधे Behance portfolio देखकर contact कर सकते हैं, इसलिए profile को हमेशा updated और professional रखो। Behance खासकर उन creatives के लिए best है जो अपने काम को global level पर showcase करना चाहते हैं और साथ ही remote design opportunities ढूँढ रहे हैं।',
+ url:'https://www.behance.net/joblist'},
+
+{id:'dribbble', name:'Dribbble Jobs', cat:'design', tags:['design','remote'], 
+ desc:'Design roles + freelance posts.',
+ details:'Dribbble दुनिया का सबसे popular design community platform है जहाँ designers अपने “shots” (design samples) share करते हैं। साथ ही इसमें job board और freelance gigs भी regularly post होते हैं।  Profile पर case studies और visually appealing design shots डालना जरूरी है ताकि recruiters और agencies attract हों। Freelance opportunities देखने के लिए “Freelance” tag follow करो और remote filters लगाओ।  Dribbble पर कई बार agencies और startups directly designers को hire करती हैं। Consistent posting, design community में engagement और high-quality portfolio shots से visibility बढ़ती है। यह platform खासकर graphic, product और UI/UX designers के लिए बहुत valuable है।',
+ url:'https://dribbble.com/jobs'},
+
+      // Writing / Content
+{id:'medium', name:'Medium Partner', cat:'writing', tags:['writing','revenue'], 
+ desc:'Reads से earning (country eligibility varies).',
+ details:'Medium एक global writing platform है जहाँ writers अपने articles publish करते हैं। Medium Partner Program से आप अपने content की reads और engagement के हिसाब से earning कर सकते हो।  इसमें खास तौर पर quality long-form writing और niche helpful content (जैसे personal growth, tech explainers, productivity, startups) अच्छा perform करता है। Audience अगर ज्यादा समय आपका article पढ़ती है और clap/response देती है तो earning बढ़ती है।  Eligibility हर country में अलग होती है, लेकिन account free बनाना और writing start करना simple है। Consistency से publish करो और trending niches को target करो ताकि ज्यादा reach और revenue मिले।',
+ url:'https://medium.com/'},
+
+{id:'substack', name:'Substack', cat:'writing', tags:['writing','newsletter'], 
+ desc:'Newsletter + paid subs (no upfront).',
+ details:'Substack एक newsletter platform है जहाँ आप अपनी writing directly subscribers तक पहुँचा सकते हो। Audience build करने के लिए शुरू में free newsletters publish करो और valuable content share करो।  जैसे-जैसे subscribers बढ़ेंगे, आप paid tiers add कर सकते हो जहाँ readers monthly/annual subscription pay करके premium content पढ़ते हैं। इसमें upfront कोई cost नहीं है, platform सिर्फ subscription revenue से small commission लेता है।  Substack खासकर writers, journalists और niche experts के लिए अच्छा है जो long-term loyal audience बनाना चाहते हैं और direct reader support से earn करना चाहते हैं।',
+ url:'https://substack.com/'},
+
+      // Video / Audio
+{id:'youtubers', name:'Creator Communities', cat:'video', tags:['video','editing','remote'], 
+ desc:'Editors को creators के साथ gigs.',
+ details:'YouTube और social media creators को हमेशा video editors और content helpers की जरूरत रहती है। ऐसे gigs पाने के लिए Twitter, Discord servers और Facebook groups में “editor for hire” या “video editing” जैसे keywords search करो।  कई बार creators खुद group/community में job posts डालते हैं और सीधे editors से connect करते हैं। Portfolio या short demo reel showcase करो ताकि creator जल्दी decision ले सके।  शुरुआत में छोटे creators या short-form content (reels, shorts, gaming edits) से start करो और gradually बड़े channels और long-term contracts target करो। यह path खासकर उन editors के लिए अच्छा है जो flexible remote gigs और recurring creative work ढूँढ रहे हैं।',
+ url:'https://www.youtube.com/'},
+
+{id:'voices', name:'Voices.com', cat:'voice', tags:['voice','auditions'], 
+ desc:'Voice gigs—free signup; कुछ plans paid; details पढ़ें.',
+ details:'Voices.com दुनिया का सबसे बड़ा voice-over marketplace है जहाँ companies और creators voice artists को hire करते हैं। यहाँ audiobooks, ads, explainer videos और games के लिए regularly voice gigs आते हैं।  Free signup से भी auditions apply कर सकते हो और demo reels upload करना ज़रूरी है ताकि clients आपकी voice सुनकर select कर सकें। Paid membership plans extra visibility देते हैं, लेकिन शुरुआत free से भी possible है।  Voice quality, clear recordings और multiple demo styles (casual, professional, energetic) डालना success के लिए जरूरी है। Reviews और client ratings build करने से bigger projects और long-term opportunities मिलती हैं।',
+ url:'https://www.voices.com/'},
+
+      // Coding / Tech / Bounties
+{id:'toptal', name:'Toptal', cat:'coding', tags:['screening','high pay','remote'], 
+ desc:'Top 3% talent; tough screening; high rates.',
+ details:'Toptal एक exclusive freelancing network है जो खुद को “top 3% talent” platform कहता है। यहाँ entry पाना थोड़ा tough है क्योंकि screening process में coding tests, DSA (data structures & algorithms), system design interviews और communication skills चेक किए जाते हैं।  अगर आप professional developer, designer, finance expert या project manager हो तो Toptal पर high-paying remote projects मिल सकते हैं। Profile बनाने से पहले portfolio strong होना चाहिए और real-world case studies add करना helpful होता है।  Toptal का फायदा यह है कि clients ज्यादातर established companies और funded startups होते हैं, इसलिए rates high और contracts long-term होते हैं। Serious और skilled professionals के लिए ये best premium freelancing option है।',
+ url:'https://www.toptal.com/'},
+
+{id:'replit', name:'Replit Bounties', cat:'coding', tags:['bounty','no upfront'], 
+ desc:'Small coding tasks (bounties).',
+ details:'Replit Bounties एक developer-focused platform है जहाँ छोटे coding tasks को “bounties” के रूप में post किया जाता है। कोई भी developer इन bounties को pick करके deliverables पूरा करता है और reward earn करता है।  यहाँ quick projects होते हैं — जैसे scripts, automation, bug fixes, small apps या integrations। Apply करने से पहले project का scope अच्छे से पढ़ो और deliverables clear करो।  Payment secure रहता है लेकिन account में payment method verify करना जरूरी है। Beginners के लिए यह platform अच्छा है क्योंकि छोटे tasks से सीखते-सीखते earn भी कर सकते हैं। Advanced devs के लिए भी यह side-income और community exposure का बढ़िया option है।',
+ url:'https://replit.com/bounties'},
+
+{id:'gitcoin', name:'Gitcoin (Web3)', cat:'coding', tags:['bounty','crypto','oss'], 
+ desc:'Open-source/Web3 bounties.',
+ details:'Gitcoin एक Web3 और open-source focused platform है जहाँ blockchain, DeFi और crypto-related projects के लिए bounties और hackathons regularly host किए जाते हैं। यहाँ developers और designers को सीधे crypto में payouts मिलते हैं।  Platform पर projects open-source होते हैं और कई बार community-driven भी रहते हैं। Apply करने से पहले bounty details, deliverables और payout token/crypto type को ध्यान से पढ़ो।  कुछ cases में KYC या region-specific rules apply हो सकते हैं, इसलिए account बनाते समय compliance check करना जरूरी है। Gitcoin पर काम करने से न सिर्फ earning होती है बल्कि Web3 community में exposure और open-source reputation भी build होता है।  यह platform खासकर blockchain developers, smart contract engineers और crypto-enthusiast coders के लिए best है।',
+ url:'https://www.gitcoin.co/'},
+
+      // Data / Analytics
+{id:'kaggle', name:'Kaggle Gigs (community)', cat:'data', tags:['data','ml','community'], 
+ desc:'Community से collabs; showcase via notebooks.',
+ details:'Kaggle एक data science और machine learning community platform है, जो competitions, datasets और collaborative projects के लिए जाना जाता है। यहाँ पर अपना portfolio notebooks और kernels के ज़रिए showcase किया जा सकता है।  Competitions में अच्छा perform करने या high-quality notebooks publish करने से recruiters और companies खुद contact करती हैं। इससे freelancing gigs या collabs के inbound leads मिलते हैं।  Kaggle पर active रहकर discussions, datasets और competitions में contribution करना network build करने और real-world ML exposure पाने का best तरीका है। Data/ML professionals के लिए ये community-driven indirect freelancing path है।',
+ url:'https://www.kaggle.com/'},
+
+// Reddit / Communities
+{id:'reddit', name:'Reddit r/forhire', cat:'general', tags:['free','remote'], 
+ desc:'Post/apply—verify clients carefully.',
+ details:'Reddit का r/forhire subreddit freelancing jobs और gigs खोजने का एक community marketplace है। यहाँ आप खुद “For Hire” पोस्ट डाल सकते हो (अपनी skills showcase करके) या फिर “Hiring” posts पर apply कर सकते हो।  Platform open और community-driven है, इसलिए apply करने से पहले हमेशा client को verify करें और payment के लिए escrow/milestone insist करें। Rules और subreddit guidelines अच्छे से पढ़कर follow करना जरूरी है, वरना posts remove हो सकते हैं।  ये channel खासकर remote gigs और quick freelance opportunities के लिए अच्छा है, लेकिन भरोसेमंद clients चुनना freelancer की responsibility है।',
+ url:'https://www.reddit.com/r/forhire/'}
+];
+    // ---------- RENDER ----------
+    const grid = document.getElementById('grid');
+
+    function iconFor(cat){
+      return {design:'🎨', writing:'✍️', video:'🎥', voice:'🎤', marketing:'📣', coding:'👨‍💻', data:'📊', india:'🇮🇳', general:'🌐'}[cat] || '🧩';
+    }
+
+    function card(s){
+      return `
+      <div class="rounded-2xl border bg-white hover:shadow-md transition">
+        <div class="p-5">
+          <div class="flex items-start gap-3">
+            <div class="text-2xl">${iconFor(s.cat)}</div>
+            <div class="min-w-0">
+              <h3 class="text-lg font-semibold truncate">${s.name}</h3>
+              <p class="text-sm text-slate-600 mt-0.5">${s.desc}</p>
+              <div class="mt-2 flex flex-wrap gap-2 text-[11px] text-slate-600">
+                <span class="px-2 py-0.5 rounded-full border border-slate-200 bg-slate-50">#${s.cat}</span>
+                ${(s.tags||[]).slice(0,4).map(x=>`<span class="px-2 py-0.5 rounded-full border border-slate-200 bg-slate-50">#${x}</span>`).join('')}
+              </div>
+              <div class="mt-4">
+                <a href="${s.url}" target="_blank" rel="noopener nofollow"
+                   class="inline-block px-3 py-2 rounded-lg bg-cyan-600 text-white font-semibold hover:bg-cyan-500 transition">
+                  Visit & Apply
+                </a>
+                <button class="inline-block px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 ml-2" onclick="toggle('${s.id}')">
+                  Details
+                </button>
+              </div>
+            </div>
+          </div>
+          <div id="${s.id}" class="reveal mt-3">
+            <div class="rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm">
+              <p class="mb-1"><b>How it works:</b> ${s.details}</p>
+              <p class="mb-1"><b>Tip:</b> Profile साफ़ रखो; niche skills लिखो; 3 solid samples/links लगाओ; छोटा काम लेकर rating बनाओ।</p>
+<p><b>Safety:</b> हमेशा ध्यान रखें — किसी भी platform के बाहर payment या chat न करें। किसी को upfront पैसे न दें। सिर्फ़ platform के अंदर secure escrow या milestone system का इस्तेमाल करें। यह काम पूरी तरह free है, किसी भी तरह की investment की ज़रूरत नहीं है।</p>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    function render(list){
+      grid.innerHTML = list.map(card).join('');
+      document.getElementById('empty').classList.toggle('hidden', list.length !== 0);
+    }
+
+    // ---------- FILTERS ----------
+    function applyFilters(){
+      const q = (document.getElementById('search').value || '').toLowerCase().trim();
+      const cat = document.getElementById('category').value;
+      const filtered = sites.filter(s=>{
+        const inCat = (cat === 'all' || s.cat === cat);
+        const text = (s.name+' '+s.desc+' '+s.details+' '+s.cat+' '+(s.tags||[]).join(' ')).toLowerCase();
+        const inSearch = (q === '' || text.includes(q));
+        return inCat && inSearch;
+      });
+      render(filtered);
+    }
+    function quickTag(tag){ const s=document.getElementById('search'); s.value=tag; applyFilters(); }
+    function toggle(id){ document.getElementById(id).classList.toggle('open'); }
+
+    // Init
+    render(sites);
+  </script>
+</body>
+</html>
