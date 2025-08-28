@@ -127,33 +127,26 @@ box-shadow:0 0 20px #00f5ff; z-index:9999; max-width:90%; width:350px; text-alig
 </div>
     
 <!-- Box 11: Tools Panel -->
-<div class="scroll-box box11" style="position:relative;">
-  <!-- 🔵 Full-box BG Image (padding को कवर करने के लिए negative margin) -->
-  <div style="
-    position:absolute; inset:0; 
-    margin:-20px;              /* .scroll-box की padding (20px) को nullify */
-    border-radius:16px; 
-    overflow:hidden; 
-    z-index:0;                 /* BG पीछे */
-  ">
-    <img src="images/ai-bhai-deepak-9x16.jpg?v=2" alt="AI Bhai × Deepak"
-         style="width:100%; height:100%; object-fit:cover; display:block;">
-  </div>
+<!-- Box 11: Tools Panel -->
+<div class="scroll-box box11">
+  <h3 class="box11-title">AI Bhai × Deepak Tools Panel</h3>
 
-  <!-- 🔶 Content Overlay (ऊपर दिखेगा) -->
-  <div style="position:relative; z-index:1;">
-    <h3 class="box11-title">AI Bhai × Deepak Tools Panel</h3>
-    <!-- Button: शीर्षक के नीचे, टॉप-लेफ्ट में -->
-    <a href="ai-tools.html" class="box11-btn" style="margin-top:8px; display:inline-block;">
-      <img src="images/ai-bhai-icon.png" alt="" width="20" height="20" style="vertical-align:middle; margin-right:6px;">
-      Open Full Tools Panel
-    </a>
-    <p class="box11-subtext">Use all powerful tools in one dedicated space</p>
-    <p class="box11-note">Tools now load separately to reduce homepage load time.</p>
-  </div>
+  <p class="box11-subtext">Use all powerful tools in one dedicated space</p>
 
-  <div class="glow-zoom-box"></div>
+  <a href="ai-tools.html" class="box11-btn">
+    <img src="images/ai-bhai-icon.png" alt="" width="22" height="22" style="vertical-align:middle;margin-right:6px;">
+    Open Full Tools Panel
+  </a>
+
+  <p class="box11-note">Tools now load separately to reduce homepage load time.</p>
+
+  <!-- बस यहाँ background-image दो -->
+  <div class="glow-zoom-box"
+       style="background-image:url('images/ai-bhai-deepak-9x16.jpg?v=2');
+              background-size:cover; background-position:center;">
+  </div>
 </div>
+<!-- End of scroll-row-10 -->
   </div>
 </div>
 <!-- End of scroll-row-10 -->
