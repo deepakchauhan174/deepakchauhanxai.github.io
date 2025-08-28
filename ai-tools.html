@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Bhai — Tools Library 2025 (Hindi)</title>
+
+  <!-- ✅ Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6575643228502924" crossorigin="anonymous"></script>
+
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* छोटे-से टचेज़: ग्लो/ग्लास */
+    .glass { backdrop-filter: blur(12px); background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); }
+    .glow  { box-shadow: 0 0 30px rgba(0,255,255,0.25); }
+    .reveal { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+    .reveal.open { max-height: 420px; }
+    .chip { border: 1px solid rgba(255,255,255,.2); }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-[#0b0f1a] via-[#0a1433] to-[#001b2e] text-white">
+
+  <!-- Top Nav -->
+  <header class="sticky top-0 z-50 bg-black/40 glass">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="images/circle2.jpg" alt="AI Bhai" class="w-10 h-10 rounded-full ring-2 ring-cyan-400/60">
+        <div>
+          <h1 class="text-xl md:text-2xl font-extrabold tracking-wide">
+            <span class="text-cyan-300">AI</span> Bhai <span class="text-xs md:text-sm text-cyan-200/70">Tools Library</span>
+          </h1>
+          <p class="text-xs md:text-sm text-cyan-100/70">सीखो, बढ़ो और Create Your Future with AI ✨</p>
+        </div>
+      </div>
+
+      <a href="/" class="hidden md:inline-flex px-3 py-1.5 rounded-lg bg-cyan-500 text-black font-semibold hover:bg-cyan-400 transition">
+        ← Home
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="max-w-7xl mx-auto px-4 pt-6">
+    <div class="glass glow rounded-3xl p-6 md:p-8">
+      <div class="flex flex-col md:flex-row md:items-center gap-4">
+        <div class="flex-1">
+          <h2 class="text-2xl md:text-3xl font-bold leading-tight">
+            🔥 Top Free & Useful <span class="text-cyan-300">AI Tools</span> — Hindi Explain + Smart Filters
+          </h2>
+          <p class="mt-2 text-cyan-100/80">
+            लिखने, इमेज/वीडियो, आवाज़, बिज़नेस, कोडिंग और यूटिलिटी—सब एक ही पेज पर। Search करो, filter लगाओ, और क्लिक पर details देखो।
+          </p>
+        </div>
+        <img src="images/circle2.jpg" alt="AI Bhai" class="w-20 h-20 md:w-24 md:h-24 rounded-full ring-4 ring-cyan-400/50 mx-auto md:mx-0">
+      </div>
+
+      <!-- Controls -->
+      <div class="mt-5 flex flex-col md:flex-row gap-3">
+        <input id="search" type="text" placeholder="🔎 Search: voice, video, SEO, design, coding…"
+               class="flex-1 px-4 py-2 rounded-xl bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400/70"
+               oninput="applyFilters()">
+        <select id="category"
+                class="px-4 py-2 rounded-xl bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400/70"
+                onchange="applyFilters()">
+          <option value="all">🧩 All Categories</option>
+          <option value="text">✍️ Text / Writing</option>
+          <option value="image">🎨 Image / Design</option>
+          <option value="video">🎥 Video</option>
+          <option value="voice">🎤 Voice / Music</option>
+          <option value="business">💼 Business / Marketing</option>
+          <option value="coding">👨‍💻 Coding / Dev</option>
+          <option value="utility">🧰 Utility / PDF / Search</option>
+        </select>
+      </div>
+
+      <!-- Quick chips -->
+      <div class="mt-3 flex flex-wrap gap-2 text-sm">
+        <button class="px-3 py-1 rounded-full chip hover:bg-white/10" onclick="quickTag('free')">#Free</button>
+        <button class="px-3 py-1 rounded-full chip hover:bg-white/10" onclick="quickTag('video')">#Video</button>
+        <button class="px-3 py-1 rounded-full chip hover:bg-white/10" onclick="quickTag('seo')">#SEO</button>
+        <button class="px-3 py-1 rounded-full chip hover:bg-white/10" onclick="quickTag('voice')">#Voice</button>
+        <button class="px-3 py-1 rounded-full chip hover:bg-white/10" onclick="quickTag('design')">#Design</button>
+        <button class="px-3 py-1 rounded-full chip hover:bg-white/10" onclick="quickTag('coding')">#Coding</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grid -->
+  <main class="max-w-7xl mx-auto px-4 py-6">
+    <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+    <div id="empty" class="hidden text-center text-cyan-100/80 py-12">कोई रिज़ल्ट नहीं मिला। सर्च/फ़िल्टर बदलकर देखें।</div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="max-w-7xl mx-auto px-4 pb-10">
+    <div class="glass rounded-2xl p-5 text-center">
+      <p class="text-cyan-100/80 text-sm">
+        Made with ❤️ by <span class="text-cyan-300 font-semibold">AI Bhai</span>. <br>
+        Tips: Prompt power का इस्तेमाल करें—छोटे steps में काम बांटें, results तेज़ मिलेंगे!
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ---------- Data ----------
+    const toolsData = [
+      // TEXT / WRITING
+      {id:'chatgpt',name:'ChatGPT',emoji:'✍️',cat:'text',tags:['free','writing','qna','coding'],desc:'लिखने, सवाल-जवाब और कोडिंग में मदद। ब्लॉग/ईमेल/आर्टिकल जल्दी बनाओ।',url:'https://chat.openai.com'},
+      {id:'jasper',name:'Jasper AI',emoji:'✍️',cat:'text',tags:['marketing','ads','blog'],desc:'Ads, marketing copy और blogs के लिए प्रीमियम writing सहायक।',url:'https://www.jasper.ai'},
+      {id:'copyai',name:'Copy.ai',emoji:'✍️',cat:'text',tags:['social','free','marketing'],desc:'Social media captions और marketing text जल्दी तैयार।',url:'https://www.copy.ai'},
+      {id:'writesonic',name:'Writesonic',emoji:'✍️',cat:'text',tags:['seo','blog','ads'],desc:'SEO ब्लॉग, product descriptions, ads—सब auto generate।',url:'https://writesonic.com'},
+      {id:'quillbot',name:'QuillBot',emoji:'✍️',cat:'text',tags:['rewrite','free'],desc:'Text को नए अंदाज़ में rewrite/paraphrase करो।',url:'https://quillbot.com'},
+      {id:'grammarly',name:'Grammarly AI',emoji:'📘',cat:'text',tags:['grammar','free'],desc:'Grammar check + style suggestions—हिंदी/अंग्रेज़ी लिखाई बेहतर।',url:'https://www.grammarly.com'},
+
+      // IMAGE / DESIGN
+      {id:'canva',name:'Canva AI',emoji:'🎨',cat:'image',tags:['design','free','brand'],desc:'Poster, logo, banner, social posts—ready templates और Magic design।',url:'https://www.canva.com'},
+      {id:'midjourney',name:'MidJourney',emoji:'🎨',cat:'image',tags:['art','pro'],desc:'Text से high-quality AI art/realistic images।',url:'https://www.midjourney.com'},
+      {id:'dalle',name:'DALL·E',emoji:'🎨',cat:'image',tags:['image','free'],desc:'Creative images—text prompt से नए visuals बनाओ।',url:'https://openai.com/dall-e'},
+      {id:'removebg',name:'Remove.bg',emoji:'🖼️',cat:'image',tags:['utility','free','design'],desc:'फोटो का background एक क्लिक में हटाओ।',url:'https://remove.bg'},
+      {id:'lexica',name:'Lexica',emoji:'🔎',cat:'image',tags:['search','free','art'],desc:'AI generated images का search engine + prompts।',url:'https://lexica.art'},
+      {id:'ideogram',name:'Ideogram',emoji:'🖋️',cat:'image',tags:['logo','text-on-image','free'],desc:'Logos/posters में clean text rendering के लिए मशहूर।',url:'https://ideogram.ai'},
+
+      // VIDEO
+      {id:'pictory',name:'Pictory',emoji:'🎥',cat:'video',tags:['video','shorts'],desc:'Blogs/scripts से auto video/reels बनाओ।',url:'https://pictory.ai'},
+      {id:'runway',name:'Runway ML',emoji:'🎥',cat:'video',tags:['edit','gen','pro'],desc:'AI video editing, remove objects, gen-2 video tools।',url:'https://runwayml.com'},
+      {id:'synthesia',name:'Synthesia',emoji:'🎥',cat:'video',tags:['avatar','studio'],desc:'AI avatar presenters के साथ प्रोफेशनल videos।',url:'https://www.synthesia.io'},
+      {id:'lumen5',name:'Lumen5',emoji:'🎬',cat:'video',tags:['blog-to-video','social'],desc:'Blog को auto video में बदलो—social friendly।',url:'https://lumen5.com'},
+      {id:'capcutai',name:'CapCut AI',emoji:'✂️',cat:'video',tags:['free','mobile','edit'],desc:'Templates, auto captions, quick edit for reels/shorts।',url:'https://www.capcut.com'},
+
+      // VOICE / MUSIC
+      {id:'elevenlabs',name:'ElevenLabs',emoji:'🎤',cat:'voice',tags:['voiceover','studio'],desc:'Text से natural human voiceover कई भाषाओं में।',url:'https://elevenlabs.io'},
+      {id:'voicemod',name:'Voicemod',emoji:'🎤',cat:'voice',tags:['changer','gaming'],desc:'Live voice changer—streaming/gaming के लिए।',url:'https://www.voicemod.net'},
+      {id:'soundraw',name:'Soundraw',emoji:'🎶',cat:'voice',tags:['music','bgm'],desc:'Royalty-free background music AI से बनाओ।',url:'https://soundraw.io'},
+      {id:'aiva',name:'AIVA',emoji:'🎼',cat:'voice',tags:['compose','music'],desc:'AI composer—themes, ads, films के लिए music।',url:'https://www.aiva.ai'},
+
+      // BUSINESS / MARKETING
+      {id:'hubspot',name:'HubSpot AI',emoji:'💼',cat:'business',tags:['crm','email','automation'],desc:'CRM + marketing automation + AI content/insights।',url:'https://www.hubspot.com'},
+      {id:'surferseo',name:'Surfer SEO',emoji:'📈',cat:'business',tags:['seo','content'],desc:'Keyword + on-page suggestions—Google ranking में मदद।',url:'https://surferseo.com'},
+      {id:'notionai',name:'Notion AI',emoji:'📒',cat:'business',tags:['notes','summaries','free'],desc:'Notes, docs, summaries, task ideas—सब एक जगह।',url:'https://www.notion.so/product/ai'},
+      {id:'mailchimp',name:'Mailchimp AI',emoji:'📨',cat:'business',tags:['email','free'],desc:'Email campaigns के लिए AI subject lines, content।',url:'https://mailchimp.com'},
+      {id:'copygen',name:'Copygen',emoji:'💬',cat:'business',tags:['ads','social','free'],desc:'Ads/social captions जल्दी—हिंदी/English mix भी।',url:'https://www.copygen.ai'},
+
+      // CODING / DEV
+      {id:'copilot',name:'GitHub Copilot',emoji:'👨‍💻',cat:'coding',tags:['coding','autocomplete','pro'],desc:'AI pair programmer—smart suggestions, test stubs।',url:'https://github.com/features/copilot'},
+      {id:'tabnine',name:'TabNine',emoji:'👨‍💻',cat:'coding',tags:['coding','free'],desc:'Lightweight AI autocomplete कई IDEs में।',url:'https://www.tabnine.com'},
+      {id:'replit',name:'Replit Ghostwriter',emoji:'👨‍💻',cat:'coding',tags:['cloud','learn'],desc:'Online editor + AI helper + deploy in browser।',url:'https://replit.com'},
+      {id:'v0',name:'V0 (Vercel)',emoji:'⚡',cat:'coding',tags:['ui','react','design'],desc:'Prompt से production-ready UI (React/Tailwind)।',url:'https://v0.dev'},
+      {id:'boltnew',name:'Bolt.new',emoji:'⚙️',cat:'coding',tags:['starter','fullstack'],desc:'AI से complete app scaffolds + instant preview।',url:'https://bolt.new'},
+
+      // UTILITY / PDF / SEARCH
+      {id:'perplexity',name:'Perplexity AI',emoji:'🔎',cat:'utility',tags:['search','qna','free'],desc:'वेब-search + citations के साथ तेज़ Q&A।',url:'https://www.perplexity.ai'},
+      {id:'chatpdf',name:'ChatPDF',emoji:'📄',cat:'utility',tags:['pdf','free'],desc:'PDF अपलोड करो, सवाल पूछो—तुरंत जवाब।',url:'https://www.chatpdf.com'},
+      {id:'tldraw',name:'tldraw',emoji:'🧩',cat:'utility',tags:['whiteboard','free'],desc:'Infinite canvas—diagram/flows जल्दी स्केच करो।',url:'https://www.tldraw.com'},
+      {id:'otter',name:'Otter.ai',emoji:'📝',cat:'utility',tags:['meetings','notes'],desc:'मीटिंग transcript + auto notes/summaries।',url:'https://otter.ai'},
+      {id:'gamma',name:'Gamma',emoji:'📊',cat:'utility',tags:['slides','free'],desc:'Text से सुंदर presentations/web docs बनाओ।',url:'https://gamma.app'},
+      {id:'loomai',name:'Loom + AI',emoji:'🎙️',cat:'utility',tags:['screen','explain'],desc:'Screen/video explainers + AI highlights/resume।',url:'https://www.loom.com'}
+    ];
+
+    // ---------- Render ----------
+    const grid = document.getElementById('grid');
+    function iconFor(cat){ return {text:'✍️',image:'🎨',video:'🎥',voice:'🎤',business:'💼',coding:'👨‍💻',utility:'🧰'}[cat] || '🧩'; }
+    function labelFor(cat){ return {text:'Text / Writing',image:'Image / Design',video:'Video',voice:'Voice / Music',business:'Business / Marketing',coding:'Coding / Dev',utility:'Utility / PDF / Search'}[cat] || cat; }
+
+    function card(t){
+      return `
+      <div class="glass rounded-2xl glow hover:shadow-cyan-400/20 hover:scale-[1.01] transition">
+        <div class="p-5">
+          <div class="flex items-start gap-3">
+            <div class="text-2xl">${t.emoji}</div>
+            <div class="min-w-0">
+              <h3 class="text-lg font-semibold truncate">${t.name}</h3>
+              <p class="text-sm text-cyan-100/80 mt-0.5">${t.desc}</p>
+              <div class="mt-2 flex flex-wrap gap-2 text-[11px] text-cyan-100/80">
+                <span class="px-2 py-0.5 rounded-full bg-white/10 border border-white/20">#${t.cat}</span>
+                ${(t.tags||[]).slice(0,4).map(x=>`<span class="px-2 py-0.5 rounded-full bg-white/10 border border-white/20">#${x}</span>`).join('')}
+              </div>
+              <div class="mt-4 flex gap-2">
+                <a href="${t.url}" target="_blank" class="px-3 py-2 rounded-lg bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition">Official</a>
+                <button class="px-3 py-2 rounded-lg bg-white/10 border border-white/20 hover:bg-white/15" onclick="toggle('${t.id}')">Details</button>
+              </div>
+            </div>
+          </div>
+          <div id="${t.id}" class="reveal mt-3">
+            <div class="rounded-xl bg-white/5 border border-white/15 p-3 text-sm">
+              <p class="mb-1"><b>Use-case:</b> ${t.desc}</p>
+              <p class="mb-1"><b>Category:</b> ${iconFor(t.cat)} ${labelFor(t.cat)}</p>
+              <p><b>Tags:</b> ${(t.tags||[]).map(x=>'#'+x).join(', ') || '—'}</p>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    function render(list){
+      grid.innerHTML = list.map(card).join('');
+      document.getElementById('empty').classList.toggle('hidden', list.length !== 0);
+    }
+
+    // ---------- Filters ----------
+    function applyFilters(){
+      const q = (document.getElementById('search').value || '').toLowerCase().trim();
+      const cat = document.getElementById('category').value;
+      const filtered = toolsData.filter(t=>{
+        const inCat = (cat === 'all' || t.cat === cat);
+        const text = (t.name+' '+t.desc+' '+t.cat+' '+(t.tags||[]).join(' ')).toLowerCase();
+        const inSearch = (q === '' || text.includes(q));
+        return inCat && inSearch;
+      });
+      render(filtered);
+    }
+
+    function quickTag(tag){
+      const s = document.getElementById('search');
+      s.value = tag;
+      applyFilters();
+    }
+
+    function toggle(id){
+      const el = document.getElementById(id);
+      el.classList.toggle('open');
+    }
+
+    // Init
+    render(toolsData);
+  </script>
+</body>
+</html>
