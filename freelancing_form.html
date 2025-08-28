@@ -49,6 +49,17 @@
           <img src="images/circle2.jpg" alt="AI Bhai" class="w-20 h-20 md:w-24 md:h-24 rounded-full ring-4 ring-cyan-500/40 mx-auto md:mx-0">
         </div>
 
+<!-- AD: top banner (below hero) -->
+<div class="max-w-7xl mx-auto px-4 pt-4">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6575643228502924"
+       data-ad-slot="3037667154"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        
         <div class="mt-5 flex flex-col md:flex-row gap-3">
           <input id="search" type="text" placeholder="🔎 Search: fiverr, india, design, no upfront…"
                  class="flex-1 px-4 py-2 rounded-xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
@@ -84,6 +95,17 @@
     <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
     <div id="empty" class="hidden text-center text-slate-600 py-12">No results. Try different filters.</div>
 
+<!-- AD: above transparency note -->
+<div class="max-w-7xl mx-auto px-4 pb-4">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6575643228502924"
+       data-ad-slot="3037667154"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    
     <!-- Transparency Note -->
     <div class="mt-8 rounded-2xl border bg-white p-4 text-sm text-slate-700">
       <b>Note:</b> Signup free है; ज्यादातर platforms project पूरा होने पर commission लेते हैं.  
@@ -287,11 +309,32 @@
         </div>
       </div>`;
     }
+  // Ad block html
+  function adBlockHTML(){
+    return `
+      <div class="rounded-2xl border bg-white p-3 flex items-center justify-center" style="min-height:120px">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6575643228502924"
+             data-ad-slot="3037667154"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+      </div>
+    `;
+  }
 
-    function render(list){
-      grid.innerHTML = list.map(card).join('');
-      document.getElementById('empty').classList.toggle('hidden', list.length !== 0);
+  function render(list){
+    const cards = list.map(card);
+    // 6th item के बाद ad inject
+    if(cards.length > 6){
+      cards.splice(6, 0, adBlockHTML());
     }
+    document.getElementById('grid').innerHTML = cards.join('');
+    document.getElementById('empty').classList.toggle('hidden', list.length !== 0);
+
+    // AdSense refresh trigger
+    try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e){}
+  }
 
     // ---------- FILTERS ----------
     function applyFilters(){
@@ -311,5 +354,23 @@
     // Init
     render(sites);
   </script>
+    <!-- ============ AI Bhai Popup Widget (Top-Right, sticky) ============ -->
+<script>
+(function(){
+  var s=document.createElement('script');
+  s.src='https://deepakchauhanxai.com/scripts/ai_bhai_congratulations_popup.js';   // ← यहाँ अपना final JS रखें
+  s.onload=function(){
+    AIBhaiPopup({
+      avatarUrl:'https://deepakchauhanxai.xyz/images/AI-bhai.png',
+      dataUrl:'https://deepakchauhanxai.xyz/referral/api/broadcast.php', // ← API से JSON (ctas सहित)
+      position:'tr',   // top-right
+      offset:'18px',   // edge से दूरी
+      accent:'#FFA500',
+      pollSec:60
+    });
+  };
+  document.head.appendChild(s);
+})();
+</script>
 </body>
 </html>
