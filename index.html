@@ -356,23 +356,24 @@ box-shadow:0 0 20px #00f5ff; z-index:9999; max-width:90%; width:350px; text-alig
   <p class="vertical-scroll-text">Deepak Chauhan × AI Bhai x Logic Bhai – तीन की जोड़ी</p>
 </div>
 <canvas id="particle-canvas" style="position: fixed; z-index: 0; top: 0; left: 0; pointer-events: none;"></canvas>
-  <script>
-(function(){
-  var s=document.createElement('script');
-  s.src='https://deepakchauhanxai.com/scripts/ai_bhai_congratulations_popup.js';
-  s.onload=function(){
-    AIBhaiPopup({
-      avatarUrl:'https://deepakchauhanxai.xyz/images/AI-bhai.png',
-      dataUrl:'https://deepakchauhanxai.xyz/referral/api/broadcast.php',
-      position:'bl',     // tr/br/tl/bl
-      offset:'18px',
-      // accent not passed → default rainbow
-      pollSec:60
-    });
-  };
-  document.head.appendChild(s);
-})();
-  </script>
+  <!-- ============ AI Bhai Popup Widget (Top-Right, sticky) ============ -->    
+<script>    
+(function(){    
+  var s=document.createElement('script');    
+  s.src='https://deepakchauhanxai.com/scripts/ai_bhai_congratulations_popup.js';   // ← यहाँ अपना final JS रखें    
+  s.onload=function(){    
+    AIBhaiPopup({    
+      avatarUrl:'https://deepakchauhanxai.xyz/images/AI-bhai.png',    
+      dataUrl:'https://deepakchauhanxai.xyz/referral/api/broadcast.php', // ← API से JSON (ctas सहित)    
+      position:'tr',   // top-right    
+      offset:'18px',   // edge से दूरी    
+      accent:'#FFA500',    
+      pollSec:60    
+    });    
+  };    
+  document.head.appendChild(s);    
+})();    
+</script>    
 <script src="ads.js"></script>
 <script src="scripts/future_planning.js"></script>
 <script src="scripts/Deepak_AI_phul.js"></script>
