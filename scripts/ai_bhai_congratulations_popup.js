@@ -1,300 +1,186 @@
-/* ai_bhai_congratulations_popup.js
-   AI Bhai — Congrats/Announcement Popup (sticky + accent gradient support)
-   v1.5  |  Author: Deepak × AI Bhai
-*/
-(function(global){
-  function normalizeAccent(accent){
-    // accent: string color OR array of colors (→ gradient)
-    if (Array.isArray(accent) && accent.length >= 2){
-      return { type:'gradient', css:`linear-gradient(90deg, ${accent.join(',')})` };
-    }
-    if (typeof accent === 'string' && accent.trim()){
-      return { type:'color', css:accent.trim() };
-    }
-    // default rainbow
-    const rainbow = ['#ff0000','#ff7f00','#ffff00','#00ff00','#0000ff','#4b0082','#8f00ff'];
-    return { type:'gradient', css:`linear-gradient(90deg, ${rainbow.join(',')})` };
+/*! AI Bhai Popup v2 — Final */
+(function(window, document){
+  if(window.__AIBhaiPopup__){ window.AIBhaiPopup = window.__AIBhaiPopup__; return; }
+
+  function $(sel, root){ return (root||document).querySelector(sel); }
+  function el(tag, attrs){ const e=document.createElement(tag); if(attrs) Object.assign(e, attrs); return e; }
+  function css(str){ const s=el('style'); s.textContent=str; document.head.appendChild(s); return s; }
+  function safeUrl(u){ try{ return new URL(u, location.href).href; }catch(e){ return ''; } }
+
+  const BASE_CSS = `
+  .aiB-fab{ position:fixed; z-index:2147483000; width:58px; height:58px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    background:transparent; border:2px solid var(--ai-accent,#2dd4bf);
+    box-shadow:0 0 0 2px rgba(45,212,191,.18) inset; overflow:hidden;
+    transition:transform .15s ease, box-shadow .2s ease; -webkit-backdrop-filter:saturate(120%) blur(4px); backdrop-filter:saturate(120%) blur(4px) }
+  .aiB-fab:hover{ transform:scale(1.05); box-shadow:0 0 0 4px rgba(45,212,191,.25) inset; }
+  .aiB-fab img{ width:100%; height:100%; object-fit:cover; border-radius:50%; }
+  .aiB-overlay{ position:fixed; inset:0; background:rgba(6,12,20,.6); z-index:2147482998; opacity:0; pointer-events:none; transition:opacity .2s }
+  .aiB-overlay.aiB-show{ opacity:1; pointer-events:auto }
+  .aiB-modal{ position:fixed; z-index:2147482999; max-width:520px; width:92vw; max-height:80vh; overflow:auto;
+    left:50%; top:50%; transform:translate(-50%,-44%) scale(.98); background:#101827; color:#e9edf5;
+    border:1px solid #20304f; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.45);
+    opacity:0; transition:opacity .2s, transform .2s; }
+  .aiB-modal.aiB-show{ opacity:1; transform:translate(-50%,-50%) scale(1) }
+  .aiB-head{ display:flex; align-items:center; gap:10px; padding:14px 16px; border-bottom:1px solid #1d2b46; position:sticky; top:0; background:#101827; z-index:2 }
+  .aiB-ava{ width:36px; height:36px; border-radius:50%; overflow:hidden; border:2px solid var(--ai-accent,#2dd4bf) }
+  .aiB-ava img{ width:100%; height:100%; object-fit:cover }
+  .aiB-title{ font-weight:800; font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+  .aiB-typing:after{ content:'|'; margin-left:2px; animation:aiB-caret 1s steps(1) infinite }
+  @keyframes aiB-caret { 50%{ opacity:0 } }
+  .aiB-close{ margin-left:auto; font-size:18px; background:transparent; border:0; color:#a6b0c3; cursor:pointer }
+  .aiB-body{ padding:14px 16px; display:flex; flex-direction:column; gap:12px }
+  .aiB-text{ line-height:1.55; color:#dbe7ff }
+  .aiB-media img{ max-width:100%; border-radius:12px; border:1px solid #223154; display:block }
+  .aiB-media .sticker{ width:120px; height:auto }
+  .aiB-cta{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; background:var(--ai-accent,#2dd4bf);
+    color:#08252a; border-radius:10px; border:0; text-decoration:none; font-weight:700; width:max-content }
+  .aiB-ctas{ display:flex; gap:8px; flex-wrap:wrap }
+  .aiB-foot{ padding:0 16px 14px 16px; color:#a6b0c3; font-size:12px }
+  `;
+  css(BASE_CSS);
+
+  function typing(el, text){
+    el.textContent=''; el.classList.add('aiB-typing');
+    let i=0; const t=setInterval(()=>{ el.textContent = text.slice(0, ++i); if(i>=text.length){ clearInterval(t); el.classList.remove('aiB-typing'); } }, 30);
   }
 
-  function injectCSS(){
-    if (document.getElementById('aibhai-popup-styles')) return;
-    const css = `
-    .ab-btn{
-      position:fixed; z-index:99999; width:56px; height:56px;
-      border-radius:50%; cursor:pointer; display:grid; place-items:center;
-      box-shadow:0 6px 18px rgba(0,0,0,.28);
-    }
-    .ab-btn-ring{
-      position:absolute; inset:0; border-radius:50%;
-      padding:2px; /* gradient border via background + inner circle */
-      background: var(--ab-accent, #2dd4bf);
-      -webkit-mask:
-        radial-gradient(#000 68%, transparent 69%) content-box,
-        radial-gradient(#000 70%, transparent 71%);
-      -webkit-mask-composite: destination-out;
-              mask-composite: exclude;
-    }
-    .ab-btn-inner{
-      width:100%; height:100%; border-radius:50%;
-      background:#0b1220; display:grid; place-items:center; overflow:hidden;
-    }
-    .ab-btn-inner img{ width:70%; height:70%; object-fit:contain; filter:none; }
-
-    .ab-card-wrap{ position:fixed; z-index:99998; inset:0; display:none; }
-    .ab-backdrop{ position:absolute; inset:0; background:rgba(3,7,18,.55); backdrop-filter: blur(2px); }
-    .ab-card{
-      position:absolute; max-width:360px; width:calc(100% - 24px);
-      background:#0f172a; color:#e6edf7; border-radius:14px; 
-      border:1px solid rgba(148,163,184,.2); box-shadow:0 12px 40px rgba(0,0,0,.35);
-      overflow:hidden;
-    }
-    .ab-head{
-      display:flex; align-items:center; gap:10px; padding:12px;
-      border-bottom:1px solid rgba(148,163,184,.1);
-      position:relative;
-    }
-    .ab-head::after{
-      content:''; position:absolute; left:0; right:0; bottom:0; height:3px;
-      background: var(--ab-accent, #2dd4bf);
-    }
-    .ab-ava{ width:34px; height:34px; border-radius:50%; overflow:hidden; background:#0b1220; border:1px solid rgba(148,163,184,.25); }
-    .ab-ava img{ width:100%; height:100%; object-fit:cover; }
-    .ab-title{ font-weight:800; font-size:16px; line-height:1.2; }
-    .ab-typing .ab-title::after{
-      content:'▌'; margin-left:4px; animation:abblink 1s steps(1) infinite; opacity:.8;
-    }
-    @keyframes abblink{ 50%{opacity:0} }
-
-    .ab-close{ margin-left:auto; background:transparent; border:0; color:#93a4b8; font-size:18px; cursor:pointer }
-    .ab-body{ padding:12px; font-size:14px; color:#cbd5e1 }
-    .ab-body p{ margin:0 0 8px 0 }
-    .ab-media{ display:flex; gap:8px; flex-wrap:wrap; margin-top:6px }
-    .ab-media img{ max-width:100%; border-radius:10px; border:1px solid rgba(148,163,184,.2) }
-
-    .ab-ctas{ display:flex; gap:8px; flex-wrap:wrap; padding:12px; border-top:1px dashed rgba(148,163,184,.18) }
-    .ab-cta{
-      border-radius:999px; padding:8px 12px; border:1px solid rgba(148,163,184,.35);
-      background:#0b1220; color:#e6edf7; font-weight:700; font-size:13px; text-decoration:none;
-    }
-    .ab-footer{ padding:10px 12px; font-size:12px; color:#93a4b8; border-top:1px solid rgba(148,163,184,.1) }
-
-    @media (prefers-reduced-motion:no-preference) {
-      .ab-card{ transform: translateY(8px); opacity:0; transition:.28s ease }
-      .ab-card.show{ transform: translateY(0); opacity:1 }
-      .ab-btn{ transition: transform .16s ease }
-      .ab-btn:active{ transform: scale(.96) }
-    }
-    `;
-    const st = document.createElement('style');
-    st.id = 'aibhai-popup-styles';
-    st.textContent = css;
-    document.head.appendChild(st);
-  }
-
-  function placeButton(btn, position, offset){
-    const off = offset || '16px';
-    btn.style[ position.includes('t') ? 'top':'bottom' ] = off;
-    btn.style[ position.includes('l') ? 'left':'right' ] = off;
+  function placeFab(fab, pos, offset){
+    const map = { br:{b:offset, r:offset}, bl:{b:offset, l:offset}, tr:{t:offset, r:offset}, tl:{t:offset, l:offset} };
+    const p = map[pos] || map.tr;
+    fab.style.bottom = p.b||''; fab.style.top=p.t||''; fab.style.left=p.l||''; fab.style.right=p.r||'';
   }
 
   async function fetchJSON(url){
     try{
-      const r = await fetch(url, {cache:'no-store'});
-      const j = await r.json();
-      return j && j.ok ? j.data || j : null;
+      const res = await fetch(url, {cache:'no-store'});
+      if(!res.ok) return null;
+      return await res.json();
     }catch(e){ return null; }
   }
 
-  function renderCard(data, opts, accentCSS){
-    const wrap = document.createElement('div');
-    wrap.className = 'ab-card-wrap';
+  function renderModal(data, opts){
+    const ov = el('div', {className:'aiB-overlay'});
+    const md = el('div', {className:'aiB-modal', style:`--ai-accent:${opts.accent}`});
 
-    const backdrop = document.createElement('div');
-    backdrop.className = 'ab-backdrop';
+    // head
+    const head = el('div', {className:'aiB-head'});
+    const ava  = el('div', {className:'aiB-ava'});
+    const avim = el('img', {src:safeUrl(opts.avatarUrl)});
+    const ttl  = el('div', {className:'aiB-title'});
+    const cls  = el('button', {className:'aiB-close', innerHTML:'❌', title:'Close'});
+    ava.appendChild(avim); head.appendChild(ava); head.appendChild(ttl); head.appendChild(cls);
 
-    const card = document.createElement('div');
-    card.className = 'ab-card';
-    // position near button corner
-    const pos = (opts.position||'tr');
-    const off = opts.offset || '16px';
-    if (pos === 'tr'){ card.style.top = off; card.style.right = off; }
-    if (pos === 'br'){ card.style.bottom = off; card.style.right = off; }
-    if (pos === 'tl'){ card.style.top = off; card.style.left  = off; }
-    if (pos === 'bl'){ card.style.bottom = off; card.style.left  = off; }
+    // body
+    const body = el('div', {className:'aiB-body'});
+    if(data.textHtml){ const t = el('div', {className:'aiB-text'}); t.innerHTML = data.textHtml; body.appendChild(t); }
 
-    card.style.setProperty('--ab-accent', accentCSS);
-
-    // HEAD
-    const head = document.createElement('div');
-    head.className = 'ab-head' + (data.typingTitle ? ' ab-typing' : '');
-    const ava = document.createElement('div'); ava.className = 'ab-ava';
-    ava.innerHTML = `<img src="${opts.avatarUrl||''}" alt="AI Bhai">`;
-    const title = document.createElement('div'); title.className='ab-title';
-    title.textContent = data.title || 'AI Bhai';
-    const close = document.createElement('button'); close.className='ab-close'; close.innerHTML='✕';
-
-    head.appendChild(ava); head.appendChild(title); head.appendChild(close);
-
-    // BODY
-    const body = document.createElement('div'); body.className='ab-body';
-    const safeHtml = (data.textHtml || '').toString();
-    body.innerHTML = safeHtml;
-
-    // MEDIA
-    const mediaWrap = document.createElement('div'); mediaWrap.className='ab-media';
-    (data.media||[]).forEach(m=>{
-      if(!m.url) return;
-      const im = document.createElement('img');
-      im.src = m.url; im.alt = m.type||'media';
-      mediaWrap.appendChild(im);
-    });
-    if ((data.media||[]).length) body.appendChild(mediaWrap);
-
-    // CTAs (multiple or single)
-    const ctas = document.createElement('div'); ctas.className='ab-ctas';
-    const list = Array.isArray(data.ctas) ? data.ctas : (data.cta ? [data.cta] : []);
-    list.forEach(c=>{
-      if(!c || !c.href) return;
-      const a = document.createElement('a');
-      a.className='ab-cta'; a.href=c.href; a.target='_blank'; a.rel='noopener';
-      a.textContent = c.label || 'Open';
-      ctas.appendChild(a);
-    });
-
-    // FOOTER
-    const foot = document.createElement('div'); foot.className='ab-footer';
-    foot.textContent = data.footer || (data.nameTag || '');
-
-    card.appendChild(head);
-    card.appendChild(body);
-    if (ctas.childElementCount) card.appendChild(ctas);
-    if ((foot.textContent||'').trim()) card.appendChild(foot);
-
-    wrap.appendChild(backdrop); wrap.appendChild(card);
-
-    // events
-    function closeAll(){
-      wrap.style.display='none';
-      card.classList.remove('show');
+    if(Array.isArray(data.media)){
+      data.media.forEach(m=>{
+        const u = safeUrl(m.url||''); if(!u) return;
+        const wrap = el('div', {className:'aiB-media'});
+        const img = el('img', {src:u, loading:'lazy'});
+        if((m.type||'').toLowerCase()==='sticker'){ img.className='sticker'; }
+        wrap.appendChild(img); body.appendChild(wrap);
+      });
     }
-    backdrop.addEventListener('click', closeAll);
-    close.addEventListener('click', closeAll);
 
-    document.body.appendChild(wrap);
-    // show with animation
-    wrap.style.display='block';
-    requestAnimationFrame(()=> card.classList.add('show'));
-    return wrap;
+    // CTAs (multi first, then legacy single)
+    let hasAnyCTA = false;
+    if (Array.isArray(data.ctas) && data.ctas.length){
+      const wrap = el('div', {className:'aiB-ctas'});
+      data.ctas.forEach(c=>{
+        if(!c || !c.href) return;
+        const a = el('a', {className:'aiB-cta', href:safeUrl(c.href), target:'_blank', rel:'noopener'});
+        a.textContent = c.label || 'Open';
+        wrap.appendChild(a);
+        hasAnyCTA = true;
+      });
+      if(hasAnyCTA) body.appendChild(wrap);
+    }
+    if(!hasAnyCTA && data.cta && data.cta.href){
+      const a = el('a', {className:'aiB-cta', href:safeUrl(data.cta.href), target:'_blank', rel:'noopener'});
+      a.textContent = data.cta.label || 'Open';
+      body.appendChild(a);
+    }
+
+    // foot
+    const foot = el('div', {className:'aiB-foot'});
+    const tags = [];
+    if(data.nameTag) tags.push(data.nameTag);
+    if(data.footer)  tags.push(data.footer);
+    foot.textContent = tags.join(' • ');
+
+    md.appendChild(head); md.appendChild(body); md.appendChild(foot);
+    document.body.appendChild(ov); document.body.appendChild(md);
+
+    // open anim
+    setTimeout(()=>{ ov.classList.add('aiB-show'); md.classList.add('aiB-show'); }, 10);
+
+    const titleText = data.title || 'AI Bhai';
+    if(data.typingTitle){ typing(ttl, titleText); } else { ttl.textContent = titleText; }
+
+    function close(){ md.classList.remove('aiB-show'); ov.classList.remove('aiB-show'); setTimeout(()=>{ md.remove(); ov.remove(); }, 180); }
+    cls.onclick = close; ov.onclick = close;
+
+    return { close };
   }
 
-  function createButton(opts, accentCSS){
-    const btn = document.createElement('div');
-    btn.className = 'ab-btn';
-    btn.style.setProperty('--ab-accent', accentCSS);
-
-    const ring = document.createElement('div'); ring.className='ab-btn-ring';
-    // gradient or color background for ring
-    ring.style.background = accentCSS;
-
-    const inner = document.createElement('div'); inner.className='ab-btn-inner';
-    inner.innerHTML = `<img src="${opts.avatarUrl||''}" alt="AI Bhai">`;
-
-    btn.appendChild(ring); btn.appendChild(inner);
-    placeButton(btn, (opts.position||'tr'), (opts.offset||'16px'));
-    document.body.appendChild(btn);
-    return btn;
-  }
-
-  function allowedAudience(data, isLoggedIn){
-    const a = (data.audience || 'all');
-    if (a === 'all') return true;
-    if (a === 'new') return !isLoggedIn;
-    if (a === 'loggedin') return !!isLoggedIn;
-    return true;
-  }
-
-  // ================= PUBLIC API =================
-  async function AIBhaiPopup(userOpts){
-    injectCSS();
-
+  function AIBhaiPopup(options){
     const opts = Object.assign({
-      avatarUrl:'',
-      dataUrl:'',
-      position:'tr',  // tr/br/tl/bl
-      offset:'16px',
-      accent: ['#ff0000','#ff7f00','#ffff00','#00ff00','#0000ff','#4b0082','#8f00ff'], // default rainbow
-      pollSec: 60
-    }, userOpts||{});
+      avatarUrl: '',
+      dataUrl:   '',
+      position:  'tr',   // tr default (top-right)
+      offset:    '18px', // distance from edges
+      accent:    '#2dd4bf',
+      pollSec:   0       // 0 = no polling
+    }, options||{});
 
-    const acc = normalizeAccent(opts.accent);
-    const accentCSS = acc.css;
+    // FAB — fixed (scroll पर साथ रहेगा)
+    const fab = el('button', {className:'aiB-fab', style:`--ai-accent:${opts.accent}`});
+    const im  = el('img', {src:safeUrl(opts.avatarUrl)});
+    fab.appendChild(im);
+    placeFab(fab, opts.position, opts.offset);
+    document.body.appendChild(fab);
 
-    // floating sticky button
-    const btn = createButton(opts, accentCSS);
+    let latestPayload = null, modalRef = null;
 
-    // state
-    let current = null;
-    let cardWrap = null;
-
-    async function openNow(){
-      if (!opts.dataUrl) return;
-
-      const data = await fetchJSON(opts.dataUrl);
-      if (!data || data.enabled === false) return;
-
-      const isLoggedIn = !!(localStorage.getItem('my_email') || localStorage.getItem('email'));
-      if (!allowedAudience(data, isLoggedIn)) return;
-
-      // avoid re-render if unchanged
-      const keyNow = JSON.stringify(data);
-      if (current && current === keyNow){
-        // just toggle open
-        if (cardWrap && cardWrap.style.display !== 'block'){
-          cardWrap.style.display='block';
-          const card = cardWrap.querySelector('.ab-card');
-          requestAnimationFrame(()=> card.classList.add('show'));
-        }
-        return;
-      }
-      current = keyNow;
-
-      // dispose previous
-      if (cardWrap && cardWrap.parentNode) cardWrap.parentNode.removeChild(cardWrap);
-      cardWrap = renderCard(data, opts, accentCSS);
+    async function getPayload(){
+      // prefer API (broadcast.php)
+      let data = await fetchJSON(opts.dataUrl);
+      if(data && data.ok && data.data){ data = data.data; } // handle {ok:true,data:{...}}
+      if(!data) return null;
+      if(data.enabled === false) return null;
+      // normalize fields to avoid undefined
+      data.ctas = Array.isArray(data.ctas) ? data.ctas : [];
+      return data;
     }
 
-    btn.addEventListener('click', openNow);
+    async function open(){
+      const data = await getPayload();
+      const payload = data || { title:'AI Bhai', typingTitle:true, textHtml:'<p>Namaste! Kuch naya aane wala hai. 🚀</p>', ctas:[] };
+      if(modalRef) return;
+      modalRef = renderModal(payload, opts);
+      const oldClose = modalRef.close;
+      modalRef.close = function(){ oldClose(); modalRef=null; };
+    }
 
-    // initial silent fetch (doesn't open automatically)
-    fetchJSON(opts.dataUrl).then(d=>{
-      if (!d) return;
-      current = JSON.stringify(d);
-    });
+    fab.addEventListener('click', open);
 
-    // polling (optional)
-    const poll = Math.max(0, Number(opts.pollSec||0));
-    if (poll > 0){
+    if(opts.pollSec>0){
       setInterval(async ()=>{
-        const d = await fetchJSON(opts.dataUrl);
-        if (!d || d.enabled === false) return;
-        const nextKey = JSON.stringify(d);
-        if (current !== nextKey){
-          current = nextKey;
-          // if open, recreate; if closed, wait for click
-          if (cardWrap && cardWrap.style.display==='block'){
-            if (cardWrap.parentNode) cardWrap.parentNode.removeChild(cardWrap);
-            cardWrap = renderCard(d, opts, accentCSS);
-          }
+        const data = await getPayload();
+        if(!data) return;
+        if(JSON.stringify(data)!==JSON.stringify(latestPayload)){
+          latestPayload = data;
+          if(modalRef){ modalRef.close(); modalRef=null; }
         }
-      }, poll*1000);
+      }, Math.max(10, opts.pollSec)*1000);
     }
 
-    return {
-      open: openNow
-    };
+    return { open };
   }
 
-  // expose
-  global.AIBhaiPopup = AIBhaiPopup;
-
-})(window);
+  window.__AIBhaiPopup__ = AIBhaiPopup;
+  window.AIBhaiPopup = AIBhaiPopup;
+})(window, document);
